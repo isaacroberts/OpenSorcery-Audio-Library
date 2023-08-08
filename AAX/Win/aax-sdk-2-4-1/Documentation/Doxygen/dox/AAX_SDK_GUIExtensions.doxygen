@@ -1,0 +1,32 @@
+/*===================================================================================================
+AAX_SDK_GUIExtensions.doxygen
+
+Copyright 2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+
+/** @defgroup GUIExtensions GUI Extensions
+	@ingroup ExtensionsDocs
+	
+	@brief GUI Extensions for the %AAX SDK
+
+	@section about About the SDK's GUI Extensions
+The code and projects in the SDK's Extensions/GUI/ directory demonstrate how to extend the %AAX SDK's GUI programming interface using a variety of popular GUI frameworks, including:
+
+- Native Cocoa
+- Native Win32
+- VSTGUI
+- JUCE
+
+These projects do not represent core functionality of the %AAX SDK, but rather they serve as examples of how plug-in GUIs can be written to the %AAX specification using a variety of different approaches.
+
+	@section notes Notes
+
+- The VST and JUCE GUI Extension library projects use a macro value to resolve file paths to the installed framework directory.  This macro is defined in a Visual Studio property sheet on Windows and as a custom project variable on Mac. Because this macro will not be resolved on Mac until compilation, the Xcode GUI will not be able to find the included files.  However, the projects should builds successfully once the macros are updated to point to the correct directory.
+- The JUCE GUI Extension code in this SDK was written using version 1.51 of the JUCE framework
+- Several VSTGUI-based headers with an "_ext" filename are provided along with the SDK's GUI Extensions code. These headers are slightly modified versions of the corresponding headers that are distributed with VSTGUI. The headers have been modified for use with our example plug-ins because we had several problems when using the VSTGUI SDK for 64 bit. For example, we encountered conflicting typedefs redefinitions like int32_t etc., which are preprocessed out of the vstguibase_ext.h file. These headers should not be required to build a 32-bit plug-in and they were only added in our transitional %AAX SDK, version 1.5.
+
+*/

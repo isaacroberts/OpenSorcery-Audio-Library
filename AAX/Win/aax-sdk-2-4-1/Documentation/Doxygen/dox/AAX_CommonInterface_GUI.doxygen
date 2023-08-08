@@ -1,0 +1,37 @@
+/*===================================================================================================
+AAX_CommonInterface_GUI.doxygen
+
+Copyright 2016, 2018 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup CommonInterface_GUI GUI interface
+	@ingroup MainInterface
+	
+	@brief The interface for a %AAX Plug-in's user interface
+	
+		The \ref AAX_IEffectGUI "GUI interface" includes methods for handling the plug-in's
+		GUI window and events.
+		
+	\par Accessing the window
+	
+		In %AAX, the plug-in's window is provided as a native window pointer through the
+		\ref AAX_IViewContainer interface.  The plug-in may also use this interface to forward
+		events in its window back to the host for handling.
+		
+	\par Default implementation
+		
+		A default implementation of the GUI interface, \ref AAX_CEffectGUI, is compiled in to the
+		%AAX library.  This class includes a few helper methods and other extensions to the base 
+		interface.  Of particular note are several additional pure virtual methods that are used by
+		this class to extend the GUI API, and which must be overridden by any inheriting class.
+		
+	\par Extensions
+	
+		The %AAX SDK includes several examples of how the basic GUI interface may be extended to
+		support native or third-party GUI frameworks.  These examples are not a core part of the
+		SDK, but are provided to developers as a convenience when incorporating their own chosen
+		GUI framework.
+		
+ */

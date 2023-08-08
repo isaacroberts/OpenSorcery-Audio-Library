@@ -1,0 +1,94 @@
+/*===================================================================================================
+
+Copyright 2016 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+msc {
+	// Display properties
+	hscale = "1";
+	
+	// Declare entities
+	 host              [label = "Host", textbgcolor = "#edebff", arctextbgcolor = "#edebff"]
+	,plugin            [label = "Plug-In", textbgcolor = "#eafbef", arctextbgcolor = "#eafbef"]
+	;
+		
+	// -------------------
+	|||;
+	|||;
+	host note plugin [label = "Edit event handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	plugin rbox plugin [label = "OS Edit Event"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostTouchRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostSetValueRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostSetValueRequest()"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostReleaseRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostReleaseRequest()"];
+	
+	// -------------------
+	|||;
+	|||;
+	host note plugin [label = "Set value handling\nfor linker param", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	host rbox host [label = "PostTouchRequest() processed"];
+	host => plugin [label = "AAX_IEffectParameters::UpdateParameterTouch()\niParameterID: linker\niTouchState: true", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostTouchRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()", linecolor = "red"];
+	plugin >> host;
+	
+	host rbox host [label = "PostSetValueRequest() processed"];
+	host => plugin [label = "AAX_IEffectParameters::UpdateParameterNormalizedValue()\niParameterID: linker\niSource: AAX_eUpdateSource_Unspecified", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	plugin rbox plugin [label = "Linked parameter edit"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostTouchRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()", linecolor = "red"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostSetValueRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostSetValueRequest()", linecolor = "red"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostReleaseRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostReleaseRequest()", linecolor = "red"];
+	plugin rbox plugin [label = "Continue handling linker parameter update"];
+	plugin => plugin [label = "Update linker parameter state"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostCurrentValue()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostCurrentValue()"];
+	plugin => plugin [label = "Increment number of changes", URL = "\ref AAX_IACFEffectParameters::GetNumberOfChanges()"];
+	plugin >> host;
+	
+	host rbox host [label = "PostReleaseRequest() processed"];
+	host => plugin [label = "AAX_IEffectParameters::UpdateParameterTouch()\niParameterID: linker\niTouchState: false", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostReleaseRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostReleaseRequest()", linecolor = "red"];
+	plugin >> host;
+	
+	// -------------------
+	|||;
+	|||;
+	host note plugin [label = "Set value handling\nfor linked param", textbgcolor = "#fff0f0"];
+	// -------------------
+	
+	host rbox host [label = "PostTouchRequest() processed"];
+	host => plugin [label = "AAX_IEffectParameters::UpdateParameterTouch()\niParameterID: linked\niTouchState: true", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	plugin -X host [label = "AAX_IAutomationDelegate::PostTouchRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()", ID = "1", linecolor = "red"];
+	plugin >> host;
+	
+	host rbox host [label = "PostSetValueRequest() processed"];
+	host => plugin [label = "AAX_IEffectParameters::UpdateParameterNormalizedValue()\niParameterID: linked\niSource: AAX_eUpdateSource_Parameter", ID = "2", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	plugin rbox plugin [label = "No linker parameter edit"];
+	plugin rbox plugin [label = "Continue handling linked parameter update"];
+	plugin => plugin [label = "Update linked parameter state"];
+	plugin -> host [label = "AAX_IAutomationDelegate::PostCurrentValue()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostCurrentValue()"];
+	plugin => plugin [label = "Increment number of changes", URL = "\ref AAX_IACFEffectParameters::GetNumberOfChanges()"];
+	plugin >> host;
+	
+	host rbox host [label = "PostReleaseRequest() processed"];
+	host => plugin [label = "AAX_IEffectParameters::UpdateParameterTouch()\niParameterID: linked\niTouchState: false", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	plugin -X host [label = "AAX_IAutomationDelegate::PostReleaseRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostReleaseRequest()", ID = "1", linecolor = "red"];
+	plugin >> host;
+	
+	// -------------------
+	|||;
+	|||;
+	host note plugin [label = "Current value handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	|||;
+	... [label = "Identical to standard (unlinked) sequence"];
+	|||;
+	
+	
+	// [label = "", URL = "\ref "];
+		
+}

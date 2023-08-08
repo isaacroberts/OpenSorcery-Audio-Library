@@ -1,0 +1,29 @@
+Both Options:
+
+Preprocessor definitions:
+M_PI=3.14159265358979323846
+RT_INCLUDED=1
+
+
+
+Debug/Release Options:
+
+Warning level: Low
+
+Header search paths:
+C:\Boost\boost_1_80_0
+C:\Libs\Include
+
+Library search paths:
+C:\Boost\libs
+C:\Libs\Libs
+
+Intermediates Path:
+	C:\Users\yitza\Documents\BuildFolder\PluginName
+
+
+Module path for Visual Studio:
+
+
+Build static runtime for Windows 8 and below, Dynamic Runtime for windows 10
+

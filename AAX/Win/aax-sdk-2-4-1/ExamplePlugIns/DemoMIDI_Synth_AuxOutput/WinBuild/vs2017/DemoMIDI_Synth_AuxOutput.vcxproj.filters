@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{f4107fdf-8c24-46bd-bf8e-c716c612580b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common sources">
+      <UniqueIdentifier>{8c1ab41b-57bc-4540-aac6-9a3fe305d728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AAX">
+      <UniqueIdentifier>{4179f05e-2a48-493c-8390-a55115c35072}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\DemoSynth_Defs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoSynth_Describe.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoSynth_Parameters.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\ProcessingClasses\CSimpleTone.h">
+      <Filter>Source Files\Common sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\ProcessingClasses\CSimpleSynth.h">
+      <Filter>Source Files\Common sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Extensions\Topology\AAX_CMonolithicParameters.h">
+      <Filter>Source Files\AAX</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\DemoSynth_Describe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DemoSynth_Parameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Interfaces\AAX_Exports.cpp">
+      <Filter>Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\ProcessingClasses\CSimpleTone.cpp">
+      <Filter>Source Files\Common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\ProcessingClasses\CSimpleSynth.cpp">
+      <Filter>Source Files\Common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Extensions\Topology\AAX_CMonolithicParameters.cpp">
+      <Filter>Source Files\AAX</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\PreBuildEvent.bat">
+      <Filter>Resource Files</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary_x64.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_D.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_x64_D.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary.lib">
+      <Filter>Libs</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

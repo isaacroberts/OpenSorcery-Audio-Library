@@ -1,0 +1,83 @@
+/*===================================================================================================
+AAX_AuxInterface_DirectData.doxygen
+
+Copyright 2011-2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+
+/** @defgroup AuxInterface_DirectData Direct data access interface
+	@ingroup AdditionalFeatures
+		
+	@brief A host interface providing direct access to a plug-in's algorithm memory	
+		
+		<EM>This interface represents an optional component that you can add to your plug-in in order to
+		support extended features of the %AAX SDK.</EM>
+		
+		Some plug-ins require the host to retrieve non-meter data from the decoupled algorithm module 
+		to display on a GUI or perform additional computation. For example, the result of computing 
+		the audio spectrum or pitch data in the algorithm can be delivered to the host to display 
+		on-screen. This is the purpose of the \ref AAX_IEffectDirectData interface.
+
+		The \ref AAX_IEffectDirectData "Direct Data interface" provides facilities for directly
+		accessing a plug-in's algorithm memory.  This interface may be used to transfer private data
+		from the algorithm to other plug-in components, such as the \ref CommonInterface_GUI "GUI".
+		It may also be used as an alternative to \ref AAX_IController::PostPacket() "PostPacket()"
+		to perform direct writes to the algorithm's private data memory.
+
+		To set up Direct Data, the module must be registered with the host in the plug-in's 
+		Description callback like other process pointers. To add this interface to your plug-in at 
+		describe time, call \ref AAX_IEffectDescriptor::AddProcPtr() using the
+		\ref kAAX_ProcPtrID_Create_EffectDirectData selector.
+
+		The DirectData module works for all plug-in types, including %AAX Native, %AAX DSP, and %AAX 
+		AudioSuite.
+
+		\section auxinterface_directdata_convenienceclass Convenience class
+
+		\ref AAX_CEffectDirectData, the concrete implementation of \ref AAX_IEffectDirectData, 
+		consists of a 
+		\ref AAX_CEffectDirectData::TimerWakeup_PrivateDataAccess() "TimerWakeup_PrivateDataAccess()" 
+		function that you subclass in order to access an algorithm's private state data. This timer 
+		wakes up at a periodic interval. In this function you can read the algorithm's private data 
+		port to pull the state of an algorithm. Note that the wakeup period is variable depending on 
+		the plug-in's buffer size and running context (real time processing, AudioSuite, offline 
+		bounce, etc.) Care must be taken to ensure that any data retrieved from the algorithm is 
+		either buffered to handle the thread callback periods for the various running contexts or that 
+		the plug-in does not depend on the Direct Data timer catching every state update.
+
+		\ref AAX_CEffectDirectData also includes convenience accessors to the Controller and Data Model 
+		in order to help facilitate common access scenarios. Using these, you can do any computation 
+		necessary to handle the incoming algorithm state data and send results on to the Data Model 
+		and/or the GUI interface.
+
+		\section auxinterface_directdata_privatedataaccess Private data access interface
+
+		The Direct Data API provides a \ref AAX_IEffectDirectData::TimerWakeup() "TimerWakeup"
+		callback with access to \ref AAX_IPrivateDataAccess.  This reference is only valid within
+		the context of the wakeup callback and cannot be stored to provide private data access in
+		other contexts.
+
+		The Private Data Access interface can be used to directly read from and write to an
+		algorithm's private data.  These operations are not synchronized with the algorithm's
+		processing callback, which may asynchronously pre-empt the read or write operations.
+		Plug-ins that use this interface should buffer all access to their private data to ensure
+		data integrity.
+		
+		\section auxinterface_directdata_modulecommunication Communicating with other modules
+		
+		The Direct Data API does not include any facilities for inter-module communication.  In
+		order to transfer data between a plug-in's \ref AAX_IEffectDirectData object and its other
+		objects, dedicated custom data methods in those objects' interfaces should be used.  For
+		example, to communicate with the plug-in's data model, use
+		\ref AAX_IEffectParameters::GetCustomData() and \ref AAX_IEffectParameters::SetCustomData()
+		
+		\sa additionalFeatures_Hybrid for another approach to transferring large amounts of (audio)
+		data between the algorithm callback and the plug-in's data model.
+		
+*/
+
+
+

@@ -1,0 +1,56 @@
+/*===================================================================================================
+
+Copyright 2016 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+msc {
+	// Display properties
+	hscale = "1";
+	
+	// Declare entities
+	 host              [label = "Host", arctextbgcolor = "#edebff"]
+	,effectparams      [label = "AAX_CEffectParameters", URL = "\ref AAX_CEffectParameters", arctextbgcolor = "#eafbef"]
+	,packetdispatcher  [label = "AAX_CPacketDispatcher", URL = "\ref AAX_CPacketDispatcher", arctextbgcolor = "#eafbef"]
+	;
+	
+	// Describe implementation scopes
+	 host box host [label = "Implemented by Host", textbgcolor = "#edebff"]
+	,effectparams box packetdispatcher [label = "Default AAX Library Implementation", textbgcolor = "#eafbef"]
+	;
+	
+	// -------------------
+	|||;
+	|||;
+	host note packetdispatcher [label = "Parameter value automation handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	host => effectparams [label = "UpdateParameterNormalizedValue()\niParameterID: linker\niSource: AAX_eUpdateSource_Unspecified", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	effectparams => effectparams [label = "IsParameterLinkReady()\ninParameterID: linker\ninSource: AAX_eUpdateSource_Unspecified\nreturns false", URL = "\ref AAX_CEffectParameters::IsParameterLinkReady()", ID = "1", linecolor = "red"];
+	effectparams rbox packetdispatcher [label = "No linked parameter edit"];
+	effectparams rbox packetdispatcher [label = "Continue handling linker parameter update"];
+	... [label = "Proceeds as above"];
+	effectparams >> host;
+	
+	host => effectparams [label = "UpdateParameterNormalizedValue()\niParameterID: linked\niSource: AAX_eUpdateSource_Unspecified", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	effectparams => effectparams [label = "IsParameterLinkReady()\ninParameterID: linked\ninSource: AAX_eUpdateSource_Unspecified\nreturns false", URL = "\ref AAX_CEffectParameters::IsParameterLinkReady()", ID = "1", linecolor = "red"];
+	effectparams rbox packetdispatcher [label = "No linker parameter edit"];
+	effectparams rbox packetdispatcher [label = "Continue handling linked parameter update"];
+	... [label = "Proceeds as above"];
+	effectparams >> host;
+	
+	// -------------------
+	|||;
+	|||;
+	host note packetdispatcher [label = "Current value handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	|||;
+	... [label = "Identical to standard (unlinked) sequence"];
+	|||;
+	
+	
+	// [label = "", URL = "\ref "];
+		
+}

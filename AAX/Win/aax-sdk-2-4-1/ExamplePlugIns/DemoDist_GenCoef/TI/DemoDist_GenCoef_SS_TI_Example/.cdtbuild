@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.1.0?>
+
+<ManagedProjectBuildInfo>
+<project id="DemoDist_Stereo_Stereo_TI.com.ti.ccstudio.buildDefinitions.C6000.ProjectType.393500215" name="C6000" projectType="com.ti.ccstudio.buildDefinitions.C6000.ProjectType">
+<configuration artifactExtension="dll" artifactName="${ConfigDir}/${ProjName}" description="" id="com.ti.ccstudio.buildDefinitions.C6000.Debug.788427933" name="Debug" parent="com.ti.ccstudio.buildDefinitions.C6000.Debug" postbuildStep="">
+<toolChain id="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.DebugToolchain.785101994" name="TI Code Generation Tools" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.DebugToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.linkerDebug.1980533477">
+<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.584676322" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+<listOptionValue builtIn="false" value="DEVICE_CONFIGURATION_ID=com.ti.ccstudio.deviceModel.C6000.GenericC67xPlusDevice"/>
+<listOptionValue builtIn="false" value="DEVICE_ENDIANNESS=little"/>
+<listOptionValue builtIn="false" value="OUTPUT_FORMAT=COFF"/>
+<listOptionValue builtIn="false" value="CCS_MBS_VERSION=4.2.4"/>
+<listOptionValue builtIn="false" value="LINKER_COMMAND_FILE="/>
+<listOptionValue builtIn="false" value="RUNTIME_SUPPORT_LIBRARY=rts67plus_elf.lib"/>
+<listOptionValue builtIn="false" value="IS_ELF=false"/>
+<listOptionValue builtIn="false" value="PROJECT_KIND=com.ti.ccstudio.managedbuild.core.ProjectKind_Executable"/>
+<listOptionValue builtIn="false" value="IS_ASSEMBLY_ONLY=false"/>
+<listOptionValue builtIn="false" value="OUTPUT_TYPE=executable"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.1574404879" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION" value="7.0.5" valueType="string"/>
+<tool id="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.compilerDebug.928552405" name="C6000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.compilerDebug">
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIAG_WARNING.535939292" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIAG_WARNING" valueType="stringList">
+<listOptionValue builtIn="false" value="225"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.SILICON_VERSION.1435532144" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.SILICON_VERSION" value="67p" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DEFINE.518032699" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DEFINE" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="&quot;_DEBUG&quot;"/>
+<listOptionValue builtIn="false" value="&quot;TI_VERSION&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.INCLUDE_PATH.817849030" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/Interfaces&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/ExamplePlugIns/Common/ProcessingClasses&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/ExamplePlugIns/DemoDist_GenCoef/Source&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/ExamplePlugIns/DemoDist_GenCoef/TI&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.KEEP_ASM.1363646505" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.KEEP_ASM" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIRECTORY_MODE.389687622" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIRECTORY_MODE" value="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIRECTORY_MODE.manual" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.TEMP_DIRECTORY.756816549" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.TEMP_DIRECTORY" value="&quot;${IntDir}&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OBJ_DIRECTORY.1219731660" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OBJ_DIRECTORY" value="&quot;${IntDir}&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.ASM_DIRECTORY.283883667" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.ASM_DIRECTORY" value="&quot;${IntDir}&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.LIST_DIRECTORY.1026176713" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.LIST_DIRECTORY" value="&quot;${IntDir}&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CMD_FILE.1973040756" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CMD_FILE" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/TI/CCSv4/CommonPlugIn_CompilerCmd.cmd&quot;"/>
+</option>
+</tool>
+<tool id="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.linkerDebug.1980533477" name="C6000 Linker" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.linkerDebug">
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.OUTPUT_FILE.637159163" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.OUTPUT_FILE" value="&quot;${ConfigDir}/${ProjName}.dll&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.MAP_FILE.8766373" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.MAP_FILE" value="&quot;${ConfigDir}/${ProjName}.map&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.generatedLinkerCommandFiles.1785727155" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.generatedLinkerCommandFiles" valueType="libs">
+<listOptionValue builtIn="false" value="&quot;$(GEN_CMDS_QUOTED)&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.SEARCH_PATH.2016080221" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.SEARCH_PATH" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.DISABLE_AUTO_RTS.951821463" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.DISABLE_AUTO_RTS" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.RELOCATABLE.1751179264" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.RELOCATABLE" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.INITIALIZATION_MODEL.2064125316" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.INITIALIZATION_MODEL" value="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.INITIALIZATION_MODEL._none" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.LIBRARY.1555536273" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.LIBRARY" valueType="libs">
+<listOptionValue builtIn="false" value="&quot;rts67plus_elf.lib&quot;"/>
+</option>
+</tool>
+<macros expandEnvironmentMacros="true"/>
+</toolChain>
+</configuration>
+<configuration artifactExtension="dll" artifactName="${ConfigDir}/${ProjName}" description="" id="com.ti.ccstudio.buildDefinitions.C6000.Release.2029418424" name="Release" parent="com.ti.ccstudio.buildDefinitions.C6000.Release" postbuildStep="">
+<toolChain id="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.ReleaseToolchain.666105214" name="TI Code Generation Tools" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.ReleaseToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.linkerRelease.1901727121">
+<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.892213516" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+<listOptionValue builtIn="false" value="DEVICE_CONFIGURATION_ID=com.ti.ccstudio.deviceModel.C6000.GenericC67xPlusDevice"/>
+<listOptionValue builtIn="false" value="DEVICE_ENDIANNESS=little"/>
+<listOptionValue builtIn="false" value="OUTPUT_FORMAT=COFF"/>
+<listOptionValue builtIn="false" value="CCS_MBS_VERSION=4.2.4"/>
+<listOptionValue builtIn="false" value="LINKER_COMMAND_FILE="/>
+<listOptionValue builtIn="false" value="RUNTIME_SUPPORT_LIBRARY=rts67plus_elf.lib"/>
+<listOptionValue builtIn="false" value="IS_ELF=false"/>
+<listOptionValue builtIn="false" value="PROJECT_KIND=com.ti.ccstudio.managedbuild.core.ProjectKind_Executable"/>
+<listOptionValue builtIn="false" value="IS_ASSEMBLY_ONLY=false"/>
+<listOptionValue builtIn="false" value="OUTPUT_TYPE=executable"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.1456082454" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION" value="7.0.5" valueType="string"/>
+<tool id="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.compilerRelease.699846768" name="C6000 Compiler" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.compilerRelease">
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIAG_WARNING.114474908" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIAG_WARNING" valueType="stringList">
+<listOptionValue builtIn="false" value="225"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.SILICON_VERSION.1519956774" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.SILICON_VERSION" value="67p" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OPT_LEVEL.release.1861109380" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OPT_LEVEL.release" value="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OPT_LEVEL.3" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.PROGRAM_LEVEL_COMPILE.840588598" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.PROGRAM_LEVEL_COMPILE" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DEFINE.910418976" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DEFINE" valueType="definedSymbols">
+<listOptionValue builtIn="false" value="&quot;TI_VERSION&quot;"/>
+<listOptionValue builtIn="false" value="_DEBUG"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.INCLUDE_PATH.633558028" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.INCLUDE_PATH" valueType="includePath">
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/Interfaces&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/ExamplePlugIns/Common/ProcessingClasses&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/ExamplePlugIns/DemoDist_GenCoef/Source&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/ExamplePlugIns/DemoDist_GenCoef/TI&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CONSULTANT.397206358" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CONSULTANT" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DEBUG_SOFTWARE_PIPELINE.986155046" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DEBUG_SOFTWARE_PIPELINE" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OPTIMIZER_INTERLIST.1214562688" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OPTIMIZER_INTERLIST" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CALL_ASSUMPTIONS.771357463" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CALL_ASSUMPTIONS" value="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CALL_ASSUMPTIONS.3" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.KEEP_ASM.353930659" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.KEEP_ASM" value="true" valueType="boolean"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.SOURCE_INTERLIST.1227100657" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.SOURCE_INTERLIST" value="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.SOURCE_INTERLIST.SRC_INTERLIST" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIRECTORY_MODE.1726147079" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIRECTORY_MODE" value="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.DIRECTORY_MODE.manual" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.TEMP_DIRECTORY.1325059815" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.TEMP_DIRECTORY" value="&quot;${IntDir}&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OBJ_DIRECTORY.1090532544" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.OBJ_DIRECTORY" value="&quot;${IntDir}&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.ASM_DIRECTORY.637925939" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.ASM_DIRECTORY" value="&quot;${IntDir}&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.LIST_DIRECTORY.369648070" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.LIST_DIRECTORY" value="&quot;${IntDir}&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CMD_FILE.318335698" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.compilerID.CMD_FILE" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;${SDK_SOURCE_ROOT}/TI/CCSv4/CommonPlugIn_CompilerCmd.cmd&quot;"/>
+</option>
+</tool>
+<tool id="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.linkerRelease.1901727121" name="C6000 Linker" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.exe.linkerRelease">
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.OUTPUT_FILE.2125397109" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.OUTPUT_FILE" value="&quot;${ConfigDir}/${ProjName}.dll&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.MAP_FILE.924182589" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.MAP_FILE" value="&quot;${ConfigDir}/${ProjName}.map&quot;" valueType="string"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.generatedLinkerCommandFiles.716902914" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.generatedLinkerCommandFiles" valueType="libs">
+<listOptionValue builtIn="false" value="&quot;$(GEN_CMDS_QUOTED)&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.SEARCH_PATH.936141085" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.SEARCH_PATH" valueType="stringList">
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/lib&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.INITIALIZATION_MODEL.2114932764" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.INITIALIZATION_MODEL" value="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.INITIALIZATION_MODEL._none" valueType="enumerated"/>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.LIBRARY.938626113" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.LIBRARY" valueType="libs">
+<listOptionValue builtIn="false" value="&quot;rts67plus_elf.lib&quot;"/>
+</option>
+<option id="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.RELOCATABLE.145114495" superClass="com.ti.ccstudio.buildDefinitions.C6000_7.0.linkerID.RELOCATABLE" value="true" valueType="boolean"/>
+</tool>
+<macros expandEnvironmentMacros="true"/>
+</toolChain>
+</configuration>
+<macros>
+<stringMacro name="PackageName" type="VALUE_PATH_DIR" value="DemoDist_GenCoef.aaxplugin"/>
+<stringMacro name="OutDir" type="VALUE_PATH_DIR" value="${ProjDirPath}/../../TI/bin"/>
+<stringMacro name="IntDir" type="VALUE_PATH_DIR" value="${OutDir}/../int/${ProjName}/${ConfigName}"/>
+<stringMacro name="ConfigDir" type="VALUE_PATH_DIR" value="${OutDir}/${ConfigName}"/>
+</macros>
+</project>
+</ManagedProjectBuildInfo>

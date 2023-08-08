@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Interfaces\AAX_Exports.cpp">
+      <Filter>Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\ProcessingClasses\CSimpleDelayLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DemoDelay_Describe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DemoDelay_Parameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HostProcessor\DemoDelay_HostProcessor.cpp">
+      <Filter>Source Files\HostProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HostProcessor\HostProcessor_Describe.cpp">
+      <Filter>Source Files\HostProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HostProcessor_Comp\DemoDelay_HostProcessor_Comp.cpp">
+      <Filter>Source Files\HostProcessor_Comp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HostProcessor_Comp\HostProcessor_Comp_Describe.cpp">
+      <Filter>Source Files\HostProcessor_Comp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\DemoDelayResource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoDelay_Parameters.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\ProcessingClasses\CSimpleDelayLine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoDelay_Defs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoDelay_Describe.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HostProcessor\DemoDelay_HostProcessor.h">
+      <Filter>Source Files\HostProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HostProcessor\HostProcessor_Describe.h">
+      <Filter>Source Files\HostProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HostProcessor_Comp\DemoDelay_HostProcessor_Comp.h">
+      <Filter>Source Files\HostProcessor_Comp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HostProcessor_Comp\HostProcessor_Comp_Describe.h">
+      <Filter>Source Files\HostProcessor_Comp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_x64_D.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_D.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary_x64.lib">
+      <Filter>Libs</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{a5977dd4-7062-42f2-8787-1de2c52fa9c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ed9a5252-4224-4793-bc59-a233cf7d0181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{29bcf680-0c53-477b-993e-76be065dc950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HostProcessor">
+      <UniqueIdentifier>{324ef1cc-0d1b-4e6e-8b6a-f215f04cbacf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HostProcessor_Comp">
+      <UniqueIdentifier>{49250378-0ef4-4110-a386-8558e51f2980}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\DemoDelay.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

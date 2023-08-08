@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoMIDI_Synth_example", "DemoMIDI_Synth.vcxproj", "{3A57CCF9-E22F-4543-A583-BECF9794A024}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A57CCF9-E22F-4543-A583-BECF9794A024}.Debug|x64.ActiveCfg = Debug|x64
+		{3A57CCF9-E22F-4543-A583-BECF9794A024}.Debug|x64.Build.0 = Debug|x64
+		{3A57CCF9-E22F-4543-A583-BECF9794A024}.Release|x64.ActiveCfg = Release|x64
+		{3A57CCF9-E22F-4543-A583-BECF9794A024}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {930FADF3-2DC1-47DA-A874-6A2AD871E365}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoDelay_DynComp_example", "DemoDelay_DynComp.vcxproj", "{442CFCFD-4A85-43E9-9A31-FA527AA06245}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{442CFCFD-4A85-43E9-9A31-FA527AA06245}.Debug|x64.ActiveCfg = Debug|x64
+		{442CFCFD-4A85-43E9-9A31-FA527AA06245}.Debug|x64.Build.0 = Debug|x64
+		{442CFCFD-4A85-43E9-9A31-FA527AA06245}.Release|x64.ActiveCfg = Release|x64
+		{442CFCFD-4A85-43E9-9A31-FA527AA06245}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50568958-80D3-4F04-B15D-4A459402DDF9}
+	EndGlobalSection
+EndGlobal

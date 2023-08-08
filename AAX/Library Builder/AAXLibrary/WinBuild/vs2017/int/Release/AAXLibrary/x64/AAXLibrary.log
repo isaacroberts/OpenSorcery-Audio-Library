@@ -1,0 +1,564 @@
+﻿  AAX_CAutoreleasePool.Win.cpp
+  AAX_CChunkDataParser.cpp
+  AAX_CEffectDirectData.cpp
+  AAX_CEffectGUI.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectGUI.h(238,1): warning C5204: 'AAX_IACFEffectGUI': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+  AAX_CEffectParameters.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectDirectData.h(107,1): warning C5204: 'AAX_IACFEffectDirectData': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(869,1): warning C5204: 'AAX_IACFEffectParameters': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(961,1): warning C5204: 'AAX_IACFEffectParameters_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1026,1): warning C5204: 'AAX_IACFEffectParameters_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1092,1): warning C5204: 'AAX_IACFEffectParameters_V4': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(869,1): warning C5204: 'AAX_IACFEffectParameters': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(961,1): warning C5204: 'AAX_IACFEffectParameters_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1026,1): warning C5204: 'AAX_IACFEffectParameters_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1092,1): warning C5204: 'AAX_IACFEffectParameters_V4': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(869,1): warning C5204: 'AAX_IACFEffectParameters': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(961,1): warning C5204: 'AAX_IACFEffectParameters_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1026,1): warning C5204: 'AAX_IACFEffectParameters_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1092,1): warning C5204: 'AAX_IACFEffectParameters_V4': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPrivateDataAccess.h(49,1): warning C5204: 'AAX_IACFPrivateDataAccess': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(165,2): warning C5204: 'AAX_IACFController': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(198,1): warning C5204: 'AAX_IACFController_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(215,1): warning C5204: 'AAX_IACFController_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectDirectData.cpp)
+  AAX_CHostProcessor.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(869,1): warning C5204: 'AAX_IACFEffectParameters': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(961,1): warning C5204: 'AAX_IACFEffectParameters_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1026,1): warning C5204: 'AAX_IACFEffectParameters_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1092,1): warning C5204: 'AAX_IACFEffectParameters_V4': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessor.h(70,1): warning C5204: 'AAX_IACFHostProcessor': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessor.h(83,1): warning C5204: 'AAX_IACFHostProcessor_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessorDelegate.h(43,1): warning C5204: 'AAX_IACFHostProcessorDelegate': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessorDelegate.h(52,1): warning C5204: 'AAX_IACFHostProcessorDelegate_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessorDelegate.h(60,1): warning C5204: 'AAX_IACFHostProcessorDelegate_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(165,2): warning C5204: 'AAX_IACFController': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(198,1): warning C5204: 'AAX_IACFController_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(215,1): warning C5204: 'AAX_IACFController_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostProcessor.cpp)
+  AAX_CHostServices.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(165,2): warning C5204: 'AAX_IACFController': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(198,1): warning C5204: 'AAX_IACFController_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(215,1): warning C5204: 'AAX_IACFController_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostServices.h(62,1): warning C5204: 'AAX_IACFHostServices': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostServices.h(70,1): warning C5204: 'AAX_IACFHostServices_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostServices.h(78,1): warning C5204: 'AAX_IACFHostServices_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFTransport.h(52,1): warning C5204: 'AAX_IACFTransport': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFTransport.h(64,1): warning C5204: 'AAX_IACFTransport_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFViewContainer.h(69,1): warning C5204: 'AAX_IACFViewContainer': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFViewContainer.h(88,1): warning C5204: 'AAX_IACFViewContainer_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_CEffectGUI.cpp(30,2): warning C5038: data member 'AAX_CEffectGUI::mViewContainer' will be initialized after data member 'AAX_CEffectGUI::mEffectParameters'
+  AAX_CMutex.cpp
+  AAX_CommonConversions.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(165,2): warning C5204: 'AAX_IACFController': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(198,1): warning C5204: 'AAX_IACFController_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(215,1): warning C5204: 'AAX_IACFController_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFAutomationDelegate.h(74,1): warning C5204: 'AAX_IACFAutomationDelegate': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFTransport.h(52,1): warning C5204: 'AAX_IACFTransport': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFTransport.h(64,1): warning C5204: 'AAX_IACFTransport_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPageTable.h(45,1): warning C5204: 'AAX_IACFPageTable': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPageTable.h(60,1): warning C5204: 'AAX_IACFPageTable_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CEffectParameters.cpp)
+  AAX_CPacketDispatcher.cpp
+  AAX_CParameter.cpp
+  AAX_CParameterManager.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(869,1): warning C5204: 'AAX_IACFEffectParameters': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(961,1): warning C5204: 'AAX_IACFEffectParameters_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1026,1): warning C5204: 'AAX_IACFEffectParameters_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1092,1): warning C5204: 'AAX_IACFEffectParameters_V4': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CPacketDispatcher.cpp)
+  AAX_CString.cpp
+  AAX_IEffectDirectData.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectDirectData.h(107,1): warning C5204: 'AAX_IACFEffectDirectData': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_CParameterManager.cpp(29,5): warning C5038: data member 'AAX_CParameterManager::mParametersMap' will be initialized after data member 'AAX_CParameterManager::mAutomationDelegate'
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectDirectData.cpp)
+  AAX_IEffectGUI.cpp
+  AAX_IEffectParameters.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectGUI.h(238,1): warning C5204: 'AAX_IACFEffectGUI': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(869,1): warning C5204: 'AAX_IACFEffectParameters': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(961,1): warning C5204: 'AAX_IACFEffectParameters_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1026,1): warning C5204: 'AAX_IACFEffectParameters_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectParameters.h(1092,1): warning C5204: 'AAX_IACFEffectParameters_V4': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectGUI.cpp)
+  AAX_IHostProcessor.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IEffectParameters.cpp)
+  AAX_Init.cpp
+  AAX_Properties.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessor.h(70,1): warning C5204: 'AAX_IACFHostProcessor': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessor.h(83,1): warning C5204: 'AAX_IACFHostProcessor_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFCollection.h(48,1): warning C5204: 'AAX_IACFCollection': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+  AAX_SliderConversions.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_IHostProcessor.cpp)
+  AAX_VAutomationDelegate.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VAutomationDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFAutomationDelegate.h(74,1): warning C5204: 'AAX_IACFAutomationDelegate': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VAutomationDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFAutomationDelegate
+          ] (compiling source file ..\..\source\AAX_VAutomationDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VAutomationDelegate.cpp(43): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFAutomationDelegate
+          ]
+  AAX_VCollection.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFCollection.h(48,1): warning C5204: 'AAX_IACFCollection': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_Init.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectDescriptor.h(53,1): warning C5204: 'AAX_IACFEffectDescriptor': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectDescriptor.h(63,1): warning C5204: 'AAX_IACFEffectDescriptor_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+  AAX_VComponentDescriptor.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(45,1): warning C5204: 'AAX_IACFPropertyMap': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(54,1): warning C5204: 'AAX_IACFPropertyMap_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(63,1): warning C5204: 'AAX_IACFPropertyMap_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=IACFComponentFactory
+          ] (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VCollection.cpp(39): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=IACFComponentFactory
+          ]
+  AAX_VController.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFCollection
+          ] (compiling source file ..\..\source\AAX_VCollection.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VCollection.cpp(82): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFCollection
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(74,1): warning C5204: 'AAX_IACFComponentDescriptor': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(82,1): warning C5204: 'AAX_IACFComponentDescriptor_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(93,1): warning C5204: 'AAX_IACFComponentDescriptor_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+  AAX_VDescriptionHost.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(165,2): warning C5204: 'AAX_IACFController': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(198,1): warning C5204: 'AAX_IACFController_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFController.h(215,1): warning C5204: 'AAX_IACFController_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPageTable.h(45,1): warning C5204: 'AAX_IACFPageTable': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPageTable.h(60,1): warning C5204: 'AAX_IACFPageTable_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPageTableController.h(115,1): warning C5204: 'AAX_IACFPageTableController': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPageTableController.h(194,1): warning C5204: 'AAX_IACFPageTableController_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+  AAX_VEffectDescriptor.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VDescriptionHost.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VDescriptionHost.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VDescriptionHost.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VDescriptionHost.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VDescriptionHost.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VDescriptionHost.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VDescriptionHost.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFDescriptionHost.h(44,1): warning C5204: 'AAX_IACFDescriptionHost': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VDescriptionHost.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectDescriptor.h(53,1): warning C5204: 'AAX_IACFEffectDescriptor': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFEffectDescriptor.h(63,1): warning C5204: 'AAX_IACFEffectDescriptor_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(45,1): warning C5204: 'AAX_IACFPropertyMap': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(54,1): warning C5204: 'AAX_IACFPropertyMap_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(63,1): warning C5204: 'AAX_IACFPropertyMap_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=IACFComponentFactory
+          ] (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VComponentDescriptor.cpp(195): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=IACFComponentFactory
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFComponentDescriptor
+          ] (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VComponentDescriptor.cpp(199): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFComponentDescriptor
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFController
+          ] (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VController.cpp(64): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFController
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFController_V2
+          ] (compiling source file ..\..\source\AAX_VController.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VController.cpp(75): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFController_V2
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFComponentDescriptor_V3
+          ] (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VComponentDescriptor.cpp(462): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFComponentDescriptor_V3
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFComponentDescriptor_V2
+          ] (compiling source file ..\..\source\AAX_VComponentDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VComponentDescriptor.cpp(495): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFComponentDescriptor_V2
+          ]
+  AAX_VFeatureInfo.cpp
+  AAX_VHostProcessorDelegate.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(74,1): warning C5204: 'AAX_IACFComponentDescriptor': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(82,1): warning C5204: 'AAX_IACFComponentDescriptor_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(93,1): warning C5204: 'AAX_IACFComponentDescriptor_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VFeatureInfo.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFFeatureInfo.h(63,1): warning C5204: 'AAX_IACFFeatureInfo': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VFeatureInfo.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(45,1): warning C5204: 'AAX_IACFPropertyMap': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VFeatureInfo.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(45,1): warning C5204: 'AAX_IACFPropertyMap': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(54,1): warning C5204: 'AAX_IACFPropertyMap_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VFeatureInfo.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(54,1): warning C5204: 'AAX_IACFPropertyMap_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(63,1): warning C5204: 'AAX_IACFPropertyMap_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VFeatureInfo.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(63,1): warning C5204: 'AAX_IACFPropertyMap_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+  AAX_VHostServices.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostProcessorDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=IACFComponentFactory
+          ] (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VEffectDescriptor.cpp(39): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=IACFComponentFactory
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessorDelegate.h(43,1): warning C5204: 'AAX_IACFHostProcessorDelegate': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostProcessorDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessorDelegate.h(52,1): warning C5204: 'AAX_IACFHostProcessorDelegate_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostProcessorDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFEffectDescriptor
+          ] (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VEffectDescriptor.cpp(41): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFEffectDescriptor
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostProcessorDelegate.h(60,1): warning C5204: 'AAX_IACFHostProcessorDelegate_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostProcessorDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFEffectDescriptor_V2
+          ] (compiling source file ..\..\source\AAX_VEffectDescriptor.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VEffectDescriptor.cpp(187): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFEffectDescriptor_V2
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFHostProcessorDelegate
+          ] (compiling source file ..\..\source\AAX_VHostProcessorDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VHostProcessorDelegate.cpp(51): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFHostProcessorDelegate
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFHostProcessorDelegate_V2
+          ] (compiling source file ..\..\source\AAX_VHostProcessorDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VHostProcessorDelegate.cpp(74): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFHostProcessorDelegate_V2
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFHostProcessorDelegate_V3
+          ] (compiling source file ..\..\source\AAX_VHostProcessorDelegate.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VHostProcessorDelegate.cpp(85): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFHostProcessorDelegate_V3
+          ]
+  AAX_VPageTable.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostServices.h(62,1): warning C5204: 'AAX_IACFHostServices': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostServices.h(70,1): warning C5204: 'AAX_IACFHostServices_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFHostServices.h(78,1): warning C5204: 'AAX_IACFHostServices_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=IACFComponentFactory
+          ] (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VHostServices.cpp(36): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=IACFComponentFactory
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFHostServices
+          ] (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VHostServices.cpp(73): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFHostServices
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFHostServices_V2
+          ] (compiling source file ..\..\source\AAX_VHostServices.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VHostServices.cpp(84): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFHostServices_V2
+          ]
+  AAX_VPrivateDataAccess.cpp
+  AAX_VPropertyMap.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPageTable.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPageTable.h(45,1): warning C5204: 'AAX_IACFPageTable': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPageTable.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPageTable.h(60,1): warning C5204: 'AAX_IACFPageTable_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPageTable.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFPageTable
+          ] (compiling source file ..\..\source\AAX_VPageTable.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VPageTable.cpp(48): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFPageTable
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFPageTable_V2
+          ] (compiling source file ..\..\source\AAX_VPageTable.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VPageTable.cpp(202): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFPageTable_V2
+          ]
+  AAX_VTransport.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPrivateDataAccess.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPrivateDataAccess.h(49,1): warning C5204: 'AAX_IACFPrivateDataAccess': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPrivateDataAccess.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(45,1): warning C5204: 'AAX_IACFPropertyMap': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(54,1): warning C5204: 'AAX_IACFPropertyMap_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFPropertyMap.h(63,1): warning C5204: 'AAX_IACFPropertyMap_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+  AAX_VViewContainer.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VTransport.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFTransport.h(52,1): warning C5204: 'AAX_IACFTransport': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VTransport.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFTransport.h(64,1): warning C5204: 'AAX_IACFTransport_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VTransport.cpp)
+  AAX_CACFUnknown.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VViewContainer.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFViewContainer.h(69,1): warning C5204: 'AAX_IACFViewContainer': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VViewContainer.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFViewContainer.h(88,1): warning C5204: 'AAX_IACFViewContainer_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VViewContainer.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFViewContainer
+          ] (compiling source file ..\..\source\AAX_VViewContainer.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VViewContainer.cpp(58): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFViewContainer
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFViewContainer_V2
+          ] (compiling source file ..\..\source\AAX_VViewContainer.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VViewContainer.cpp(149): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFViewContainer_V2
+          ]
+  AAX_CUIDs.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CACFUnknown.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CACFUnknown.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CACFUnknown.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CACFUnknown.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CACFUnknown.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CACFUnknown.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CACFUnknown.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CUIDs.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CUIDs.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CUIDs.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CUIDs.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CUIDs.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CUIDs.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CUIDs.cpp)
+  CACFClassFactory.cpp
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_CACFUnknown.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfunknown.h(244,1): warning C5204: 'IACFUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\..\..\Interfaces\ACF\CACFClassFactory.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\..\..\Interfaces\ACF\CACFClassFactory.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\..\..\Interfaces\ACF\CACFClassFactory.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\..\..\Interfaces\ACF\CACFClassFactory.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\..\..\Interfaces\ACF\CACFClassFactory.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\..\..\Interfaces\ACF\CACFClassFactory.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\..\..\Interfaces\ACF\CACFClassFactory.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(74,1): warning C5204: 'AAX_IACFComponentDescriptor': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(82,1): warning C5204: 'AAX_IACFComponentDescriptor_V2': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFComponentDescriptor.h(93,1): warning C5204: 'AAX_IACFComponentDescriptor_V3': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(262,1): warning C5204: 'IACFClassFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(358,1): warning C5204: 'IACFDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(421,1): warning C5204: 'IACFPluginDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(484,1): warning C5204: 'IACFComponentDefinition': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(625,1): warning C5204: 'IACFEnumDefinitions': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\acfbaseapi.h(766,1): warning C5204: 'IACFComponentFactory': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\AAX_IACFDescriptionHost.h(44,1): warning C5204: 'AAX_IACFDescriptionHost': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\CACFUnknown.h(475,3): warning C5204: 'CACFUnknown::PrivateUnknown': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly (compiling source file ..\..\..\..\Interfaces\ACF\CACFClassFactory.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFPropertyMap
+          ] (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VPropertyMap.cpp(92): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFPropertyMap
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFPropertyMap_V2
+          ] (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VPropertyMap.cpp(110): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFPropertyMap_V2
+          ]
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Interfaces\ACF\ACFPtr.h(50,1): warning C5204: 'ACFNoAddRefReleaseOnPtr<T>': class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+          with
+          [
+              T=AAX_IACFPropertyMap_V3
+          ] (compiling source file ..\..\source\AAX_VPropertyMap.cpp)
+C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\AAXLibrary\source\AAX_VPropertyMap.cpp(114): message : see reference to class template instantiation 'ACFNoAddRefReleaseOnPtr<T>' being compiled
+          with
+          [
+              T=AAX_IACFPropertyMap_V3
+          ]
+  AAXLibrary.vcxproj -> C:\Users\WINDOWS\Dropbox\JUCE_Library\AAX\Library Builder\Release\AAXLibrary_x64.lib

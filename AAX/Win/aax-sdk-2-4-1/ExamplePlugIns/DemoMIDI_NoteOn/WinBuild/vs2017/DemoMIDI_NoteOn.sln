@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DemoMIDI_NoteOn_example", "DemoMIDI_NoteOn.vcxproj", "{A6F5825F-8B30-4D89-A676-65A288D726E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6F5825F-8B30-4D89-A676-65A288D726E6}.Debug|x64.ActiveCfg = Debug|x64
+		{A6F5825F-8B30-4D89-A676-65A288D726E6}.Debug|x64.Build.0 = Debug|x64
+		{A6F5825F-8B30-4D89-A676-65A288D726E6}.Release|x64.ActiveCfg = Release|x64
+		{A6F5825F-8B30-4D89-A676-65A288D726E6}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA47A26F-8551-4A70-87F4-30E7E66ED948}
+	EndGlobalSection
+EndGlobal

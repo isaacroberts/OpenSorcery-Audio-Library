@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{64b997e9-9181-438e-83f8-a565ef9684bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\AAX">
+      <UniqueIdentifier>{3200eb5e-de53-4a1a-9d2f-ea986bcbdb49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{7efa9a23-afe4-459a-bdf1-042baff36810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\Debug">
+      <UniqueIdentifier>{2dc298b8-8804-4592-84e3-a00233c3977b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\Release">
+      <UniqueIdentifier>{6cdeb6be-50df-4105-8f4c-b368532e7af4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\DemoGain_Alg.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoGain_Defs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoGain_Describe.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoGain_Parameters.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\DemoGain_GUI.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\DemoGain_GUI_Win32.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Extensions\GUI\AAX_CEffectGUI_Win32.h">
+      <Filter>Source Files\GUI\AAX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DemoGainResource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\DemoGain_AlgProc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DemoGain_Describe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DemoGain_Parameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\DemoGain_GUI_Win32.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Extensions\GUI\AAX_CEffectGUI_Win32.cpp">
+      <Filter>Source Files\GUI\AAX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Interfaces\AAX_Exports.cpp">
+      <Filter>Libs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\DemoGain.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary_x64.lib">
+      <Filter>Libs\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary.lib">
+      <Filter>Libs\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_x64_D.lib">
+      <Filter>Libs\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_D.lib">
+      <Filter>Libs\Debug</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

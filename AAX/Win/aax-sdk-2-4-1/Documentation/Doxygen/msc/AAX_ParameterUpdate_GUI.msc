@@ -1,0 +1,103 @@
+/*===================================================================================================
+
+Copyright 2016 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+msc {
+	// Display properties
+	hscale = "1.8";
+	
+	// Declare entities
+	 host              [label = "Host", arctextbgcolor = "#edebff"]
+	,autodelegate      [label = "AAX_IAutomationDelegate", URL = "\ref AAX_IAutomationDelegate", arctextbgcolor = "#edebff"]
+	,controller        [ label = "AAX_IController", URL = "\ref AAX_IController", arctextbgcolor = "#edebff"]
+	,effectparams      [label = "AAX_CEffectParameters", URL = "\ref AAX_CEffectParameters", arctextbgcolor = "#eafbef"]
+	,param_linker      [label = "AAX_CParameter", URL = "\ref AAX_CParameter", arctextbgcolor = "#eafbef"]
+	,packetdispatcher  [label = "AAX_CPacketDispatcher", URL = "\ref AAX_CPacketDispatcher", arctextbgcolor = "#eafbef"]
+	,datamodel         [label = "Plug-in Data Model", arctextbgcolor = "#fbfbea"]
+	,gui               [label = "Plug-in GUI", arctextbgcolor = "#fbfbea"]
+	,alg               [label = "Algorithm", arctextbgcolor = "#fbfbea"]
+	;
+	
+	// Describe implementation scopes
+	 host box controller [label = "Implemented by Host", textbgcolor = "#edebff"]
+	,effectparams box packetdispatcher [label = "Default AAX Library Implementation", textbgcolor = "#eafbef"]
+	,datamodel box alg [label = "Implemented by Plug-in", textbgcolor = "#fbfbea"]
+	;
+	
+	// -------------------
+	|||;
+	|||;
+	host note alg [label = "Edit event handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	gui rbox gui [label = "OS Edit Event"];
+	gui => gui [label = "Convert to normalized"];
+	gui => effectparams [label = "SetParameterNormalizedValue()", URL = "\ref AAX_IACFEffectParameters::SetParameterNormalizedValue()"];
+	effectparams => param_linker [label = "SetNormalizedValue()", URL = "\ref AAX_IParameter::SetNormalizedValue()"];
+	param_linker => param_linker [label = "SetNormalizedValue", URL = "\ref AAX_CParameter::SetNormalizedValue()"];
+	param_linker -> autodelegate [label = "PostTouchRequest()", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()"];
+	param_linker -> autodelegate [label = "PostSetValueRequest()", URL = "\ref AAX_IAutomationDelegate::PostSetValueRequest()"];
+	param_linker -> autodelegate [label = "PostReleaseRequest()", URL = "\ref AAX_IAutomationDelegate::PostReleaseRequest()"];
+	param_linker >> effectparams;
+	effectparams >> gui;
+	
+	// -------------------
+	|||;
+	|||;
+	host note alg [label = "Set value handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	host rbox controller [label = "PostTouchRequest() processed"];
+	host => effectparams [label = "UpdateParameterTouch()\niTouchState: true", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	effectparams >> host;
+	
+	host rbox controller [label = "PostSetValueRequest() processed"];
+	host => effectparams [label = "UpdateParameterNormalizedValue()\niSource: AAX_eUpdateSource_Unspecified", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	effectparams => param_linker [label = "UpdateNormalizedValue()", URL = "\ref AAX_IParameter::UpdateNormalizedValue()"];
+	param_linker => param_linker [label = "Update parameter state"];
+	param_linker -> autodelegate [label = "PostCurrentValue()", URL = "\ref AAX_IAutomationDelegate::PostCurrentValue()"];
+	param_linker >> effectparams;
+	effectparams => packetdispatcher [label = "SetDirty()", URL = "\ref AAX_CPacketDispatcher::SetDirty()"];
+	packetdispatcher >> effectparams;
+	effectparams => effectparams [label = "Increment number of changes", URL = "\ref AAX_IACFEffectParameters::GetNumberOfChanges()"];
+	effectparams >> host;
+	
+	host rbox controller [label = "PostReleaseRequest() processed"];
+	host => effectparams [label = "UpdateParameterTouch()\niTouchState: false", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	effectparams >> host;
+	
+	// -------------------
+	|||;
+	|||;
+	host note alg [label = "Current value handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	host rbox controller [label = "Following UpdateParameterNormalizedValue()"];
+	host => effectparams [label = "GenerateCoefficients()", URL = "\ref AAX_IEffectParameters::GenerateCoefficients()", ID = "timestamp"];
+	effectparams => packetdispatcher [label = "Dispatch()", URL = "\ref AAX_CPacketDispatcher::Dispatch()"];
+	packetdispatcher =>> datamodel [label = "Packet generation callback", URL = "\ref AAX_CPacketDispatcher::RegisterPacket()"];
+	datamodel >> packetdispatcher;
+	packetdispatcher -> controller [label = "PostPacket()", URL = "AAX_IController::PostPacket()"];
+	packetdispatcher >> effectparams;
+	effectparams >> host;
+	
+	host rbox controller [label = "PostCurrentValue() processed"];
+	host -> host [label = "Update other clients\n(async)"];
+	host => gui [label = "ParameterUpdated()", URL = "AAX_IACFEffectGUI::ParameterUpdated()"];
+	gui => gui [label = "Update GUI state"];
+	gui >> host;
+	
+	|||;
+	... [label = "Timestamp synchronization with real-time thread"];
+	|||;
+	
+	host rbox controller [label = "PostPacket() processed"];
+	host -> alg [label = "Update algorithm context"];
+	
+	
+	// [label = "", URL = "\ref "];
+		
+}

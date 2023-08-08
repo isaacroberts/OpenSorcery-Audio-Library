@@ -1,0 +1,802 @@
+/*===================================================================================================
+AAX_VENUE_Guide.doxygen
+
+Copyright 2016, 2018 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+/** @defgroup AAX_VENUE_Guide VENUE Guide
+	@ingroup CompatibleEnvironmentsDocs
+	
+	@brief Details about using %AAX plug-ins in VENUE live sound systems
+
+	@section aax_venue_guide_contents Contents
+		\li \ref aax_venue_guide__about_this_document
+		\li \ref aax_venue_guide__overview
+		\li \ref aax_venue_guide__systems
+		\li \ref aax_venue_guide__environment
+		\li \ref aax_venue_guide__features
+		\li \ref aax_venue_guide__installer
+		\li \ref aax_venue_guide__guidelines
+		\li \ref aax_venue_guide__system_details
+		\li \ref aax_venue_guide__additional_information
+		
+	
+<DIV CLASS="section">
+	@section aax_venue_guide__about_this_document About this document
+This guide discusses specific details related to creating %AAX plug-ins which are compatible with Avid VENUE systems.
+
+This guide includes a general overview of the new VENUE architecture as it pertains to plug-ins, a set of guidelines for developing compatible plug-ins, and details for creating full-featured plug-in installers for VENUE.
+
+\note Any reference in this document to "VENUE" refers specifically to VENUE | S6L, and VENUE | S3L systems. Older VENUE systems such as VENUE Profile, D-Show, and SC48 are not compatible with %AAX plug-ins and are not considered in this document.
+
+</DIV>
+		
+	
+<DIV CLASS="section">
+	@section aax_venue_guide__overview Overview of VENUE
+		VENUE is Avid's product line aimed at live sound users. VENUE systems are modular, with audio engine, control surface, console, I/O, and external GUI units.
+
+		VENUE offers plug-in racks to utilize the power of %AAX DSP plug-ins. As virtual outboard racks inside the VENUE system, the plug-in racks allow users to take their %AAX DSP plug-ins out of the studio and into a live performance.
+
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG alt="The main VENUE software interface" src="05_Inputs_AUXs_32_Bus_med.png" />
+		<DIV CLASS="imagecaption">Figure 1: The main VENUE software interface</DIV>
+
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG alt="VENUE plug-in rack" src="06_Plugins_update_med.png" />
+		<DIV CLASS="imagecaption">Figure 2: VENUE plug-in rack</DIV>
+
+		Using the VENUE GUI, an operator is able to see thumbnails for each of the plug-ins in a plug-in rack. An operator can choose to zoom in on a plug-in from this rack view and, from there, graphically control the plug-in with the mouse, keyboard, or touch-screen. Only one plug-in interface can be displayed at a time in this mode.
+
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG alt="Plug-in zoom view" src="08_Plugins_ZoomView_update_med.png" />
+		<DIV CLASS="imagecaption">Figure 3: Plug-in zoom view</DIV>
+		
+</DIV>
+		
+	
+<DIV CLASS="section">
+	@section aax_venue_guide__systems VENUE systems
+		This section will provide a brief overview of Avid's AAX-compatible VENUE systems. For more information about the features, functionality, and use of these systems see the VENUE user documentation.
+	
+		@subsection aax_venue_guide__systems__s6l VENUE | S6L
+			VENUE | S6L is a modular system designed to take on the world's most demanding tours and events with ease. Offering unprecedented processing capabilities - with over 300 processing channels - S6L delivers unrelenting performance and reliability through its advanced engine design and backs it up with modern touchscreen workflows and scalability to meet any challenge.
+
+			The S6L engine contains dedicated HDX-powered DSPs handling all plug-in processing and supports 64-bit %AAX DSP plug-ins.
+
+		@subsection aax_venue_guide__systems__s3l VENUE | S3L-X
+			The VENUE | S3L-X System is a modular live sound solution including an HDX-powered processing engine, scalable remote I/O, and a EUCON-enabled control surface.
+
+			At the heart of the S3L system lies the E3 engine. The E3 runs Windows Embedded and a version of VENUE software that can load %AAX DSP plug-ins onto a built-in HDX platform. Accompanying the E3 engine is the \ref subsubsection__avid_s3 "S3" control surface and one or more Stage 16 remote I/O boxes.
+		
+			Most system parameters, including plug-ins, can be controlled using either the on-screen VENUE software or directly via encoders on the S3 control surface. When being used as part of a VENUE | S3L-X system, the S3 control surface is divided into three main sections:
+				<DIV CLASS="SectionHead">A - Channel Section</DIV>
+					The Channel section provides control of Input Channels, FX Returns, Output Channels, some channel parameters (such as Input Channel Gain and Aux Send levels), and channel banking. Channels are selected using the channel Select switches next to each fader.
+				
+				<DIV CLASS="SectionHead">B - Channel Control</DIV>
+					The eight Channel Control encoders provide control of processing functions for the currently selected Input or Output Channel. Inserted Dynamics and EQ plug-ins can be selected and adjusted in Channel Control.
+				
+				<DIV CLASS="SectionHead">C - Global Control</DIV>
+					The eight Global Control encoders provide control of system-wide parameters, including control of plug-ins. The Global Control encoders can be placed into Insert Mode, and can then be used to select and adjust any plug-ins.
+		
+			\nodox Image files must be copied to the /output/html directory \endnodox
+			<IMG alt="Main control sections on the S3 control surface" src="s3l_main_channel_control_sections.png" />
+			<DIV CLASS="imagecaption">Figure 4: Main control sections on the S3 control surface</DIV>
+			
+			@subsubsection aax_venue_guide__systems__s3l__using_channel_control Using Channel Control
+				If a channel has an EQ, Comp/Lim, or Expander/Gate plug-in inserted on it, it can be controlled using the eight Channel Control encoders. The user can toggle between controlling the built-in Dynamics or EQ processors and the plug-in versions.
+				
+				Each Input and Output Channel has built-in EQ and Comp/Lim processors. Each Input Channel also has a built-in Expander/Gate. To adjust the built-in processors, the user selects a channel, assigns a processing function to Channel Control by pressing the corresponding encoder from the Channel Control main menu, then adjusts the available parameters.
+				
+				\nodox Image files must be copied to the /output/html directory \endnodox
+				<IMG alt="The Channel Control main menu" src="s3l_channel_control_menu.png" />
+				<DIV CLASS="imagecaption">Figure 5: The Channel Control main menu</DIV>
+				
+				See \ref aax_page_table_guide_04_avid_center_section_page_tables_venue_s3l_mapping for a description of how plug-in parameters are mapped to the S3L Channel Control encoders for EQ, Compressor/Limiter, and Expander/Gate plug-ins.
+				
+</DIV>
+		
+	
+<DIV CLASS="section">
+	@section aax_venue_guide__environment Host environment
+		@subsection aax_venue_guide__environment__audio_engine Audio engine
+			The audio engine in VENUE is based around Avid's HDX technology. Each VENUE S6L and S3L System contains a specialized HDX core card. For more information about HDX, see the \ref AAX_TI_Guide. Because the VENUE architecture is so similar to HDX, %AAX DSP plug-ins are cross-compatible with VENUE and most plug-ins will run seamlessly on VENUE with little or no modification.
+			
+			Each VENUE system operates at a single native sample rate. VENUE supports multiple processing block sizes at this sample rate. Like in Pro Tools | HDX systems, each DSP chip in the system will only be able to load plug-ins using a single block size; plug-ins which process using different block sizes cannot be allocated to the same DSP.
+			
+		@subsection aax_venue_guide__environment__dsp_resources Available DSP resources
+			The following information reflects plug-in processing abilities of VENUE systems:
+			<ul CLASS="paragraphs">
+				<li>
+					<DIV CLASS="SectionHead">S3L-X</DIV>
+					<ul>
+						<li>4 TI C6727 DSP chips are available for plug-in processing</li>
+						<li>40 plug-in rack slots are available</li>
+					</ul>
+				</li>
+				<li>
+					<DIV CLASS="SectionHead">S6L</DIV>
+					<ul>
+						<li>All HDX DSP cards are dedicated to plug-in processing; each HDX DSP card has 18 TI C6727 DSP Chips</li>
+						<li>Depending on E6L engine type, 125 (E6L-144) or 200 (E6L-192) plug-in rack slots are available</li>
+					</ul>
+				</li>
+			</ul>
+			
+		@subsection aax_venue_guide__environment__operating_system Operating system
+			The core host software in a VENUE system is built upon Windows Embedded 8. The installation used on VENUE systems is a customized version of Windows 8 that includes only what is necessary for the VENUE software.
+			
+			Core services from Windows 8 are available, such as the Win32 API, but some advanced services may not be available. Such services include MIDI, printing, video codec, .NET, etc. If your code relies on advanced Win32 APIs, or you are in doubt about specific APIs, please contact Avid for more information. 
+			
+			Using unavailable services may cause a plug-in to not load (e.g. if it attempts to link against DLLs that aren't included in the Windows Embedded 8 image) or to fail during run-time. Whenever possible, before using any advanced Win32 API, you should verify the availability of the service and/or handle the fact that the service might not be functional.
+			
+			See the \ref aax_venue_guide__installer section for more information about ensuring that all required run-time components are available to your plug-in.
+			
+		@subsection aax_venue_guide__environment__display Display
+			VENUE S6L requires that plug-in windows be restricted to a certain size. If a plug-in exceeds this size, it will overlap VENUE's GUI and may possibly be truncated. The specifications are as follows:
+			<ul CLASS="paragraphs">
+				<li>
+					<DIV CLASS="SectionHead">S3L-X</DIV>
+					<ul>
+						<li>Total GUI size: 1024 W x 768 H</li>
+						<li>Max plug-in window size (w/o sidechain support): 749 W x 617 H</li>
+						<li>Max plug-in window size (with sidechain support): 749 W x 565 H</li>
+						<!--<li>Max plug-in Thumbnail size: 225 W x 95 H</li> REMOVED b/c actual on-disk thumbnail image files are full-size, and are scaled to the smaller resolution at run-time by the VENUE software -->
+					</ul>
+				</li>
+				<li>
+					<DIV CLASS="SectionHead">S6L</DIV>
+					<ul>
+						<li>Total GUI size: 1920 W x 1080 H</li>
+						<li>Max plug-in window size (w/o sidechain support): 1436 W x 855 H</li>
+						<li>Max plug-in window size (with sidechain support): 1436 W x 796 H</li>
+						<!--<li>Max plug-in Thumbnail size: 234 W x 106 H</li> REMOVED b/c actual on-disk thumbnail image files are full-size, and are scaled to the smaller resolution at run-time by the VENUE software -->
+					</ul>
+				</li>
+			</ul>
+						
+			VENUE will dispatch a \ref AAX_eNotificationEvent_MaxViewSizeChanged notification indicating the maximum size for a plug-in's GUI. Calls to \ref AAX_IViewContainer::SetViewSize() will fail with an error if the plug-in attempts to set its view size to a larger value than the system supports, though the plug-in's initial GUI will be displayed (and possibly truncated) at its normal size before any resize requests are made.
+			
+			The actual hardware and graphical acceleration available in VENUE systems is as follows:
+			<TABLE>
+				<TR>
+					<TH></TH>
+					<TH>S3L-X</TH>
+					<TH>S6L</TH>
+				</TR>
+				<TR>
+					<TH>CPU model</TH>
+					<TD>Celeron P4500</TD>
+					<TD>Core i5-2510E</TD>
+				</TR>
+				<TR>
+					<TH>GPU model</TH>
+					<TD>Intel HD Graphics</TD>
+					<TD>Intel HD Graphics 3000</TD>
+				</TR>
+				<TR>
+					<TH>DirectX support</TH>
+					<TD>10.1</TD>
+					<TD>10.1</TD>
+				</TR>
+				<TR>
+					<TH>OpenGL support</TH>
+					<TD>2.1</TD>
+					<TD>3.1</TD>
+				</TR>
+				<TR>
+					<TH>OpenCL support</TH>
+					<TD>None</TD>
+					<TD>None</TD>
+				</TR>
+				<TR>
+					<TH>Shader model</TH>
+					<TD>4</TD>
+					<TD>4.1</TD>
+				</TR>
+			</TABLE>
+		
+		@subsection aax_venue_guide__environment__page_tables Page tables
+			<ul>
+				<li>VENUE S3L-X uses <tt>'PcTL'</tt> (ProControl) page tables</li>
+				<li>VENUE S6L uses <tt>'Av46'</tt>, a EUCON-style page table with a 4x6 knob cell configuration.</li>
+			</ul>
+			
+			\note In S6L, the <tt>'FrTL'</tt> (C|24) page table is used as a fallback when 4x6 is not available. This is only a temporary solution to support legacy plug-ins. All plug-ins targeting VENUE S6L support must support the 4x6 knob cell layout and should not rely on this C|24 fallback behavior.
+			
+			<DIV CLASS="SectionHead">Page table design guidelines</DIV>
+				Primary plug-in parameters should be located on the first page in the page tables for a surface. This is especially true for the 4x6 knob cell layout used by S6L. Users should not be required to navigate between pages for the majority of common operations.
+				
+				For more information about page tables, including additional guidelines for good page table design, see the \ref AAX_Page_Table_Guide.
+
+		@subsection aax_venue_guide__environment__network Network communications
+			Some plug-ins may require interaction with other devices in a network. VENUE systems have two Gigabit Ethernet ports available:
+			<ol>
+				<li><b>ECx port</b> Intended for connection of VNC Viewer to control the VENUE system remotely. The IP address and network mask for this port are user-configurable in the VENUE UI.</li>
+				<li><b>AVB port</b> Intended for connection of all other VENUE system components, as well as a computer running Pro Tools software. This port always uses link-local addressing. Because of AVB traffic, the effective bandwidth of this port is limited to 100 Mb/s.
+				\note Plug-ins must not use a significant portion of the available bandwidth on the AVB port, since it will affect mission-critical control connections of a VENUE system.</li>
+			</ol>
+			
+			Both S3L-X and S6L systems include the Apple Bonjour service. Plug-ins may use Bonjour for interfacing with other software in the network. Plug-ins must not install their own version of Bonjour or attempt to modify the Bonjour installation on the system.
+		
+		@subsection aax_venue_guide__environment__overview Host environment summary
+			<TABLE>
+				<TR>
+					<TH></TH>
+					<TH>S3L-X</TH>
+					<TH>S6L</TH>
+				</TR>
+				<TR>
+					<TH>Operating System</TH>
+					<TD>Windows Embedded 8</TD>
+					<TD>Windows Embedded 8</TD>
+				</TR>
+				<TR>
+					<TH>Sample Rate</TH>
+					<TD>48 kHz</TD>
+					<TD>96 kHz</TD>
+				</TR>
+				<TR>
+					<TH>Max GUI size</TH>
+					<TD>749 W x 617 H (no sidechain)<BR />749 W x 565 H (sidechain)</TD>
+					<TD>1436 W x 855 H (no sidechain)<BR />1436 W x 796 H (sidechain)</TD>
+				</TR>
+				<TR>
+					<TH>Page table</TH>
+					<TD><tt>'PcTL'</tt></TD>
+					<TD><tt>'Av46'</tt></TD>
+				</TR>
+			</TABLE>
+
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_venue_guide__features AAX feature support and compatibility
+		VENUE supports many of the same %AAX features as Pro Tools. However, some features are not available in VENUE, and other features are managed differently between the two applications. This section describes how VENUE handles various optional %AAX features.
+		
+		@subsection subsection__aax_venue_guide__features__processing Processing configurations
+			<DIV CLASS="SectionHead">Architectures</DIV>
+				VENUE supports 64-bit %AAX DSP plug-ins only. %AAX Native and %AAX Hybrid plug-ins are not supported. Plug-ins compiled for 32-bit processors are not supported, though they may be included in a VENUE-compatible .aaxplugin bundle alongside the plug-in's 64-bit binary.
+			
+			<DIV CLASS="SectionHead">Stem formats</DIV>
+				<ul>
+					<li>Mono plug-ins may be inserted as channel inserts on mono input strips and output busses.</li>
+					<li>Stereo plug-ins can be inserted as channel inserts on stereo input strips and output busses.</li>
+					<li>Greater-than-stereo formats are not supported by VENUE</li>
+					<li>Multi-mono processing is not supported; an operator must use the stereo version of a plug-in in stereo processing locations.</li>
+				</ul>
+			
+			<DIV CLASS="SectionHead">Width-changing plug-ins</DIV>
+				Width Changing plug-ins are not allowed as inserts except in mix busses. Unlike in Pro Tools, a plug-in cannot change the output stem format of a strip or bus by using a mono-to-stereo plug-in on a mono track.
+				
+				However, width-changing plug-ins are supported on output busses. For these, the outputs of the plug-in can either be routed back to an FX return or routed out to physical outputs. This functionality does not require any additional implementation specific to VENUE.
+		
+		@subsection subsection__aax_venue_guide__features__presets Presets and automation
+			Plug-In settings are persisted (saved & restored) the same way for Show files, snapshots & settings files, using a single method to extract settings and a single method to apply setting. The code uses the "chunk" APIs. That's similar to what Pro Tools does, except that for automation, VENUE uses exclusively snapshots (that is, VENUE does not record & playback individual control changes). 
+
+			Many VENUE snapshots users are known to store settings for every Plug-In in every snapshot (or almost). This causes performance issues because settings are often fairly slow to load, making a snapshot recall last too long (sometimes 30 seconds or more!) whereas users expect a snapshot recall to take instantly. However, extremely frequently, settings are not actually changing from a snapshot to the next one (that is, from one snapshot to the next one, the vast majority of Plug-Ins contain the same settings). To mitigate this, VENUE calls \ref AAX_IEffectParameters::CompareActiveChunk() to determine whether a chunk from an incoming snapshot would result in any change to the plug-in's current settings. If not, the new chunk will not be loaded onto the plug-in. This optimization is extremely effective, but requires that Plug-Ins implement the \ref AAX_IEffectParameters::CompareActiveChunk() "CompareActiveChunk()" method properly at any time (in particular regardless of whether the plug-in is visible or not). With VENUE, you must implement this API very well or the Plug-In may not be controllable. This optimization will affect settings application when a show is loaded, when presets are loaded and when snapshots are recalled. 
+
+			All chunks are first compared one by one to the active chunks, until one is different or an error is returned. If any chunk compare fails (not equal or error returned), then all chunks are sent in sequence. 
+
+			As it is the basic method for plug-in settings manipulation, it is critical that plug-ins process chunks as accurately and efficiently as possible. 
+
+			<DIV CLASS="SectionHead">Plug-In Chunks</DIV>
+				The size of a plug-in chunk cannot exceed 64KB in VENUE. If a Plug-In requires more than 64KB of chunk data total (all chunk sizes added), settings for this plug-in won't be persisted, snapshots won't work for this plug-in and users won't be able to load or save settings. If you can not meet this requirement, you should detect that you are running on VENUE and not declared the process type as it won't be usable. 
+		
+		@subsection subsection__aax_venue_guide__features__unsupported Unsupported features
+
+			The following %AAX features are not supported by VENUE. Plug-ins that require these features will not be compatible with VENUE systems. If your plug-ins use these features for advanced functionality but not for basic operation then you should document this restriction for VENUE users.
+
+			<UL CLASS="paragraphs">
+				<LI>
+					<DIV CLASS="SectionHead">Advanced audio routing </DIV>
+					VENUE does not support \ref additionalFeatures_AOS "Auxiliary Output Stems" from plug-ins.
+
+					\warning \ref CommonInterface_Describe calls to register auxiliary output stems will return an error code on VENUE systems, indicating that the host will not provide audio buffers for auxiliary output stems during processing. A plug-in must not attempt to write data into auxiliary output stem buffers which have not been provided by the host!
+				</LI>
+				<LI>
+					<DIV CLASS="SectionHead">Transport interface </DIV>
+					VENUE operates entirely in real-time and does not contain a timeline of pre-recorded audio. Therefore VENUE does not support the \ref AAX_ITransport interface. VENUE will return \ref AAX_ERROR_UNIMPLEMENTED to unsupported transport interface method calls.
+				</LI>
+				<LI>
+					<DIV CLASS="SectionHead">MIDI </DIV>
+					VENUE does not support MIDI routing to and from plug-in instances, and no \ref additionalFeatures_MIDI "AAX MIDI features" are supported by VENUE.
+				</LI>
+			</UL>
+		
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_venue_guide__installer VENUE Plug-in installer specification
+		To install plug-ins, the VENUE software includes a simple installation interface. To install a plug-in, the operator simply plugs in a USB Flash Drive with an installer for the plug-in and the plug-in will show up in an installer menu on the VENUE interface (shown below). 
+
+		This menu will automatically list all the installable plug-ins on the drive. With the click of a button, the user can install the plug-ins onto his VENUE system. 
+		
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG alt="The VENUE plug-in installer tab" src="08b-Options-Plugins-Install_med.png" />
+		<DIV CLASS="imagecaption">Figure 6: The VENUE plug-in installer tab</DIV>
+
+		For this custom installation to work properly, the plug-in installation USB Key must follow a certain layout. This layout is designed to be as flexible and as expandable as possible, giving the developer many options while retaining the simplicity that makes VENUE's plug-in installation appealing to the user. This layout is also designed to coexist on a drive with a Pro Tools plug-in install. The following is a detailed description of how the file hierarchy should be laid out. 
+		
+		@subsection subsection__aax_venue_guide__installer__overview Overview
+			The VENUE Plug-In installer specification is an extension of an %AAX plug-in bundle, i.e. of the <em>MyPlugIn</em>.aaxplugin folder.
+			
+			A standard .aaxplugin directory forms a basic, compatible plug-in installer for VENUE. See \ref commoninterface_formatspecification__aaxplugin_directory_structure for more information about this folder.
+
+			The following optional items can be added to the .aaxplugin folder to extend its functionality when used as a VENUE plug-in installer:
+			<ul>
+				<li>License file that will need to be accepted by end user</li>
+				<li>Pre-install action (either .bat script or executable or both)</li>
+				<li>Post-install action (either .bat script or executable or both)</li>
+				<li>Pre-uninstall action (either .bat script or executable or both)</li>
+				<li>Post-uninstall action (either .bat script or executable or both)</li>
+				<li>PACE Eden installer to update the version pre-installed on the VENUE system</li>
+				<li>Factory presets</li>
+				<li>Registry entries in a form of .reg files</li>
+				<li>Program files to be placed in the system's C:\\Program Files folder</li>
+				<li>Plug-in thumbnails to be shown in the rack in VENUE Software UI</li>
+			</ul>
+		
+		@subsection subsection__aax_venue_guide__installer__format Directory structure
+			Here is a layout of the optional elements in the .aaxplugin plug-in installer directory:
+			<UL CLASS="paragraphs">
+				<LI>
+					/Contents
+					<UL CLASS="paragraphs">
+						<LI><em>standard %AAX plug-in contents</em>
+					</UL>
+				</LI>
+				<LI>
+					/Pace Eden
+					<UL CLASS="paragraphs">
+						<LI>
+							Setup.exe
+						</LI>
+						<LI>
+							Setup.bat
+						</LI>
+						<LI>
+							Version.txt
+						</LI>
+					</UL>
+				</LI>
+				<LI>
+					/Program Files
+					<UL CLASS="paragraphs">
+						<LI>
+							...
+						</LI>
+					</UL>
+				</LI>
+				<LI>
+					/Thumbnails
+					<UL CLASS="paragraphs">
+						<LI>
+							<em>id1</em>.bmp (example: 424644204C41324131314C41.bmp)
+						</LI>
+						<LI>
+							<em>id2</em>.bmp
+						</LI>
+					</UL>
+				</LI>
+				<LI>
+					/License.rtf or License.txt
+				</LI>
+				<LI>
+					/Install_before.bat
+				</LI>
+				<LI>
+					/Install_before.exe
+				</LI>
+				<LI>
+					/Install_after.bat
+				</LI>
+				<LI>
+					/Install_after.exe
+				</LI>
+				<LI>
+					/<em>SomeSettings</em>.reg
+				</LI>
+				<LI>
+					/Uninstall_before.bat
+				</LI>
+				<LI>
+					/Uninstall_before.exe
+				</LI>
+				<LI>
+					/Uninstall_after.bat
+				</LI>
+				<LI>
+					/Uninstall_after.exe
+				</LI>
+			</UL>
+	
+		@subsection subsection__aax_venue_guide__installer__optional_files Optional installer files
+			@subsubsection subsubsection__aax_venue_guide__installer__optional_files__license License terms
+				A license stored as a file of either RTF or ASCII plain text format. The file must be located in the root folder of the installer. Depending on the text file format, the file name must be either <em>License.rtf</em> or <em>License.txt</em>.
+			
+			@subsubsection subsubsection__aax_venue_guide__installer__optional_files__registry Registry entries
+				Registry settings to be applied during installation need to be stored in .reg files in the root folder of installer. All such files must be of the Windows Registry format. Particular file names does not matter.
+				
+				Registry files are applied during plug-in installation.
+					
+				It is important to not alter any system settings or settings of other software installed.
+				
+				\note Changes in the registry are not reverted during the plugin uninstallation.
+			
+			@subsubsection subsubsection__aax_venue_guide__installer__optional_files__program Program files
+				Files under the <em>Program Files</em> subfolder in the plug-in installer will be copied to the system's <em>C:\\Program Files</em> folder. All contents of the <em>Program Files</em> subfolder are copied as-is into <em>C:\\Program Files</em>, retaining the internal folder structure of nested directories.
+					
+				These changes are undone when the plug-in is uninstalled.
+			
+			@subsubsection subsubsection__aax_venue_guide__installer__optional_files__thumbnails Plug-in thumbnails
+				VENUE uses thumbnail images to display plug-in GUIs in the plug-in rack while the full-size plug-in GUI is hidden.
+				
+				If thumbnail images are not provided in the plug-in installer then VENUE will display a generic thumbnail image for the plug-in until it has been focused in Zoom Mode in the VENUE interface. In this case VENUE will create and cache a thumbnail image for the plug-in GUI the first time that it is focused.
+				
+				The user may regenerate a thumbnail by right-clicking a rack with a plug-in and choosing "Recreate Thumbnail".
+				
+				<DIV CLASS="SectionHead">Including thumbnails in plug-in installers</DIV>
+				
+				A separate thumbnail should be provided in the plug-in installer for each variant supported by the plug-in, i.e. each unique %AAX DSP ID triad registered by the plug-in. Use the "Recreate Thumbnail" feature to create the initial versions of your plug-in thumbnail images. Package these thumbnail images into your plug-in installer in order to guarantee that thumbnail images will be available to users immediately upon installing the plug-in.
+				
+				Each thumbnail bitmap file is named after the following plug-in parameters:
+				<ol>
+					<li>\ref AAX_eProperty_ManufacturerID</li>
+					<li>\ref AAX_eProperty_ProductID</li>
+					<li>\ref AAX_eProperty_PlugInID_TI</li>
+				</ol>
+				
+				All of three are converted to hexadecimal representation and concatenated to form a file name that uniquely identifies a plug-in variant. For example, the Avid Channel Strip plug-in has a thumbnail file named <span style="text-decoration:underline">41564944</span> <span style="text-decoration:underline">43685374</span> <span style="text-decoration:underline">434D5469</span>.bmp (no spaces).
+				
+				The "Recreate Thumbnail" feature in VENUE will ensure that the generated thumbnail images use the correct file names, resolution, and image format.
+			
+			@subsubsection subsubsection__aax_venue_guide__installer__optional_files__actions Actions
+				A plug-in installer may define custom actions for the following cases:
+				<ol>
+					<li>Pre-install action - executed when plug-in installation starts</li>
+					<li>Post-install action - executed when plug-in installation finishes</li>
+					<li>Pre-uninstall action - executed when plug-in uninstallation starts</li>
+					<li>Post-uninstall action - executed when plug-in uninstallation finishes</li>
+				</ol>
+				
+				Each action is defined by either a .bat file or an Win32/64 executable file (.exe). Action files must be placed in the root folder of installer and use these file names:
+				<ol>
+					<li>Pre-install action - <em>Install_before.bat</em>, <em>Install_before.exe</em></li>
+					<li>Post-install action - <em>Install_after.bat</em>, <em>Install_after.exe</em></li>
+					<li>Pre-uninstall action - <em>Uninstall_before.bat</em>, <em>Uninstall_before.exe</em></li>
+					<li>Post-uninstall action - <em>Uninstall_after.bat</em>, <em>Uninstall_after.exe</em></li>
+				</ol>
+				
+				If both .exe and .bat files are present for a certain action, then both are executed, with the .bat file being run before the .exe.
+				
+				When executing an action, no exit code is tested. In order to report errors, the following needs to be done:
+				<ol>
+					<li>
+						.bat files:
+						
+						The following line should be used to report an error message from a script:
+						<tt>reg add HKCU\\Software\\Digidesign\\tmp /f /v InstallResult /d "Error description"</tt>
+					</li>
+					<li>
+						.exe files:
+						
+						The error message needs to be added to Windows registry as a REG_SZ value in <em>HKEY_CURRENT_USER\\Software\\Digidesign\\tmp and named InstallResult</em>.
+					</li>
+				</ol>
+				
+				The presence of the error message will abort a plug-in installation. Any error strings will be written to the VENUE logs so that Avid support will be able to see them. Error strings from these actions are not shown to the user.
+			
+			@subsubsection subsubsection__aax_venue_guide__installer__optional_files__pace PACE software installer
+				\warning This functionality must not be used without prior approval from Avid. Before releasing <b>any</b> VENUE plug-in update with a bundled PACE installer you must contact Avid to confirm that the bundled installer will not cause issues for deployed VENUE systems.
+				
+				VENUE allows plug-ins to install updated version of PACE iLok software immediately after the plug-in installation. In general, Avid tries to provide the latest Pace software with each VENUE software release and update. Therefore this step should not be necessary in most cases.
+				
+				The PACE installer files must be located in <em>Pace Eden</em> subfolder of the installer. This folder must contain the following files:
+				<ul>
+					<li>
+						<em>Version.txt</em> containing a version of the <em>LDSvc.exe</em> PACE executable being installed. The version information must be in the form of <em>1.2.3.4</em>
+					</li>
+					<li>
+						<em>Setup.exe</em> - the PACE installer itself.
+					</li>
+					<li>
+						(optional) <em>Setup.bat</em> containing an installation script. Usually used to run PACE installer in a silent (no UI, no interaction) mode.
+					</li>
+				</ul>
+				
+				During installation, <em>Setup.bat</em>, if present, is run. Otherwise <em>Setup.exe</em> is executed with the following command line arguments:
+				
+				<div class="TextInd1"><tt>Setup.exe /s /v\"REINSTALLMODE=vamus REBOOT=ReallySuppress /qn\"</tt></div>
+				
+				If the version of installer is not higher than the version installed in system, the installation will not be performed.
+				
+				An OS reboot is prompted in VENUE UI after PACE was installed.
+						
+		@subsection subsection__aax_venue_guide__installer__use Using a VENUE plug-in installer
+			In order to install a plug-in to the VENUE system, end user is expected to perform the following steps:
+			<ol>
+				<li>
+					Download a VENUE Plug-in Installer(s) in a form of archive (Zip is suggested). Is it ok to have multiple plug-ins in one archive as soon as each plug-in is in own VENUE Plug-in Installer (i.e. in own .aaxplugin folder).
+				</li>
+				<li>
+					Unpack archive and copy installers to USB drive in the following way:
+					<ol>
+						<li>
+							"AAX Plug-Ins" folder must be placed in the root of USB drive.
+						</li>
+						<li>
+							Each installer needs to be copied directly the "AAX Plug-Ins" folder. In the end, resulting folder structure will look like this:
+							\nodox Image files must be copied to the /output/html directory \endnodox
+							<IMG class="leftaligned" alt="VENUE plug-in installer folder structure" src="venue_plugin_installer_folders.png" />
+						</li>
+					</ol>
+				</li>
+				<li>
+					Install plug-ins in a way described in documentation of a particular VENUE Software version.
+				</li>
+			</ol>			
+			
+</DIV>
+
+
+
+<DIV CLASS="section">
+	
+	@section aax_venue_guide__guidelines Additional plug-in guidelines
+		@subsection subsection__aax_venue_guide__guidelines__reliability General Reliability and Fault Tolerance
+			Since VENUE is a more "mission critical" type of application where there is no room for error during a live show, additional precautions have to be taken with respect to reliability of its various components. We have built provisions in VENUE to protect the system from catastrophic failure due to a plug-in crashing and bringing down the entire system. On top of this, extra care should be taken in developing stable software when targeting VENUE as a platform. 
+			
+			If a plug-in crashes, the user will be warned through a dialog. A crash brings down all plug-in processes, but audio keeps flowing through the console and through the DSPs, including the plug-ins' DSPs. All the effects continue to be effective, but their parameters can't be accessed or modified anymore (the show goes on...). 
+			
+			At this point, audio should be totally unaffected, even for the effect that caused the crash (assuming the crash took place in the host code, not the DSP code, of course). At the user's discretion, all plug-ins will be bypassed or muted (depending on where they are used in the system), any dependencies on the plug- ins' DSPs will be removed, the plug-ins' DSPs will be reset, and all the plug-ins will start again. When the rebuilding operation is complete, the user will be prompted to decide when he wishes the new plug-ins to be connected. 
+			
+		@subsection subsection__aax_venue_guide__guidelines__dialogs Plug-In Dialogs
+			Plug-ins should avoid invoking dialog windows in VENUE. We strongly suggest that any unnecessary dialog window your plug-in creates, whether at installation or instantiation, be removed. For VENUE-only plug-ins, we strongly suggest to not make use of any dialog windows. 
+			
+			Should you nevertheless need to make use of additional windows or dialogs, you need to make sure that they are front-most, so that they will not be hidden behind VENUE's GUI. The VENUE software will try to force your windows to be front-most, but it is safer if your plug-in enforces this in the first place. 
+	
+		@subsection subsection__aax_venue_guide__guidelines__help Online Help
+			VENUE currently doesn't include any standardized help menu for plug-ins. We recommend that you use tooltips and other "live" help techniques similar to what plug-ins like ReVibe II, Reverb One, and Smack! use to help the user. For instance, when a user clicks on the "Side-Chain EQ" label of the Smack! Plug-In, here's what they see: 
+		
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG alt="Tooltip help in Avid's Smack! plug-in" src="smack_gui_tooltip.png" />
+		<DIV CLASS="imagecaption">Figure 7: Tooltip help in Avid's Smack! plug-in</DIV>
+		
+		One of the major benefits of this technique is that it is supported across platforms and will work the same in all AAX hosts.
+
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_venue_guide__system_details System details
+	
+		@subsection subsection__aax_venue_guide__system_details__dependencies External dependencies
+			%AAX plug-ins may rely on the presence of the following items in VENUE systems:
+			
+			<ul class="paragraphs">
+				<li>
+					<DIV CLASS="SectionHead">All VENUE systems</DIV>
+					<ul>
+						<li>
+							Bonjour service and library
+						
+							\note Plug-in installers are forbidden from installing over or modifying the pre-installed version of Bonjour on the VENUE system.
+						</li>
+						<li>VC 2005 x64 runtime</li>
+						<li>VC 2008 x64 runtime</li>
+						<li>VC 2010 x64 runtime</li>
+						<li>VC 2012 x64 runtime</li>
+						<li>VC 2013 x64 runtime</li>
+					</ul>
+				</li>
+				<li>
+					<DIV CLASS="SectionHead">S6L versions 5.7 and higher</DIV>
+					<ul>
+						<li>VC 2015 x64 runtime</li>
+						<li>VC 2017 x64 runtime</li>
+					</ul>
+				</li>
+			</ul>
+			
+			Because VENUE does not execute standard software installers for plug-ins, Avid tries to keep VC runtime versions up to date relative to the moment of release of a particular VENUE Software version.
+			
+			As of the time of this writing, Venue S3L-X systems are no longer receiving software updates and thus the S3L software will not be updated to include any additional system components beyond VC 2013.
+			
+			If you would like to provide compatibility with Venue host software which does not include your plug-in's required runtime libraries then we recommend statically linking your plug-in to these runtime libraries.
+	
+		@subsection subsection__aax_venue_guide__system_details__environment_vars Environment variables
+			Both plug-in installers and actual plug-ins may rely on a presence of the following environment variables in a VENUE system:
+			<ul>
+				<li>
+					<B><TT>DAEPLUGINSFOLDER</TT></B> - is always set to the Installed Plug-ins location. Currently this is <em>C:\\Program Files\\Common Files\\Digidesign\\DAE\\Plug-Ins</em>. Final backslash is absent.
+				</li>
+				<li>
+					<B><TT>JEX_HOST_TYPE</TT></B> - equals "venue". If required, this may be used to provide a custom behavior of the plug-in when it's run on VENUE system.
+				</li>
+			</ul>
+
+			
+	
+		@subsection subsection__aax_venue_guide__system_details__plugin_locations Plug-in file locations
+			<DIV CLASS="SectionHead">Installed Plug-Ins</DIV>
+			Located at <em>C:\\Program Files\\Common Files\\Digidesign\\DAE\\Plug-Ins</em>
+			
+			This folder is the only location used by VENUE software to instantiate a plug-in.
+			
+			This location is different from the one used by Pro Tools and Media Composer for 64-bit AAX plug-ins. The only way for a plug-in to appear at that location is to be installed from VENUE Software's "Options">"Plug-Ins" page; standard plug-in installers will place the plug-in into a different directory.
+			
+			\note This location may change in future VENUE software releases. Plug-ins should not make any assumptions about the install directory and should rely on the VENUE plug-in installer to place them in the correct location.
+			
+			<DIV CLASS="SectionHead">Plug-ins available for installation</DIV>
+			<ul>
+				<li>
+					Local: Located at <em>C:\\Program Files\\Common Files\\Avid\\Audio\\Plug-Ins</em>
+				</li>
+				<li>
+					On USB drive: Located at <em>(USB drive letter):\\AAX Plug-Ins</em>
+				</li>
+			</ul>
+			
+			These locations can be chosen as sources for plug-in installation on VENUE Software's "Options">"Plug-Ins" page.
+			
+			<DIV CLASS="SectionHead">Cached plug-in installers</DIV>
+			Located at <em>D:\\D-Show\\Plug-In Installers</em>
+			
+			Contains copies of plug-in installers installed via VENUE Software's "Options">"Plug-Ins" page.
+			
+			This location can be chosen as source for plug-in installation on VENUE Software's "Options">"Plug-Ins" page under the name "Previous Installs".
+			
+			<DIV CLASS="SectionHead">Factory presets</DIV>
+			Located at <em>D:\\D-Show\\User Data\\Effect Presets\\Factory Presets</em>
+			
+			Contains preset files for plug-ins, as well as for certain VENUE parameters. Presets are organized in folders.
+			
+			Each subfolder corresponds to a particular preset type. Plug-in presets are named after the plug-in's name and the plug-in's \ref AAX_SPlugInChunkHeader::fProductID value. For example, for an Avid Channel Strip plug-in the subfolder name is <em>Channel Strip [31313736]</em>, where "31313736" is an unsigned integer of the Channel Strip product ID.
+			
+			Contents of subfolders are .tfx files of plug-in presets. Each file name will be visible to end user as a preset name.
+			
+			Presets are copied into file location during a plug-in installation.
+			
+			<DIV CLASS="SectionHead">Plug-in thumbnails</DIV>
+			Located at <em>C:\\Program Files\\Digidesign\\Plug-In Icons</em>
+			
+			Contains .bmp files of plug-in thumbnails generated by VENUE Software as a result of saving current plug-in graphics into a bitmap. See \ref subsubsection__aax_venue_guide__installer__optional_files__thumbnails.
+	
+		@subsection subsection__aax_venue_guide__system_details__plugin_installation Installation process
+			
+			@subsubsection subsubsection__aax_venue_guide__system_details__plugin_installation__install Plug-in installation
+				These are the steps followed by VENUE when installing a plug-in:
+				<ol>
+					<li>
+						First, a VENUE plug-in installer is cached. This is done by copying a plug-in from installation source to the Cached VENUE Plug-In Installers location. All files are copied with an exception of the "Documentation" and "Pro Tools" folders.
+						
+						All of the following steps are executed from the cached installer location, not from the original source location.
+					</li>
+					<li>
+						The pre-install batch script ("Install_before.bat"), if present, is executed. Execution assumes running the script without a console window.
+						
+						\note The pre-install script must not contain any installation steps, since it's executed before the plug-in license is accepted. In general, you should only use the pre-install script for pre-install checks.
+					</li>
+					<li>
+						The pre-install executable ("Install_before.exe"), if present, is executed. Execution assumes running the executable without a console window.
+						
+						\note The pre-install executable must not perform any installation steps, since it's executed before the plug-in license is accepted. In general, you should only use the pre-install script for pre-install checks.
+					</li>
+					<li>
+						A license ("License.rtf" or "License.txt"), if present, is shown to the user. If "License.rtf" is not found, "License.txt" is used. A license, if present, must be accepted by user; otherwise installation will be aborted.
+					</li>
+					<li>
+						All files of the VENUE plug-in installer are copied to the system Installed Plug-Ins location, keeping the .aaxplugin folder structure. Failure to copy any of the items results in installation being aborted.
+					</li>
+					<li>
+						If the plug-in installer contains a subfolder named "Program Files", its contents are copied into "C:\\Program Files". Failure to copy any of items results in installation being aborted.
+					</li>
+					<li>
+						If the plug-in installer contains a subfolder named "Contents\\Factory Presets", its contents are imported as plug-in presets. The "Factory Presets" folder must contain only valid plug-in .tfx preset files in an arbitrary folder structure. All preset files are read and copied into the system's Factory Presets location.
+						
+						\note It is important for a plug-in installer to contain only plug-in presets corresponding to plug-in being installed.
+					</li>
+					<li>
+						Plug-in thumbnails, if present, are copied from the "Thumbnails" subfolder of the installer to the system Plug-in Thumbnails location.
+					</li>
+					<li>
+						Registry files, if any, are imported. Every file with .reg extension in the root of plug-in installer is treated as a Windows Registry file and gets imported by calling
+						
+						<DIV CLASS="TextInd1"><tt>regedit /s "&lt;file.reg&gt;"</tt></DIV>
+						
+						No error checking is performed.
+					</li>
+					<li>
+						The post-install batch script ("Install_after.bat"), if present, is executed. Execution assumes running the script without a console window. 
+					</li>
+					<li>
+						The post-install executable ("Install_after.exe"), if present, is executed. Execution assumes running the executable without a console window.
+					</li>
+					<li>
+						The PACE software installer, if present, is run. If the version of the installer is not higher than the version installed in system, the installation is not performed.
+						
+						When installing multiple plug-ins at once, PACE installation happens only after installing the final plug-in. VENUE will use the PACE installer with the highest available version among the installed plug-ins.
+					</li>
+					<li>
+						Plug-in installation is considered successful.
+					</li>
+				</ol>
+			
+				If errors occur during installation, the following happens:
+				<ol>
+					<li>Plug-in files are removed from the disk (see "File removal" section for details).</li>
+					<li>Cached plug-in installer is removed from the Cached VENUE Plug-in Installers location.</li>
+				</ol>
+			
+			@subsubsection subsubsection__aax_venue_guide__system_details__plugin_installation__removal File removal
+				File removal happens either in case or plug-in uninstallation or in case of a failed installation cleanup.
+				
+				The following happens:
+				<ol>
+					<li>
+						Plug-in files, as present in Cached VENUE Plug-in Installers location, are removed from Installed Plug-Ins location.
+					</li>
+					<li>
+						Plug-in Program Files files, as present in Cached VENUE Plug-in Installers location, are removed from Installed Plug-Ins location.
+					</li>
+				</ol>
+			
+			@subsubsection subsubsection__aax_venue_guide__system_details__plugin_installation__uninstall Plug-in uninstallation
+				Plug-in installation process is done by VENUE Software. It removes a plug-in from the Installed Plugins location.
+Here's a step by step process of uninstalling plug-in:
+<ol>
+	<li>
+		The pre-uninstall batch script ("Uninstall_before.bat"), if present, is executed. Execution assumes running the script without a console window. NO return code is examined. Instead, a script is allowed to report an error string that will be visible to Avid support when examining VENUE log files. The following line should be used to write an error message from a script:
+		
+		<DIV CLASS="TextInd1"><tt>reg add HKCU\\Software\\Digidesign\\tmp /f /v InstallResult /d "Error description"</tt></DIV>
+		
+		The presence of this string means an error has occurred and a plug-in uninstallation will abort.
+	</li>
+	<li>
+		The pre-uninstall executable ("Uninstall_before.exe"), if present, is executed. Execution assumes running the executable without a console window. NO return code is examined. Instead, an executable is allowed to report an error string that will be visible to Avid support when examining VENUE log files. The error needs to be added to Windows registry as a <tt>REG_SZ</tt> value in <em>HKEY_CURRENT_USER\\Software\\Digidesign\\tmp</em> and named <em>InstallResult</em>. The presence of this string means an error has occurred and a plug-in uninstallation will abort.
+	</li>
+	<li>
+		Plug-in files are removed. See \ref subsubsection__aax_venue_guide__system_details__plugin_installation__removal for details.
+	</li>
+	<li>
+		The post-uninstall batch script ("Install_after.bat"), if present, is executed. Execution assumes running the script without a console window. NO return code is examined. Instead, a script is allowed to report an error string that will be visible to Avid support when examining VENUE log files. The following line should be used to write an error message from a script:
+		
+		<DIV CLASS="TextInd1"><tt>reg add HKCU\\Software\\Digidesign\\tmp /f /v InstallResult /d "Error description"</tt></DIV>
+		
+		The presence of this string means an error has occurred and a plug-in uninstallation will abort.
+	</li>
+	<li>
+		The post-uninstall executable ("Install_after.exe"), if present, is executed. Execution assumes running the executable without a console window. NO return code is examined. Instead, an executable is allowed to report an error string that will be visible to Avid support when examining VENUE log files. The error needs to be added to Windows registry as a <tt>REG_SZ</tt> value in <em>HKEY_CURRENT_USER\\Software\\Digidesign\\tmp</em> and named <em>InstallResult</em>. The presence of this string means an error has occurred and a plug-in uninstallation will abort.
+	</li>
+	<li>
+		Plug-in removal is complete.
+	</li>
+</ol>
+
+Please note that plug-in being uninstalled is not being removed from the cache. Removal from the Cached VENUE Plug-in Installers is possible for plug-ins being not installed. In order to accomplish this, end user needs to go to VENUE Software's "Options">"Plug-Ins" page, right click on cached installer, and choose "Delete <em>plug-in name</em>".
+	
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_venue_guide__additional_information Additional Information
+
+		@subsection subsection__aax_venue_guide__additional_information__metering Metering
+			For metering displays, VENUE uses dB units referenced to VENUE's nominal operating level of +4dBu. A signal at the nominal level in VENUE (i.e. registers 0dB on the VENUE meters) will, at unity gain, generate a +4dBu analog output signal (-20dBFS digital output signal).
+			
+			As a result, a signal that registers +20dB on the VENUE meters will register 0dBFS on the plug-in meters. A signal at 0 dB in VENUE will be -20dBFS in the plug-in.
+			
+			To map between dBFS units used in plug-ins and dB units used in VENUE the operator simply needs to add 20 to any plug-in dBFS value. 
+	
+</DIV>
+
+
+*/

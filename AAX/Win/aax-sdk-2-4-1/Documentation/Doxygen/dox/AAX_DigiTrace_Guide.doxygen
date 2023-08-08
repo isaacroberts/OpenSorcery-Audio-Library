@@ -1,0 +1,572 @@
+/*===================================================================================================
+AAX_DigiTrace_Guide.doxygen
+
+Copyright 2015-2017, 2021 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup AAX_DigiTrace_Guide DigiTrace Guide
+	@ingroup CompatibleEnvironmentsDocs
+	
+	@brief How to add tracing to your plug-ins and view logging from the plug-in host
+	
+	@section digitrace__contents On this page
+		\li \ref digitrace__intro
+		\li \ref digitrace__quickstart
+		\li \ref digitrace__logfiles
+		\li \ref digitrace__configuring
+		\li \ref digitrace__bonus_features
+		\li \ref digitrace__tracingfromplugins
+		\li \ref digitrace__advancedconfiguration
+		\li \ref digitrace__compatibility
+		\li \ref digitrace__additionalinformation
+	
+	
+<DIV CLASS="section"> 
+	@section digitrace__intro What is DigiTrace?
+	
+		DigiTrace is a logging tool used by many Avid audio applications. DigiTrace provides high-performance, real-time tracing capabilities and can help you debug hard-to-isolate problems in real-time code. Pro Tools and other Avid audio products are instrumented with DigiTrace, and it is easy to add DigiTrace logging to your %AAX plug-ins.
+		
+		This document outlines how to use DigiTrace, both as a developer to add trace instrumentation to your code and as an end user to view or record trace instrumentation for an instrumented application.
+		
+		@subsection digitrace__intro__whatdoesitdo What does DigiTrace do?
+	
+			DigiTrace generates encrypted logs on users' systems. These log files can be decrypted via the DigiTraceDecryptor application that is included in the DigiTrace Tools package.
+
+			By default, DigiTrace logs basic information including details about the system, software, component versions, and any errors that are encountered. By using a simple configuration text file, DigiTrace can be easily configured to provide additional logging information such as plug-in loading details. Here are some examples of how you can use DigiTrace:
+
+			<UL>
+				<LI CLASS="Bullet">You can use DigiTrace in your plug-ins when you need a convenient, high-performance logging solution. </LI>
+				<LI CLASS="Bullet">You can use the default DigiTrace logs that Pro Tools generates to help you understand problems that your plug-ins encounter when running on Pro Tools. </LI>
+				<LI CLASS="Bullet">You can add DigiTrace statements and stack traces to your released plug-ins in order to help you troubleshoot end-user issues more quickly. </LI>
+				<LI CLASS="Bullet">You can (and should!) submit DigiTrace logs when reporting bugs and other Pro Tools issues to Avid. </LI>
+			</UL>
+	
+</DIV>
+	
+	
+	
+	
+	
+<DIV CLASS="section">	
+	@section digitrace__quickstart DigiTrace quick start guide
+		This section provides quick steps for the following common tasks:
+			\li \ref digitrace__gettingstarted__logfiles
+			\li \ref digitrace__gettingstarted__config
+			\li \ref digitrace__gettingstarted__configurefordevelopment
+			\li \ref digitrace__gettingstarted__addingtracing
+	
+		@subsection digitrace__gettingstarted__logfiles Find and decrypt DigiTrace log files
+			DigiTrace log files are placed into a common logs directory. The specific directory that is used depends on the version of DigiTrace - see \ref digitrace__logfiles__wherearethelogs
+			
+			By default, the version of DigiTrace that is installed with Avid audio products generates logs in an encrypted format with the extension ".dlog". Developer builds of Pro Tools and other applications are configured to generate plain-text logs.
+			
+			You can convert .dlog files to plain-text using the DigiTraceDecryptor tool that is included in the DigiTrace Tools package available for download from the Avid developer portal. To decrypt a log using this tool, simply drag-and-drop the .dlog file onto the tool. You can also set this tool as the default application for opening .dlog files in your OS, which will allow you to decrypt and open .dlog files directly.
+		
+		@subsection digitrace__gettingstarted__config Configure DigiTrace for AAX plug-in logging
+			You must customize the DigiTrace configuration to enable extra logging, such as debug logging for AAX plug-ins.
+			
+			DigiTrace uses a plain-text configuration file to enable custom logging. This file uses the suffix ".digitrace" and is located within or beside the application. For example, the configuration files for Pro Tools are located at:
+			- macOS: Pro Tools.app/Contents/Resources/config.digitrace
+			- Windows: C:\\Program Files\\Avid\\Pro Tools\\ProTools.digitrace
+			
+			To configure DigiTrace to print logs from \ref AAX_TRACE or \ref AAX_TRACE_RELEASE macros in AAX plug-ins, add the following line to the .digitrace configuration file for the application:
+			
+			<DIV CLASS="TextInd1">DTF_AAXPLUGINS=file\@DTP_LOWEST </DIV>
+			
+			If a config.digitrace file does not already exist for a DigiTrace-enabled application then you can create it to enable DigiTrace. For more information about customizing the DigiTrace configuration and enabling different levels of debug logging, see @ref digitrace__configuring .
+		
+		@subsection digitrace__gettingstarted__configurefordevelopment Configure DigiTrace for plain-text output
+			In order to be able to view streaming log output in real time, DigiTrace must be configured for plain-text output. This is the default configuration for developer builds of Pro Tools and other Avid audio applications.
+			
+			To configure shipping applications for plain-text log output, you must replace the application's installed DigiTrace library with a development version of the DigiTrace library. Development builds of DigiTrace are included in the DigiTrace Tools package. Search for "Digitrace.framework" on macOS or "DigiTrace.dll" on Windows and replace the installed shipping version of the library with the developer version from the DigiTrace Tools package to configure the application for plain-text output.
+			
+			Note that the developer version of DigiTrace may output logs to a different directory than the shipping version. In general, developer builds of DigiTrace will place log files in a directory next to the instrumented application. For example, developer builds of Pro Tools will output logs to a logs directory placed adjacent to the Pro Tools application bundle rather than in the user's Library/Logs/Avid folder.
+		
+		@subsection digitrace__gettingstarted__addingtracing Add tracing to a plug-in
+			To easily add tracing to an AAX plug-in, use the \ref AAX_TRACE or \ref AAX_TRACE_RELEASE macros. Logging from the "release" macro will be enabled for all builds of the plug-in, whereas logging from the "standard" macro will only be enabled in Debug builds of the plug-in.
+	
+</DIV>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<DIV CLASS="section">
+	@section digitrace__logfiles DigiTrace log files
+	
+		The default logging in Avid audio applications includes data that can be useful in many different troubleshooting situations. For example:
+
+			- Information about the user's system configuration
+			- A complete list of loaded components and libraries. (If the user has an old or incompatible version of your plug-ins installed on his system, you will know about it!)
+			- Crash logs in the event of a system failure
+		
+		In addition, you can add DigiTrace logging code to your plug-ins, helping you examine potential issues in the way your plug-in is running on a user's computer even when you cannot reproduce the issue locally.
+	
+		@subsection digitrace__logfiles__wherearethelogs Where are DigiTrace log files stored?
+			
+			@subsubsection digitrace__logfiles__wherearethelogs__directory Log directory
+				DigiTrace logs are stored in a log files directory on the user's system:
+		
+				<DIV CLASS="TextInd1">~/Library/Logs/Avid/ (macOS) </DIV>
+				<DIV CLASS="TextInd1">\%userprofile\%\\AppData\\Local\\Avid\\Logs or C:\\Program Files\\Avid\\Pro Tools\\Logs (Windows) </DIV>
+			
+				This default log directory can be overridden in the DigiTrace config file. See \ref digitrace__advancedconfiguration for more information.
+			
+			@subsubsection digitrace__logfiles__wherearethelogs__name Log file names
+				By default the log file will be given a time-stamped name in the format <TT>\<AppName\>_YYYY_MM_DD_HH_MM_SS.dlog</TT>. This timestamp represents the system time when the log was created. Like the log directory, this log file name can be changed using the DigiTrace configuration. See \ref digitrace__advancedconfiguration for more information.
+		
+		@subsection digitrace__logfiles__monitoring Monitoring DigiTrace logs
+			@subsubsection digitrace__logfiles__monitoring__files Log files
+				You can of course view a log file by opening it periodically. In addition, assuming that DigiTrace is \ref digitrace__gettingstarted__configurefordevelopment "configured for plain text output", you can also constantly monitor a log file in a "streaming" manner. This is possible using standard Unix tools included with macOS or with Cygwin on Windows. In fact, this approach usually works better than telling DigiTrace to use console output due to buffering of the console output.
+
+					<UL>
+						<LI CLASS="Bullet">For basic real-time monitoring of a single file, use <TT>tail</TT>:
+						<DIV CLASS="TextInd1"><TT>tail -f /path/to/digitrace/logs/the_logfile.txt </TT></DIV>
+						</LI>
+						<LI CLASS="Bullet">For real-time monitoring of the most recent file in the log file directory, use a combination of <TT>tail</TT> and <TT>ls</TT>:
+						@htmlonly<DIV CLASS="TextInd1"><TT>tail -f `ls -d -1 -rt/path/to/digitrace/logs/&#42;.txt | tail -1` </TT></DIV>@endhtmlonly <!-- using htmlonly to force doxygen not to see a beginning-of-comment block with the slash+asterisk combination -->
+						</LI>
+					</UL>
+
+			@subsubsection digitrace__logfiles__monitoring__console Console
+				Console behavior is quite different between macOS and Windows
+				
+				<EM CLASS="Bold">Windows </EM>
+				<DIV CLASS="TextInd1">On Windows, traces sent to the console go to the system debugging console. The only way to view the console output is to be running with an attached debugger. </DIV>
+				
+				<EM CLASS="Bold">macOS </EM>
+				<DIV CLASS="TextInd1">On the Mac, console traces are sent to stdout console, which shows up in a few places:
+					<UL>
+						<LI CLASS="Bullet">If you're running in a debugger, the debug console will display stdout output, including DigiTrace messages </LI>
+						<LI CLASS="Bullet">If you're not in the debugger, you can view the output in the Console app (/Applications/Utilities/Console). For Pro Tools, look under ~/Library/Logs/Avid/Pro Tools.X.log in the log list. Note that these messages are not displayed in the "All Messages" log. </LI>
+						<LI CLASS="Bullet">Alternately, you can manually look at the log output, again using the <TT>tail</TT> command, e.g. <TT>tail -f "~/Library/Logs/Avid/Pro Tools.0.log"</TT> </LI>
+					</UL>
+				</DIV>
+		
+		@subsection digitrace__logfiles__format Log file formatting
+			Here is the beginning of an example DigiTrace log:
+				\verbatim
+*** Digidesign Session Trace for:	/Applications/Pro Tools 11.0.2 3PDev.app (pid=0x5aff, version=11.0.2d626)
+*** Starting Timestamp:			Tuesday, January 7, 2014 4:10:57 PM Eastern Standard Time (89706938666 uS)
+*** System Details:			OS Version: 10.8,5, CPU Speed:  2.7 gHz, Architecture: Intel 64 bit, Num Processors: 8 logical 4 physical, Memory: 16384 MB
+*** DigiTrace Config File:		/Applications/Pro Tools 11.0.2 3PDev.app/Contents/Resources/config.digitrace
+*** Facilities to trace:
+
+DTF_INSTALLED_COMPONENTS@DTP_NORMAL(0e0d)
+
+Time(us),Tid,Facility,Name : Debug Message
+---------------------------------------------------------------------------
+89707181683,00c07,0e0d: Pace eden lib version: 2.0.0, r22343 (2.0.0.22343),  [...]
+89707220338,00c07,0e0d: ShoeTool_Init - shoe tool installed version is 6.000 [...]
+89707220374,00c07,0e0d: ShoeTool_IncreaseAIOLimits - var=46, newVal=512, cur [...]
+89707220380,00c07,0e0d: ShoeTool_IncreaseAIOLimits - var=47, newVal=512, cur [...]	 
+				\endverbatim
+	
+			The log file consists of a header followed by a series of log statements. Each log statement includes the following information:
+			
+				<UL>
+					<LI CLASS="Bullet">Time(us) - The time the message was logged, in microseconds since the machine was started. </LI>
+					<LI CLASS="Bullet">Tid - The thread ID of the thread that logged the message. </LI>
+					<LI CLASS="Bullet">Facility - The Facility ID of the facility that's logging the message. </LI>
+					<LI CLASS="Bullet">Name - This is the config name added to all facilites included by this config file. This can be used to group all facilites related to a feature set, for instance. If not set, this is not included. </LI>
+					<LI CLASS="Bullet">Debug Message - This is the actual string passed to the trace facility. </LI>
+				</UL>
+
+</DIV>
+	
+	
+
+
+
+
+
+
+
+
+
+<DIV CLASS="section">
+	@section digitrace__configuring Configuring DigiTrace
+		You can configure DigiTrace to include or exclude specific traces using the config.digitrace configuration file. This file is plain text and includes a single configuration command on each line.
+		
+		This is the basic format for a command used to enable tracing for a single \ref digitrace__configuring__facility "facility":
+		
+			<DIV CLASS="TextInd1"><EM CLASS="Italic">facility</EM>=[console\@<EM CLASS="Italic">minimum console logging priority</EM>],[file\@<EM CLASS="Italic">minimum file logging priority</EM>] </DIV>
+			
+		Here are some examples:
+			
+			<UL CLASS="paragraphs">
+				<LI><TT>DTF_APP_VERSION=file\@DTP_LOW </TT></LI>
+				<LI><TT>DTF_PLUGINS_3P=file\@DTP_LOW,console\@DTP_URGENT </TT></LI>
+				<LI><TT>DTF_ASSERTHANDLER=console\@DTP_URGENT </TT></LI>
+				<LI><TT>DTF_DAE_MEM=console\@DTP_URGENT,file\@DTP_LOWEST </TT></LI>
+			</UL>
+		
+		For more information about special configuration commands, see \ref digitrace__advancedconfiguration.
+			
+		@subsection digitrace__configuring__facility Trace facilities
+			Trace facilities are used by DigiTrace to determine whether or not the given trace statement should be displayed. Trace facilities allow the user to filter trace statements at the component level.
+
+		@subsection digitrace__configuring__priority Trace priorities
+			Trace priorities are used by DigiTrace to determine whether or not the given trace statement should be displayed. DigiTrace specifies five trace priorities:
+
+				<UL CLASS="paragraphs">
+					<LI><TT>DTP_LOWEST </TT></LI>
+					<LI><TT>DTP_LOW </TT></LI>
+					<LI><TT>DTP_NORMAL </TT></LI>
+					<LI><TT>DTP_HIGH </TT></LI>
+					<LI><TT>DTP_URGENT </TT></LI>
+				</UL>
+			
+			The DigiTrace configuration file specifies minimum trace priorities. For example, if a trace statement uses <TT>DTP_LOW</TT> and DigiTrace is configured to use <TT>DTP_NORMAL</TT> as the minimum trace priority, then the trace statement will not be sent to the output target. In general, the <TT>DTP_LOWEST</TT> priority setting will populate the trace output with the most verbose information while the <TT>DTP_URGENT</TT> setting will output only the most high level details.
+
+		@subsection digitrace__configuring__facilities Useful DigiTrace facilities
+			This section includes descriptions of several facilities that are used in Pro Tools and other Avid audio products. The logging provided by these facilities may be helpful when diagnosing plug-in issues.
+		
+			<UL>
+				<LI CLASS="Bullet">
+					<TT>DTF_AAXPLUGINS</TT>
+					<DIV CLASS="TextInd1">This is the standard facility for AAX plug-ins. This facility will only log traces that are present in AAX plug-ins themselves, not traces in any hosting code. Plug-ins may use the \ref AAX_TRACE or \ref AAX_TRACE_RELEASE macros to log to this facility. </DIV>
+				
+					\note Disabling the <TT>DTF_AAXPLUGINS</TT> facility will slightly reduce the overhead of trace statements and chip communication on HDX systems.
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_AAXHOST</TT> at <TT>DTP_NORMAL</TT>
+					<DIV CLASS="TextInd1">Logging from the main AAX host component. Use a lower priority for additional AAX Host tracing.</DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_PLUGINS</TT> at <TT>DTP_LOW</TT>
+					<DIV CLASS="TextInd1">Miscellaneous plug-in operations, including page table logging, preset directory errors, and DLL loading and unloading</DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_TIPLUGINS</TT> at <TT>DTP_NORMAL</TT>
+					<DIV CLASS="TextInd1">Logging for HDX plug-in algorithm handling details such as packet management and private data field state reset. Use <TT>DTP_LOW</TT> for deeper tracing.</DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_TISHELLMGR</TT> at <TT>DTP_HIGH</TT>
+					<DIV CLASS="TextInd1">Logging from the HDX RTOS</DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_DAE_HOSTDEVICE</TT> at <TT>DTP_URGENT</TT>
+					<DIV CLASS="TextInd1">Performance logging from the real-time audio render thread. See \ref digitrace__performancelogging</DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_DAE_ERRORS</TT> at <TT>DTP_NORMAL</TT> or <TT>DTP_LOW</TT>
+					<DIV CLASS="TextInd1">Information about any errors that occur in AAE. Use <TT>DTP_LOW</TT> to enable stack traces. </DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_ASSERTHANDLER</TT> at <TT>DTP_NORMAL</TT> or <TT>DTP_LOW</TT>
+					<DIV CLASS="TextInd1">Similar to <TT>DTF_DAE_ERRORS</TT>: Information about any asserts that fail. Use <TT>DTP_LOW</TT> to enable stack traces. </DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_THREAD_NAMES_AND_PRIORITIES</TT> at <TT>DTP_NORMAL</TT> or <TT>DTP_LOW</TT>
+					<DIV CLASS="TextInd1">Allows you to look up a thread's debug name from its ID on the standard trace line. Thread names and IDs will be traced as they are created, and you can then use that ID to resolve the thread name of later trace statements. Use <TT>DTP_NORMAL</TT> for just names and IDs, and <TT>DTP_LOW</TT> to include priorities. </DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_PACESUPPORT</TT> at <TT>DTP_NORMAL</TT>
+					<DIV CLASS="TextInd1">Plug-in digital signature logging, with some diagnostics for digital signature verification failures.</DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_ADC</TT> at <TT>DTP_NORMAL</TT>
+					<DIV CLASS="TextInd1">Delay compensation logging, including host accounting for plug-in latency.</DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_AUTOMATION</TT> at <TT>DTP_LOW</TT>
+					<DIV CLASS="TextInd1">Parameter touch and release logging.</DIV>
+				</LI>
+				<LI CLASS="Bullet">
+					<TT>DTF_AUDIOSUITE</TT> at <TT></TT>
+					<DIV CLASS="TextInd1">Logging of events specific to AudioSuite plug-in instances.</DIV>
+				</LI>
+			</UL>
+
+</DIV>
+	
+	
+	
+	
+	
+	
+<DIV CLASS="section">
+	@section digitrace__bonus_features Bonus features
+	
+		@subsection digitrace__performancelogging Real-time AAE performance logging with DigiTrace
+			Pro Tools 11 and higher includes logging for audio render callback performance. To enable this logging, enabled the <TT>DTF_DAE_HOSTDEVICE</TT> facility at <TT>DTP_URGENT</TT>. This facility will enable logging of real-time audio render thread metrics around any render errors that occur.
+		
+			Here is an example of a performance log:
+		
+				<DIV CLASS="TextInd1"><TT>Int(LL): hstEr=0, ioEr=0, dif=2665(2891,23129), tot=<EM CLASS="Bold">2517</EM>(<EM CLASS="Bold">1648</EM>,2317), in=51(58,83), clbk=2158(1508,2158), out=108(99,164), offset=[12], mxW=1101(<EM CLASS="Bold">com.avid.aax.eleven.free</EM>)  </TT></DIV>
+		
+			The different values included in this log are:
+		
+				<UL>
+					<LI CLASS="Bullet"><TT>hstEr  </TT>
+						<DIV CLASS="TextInd1"> </DIV>
+					</LI>
+					<LI CLASS="Bullet"><TT>ioEr  </TT>
+						<DIV CLASS="TextInd1"> </DIV>
+					</LI>
+					<LI CLASS="Bullet"><TT>dif  </TT>
+						<DIV CLASS="TextInd1"> </DIV>
+					</LI>
+					<LI CLASS="Bullet"><TT>tot  </TT>
+						<DIV CLASS="TextInd1"> </DIV>
+					</LI>
+					<LI CLASS="Bullet"><TT>in  </TT>
+						<DIV CLASS="TextInd1"> </DIV>
+					</LI>
+					<LI CLASS="Bullet"><TT>clbk  </TT>
+						<DIV CLASS="TextInd1"> </DIV>
+					</LI>
+					<LI CLASS="Bullet"><TT>out  </TT>
+						<DIV CLASS="TextInd1"> </DIV>
+					</LI>
+					<LI CLASS="Bullet"><TT>offset  </TT>
+						<DIV CLASS="TextInd1"> </DIV>
+					</LI>
+				</UL>
+		
+			A log of 'x=a (b,c)' means that the (x) value (e.g. <TT>tot</TT>) for the interrupt was (a) us, the running average was (b) us, and the maximum value encountered was (c) us. Therefore, in the example above:
+		
+				<UL>
+					<LI CLASS="Bullet">1648 us average total time was spent in each interrupt  </LI>
+					<LI CLASS="Bullet">2517 us was spent in this interrupt  </LI>
+					<LI CLASS="Bullet">Eleven Free was the longest worker in this interrupt </LI>
+				</UL>
+ 
+			In practice, it is difficult to precisely log this information during an error. This is due to changes in the interrupt pattern and scheduling when the audio engine is halted. In order to account for this, the performance logging will print out logs for several interrupts around when any error occurs. The actual audio engine error (<TT>hstEr</TT>) may be reported for a "junk" interrupt cycle that is spuriously logged during this halt process.
+		
+		@subsection digitrace__signposting Adding signposts to the DigiTrace log at run-time
+			Use the shift-'~' key combination to add a "Trace Flag" line into the DigiTrace log. This allows you to add a "signpost" line to the log right when an important event happens, or before/after an important operation, so that it is easier to find the important details when inspecting the log later.
+
+				\verbatim
+176603608088,2b603,0016: DSK_PrePrimeDiskTask::PrePrimeDiskTask - finish
+176603961348,00307,0000: Trace Flag 3 (diff prev: 2.40s, diff start: 7.18s)
+176605252296,00307,0000: Trace Flag 4 (diff prev: 1.29s, diff start: 8.47s)
+176605252779,00307,0f09: 2016-07-19 23:36:32.499 PTC_Mgr::Idle() -- performing task (Websocket Base)
+176606039830,00307,0000: Trace Flag 5 (diff prev: 0.79s, diff start: 9.26s)
+				\endverbatim
+			
+			Each trace flag signpost includes the text "Trace Flag" and the diff (in seconds) from both the previous trace flag and the first trace flag which was triggered during the current run of the app.
+			
+			These lines will be printed regardless of the current DigiTrace configuration settings.
+
+			\compatibility This feature is available in Pro Tools 12.6 and higher
+
+</DIV>
+	
+	
+	
+	
+	
+	
+	
+	
+<DIV CLASS="section">	
+	@section digitrace__tracingfromplugins Adding traces to an AAX plug-in
+	
+		@subsection digitrace__tracingfromplugins__basiclogging Basic AAX logging
+			Standard <TT>printf</TT>-style logging from AAX plug-ins is very easy. This feature is built into the AAX specification and is exposed to plug-ins via the \ref AAX_TRACE and \ref AAX_TRACE_RELEASE macros. For more information about basic logging, see the documentation for those macros.
+			
+			\note To enable basic AAX logging via these macros, the <TT>DTF_AAXPLUGINS</TT> trace facility must be enabled.
+			
+			@subsubsection digitrace__tracingfromplugins__basiclogging__dsp Tracing for AAX DSP
+				The \ref AAX_TRACE and \ref AAX_TRACE_RELEASE macros, as well as \ref AAX_ASSERT, are cross-platform and are supported for use in AAX DSP algorithms. For more information about tracing from AAX DSP algorithms, see the \ref subsection__tracing section in the \ref AAX_TI_Guide.
+	
+		@subsection digitrace__tracingfromplugins__advancedlogging Advanced DigiTrace logging features
+			As a developer, you can use several advanced macros to extend the functionality of DigiTrace logging in your plug-in beyond the simple <TT>printf</TT>-style features provided by \ref AAX_TRACE. The full DigiTrace macro suite includes macros for stack traces, very long traces, or even the ability to dump a block of memory to the log.
+		
+			Note that these advanced features are only available on the host system. They are not currently available from algorithms running on embedded hardware.
+		
+			@subsubsection digitrace__advancedlogging__filestoinclude What files do I include in my project?
+				To add advanced DigiTrace instrumentation to your source code you must:
+				
+					-# Include DigiTrace.h in the file where you are going to put your trace statements.
+					-# Compile CDigitraceAccess.cpp into your project
+
+				If you have problems including the DigiTrace header file, try moving it to the top of the file that you're including it into. DigiTrace has no other dependencies and should be safe to include into any component.
+
+			@subsubsection digitrace__advancedlogging__filestoinclude__troubleshooting What do I do if I encounter problems compiling or linking?
+					Should you run into linker errors or other problems after adding the DigiTrace header file, please go through the following items and verify that each is included in your project:
+
+						- The CDigitraceAccess.cpp file automatically searches for and loads the DigiTrace.dll (Windows) or DigiTrace.framework (Mac) component and ensures that the appropriate function pointers are initialized. If you receive linker errors, the missing symbols are likely in this file. Note that your project will need the path to CDigiTraceAccess.h in order to compile this file.
+						- If you receive an include file error for DigiPragmas.h then you will need to add the header's path to your project's search paths. This file is included in the most recent DigiTrace Tools packages but may not be included in some older packages.
+
+			@subsubsection digitrace__advancedlogging__macros Macros
+				DigiTrace provides five core macros for trace output, which are:
+
+					- <TT>TRACE_R </TT> - for general printf style tracing. Subject to a total line limit of 256 chars.
+					- <TT>TRACE_PUTS_R </TT> - prints an arbitrary length buffer, splitting it up into clean lines based on line breaks. No formatting.
+					- <TT>STACKTRACE_R </TT> - for stack trace printing. See below.
+					- <TT>MEMTRACE_R </TT> - for memory buffer hex tracing
+					- <TT>FXTRACE_R </TT> - for automatic function entry and exit tracing
+				
+				@subsubsection digitrace__advancedlogging__macros__debugvsrelease Debug vs. release macros
+					All of the macros listed above are general-use macros, which generate output in both Debug and Release builds. They each have a debug-only variant which excludes the trailing "<TT>_R</TT>". Like \ref AAX_TRACE, these debug-only versions compile to a noop in release builds.
+					
+					The use of debug-only macros is not usually necessary due to the fact that release traces are encrypted and hidden from end users (but not from other developers.) As a best practice, we recommend using the "_R" version of a macro whenever possible. The debug versions of the macros should only be necessary in special circumstances where you specifically do not want to compile the code into release builds.
+					
+					For more information about tracing in release builds see \ref digitrace__tracingfromplugins__security
+				
+				@subsubsection digitrace__advancedlogging__macros__syntax Syntax
+					Adding a DigiTrace statement to your code is as easy as making a single function call thanks to DigiTrace's predefined macros. The basic macro syntax is:
+
+						\code
+						MACRO_NAME( TRACE_FACILITY_NAME [| TRACE_PRIORITY_LEVEL], MESSAGE_STRING )
+						\endcode
+				
+					Here is a code sample:
+				
+						\code
+						bool my_function(char*  data_buffer, int data_buffer_len)
+						{
+							 FXTRACE_R( DTF_PLUGINS_3P, "my_function" ); // Automatically trace function entry and exit.
+							 // You need only to specify a trace facility.
+
+							 OSErr err = FrobnicateBuffer(data_buffer, data_buffer_len);
+							 if( noErr != err )
+							 {
+								  TRACE_R( DTF_PLUGINS_3P | DTP_HIGH, "Couldn't frobnicate the buffer: %s", OSErrToString(err) );
+							 }
+							 else
+							 {
+								  int cBytesToTrace = 64;
+								  MEMTRACE( DTF_PLUGINS_3P | DTP_LOW, "Data after frobnication", data_buffer, cBytesToTrace );
+							 }
+						}
+						\endcode
+
+			@subsubsection digitrace__advancedlogging__stacktrace Generating stack traces
+				The <TT>STACKTRACE_R</TT> macro is very useful for getting stack traces of important events in the code like throwing errors (which can be thrown from many locations). One particularly useful feature of this macro is that it allows you to specify a facility and priority for the printf part of the stacktrace, e.g. <TT>DTP_NORMAL</TT>, and another one for the stacktrace step, e.g. <TT>DTP_LOW</TT>. See DigiTrace.h for a full list of macros and their documentation.
+				
+			@subsubsection digitrace__advancedlogging__disabletracing Turning off tracing in a specific file
+				You can explicitly disable tracing in an instrumented file in the build by defining the <TT>MTurnDbgTraceOff</TT> symbol at the top of the file.
+	
+		@subsection digitrace__tracingfromplugins__security Security concerns
+			Unless you provide your own logging encryption, DigiTrace logs are not secure and should not be used to store any sensitive information.
+
+			Logs generated by Pro Tools release builds on users' systems are encrypted. This is primarily for the sake of avoiding confusion in our user community, since DigiTrace logs can be cryptic and potentially misleading for users who are not familiar with our code.
+
+			Avid and other third-party developers will see your plug-ins' release trace statements if they load your plug-ins with the appropriate trace facilities enabled. We highly recommend that you keep this in mind when developing your trace statements, both in order to prevent confusion (see the formatting guidelines in the \ref AAX_TRACE_RELEASE documentation) and in order to maintain the security of your code.
+
+</DIV>
+
+	
+	
+	
+	
+<DIV CLASS="section">
+	@section digitrace__advancedconfiguration Advanced DigiTrace configuration
+		The basic configuration command to enable tracing for a facility is described above in \ref digitrace__configuring.
+		
+		There are also additional commands that can be added to the DigiTrace configuration file for more advanced configurations.
+		
+		@subsection digitrace__advancedconfiguration__commandformat Configuration command format
+			<UL>
+				<LI CLASS="Bullet">All DigiTrace configuration commands are listed in the configuration file with the form \<token\>=\<value\> </LI>
+				<LI CLASS="Bullet">Any blank line or line beginning with a '<TT>#</TT>' character is ignored </LI>
+				<LI CLASS="Bullet">Tokens are not case sensitive </LI>
+				<LI CLASS="Bullet">If there are repeated tokens in a file, the last token wins </LI>
+			</UL>
+
+		@subsection digitrace__advancedconfiguration__commands Advanced configuration commands
+			<UL CLASS="paragraphs">
+				<LI><TT>FileTracingDir = { DIRPATH } </TT>
+					<UL>
+						<LI>Default: <TT>USE_RELATIVE_PATH</TT> </LI>
+						<LI>Custom log file directory. e.g. "C:\MyTraceDir" on Windows or "~/MyTraceDir" on macOS. </LI>
+						<LI>If DIRPATH == USE_RELATIVE_PATH then the output trace file directory will be created next to the target application. </LI>
+					</UL>
+				</LI>
+				<LI><TT>Append = { true | false } </TT>
+					<UL>
+						<LI>Default: <TT>false</TT> </LI>
+						<LI>Append to file. If <TT>true</TT>, the output of this trace will be appended to any existing log file with the same name. Otherwise, this trace will overwrite an existing log file with the same name. </LI>
+					</UL>
+				</LI>
+				<LI><TT>LogFileLimit = { LIMIT } </TT>
+					<UL>
+						<LI>Default: no limit </LI>
+						<LI>Limits the number of log files kept around for this config file to the specified number. </LI>
+						<LI>If set to an integer value, DigiTrace will delete the oldest log file(s) until there are only N most recent log files in the output folder. </LI>
+						<LI>If you rename an output file so it does not have the standard prefix, it is never deleted by this option. </LI>
+						<LI>Does not work with the "append" option </LI>
+					</UL>
+				</LI>
+				<LI><TT>TraceQueueSize = { small | medium | large } </TT>
+					<UL>
+						<LI>Default: <TT>small</TT> </LI>
+						<LI>This controls the amount of memory allocated to the trace queue. You probably won't need to change it. </LI>
+					</UL>
+				</LI>
+				<LI><TT>BeQuiet = { true | false } </TT>
+					<UL>
+						<LI>Default: <TT>false</TT> </LI>
+						<LI>"Quiet" mode. If set to <TT>true</TT>, this configuration option makes all trace output occur without any decoration (i.e. no timestamps, no thread id, no process id, etc.). </LI>
+						<LI>This mode may be useful for some types of real-time vector tracing or for configuring formatted logs for post-processing with a text editor. </LI>
+					</UL>
+				</LI>
+				<LI><TT>FileId = { FILEID } </TT>
+					<UL>
+						<LI>Default: none </LI>
+						<LI>If set, this string is included in the filename created by DigiTrace for trace output files. </LI>
+						<LI>Does not work with the "append" option </LI>
+					</UL>
+				</LI>
+				<LI><TT>Name = { NAME } </TT>
+					<UL>
+						<LI>Default: none </LI>
+						<LI>If set, this string is included in every trace for all the facilities that are enabled in this config file. </LI>
+						<LI>You can have one of these per config file. </LI>
+					</UL>
+				</LI>
+			</UL>
+	
+		@subsection digitrace__advancedconfiguration__dynamicreconfiguation Dynamically changing the DigiTrace configuration
+			DigiTrace config files can be loaded dynamically, which means that you can add new configs while the instrumented application is running. Below are the details surrounding dynamic loading:
+			
+			<UL>
+				<LI CLASS="Bullet">In debug builds, this will happen each time the app comes to the foreground.
+ </LI>
+				<LI CLASS="Bullet">The API only does anything if something has changed in your config files that will result in different tracing of some sort. If nothing has changed, the overhead to make the call is < 1ms, and current tracing is not affected.
+ </LI>
+				<LI CLASS="Bullet">If something has changed, the changes are merged in to the existing config objects in memory. Active log files are not interrupted when possible. This takes around 200ms (mostly because of a sleep command that lets threads finish tracing things). Traces that happen in threads during this changeover will be dropped.
+ </LI>
+				<LI CLASS="Bullet">No code in the actual tracing commands was changed.
+ </LI>
+				<LI CLASS="Bullet">You can change any of the attributes of the trace facilities (priority level, file or console, etc).
+ </LI>
+				<LI CLASS="Bullet">You can add new config files on the fly, or if you start with no config file, you can add one on the fly.
+ </LI>
+			</UL>
+
+</DIV>	
+	
+	
+	
+	
+	
+	
+	
+<DIV CLASS="section">	
+	@section digitrace__compatibility Compatibility
+		DigiTrace is an internal testing and troubleshooting tool. Although we will try to provide up-to-date documentation so that third-party developers can use this tool, we may need to change the way that DigiTrace works at some point and so we cannot make any promises regarding forwards-compatibility.
+		
+		At the time of this writing:
+		- DigiTrace is fully compatible with Pro Tools 8.0.3 and later. DigiTrace is installed by default with compatible Pro Tools shipping versions and with some Pro Tools Development Builds.
+		- DigiTrace is compatible with all versions of the DAE dish in the DSH environment. Tracing must be explicitly enabled in the dsh executable by placing a config.digitrace config file next to the executable.
+		
+		If you notice significant bugs or other problems with DigiTrace in any Pro Tools release then we encourage you to report the issues to us on the developer forum. We may not be able to address issues immediately, but your feedback is appreciated.
+		
+	@section digitrace__additionalinformation Additional Information
+		@subsection digitrace__additionalinformation__confidentiality Confidentiality
+			As with all information provided in the AAX SDK, the information provided in this documentation is confidential and is bound by the terms of your NDA with Avid. You may provide customized DigiTrace configuration files to end users in order to generate useful debugging information on their systems. However, you may not provide users with decrypted DigiTrace logs or with other details provided in this DigiTrace documentation.
+	
+</DIV>
+
+*/

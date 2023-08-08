@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{b1b99dc7-1f81-4afb-bf6a-06f4934ff403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\AlgComponent">
+      <UniqueIdentifier>{0489074c-5367-4f03-b88b-a147761a54af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{fab75018-d4d0-4793-8b6a-5e46ac22b3a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{bb3acd52-8b60-4518-ad52-7d9070ea04db}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\RectiFi_Describe.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RectiFi_EffectParameters.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RectiFi_AlgProc.cpp">
+      <Filter>Sources\AlgComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Interfaces\AAX_Exports.cpp">
+      <Filter>Libs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\RectiFi_Describe.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\RectiFi_EffectParameters.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\RectiFi_Alg.h">
+      <Filter>Sources\AlgComponent</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary_x64.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_D.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_x64_D.lib">
+      <Filter>Libs</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary.lib">
+      <Filter>Libs</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

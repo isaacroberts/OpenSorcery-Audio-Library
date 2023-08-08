@@ -1,0 +1,216 @@
+/*===================================================================================================
+AAX_SDK_ExamplePlugIns.doxygen
+
+Copyright 2016-2017 by Avid Technology, Inc.
+All rights reserved.
+
+===================================================================================================*/
+
+
+
+/** @defgroup ExamplePlugIns Example Plug-Ins
+	@ingroup AdditionalInformation
+
+	@brief Descriptions of the SDK's example plug-ins
+
+\section examples SDK Example plug-ins
+
+This SDK includes the following example plug-ins.  These plug-ins are
+designed to demonstrate good %AAX plug-in design with varying levels of
+complexity.
+
+In general, the SDK includes one basic version of each example plug-in,
+as well as multiple variations on this basic version. Each of these
+variations demonstrates a particular feature or design approach. To see the
+specific changes that were made to implement a feature, compare the example
+plug-in variant that demonstrates the feature to the basic version of the
+plug-in.
+
+Aside from the GUI Extension examples, which are designed to work with
+third-party GUI frameworks, each sample plug-in should successfully
+compile "out of the box".  However, you may receive compilation errors
+during the plug-ins' post-build copy step due to the fact that compiled TI
+DLLs are not included with this SDK.
+
+
+\subsection basic_examples Basic examples
+
+These plug-ins provide complete working examples of %AAX plug-ins without a
+lot of extra features. Use these plug-ins as a starting point for
+understanding AAX.
+
+
+\subsubsection DemoGain
+DemoGain is the simplest example plug-in, incorporating a mono algorithm
+with gain and bypass parameters.
+
+
+\subsubsection DemoDist
+DemoDist demonstrates some more sophisticated techniques such as coefficient
+calculation and packaging, private data allocation, and multiple stem format
+support.  DemoDist also demonstrates some basic optimization strategies for
+improving real-time algorithmic performance.
+
+
+\subsubsection DemoDelay
+DemoDelay implements a basic delay algorithm. The variants of this example
+demonstrate a variety of alternative processing features provided by AAX.
+
+
+\subsubsection DemoMIDI_NoteOn
+DemoMIDI_Note on demonstrates basic MIDI input functionality.
+The example will create a step function with every Note On and Note
+Off message it receives. It also shows how to handle MIDI packages in
+the Data Model by overriding the
+\ref AAX_CEffectParameters::UpdateMIDINodes() method.
+
+
+\subsubsection RectiFi
+This is a fully ported version of the Recti-Fi plug-in from Avid's D-Fi
+suite.  For more information about Recti-Fi, see
+http://www.avid.com/plugins/d-fi
+
+\note The SDK's Recti-Fi example plug-in is currently out of date and
+does not accurately represent Avid's shipping Recti-Fi plug-in.
+
+
+
+\subsection feature_examples Feature examples
+
+Each of these plug-ins is a slight variation on one of the \ref basic_examples.
+Each feature example plug-in demonstrates a specific feature or a possible
+alternative design approach for the plug-in. Compare these plug-ins with the
+corresponding basic example plug-in when you want to understand how a feature or
+design should be applied to your own %AAX plug-ins.
+
+
+\subsubsection DemoGain_GUIExtensions
+These examples demonstrate the use of various native and third-party GUI
+frameworks with AAX.  The examples that use third-party frameworks are
+configured to link to static libraries that combine the SDK's \ref GUIExtensions
+"GUI Extensions" (located in /Extensions/GUI) and the applicable third-party GUI
+framework.  These libraries are not included in the SDK, and you will need
+to install the applicable framework SDK before it will be possible to
+compile these example plug-ins.
+
+
+\subsubsection DemoGain_LinkedParameters
+This example demonstrates parameter linking.  The plug-in is a stereo
+version of DemoGain, with options to link the left and right channels in
+two different modes.
+
+
+\subsubsection DemoGain_Smoothed
+This example demonstrates efficient algorithmic coefficient smoothing using a
+slight variation on the basic DemoGain plug-in algorithm.
+
+
+\subsubsection DemoGain_Background
+This example demonstrates a background routine for algorithm processing.
+This example also uses the %AAX
+\ref AuxInterface_DirectData "direct data interface" for communicating
+algorithmic delay to the plug-in's controller.
+
+
+\subsubsection DemoGain_DMA
+This example includes two Effects that demonstrate use of the
+Scatter/Gather and Burst DMA facilities in AAX.
+
+
+\subsubsection DemoGain_Multichannel
+This example demonstrates a multichannel plug-in configuration supporting all
+available point source stem formats.
+
+This plug-in also includes a simple example of gain-reduction metering, which
+can be used to test host features which use this data such as the
+\ref subsubsection__external_metering_and_internal_clip_ "gain reduction meters"
+in Pro Tools.
+
+
+\subsubsection DemoGain_UpMixer
+This example demonstrates conversion between different stem formats
+
+
+\subsubsection DemoGain_ParamValueInfo
+This example demonstrates an implementation of the
+\ref AAX_IACFEffectParameters::GetParameterValueInfo() "GetParameterValueInfo()"
+method, which is used to properly display certain parameter details on
+attached control surfaces. See
+\ref aax_page_table_guide_04_avid_center_section_page_tables in the
+\ref AAX_Page_Table_Guide.
+
+
+\subsubsection DemoDist_GenCoef
+This example demonstrates an alternative approach to parameter update
+handling.  It bypasses the packet dispatcher helper class and directly
+overrides \ref AAX_IEffectParameters::UpdateParameterNormalizedValue()
+"UpdateParameterNormalizedValue()" and
+\ref AAX_IEffectParameters::GenerateCoefficients() "GenerateCoefficients()".
+This approach may be appropriate for plug-ins that involve complex mapping
+between parameter updates, coefficient generation algorithms, and
+coefficient data packets.
+
+
+\subsubsection DemoDelay_HostProcessor
+This example includes two Effects that demonstrate the optional
+\ref AuxInterface_HostProcessor for advanced offline processing features.
+One Effect implements a simple offline delay line, while the other Effect
+implements the same delay line but  compensates for its delay when rendering
+to the timeline. This demonstrates how to manually compensate for inherent
+algorithmic delay in an offline processor.
+
+\note The output of offline plug-ins that do not use the
+\ref AuxInterface_HostProcessor will be automatically adjusted by the host
+host to account for any declared latency. The manual compensation technique
+demonstrated by DemoDelay_HostProcessor is \b only necessary in plug-ins that
+implement the \ref AuxInterface_HostProcessor, e.g. plug-ins that require
+nonlinear offline processing features.
+
+
+\subsubsection DemoDelay_Hybrid
+This example demonstrates the optional \ref additionalFeatures_Hybrid
+architecture for %AAX plug-ins. This plug-in implements a short delay line
+that is rendered in the high-latency hybrid context. It can be built and
+run for either %AAX Native or %AAX DSP.
+
+
+\subsubsection DemoDelay_DynamicLatencyComp
+This example demonstrates how to properly handle algorithmic latency changes
+at run-time. It uses a delay line to emulate a latency-inducing algorithm
+with varying latency based on the delay parameter setting. When the plug-in's
+latency compensation feature is enabled it declares this latency to the host.
+
+\compatibility
+The DemoDelay_DynamicLatencyComp example is compatible with Pro Tools 11.1
+and higher.
+
+
+\subsubsection DemoMIDI_Synth
+A basic synthesizer plug-in demonstrating use of an external object to
+manage the plug-in's state. %AAX Native plug-ins that are designed to work
+with a cross-format framework may use a similar design. This plug-in uses
+\ref AAX_CMonolithicParameters and therefore is %AAX Native only.
+
+
+\subsubsection DemoMIDI_Synth_AuxOutput
+A variation on \ref DemoMIDI_Synth demonstrating the
+\ref additionalFeatures_AOS feature. This instrument plug-in supports four
+independently-routable synthesizer objects.
+
+
+\subsubsection DemoMIDI_Sampler
+This simple "drum machine" style sampler plug-in demonstrates
+sample-accurate global and local MIDI input and the MIDI Transport
+interface.  This plug-in uses \ref AAX_CMonolithicParameters and
+therefore is %AAX Native only.
+
+
+
+\subsection deprecated_examples Deprecated Examples
+
+
+\subsubsection DemoGain_Delay
+\deprecated The DemoGain_Delay example is deprecated. See DemoDelay_HostProcessor
+
+
+ */

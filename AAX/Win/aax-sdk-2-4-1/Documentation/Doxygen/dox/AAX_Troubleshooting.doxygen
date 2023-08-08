@@ -1,0 +1,184 @@
+/*===================================================================================================
+AAX_Troubleshooting.doxygen
+
+Copyright 2019, 2021 by Avid Technology, Inc.
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup AAX_Troubleshooting Troubleshooting
+	@ingroup AdditionalInformation
+
+	@brief How to solve common issues
+
+	@section troubleshooting_contents Contents
+
+		@li @ref troubleshooting_loading
+		@li @ref troubleshooting_performance
+
+
+	@section troubleshooting_loading Plug-In Fails to Load in Shipping Pro Tools
+
+		If your plug-in fails to load in shipping Pro Tools with the message "The following plug-ins failed to load because they are not valid 64 bit AAX plug-ins" then the most likely reason is that the plug-in does not have a valid digital signature.
+
+		Your %AAX plug-ins will not be compatible with shipping versions of Pro Tools until they are digitally signed using tools provided by PACE Anti-Piracy, Inc. As an %AAX developer you can receive these tools free of charge. Read the \ref subsection__digital_signature_ section of the \ref AAX_Pro_Tools_Guide to learn about the digital signing requirements for compatibility with Pro Tools.
+
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG width="30%" alt="Digital signature check failure error" src="signature_check_failed.png" />
+		<DIV CLASS="imagecaption"></DIV>
+
+		To verify whether this failure is due to an invalid digital signature vs. some other library loading failure, check the Pro Tools @ref AAX_DigiTrace_Guide "log file". A failure caused by an invalid digital signature will result in log lines like the following:
+
+		@verbatim
+Sys_PACE::GetDigitalSignature - looking for Eden dsig for path "/Applications/ProTools/Plug-Ins/DemoGain_example.aaxplugin/"
+Sys_PACE::GetDigitalSignature - dsig error name /Applications/ProTools/Plug-Ins/DemoGain_example.aaxplugin/ 0
+legacy Dsig check disabled??
+Sys_PACE::GetDigitalSignature - did NOT get valid dsig /Applications/ProTools/Plug-Ins/DemoGain_example.aaxplugin/
+Plug-In Binary "DemoGain_example.aaxplugin" failed to load with err = -7054.
+Plug-In Binary "DemoGain_example.aaxplugin" 1.0 : Failed to load.
+		@endverbatim
+
+		Another way to check whether a plug-in's digital signature is invalid is to test the plug-in in a Pro Tools developer build or with the @ref DSH_Guide "DigiShell" utility. If the plug-in successfully loads and runs in these tools but not in a shipping build of Pro Tools then it is very likely that the problem is in the plug-in's digital signature.
+
+		If you are having an issue running the signing tools then please check this list of the most common failure points:
+
+		<OL>
+			<LI CLASS="List">
+				Bad command line arguments for @c wraptool
+			</LI>
+			<LI CLASS="List">
+				An invalid developer certificate
+			</LI>
+			<LI CLASS="List">
+				An expired developer certificate
+			</LI>
+			<LI CLASS="List">
+				The Eden Tools license is not activated to your iLok USB key
+			</LI>
+			<LI CLASS="List">
+				Your code signing certificate is not installed on your iLok USB key
+			</LI>
+			<LI CLASS="List">
+				For Mac, the Xcode command line tools are not installed on your signing system
+			</LI>
+			<LI CLASS="List">
+				The plug-in bundle itself is malformed and will not load
+			</LI>
+			<LI CLASS="List">
+				The plug-in bundle is being modified at some point after being signed, thereby invalidating its digital signature
+			</LI>
+		</OL>
+
+		If a digital signature was successfully applied to an %AAX plug-in at one point in the build process but now the plug-in fails to load due to a bad signature then the most likely reason is that someone or something has altered the signature or the contents of the .aaxplugin bundle thereby invalidating the signature. The most common reason for a digital signature to become invalidated is that something is changed within the .aaxplugin bundle when moving between different systems or when archiving/unarchiving.
+
+		Several things can cause this kind of signature invalidation. Here are some examples:
+		- If symlink are not preserved when copying the plug-in
+		- If there was some actual tampering of the plug-in after the build
+		- If there is corruption of the plug-in binary itself
+		- If the .aaxplugin bundle contains one or more file names with exotic characters which change representations when moved between filesystems with different character encoding schemes
+
+		Note that the %AAX digital signature covers the entire .aaxplugin bundle so any actions which affect the contents of this bundle in any way after signing will invalidate the bundle's digital signature.
+
+		If the failure is occurring on an isolated system then replacing the .aaxplugin which has an invalidated signature with an original, untampered copy (e.g. via a reinstall) should resolve this issue.
+
+		If the failure is occurring only one certain systems then try archiving and copying the failing plug-ins back to a system where the plug-in loads successfully then comparing the archived copy to a known successful copy to see if there are any differences to the file names or binary contents of the files within the bundle.
+
+
+
+	@section troubleshooting_performance Plug-In Causes Audio Streaming Errors
+
+		\sa \ref advancedTopics_RealTimePerformance
+
+		The algorithm callback in audio plug-ins is executed within a complex real-time environment, often with tight deadlines for not only the plug-in itself but for other plug-ins participating in the same processing chain. The real-time threading model is managed outside of the plug-in and may be different across different plug-in hosts and formats. Sometimes, things go wrong and a deadline is missed.
+
+		&nbsp;
+
+		&nbsp;
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG width="25%" alt="Processing thread utilization during a sporadic audio streaming error" src="system-usage-window-error.png" />
+		<DIV CLASS="imagecaption">
+		Figure 1: Processing thread utilization during a sporadic audio streaming error</DIV>
+
+		This can happen naturally when the system is loaded to capacity and the CPU simply does not have time to complete all of the work required by the plug-in algorithm routine before the processing deadline. Most ofen, however, audio processing errors occur in situations when there ought to be more than enough time to do all of the work required by the plug-in. As shown in the image above, the real-time threads can appear to have low CPU utilization and plenty of overhead, then suddenly a deadline is missed. What happened?
+
+		In most cases, audio engine errors occur when a single plug-in instance significantly overruns the processing deadline. The instance usually processes quickly in prior executions and does not give any indication of impending doom.
+
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG width="50%" alt="Call execution times for three plug-in instances in a chain" src="aax-buffer-overrun-blocks.png" />
+		<DIV CLASS="imagecaption">
+		Figure 2: Call execution times for three plug-in instances in a chain</DIV>
+
+		There are many reasons why this can happen. One excellent tool for evaluating these kinds of failures on macOS is the <TT>ktrace</TT> utility. This utility collects system calls, thread interactions, and backtraces similar to Instruments data in a simple command line tool. This can provide a detailed view of the state of the system leading up to an audio streaming error, and can be used to capture logs on any Mac system, even those without special developer tools installed. Once the tool is running there is a minimal performance impact. Avid provides a ktrace capture utility for use with Pro Tools that can trigger captures based on Pro Tools audio engine errors. You can download this tool from the %AAX SDK downloads area.
+		
+		\nodox Image files must be copied to the /output/html directory \endnodox
+		<IMG width="25%" alt="Beginning in Pro Tools 2021.6, this dialog is presented when a plug-in significantly overruns its deadline" src="audio-processing-deadline-not-met.png" />
+		<DIV CLASS="imagecaption">
+		Figure 3: Beginning in Pro Tools 2021.6, this dialog is presented when a plug-in significantly overruns its deadline</DIV>
+
+		Here are some of the culprits that Avid has found when investigating these kinds of performance issues using ktraces and similar utilities. Use these examples as a guide for the kinds of things to watch out for in your plug-ins, especially when you hear reports that your plug-ins may be triggering sporadic audio engine errors.
+
+		<UL CLASS="paragraphs">
+			<LI>
+				<DIV CLASS="SectionHead">
+					System calls, C++ library calls, and other language features' call synchronization
+				</DIV>
+
+				When tracking down intermittent performance issues, watch for any calls into the standard C++ library or any use of higher-level language features that are not explicitly designed for real-time use.
+				
+				You should never trust that STL and C++ library implementations are safe to use in a real time context. Of course STL containers are not thread safe, but in real-time code you should avoid all use of C++ library functions, not just containers, unless you are certain that the library implementation you are using will have no performance related side effects.
+				
+				For example, in some macOS versions <TT>std::clock</TT> will take a kernel mutex, causing an unexpected priority inversion with any lower-priority thread using <TT>std::clock</TT> at the same time.
+
+				Furthermore, the runtime features of higher-level languages are often not designed for running in real time. Objective-C and Swift messaging calls can take locks and should never be used in a real time thread and other languages' features are similarly out of your control as a developer. Avoid them in your algorithm logic.
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Other components and libraries
+				</DIV>
+
+				Similarly, any third-party component or library should not be used from the real-time thread unless it is explicitly designed for use in this context. It can sometimes be difficult to track calls into library code, especially if the library use is not isolated to a particular function in the plug-in such as its graphics or signal processing. Be particularly careful to isolate the plug-in's algorithm logic when using general-purpose libraries that serve multiple functions in a plug-in or when using objects that combine multiple functions.
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Synchronization within the plug-in
+				</DIV>
+
+				Any synchronization of data access within a plug-in must be performed in a way such that the real-time algorithm can never block on a resource held by a lower priority thread.
+				
+				In an %AAX plug-in, parameter changes are applied on a different thread than audio processing. %AAX includes a system for synchronizing delivery of parameter updates to the algorithm at the correct time without requiring any synchronization by the plug-in, and you are strongly encouraged to understand the details of how @ref advancedTopics_ParameterUpdates "parameter updates" work, in particular how the @ref advancedTopics_parameterUpdateTiming "parameter update timing" is achieved and how to implement proper timing and synchronization even in a plug-in that does not use a standard decoupled algorithm callback.
+
+				Be particularly careful if you do not use this sytem for decoupling and if instead your plug-in shares access to the same data between its algorithm and other logic, even if you are using a third party framework. If your plug-in triggers sporadic deadline misses in the host engine then this can be a productive area to inspect
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					File access
+				</DIV>
+
+				File access can accidentally creep into the logic executed by a plug-in algorithm, causing random but severe timing failures. Check to make sure that your plug-in cannot possibly trigger any logging to a file from the audio processing thread. Even having a file handle open on the processing thread can cause performance problems: the OS may trigger a flush on such an open file during a filesystem synchronization event, causing the thread to block despite there being no explicit file I/O operations performed.
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Virtual memory faults
+				</DIV>
+
+				If your plug-in frequently accesses large amounts of data then be sure to check for possible virtual memory faults in any logs concerning audio buffer overruns. Avoid any access to paged memory or files from within the plug-in's real-time code.
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Memory allocation
+				</DIV>
+
+				Memory allocation is the classic example of what not to do in a real-time thread, yet it can be quite difficult to track down. There are no guarantees for the time that a <TT>malloc</TT> call may execute; the call may even need to page memory in from disk in order to complete. It can be very difficult to determine whether any particular call can result in memory allocation, and this underscores the total control that you must take over your plug-in's algorithm logic. Every operation performed within the audio processing thread must be guaranteed to be free of memory allocation, which requires a deep understanding and control over the implementation of all methods called from the algorithm.
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					User authorization and copy protection
+				</DIV>
+
+				Some copy protection schemes will helpfully scatter authorization checks throughout your code, relieving you of that chore. Be sure to exclude your plug-in's real-time logic from this process. Authorization checks are complex and can take multiple milliseconds to complete, or more if they involve external licensing hardware or contact with an external server.
+			</LI>
+		</UL>
+
+
+*/

@@ -1,0 +1,13 @@
+//        Copyright 2016, 2021 by Avid Technology, Inc.
+digraph aax_ieffectparams_contained {
+	graph [ fontname=Helvetica ];
+	node [shape=record, fontname=Helvetica, fontsize=10];
+	
+	subgraph cluster_cdata {
+		label="AAX_CEffectParameters";
+		URL="\ref AAX_CEffectParameters";
+		cparam [ label="AAX_CParameterManager" URL="\ref AAX_CParameterManager"];
+		chunk [ label="AAX_CChunkDataParser" URL="\ref AAX_CChunkDataParser"];
+		cpacket [ label="AAX_CPacketDispatcher" URL="\ref AAX_CPacketDispatcher"];
+	}
+}

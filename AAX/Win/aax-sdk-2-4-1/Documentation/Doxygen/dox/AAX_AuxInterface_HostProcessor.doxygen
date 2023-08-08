@@ -1,0 +1,37 @@
+/*===================================================================================================
+AAX_AuxInterface_HostProcessor.doxygen
+
+Copyright 2011-2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+
+/** @defgroup AuxInterface_HostProcessor Offline processing interface
+	@ingroup AdditionalFeatures
+	
+	@brief Advanced offline processing features
+		
+		<EM>This interface represents an optional component that you can add to your plug-in in order to
+		support extended features of the %AAX SDK.</EM>
+
+		The HostProcessor interface provides offline plug-ins with useful offline processing features
+		such as random-access facilities and a non-processing analysis callback. For documentation,
+		see the following classes:
+		- \ref AAX_CHostProcessor "Host processor module"
+		- \ref AAX_IACFHostProcessorDelegate "Host processor delegate"
+		
+		To add this interface to your plug-in at describe time, register a
+		\ref AAX_IEffectDescriptor::AddProcPtr "ProcPtr" using the
+		\ref kAAX_ProcPtrID_Create_HostProcessor selector.
+		
+		\note
+		If your plug-in does not require the specific offline processing features provided by this
+		interface then it should not register a host processor. Instead, register an offline version
+		of the plug-in's real-time algorithm using the \ref AAX_eProperty_PlugInID_AudioSuite property.
+		
+*/
+
+
+

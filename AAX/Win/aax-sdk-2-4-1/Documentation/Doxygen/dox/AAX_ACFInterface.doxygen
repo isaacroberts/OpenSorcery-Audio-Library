@@ -1,0 +1,352 @@
+﻿/*===================================================================================================
+AAX_ACFInterface.doxygen
+
+This file includes minimal documentation for ACF.  ACF classes that are
+used by common AAX interfaces are included in-line below and added to
+the ACFInterface_Elements group.
+
+Copyright 2016, 2018 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup ACFInterface The Avid Component Framework (ACF)
+	
+	@brief How the %AAX C++ interfaces work
+	
+	\ingroup AdvancedTopics
+
+		The objects and interfaces in %AAX are based on the Avid Component Framework (ACF). The ACF is 
+		Avid’s implementation of COM, and is the framework that %AAX, as well as AVX (Avid Video 
+		Externsions) plug-ins are built on.
+		
+		ACF can be considered an implementation detail of the %AAX SDK; the SDK is written to protect 
+		plug-in developers from the intricacies of ACF, and it is not necessary to understand ACF or 
+		COM in order to use the SDK.
+		
+		\section details More details
+	
+		As in COM, ACF draws a distinction between the concept of an object and the concept of an 
+		interface. An object is treated as a "black box" of code, whereas an interface is a class of 
+		pure virtual methods that allows one to access the functionality inside the object. An object 
+		in ACF is represented by the \ref IACFUnknown interface, which is binary compatible with the COM 
+		class IUnknown. (Likewise, \ref IACFUnknown follows the same reference counting rules as IUnknown 
+		objects.) This interface allows a client to get pointers to other interfaces on a given object 
+		using the \ref IACFUnknown::QueryInterface() "QueryInterface()" method.
+	
+		Reference counting is an important aspect of both COM and ACF. Simply put, reference counting 
+		is the practice of tracking all references to an object, so that a program can determine when 
+		the object can safely be deleted. The %AAX SDK library handles this reference counting behind 
+		the scenes, so plug-ins that call into the SDK library to manage their component interfaces 
+		will not leak references.
+		
+		Many additional resources can be found both online and print that cover COM and reference 
+		counting in greater detail.
+		
+		
+		\section acf_in_aax ACF interfaces in AAX
+		
+		The binary interface between an %AAX plug-in and host is defined by a series of ACF interfaces.  
+		Each of these interfaces inherits from \ref IACFUnknown.  The implementation of each ACF interface 
+		typically uses \c CACFUnknown, a utility class that provides basic reference counting and 
+		additional fundamental ACF details to satisfy \ref IACFUnknown.
+		
+		These ACF interfaces may be implemented by either the %AAX plug-in or the host.  The host retains a 
+		reference to each interface that is implemented by the plug-in in order to call methods on the 
+		plug-in's implementation.  Correspondingly, the plug-in retains references to various interfaces 
+		that are implemented by the host, and may call host methods via these interfaces.
+		
+		\dotfile aax_acf_versioning_plug-in.dot "ACF interfaces: AAX_IACFEffectParameters and AAX_IACFController"
+		
+		The figure above demonstrates this design: the plug-in implements \ref AAX_IACFEffectParameters 
+		directly, and retains a reference to an \ref AAX_IACFController that is implemented by the host.
+		
+		In order to implement \ref AAX_IACFEffectParameters, \ref AAX_IEffectParameters inherits from \c 
+		CACFUnknown and implements \ref IACFUnknown::QueryInterface() "QueryInterface()" to ensure that the 
+		\ref IACFUnknown interface is implemented.  The rest of the implementation of
+		\ref AAX_IACFEffectParameters is contained in \ref AAX_CEffectParameters and the plug-in's custom 
+		data model class.
+		
+		The reference to \ref AAX_IACFController is managed by a versioned implementation class.  For more 
+		information about this design, see below.
+		
+		
+		\section using_acf Using ACF interfaces
+		
+		Depending on where an interface is implemented, there are two specific ways to acquire a reference 
+		to the underlying %AAX object from an \ref IACFUnknown pointer:
+		
+		\li \ref using_acf_host_provided_interfaces
+		\li \ref using_acf_plug_in_interfaces
+		
+			\subsection using_acf_host_provided_interfaces Host-provided interfaces
+			Interfaces that are managed by the host must be carefully version-controlled in order to
+			maintain compatibility with many different host versions.  The %AAX SDK includes "AAX_V"
+			classes to handle this versioning.  AAX_V classes are concrete classes that query the host for
+			the correct version of the requested interface.  These classes can also handle re-routing
+			deprecated calls and other complicated versioning logic.
+
+			To create an AAX_V object, pass an IACFUnknown pointer to the underlying host-managed
+			interface in to the AAX_V class' constructor.  ACF reference counting is handled automatically
+			by the object's construction and destruction routines, so no additional calls are necessary to
+			acquire and release the reference.
+			
+\code
+#include "AAX_VController.h"
+
+void SomeFunction (IACFUnknown * inController)
+{
+	// When object is created, a reference is acquired
+	AAX_VController theController (inController);
+	
+	//
+	// ...
+	//
+	
+	// When object goes out of scope, the reference is released
+}
+\endcode
+			
+			\subsection using_acf_plug_in_interfaces Plug-in interfaces
+			
+			Interfaces to objects that are owned by the plug-in always have a known version and therefore
+			do not require AAX_V object management.  Instead, these interfaces must be acquired and
+			released directly using ACF.
+			
+\code
+#include "AAX_UIDs.h"
+#include "AAX_Assert.h"
+#include "AAX_IEffectParameters.h"
+#include "acfunknown.h"
+
+void SomeFunction (IACFUnknown * inController)
+{
+	// When interface is queried, a reference is acquired
+	if ( inController )
+	{
+		AAX_IEffectParameters* myEffectParameters = NULL;
+		ACFRESULT acfErr = ACF_OK;
+		acfErr = inController->QueryInterface(
+			IID_IAAXEffectParametersV1,
+			(void **)&myEffectParameters);
+		
+		AAX_ASSERT(ACFSUCCEEDED(acfErr));
+	}	
+	
+	//
+	// ...
+	//
+	
+	// The reference must be explicitly released when finished
+	if (myEffectParameters)
+	{
+		myEffectParameters->Release();
+		myEffectParameters = NULL;
+	}
+}
+\endcode
+		
+		
+		\section ACF Interface versioning in AAX
+		
+		The ACF-based interface used by %AAX is designed to allow additional features to be added to the 
+		architecture.  This can be achieved via the addition of new kinds of interfaces (e.g.
+		\ref AAX_IEffectDirectData) or by extending the existing interfaces.  In this section, we will 
+		describe an approach for interface extension.
+		
+		First, here is a more complete picture of "version 1" of the \ref AAX_IACFEffectParameters and \ref 
+		AAX_IACFController interfaces, including a possible host implementation of
+		\ref AAX_IACFController :
+		
+		\dotfile aax_acf_versioning_full.dot "ACF interfaces: AAX_IACFEffectParameters and AAX_IACFController (with possible host design)"
+		
+		To extend these interfaces, new "version 2" interfaces are created that inherit from the original 
+		interface classes.  Although any version 1 method could be called on the new version 2 class, 
+		references to each interface are retained by the client in order to clarify the specific version 
+		in which each method was introduced.
+		
+		\dotfile aax_acf_versioning_plug-in_v2.dot "Adding a new version to AAX_IACFEffectParameters and AAX_IACFController"
+		
+		In this example, if the plug-in is loaded by an older host, the reference to \c 
+		AAX_IACFControllerV2 will return as \c NULL, and calls to the V2 methods in \ref AAX_IController 
+		will return an "unimplemented" error code.  Similarly, if a plug-in that only implements \ref 
+		AAX_IACFEffectParameters is loaded into a host that supports \c AAX_IACFEffectParametersV2, that 
+		host will receive a \c NULL reference to the newer interface version and will only be able to call 
+		methods on the plug-in's implementation of the original interface.
+		
+		As a final example, here is a possible design involving new versions of both \ref AAX_IACFEffectParameters and \ref AAX_IACFController, with an example design for the host's implementation as well as the plug-in's:
+		
+		\dotfile aax_acf_versioning_full_v2.dot "Complete design example with versioned ACF interfaces"
+*/
+
+
+
+
+
+
+
+
+
+
+
+ 
+/** @defgroup ACFInterface_Elements ACF Elements
+ 	@ingroup ACFInterface
+	
+	@brief ACF classes that are used by common %AAX interfaces
+*/
+
+
+
+
+
+
+
+
+
+
+/*!
+    \typedef acfUID
+    \brief GUID compatible structure for ACF.
+*/
+typedef struct _acfUID {
+	uint32_t Data1;
+	uint16_t Data2;
+	uint16_t Data3;
+	uint8_t  Data4[8];
+} acfUID;
+
+
+/*!
+    \typedef acfIID
+    \brief IID compatible structure for ACF.
+*/
+typedef acfUID acfIID;
+
+
+/*!
+    \interface IACFUnknown
+    \brief COM compatible IUnknown C++ interface.
+    \remarks
+     The methods of the IACFUnknown interface, implemented by all ACF objects, supports
+     general inter-object protocol negotiation via the \c QueryInterface method, and object
+     lifetime management with the AddRef and Release methods.
+
+     \note Because AddRef and Release are not required to return accurate values, callers
+     of these methods must not use the return values to determine if an object is still
+     valid or has been destroyed. (Standard M*cr*s*ft disclaimer)
+
+     For further information please refer to the Microsoft documentation for IUnknown.
+
+     \note This class will work only with compilers that can produce COM-compatible object
+     layouts for C++ classes.  egcs can not do this.  Metrowerks can do this (if you
+     subclass from __comobject).
+     
+     \ingroup ACFInterface_Elements
+ */
+class IACFUnknown
+{
+public:
+	BEGIN_ACFINTERFACE
+
+//	virtual ~IACFUnknown() {}
+
+/*!
+    \brief Returns pointers to supported interfaces.
+    \remarks
+    The QueryInterface method gives a client access to alternate interfaces implemented by
+    an object. The returned interface pointer will have already had its reference count
+	incremented so the caller will be required to call the Release method.
+    \param iid Identifier of the requested interface
+    \param ppOut Address of variable that receives the interface pointer associated with iid.
+ */
+	virtual ACFRESULT ACFMETHODCALLTYPE QueryInterface (const acfIID & iid, void ** ppOut) = 0;
+
+/*!
+    \brief Increments reference count.
+    \remarks
+     The AddRef method should be called every time a new copy of an interface is made. When
+     this copy is no longer referenced it must be released with the Release method.
+ */
+	virtual acfUInt32 ACFMETHODCALLTYPE AddRef (void) = 0;
+
+/*!
+    \brief Decrements reference count.
+    \remarks
+	Use this method to decrement the reference count. When the reference count reaches zero the
+	object that implements the interface will be deleted.
+ */
+	virtual acfUInt32 ACFMETHODCALLTYPE Release (void) = 0;
+};
+
+/*!
+   \interface IACFDefinition
+   \brief Publicly inherits from IACFUnknown.This abstract interface is used to indentify all of the plug-in components in the host.
+   \remarks
+    This interface is the base class for both plug-in and component definitions. All defined 
+    attributes are read only.
+    
+    \note This interface does not provide any attribute enumeration. You must know the uid of the associated 
+    with the attribute that you need to find.
+   \note This interface is implemented by the host. 
+     The plug-in will use this interface to define optional attributes for both plug-in and
+    component implementations classes.
+ */
+
+class IACFDefinition : public IACFUnknown
+{
+public:
+
+/*!
+   \b DefineAttribute
+   \brief Add a read only attribute to the definition.
+   \remarks
+    Use the method to define additional global attributes for you component. This
+    method will fail if the attribute has already been defined.
+    
+   \param attributeID Unique identifier for attribute
+   \param typeID Indicates the type of the attribute data
+   \param attrData Pointer to buffer that contains the attribute data
+   \param attrDataSize Size of the attribute buffer
+ */
+    virtual ACFRESULT ACFMETHODCALLTYPE DefineAttribute (
+        const acfUID& attributeID,
+        const acfUID& typeID,
+        const void *attrData,
+        acfUInt32 attrDataSize
+    ) = 0;
+
+
+/*!
+   \brief Returns information about the given attribute.
+   \remarks
+    Use this method to retrieve the type and size of a given attribute.
+   \param attributeID Unique identifier for attribute
+   \param typeID Indicates the type of the attribute data
+   \param attrDataSize Size of the attribute data
+ */
+    virtual ACFRESULT ACFMETHODCALLTYPE GetAttributeInfo (
+        const acfUID& attributeID,
+        acfUID * typeID,
+        acfUInt32 * attrDataSize
+    ) = 0;
+
+
+/*!
+   \b CopyAttribute
+   \brief Copy the a given attribute.
+   \remarks
+    Use this method to access the contents of a given attribute.
+   \param attributeID Unique identifier for attribute
+   \param typeID Indicates the type of the attribute data
+   \param attrData Pointer to buffer to copy the attribute data
+   \param attrDataSize Size of the attribute buffer
+ */
+    virtual ACFRESULT ACFMETHODCALLTYPE CopyAttribute (
+        const acfUID& attributeID,
+        const acfUID& typeID,
+        void *attrData,
+        acfUInt32 attrDataSize
+    ) = 0;
+
+};

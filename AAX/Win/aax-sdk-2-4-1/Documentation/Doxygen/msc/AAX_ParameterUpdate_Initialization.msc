@@ -1,0 +1,46 @@
+/*===================================================================================================
+
+Copyright 2016 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+msc {
+	// Display properties
+	hscale = "1";
+	
+	// Declare entities
+	 host              [label = "Host", textbgcolor = "#edebff", arctextbgcolor = "#edebff"]
+	,plugin            [label = "Plug-In", textbgcolor = "#eafbef", arctextbgcolor = "#eafbef"]
+	;
+	
+	// -------------------
+	|||;
+	|||;
+	host note plugin [label = "Initialization", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	host rbox host [label = "For each parameter"];
+	host => plugin [label = "AAX_IEffectParameters::GetParameterDefaultNormalizedValue()", URL = "AAX_IACFEffectParameters::GetParameterDefaultNormalizedValue()"];
+	plugin >> host [label = "value"];
+	
+	host => plugin [label = "AAX_IEffectParameters::UpdateParameterNormalizedValue()\niSource: AAX_eUpdateSource_Unspecified", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	... [label = "(see sequence above)"];
+	plugin >> host;
+	
+	host rbox host [label = "Following all parameter updates"];
+	host => plugin [label = "AAX_IEffectParameters::GenerateCoefficients()", URL = "\ref AAX_IEffectParameters::GenerateCoefficients()"];
+	... [label = "(see sequence above)"];
+	plugin >> host;
+	
+	|||;
+	... [label = "Timestamp synchronization with real-time thread"];
+	|||;
+	
+	host rbox host [label = "PostPacket() processed"];
+	host -> plugin [label = "Update algorithm context", linecolor = "gray"];
+	
+	
+	// [label = "", URL = "\ref "];
+		
+}

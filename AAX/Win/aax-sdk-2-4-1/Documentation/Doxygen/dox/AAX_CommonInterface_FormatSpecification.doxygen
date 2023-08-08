@@ -1,0 +1,140 @@
+/*===================================================================================================
+AAX_CommonInterface_FormatSpecification.doxygen
+
+Copyright 2016, 2018 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup CommonInterface_FormatSpecification AAX Format Specification	
+	@ingroup MainInterface
+	
+	@brief Additional requirements for %AAX plug-ins
+	
+	This document describes aspects of the %AAX plug-in format specification that are beyond the scope of the \ref MainInterface "common interface classes and callbacks" that the plug-in must implement.
+	
+<DIV CLASS="section">
+	@section commoninterface_formatspecification__aaxplugin_directory_structure .aaxplugin Directory Structure
+%AAX uses a bundle packaging format. On OS X, %AAX plug-ins are built as standard OS bundles, while on Windows they are simple directories. All %AAX plug-in bindles must use the .aaxplugin extension and the following directory structure:
+
+<UL CLASS="paragraphs">
+	<LI>
+		/Contents
+		<UL CLASS="paragraphs">
+			<LI>
+				/Resources
+				<UL CLASS="paragraphs">
+					<LI>
+						<EM CLASS="Italic">This directory contains all of the additional resource files that will be needed by the plug-in at run time such as DSP algorithm DLLs, XML page tables, and image files for the plug-in's GUI</EM>
+					</LI>
+				</UL>
+			</LI>
+		</UL>
+		<UL CLASS="paragraphs">
+			<LI>
+				/MacOS
+				<UL CLASS="paragraphs">
+					<LI>
+						<EM CLASS="Italic">Contains the plug-in's OS X binary (Mach-O)<SUP>*</SUP></EM>
+					</LI>
+				</UL>
+			</LI>
+		</UL>
+		<UL CLASS="paragraphs">
+			<LI>
+				/Win32 
+				<UL CLASS="paragraphs">
+					<LI>
+						<EM CLASS="Italic">Contains the plug-in's Windows x86 binary<SUP>*</SUP></EM>
+					</LI>
+				</UL>
+			</LI>
+		</UL>
+		<UL CLASS="paragraphs">
+			<LI>
+				/x64
+				<UL CLASS="paragraphs">
+					<LI>
+						<EM CLASS="Italic">Contains the plug-in's Windows x64 binary<SUP>*</SUP></EM>
+					</LI>
+				</UL>
+			</LI>
+		</UL>
+		<UL CLASS="paragraphs">
+			<LI>
+				/Factory Presets <EM CLASS="Italic">(optional) </EM>
+				<UL CLASS="paragraphs">
+					<LI>
+						<EM CLASS="Italic">This directory includes built-in plug-in presets. For more information, see \ref subsection__presets_and_settings_management in the \ref AAX_Pro_Tools_Guide documentation</EM>
+					</LI>
+				</UL>
+			</LI>
+		</UL>
+		<UL CLASS="paragraphs">
+			<LI>
+				PkgInfo <EM CLASS="Italic">(OS X only) </EM>
+				<UL CLASS="paragraphs">
+					<LI>
+						<EM CLASS="Italic">This file must include the concatenation of the plug-in's <TT>CFBundlePackageType</TT> (<TT>TDMw</TT>) and <TT>CFBundleSignature</TT> (<TT>PTul</TT>)</EM>
+					</LI>
+				</UL>
+			</LI>
+		</UL>
+		<UL CLASS="paragraphs">
+			<LI>
+				Info.plist <EM CLASS="Italic">(OS X only) </EM>
+				<UL CLASS="paragraphs">
+					<LI>
+						<EM CLASS="Italic">The plug-in's property list</EM>
+					</LI>
+				</UL>
+			</LI>
+		</UL>
+	</LI>
+	<LI>
+		desktop.ini (Windows only)
+		<UL CLASS="paragraphs">
+			<LI>
+				<EM CLASS="Italic">The .aaxplugin directory's view resource file, used to set its custom icon in Windows Explorer</EM>
+			</LI>
+		</UL>
+	</LI>
+	<LI>
+		PlugIn.ico (Windows only)
+		<UL CLASS="paragraphs">
+			<LI>
+				<EM CLASS="Italic">Custom plug-in icon file</EM>
+			</LI>
+		</UL>
+	</LI>
+</UL>
+
+<SUP>*</SUP>See the following compatibility notes
+\compatibility \li The plug-in's binary filename must be the same as the outer .aaxplugin bundle name
+\compatibility \li On Windows, the plug-in binary (DLL) must use the ".aaxplugin" suffix; i.e. the DLL must use exactly the same name as the outer .aaxplugin folder. On OS X, the plug-in binary does not require a specific suffix.
+\compatibility \li On Windows, the plug-in's binary filename (and therefore also the outer .aaxplugin file name) must not contain any spaces. There is a bug in AAE that will prevent binaries with spaces from being loaded properly. This is logged as PTSW-189928.
+
+\note This directory structure is also used for plug-in installer directories in the VENUE plug-in installer system. See \ref aax_venue_guide__installer for more information.
+
+</DIV>
+
+
+<DIV CLASS="section">
+		@section commoninterface_formatspecification__required_symbols Required Symbols
+The following symbols are required in any %AAX plug-in and must not be stripped from the binary:
+<UL CLASS="paragraphs">
+<LI><TT>_ACFRegisterPlugin </TT></LI>
+<LI><TT>_ACFRegisterComponent </TT></LI>
+<LI><TT>_ACFGetClassFactory </TT></LI>
+<LI><TT>_ACFCanUnloadNow </TT></LI>
+<LI><TT>_ACFStartup </TT></LI>
+<LI><TT>_ACFShutdown </TT></LI>
+<LI><TT>_ACFGetSDKVersion </TT><SUP>*</SUP></LI>
+</UL>
+
+\compatibility
+<SUP>*</SUP><TT>_ACFGetSDKVersion</TT> is required for 64-bit %AAX plug-ins only
+
+</DIV>
+
+*/

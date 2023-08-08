@@ -1,0 +1,105 @@
+/**
+
+Theme Name: DSE
+
+Author URI: http://developer.digidesign.com
+
+Theme URI: http://developer.digidesign.com
+
+Version: 1.0
+
+Author: DSE
+
+Description: A simple 2-column theme with different color schemes enhanced by AJAX menu.
+
+Note: Please keep this synched up with the Wiki CSS, found at /var/lib/mediawiki/skins...
+
+ White-ish Font Color: #c5c5c5
+ Font White-ish bold: #cfcfcf
+ Grey font: #6f6f6f
+ Background-Dark: #191919
+ Background-Dark2: #252525
+
+ Font type: 
+
+*/
+
+* {margin:0; padding:0;}
+
+body { background:url(images/bg.jpg) repeat-x #191919; color:#c5c5c5; font-size:12px; font-family:Arial, Helvetica, sans-serif; }
+
+.c, .clear {clear:both;}
+a {font-weight:bold; color:#cfcfcf; text-decoration:none;}
+a:hover {color:#ffffff}
+a img {border:none;}
+
+#wrap {width:813px; margin:0 auto;}
+
+#header { height:63px; padding:64px 0 0 21px; position:relative; font-family:"Trebuchet MS", Arial;}
+#header h1 { font-size:30px; position:absolute; left:15px; top:60px;}
+#header h2 { font-size:12px; position:absolute; left:55px; top:100px;}
+
+#menu {height:71px;}
+#menu .l { background:url(images/menu_l.jpg); width:13px; height:71px; float:left;}
+#menu .r { background:url(images/menu_r.jpg); width:13px; height:71px; float:left;}
+#menu .bg {background:url(images/menu_bg.jpg); height:71px;  float:left; width:787px; }
+
+#contentwrap {width:795px; margin:0 auto; background:url(images/main_bg.gif) repeat-y; border-bottom:1px solid #393939;}
+#content {float:left; width:520px; padding:10px 15px 10px 15px;  }
+#content p, #sidebar p {margin:0 0 10px 0;}
+#sidebar {float:right; width:200px; padding:10px 15px 10px 15px;  }
+#welcome_content {height:350px; padding:10px 15px 10px 15px;}
+
+#footer {  text-align:center; padding:10px; font-size:10px; color:#6f6f6f;}
+
+
+.post { margin:0 0 3em 0;}
+.post h3, #sidebar h3 { font-size:18px; font-family:"Trebuchet MS", Arial; margin:0 0 5px 0;}
+.post .meta { font-family:Arial, Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#6f6f6f; margin:0 0 5px 0;}
+.post .text {text-align:justify;} 
+.post .text p { margin:0 0 1em 0; line-height:17px; }
+.post ul { list-style-type:none; padding:0 0 0 0px; margin:1em 0;}
+.post ol {padding:0 0 0 15px; margin:1em 0; }
+.post ul li { padding:2px 0 2px 13px;}
+.post ol li {padding:2px 0 2px 0;}
+.post blockquote { border:#393939 1px solid; background:#191919; padding:10px 10px 0 10px; margin:0 0 1em 0;}
+.post code { border:#393939 1px dashed; background:#191919; display:block; padding:10px;}
+.post .text span.code { font-family:Monaco, "Courier New", monospace;}
+
+.s_input { width:135px; height:27px; background:#252525; border:1px solid #333333; border-right:none; float:left; color:#CCCCCC;}
+.s_submit {float:left;}
+
+.widget { margin:0 0 2em 0;}
+.widget h4 {font-size:14px; font-family:"Trebuchet MS", Arial; margin:0 0 5px 0; color:#FFFFFF;}
+.widget ul { list-style-type:none; }
+.widget ul li {  padding:2px 0 2px 13px;}
+
+.navigation { text-align:center; padding:12px; font-weight:bold;}
+
+/*Comments*/
+
+#commentwrap {width:540px; margin: 0 auto; }
+#comment, #comments input { background:#e6edc4; }
+#comment { width:435px; }
+
+#submit { margin:5px auto; padding:5px;   }
+
+#comments h4 {color:#cccccc; margin:20px 0 10px 0; font-size:12px; padding:0 0 0 20px; }
+#comments .comment {  margin:0 0 20px 0; padding:10px 40px; border-bottom:1px solid #333333; border-top:1px solid #333333; color:#c5c5c5;}
+#comments .comment .meta { padding:0 0 5px 0;}
+#comments .comment .author { padding:0 0 5px 0;}
+#comments .comment .author span {font-weight:bold;}
+#comments .comment .date {  font-size:11px; }
+#comments .comment .text { font-size:11px; padding:0 0 0 0; color:#c5c5c5;}
+
+#commentform { margin:0 auto 3em auto; width:400px;}
+#commentform td  {  color:#6f6f6f; font-weight:bold; font-size:10px;}
+#commentform input { background:#2c2c2c; border:1px solid #333333; color:#666666; padding:4px; width:125px;}
+#commentform input.submit {  border:1px solid #333333; background:#2c2c2c; width:120px; color:#808080; font-size:10px; margin:5px auto 0 auto; font-weight:bold;}
+#commentform textarea { background:#2c2c2c; border:1px solid #333333; color:#333333;  width:350px; height:110px; font-family:Arial, Helvetica, sans-serif;}
+
+/*Misc*/
+
+.alignright {float: right;}
+.alignleft {float: left}
+.navigation {display: block;	text-align: center;	margin-top: 5px;	margin-bottom: 10px;}

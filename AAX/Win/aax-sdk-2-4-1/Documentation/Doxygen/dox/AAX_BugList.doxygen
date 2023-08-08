@@ -1,0 +1,1382 @@
+/*===================================================================================================
+AAX_BugList.doxygen
+
+Copyright 2016-2017, 2019, 2021 by Avid Technology, Inc.
+All rights reserved.
+
+===================================================================================================*/
+
+
+
+/** @defgroup KnownIssues Known Issues
+	@ingroup AdditionalInformation
+
+	@brief A list of known bugs affecting %AAX plug-ins
+
+	@section knownissues_contents Contents
+		\li \ref knownissues_aaxsdk
+		\li \ref knownissues_ptsw
+		\li \ref knownissues_venue
+		\li \ref knownissues_mc
+		\li \ref knownissues_cs
+		\li \ref knownissues_other
+		\li \ref knownissues_tools
+
+
+\section knownissues_aaxsdk Known Issues in the AAX SDK
+
+\subsection AAXSDK-708
+The %AAX SDK library will not compile using macOS SDK 10.13
+
+Details:
+Compilation results in an error in NSUUID.h. This error does not occur when using SDK 10.14 or later
+
+Resolution:
+This bug has been fixed in the macOS SDK
+
+\subsection AAXSDK-705
+\ref AAX_VHostProcessorDelegate does not detect hosts with \ref IID_IAAXHostProcessorDelegateV2 "V2" support
+
+Resolultion:
+This bug is fixed as of %AAX SDK 2.4.0
+
+\subsection AAXSDK-663
+%AAX SDK <TT>\#pragma pack</TT> errors with XCode 10 and later
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.3.2
+
+\subsection AAXSDK-599
+In the Win32 GUI example plug-in, the mouse cursor disappears when text is entered in text box and only re-appears when the mouse is moved out of the plug-in window bounds
+
+Resolution:
+This bug is unresolved
+
+\subsection AAXSDK-561 AAXSDK-561 / PT-232159
+An %AAX Hybrid DSP plug-in with 7.1.2 input and output stem formats and a 16-sample processing buffer size will throw an AAE -14382 error upon instantiation at 192kHz
+
+Resolution:
+This bug is unresolved
+
+\subsection AAXSDK-533
+AAXLibrary compiles with warnings in Visual Studio 2015
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.3.0
+
+\subsection AAXSDK-514
+Using collection-level properties leads to a leaked ACF object
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.3.0
+
+\subsection AAXSDK-321
+Demo Delay (mono) DSP / Demo Gain (Cocoa UI) (mono) DSP can't be instantiated
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.2.0
+
+\subsection AAXSDK-271
+DemoMIDI_Sampler: No audio on right channel (multi-mono)
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.2.0
+
+Discussion:
+DemoMIDI_Sampler and DemoMIDI_Synth are now restricted to not use multi-mono, via the \ref AAX_eProperty_Constraint_MultiMonoSupport property.
+
+In Pro Tools, when a track's MIDI destination is set to "none" and a new plug-in that includes a MIDI input node (e.g. any Instrument plug-in) is instantiated, the track's MIDI destination is set to the first newly created MIDI input node.
+
+When the track in question is greater than mono, and the Instrument plug-in is multi-mono, the default behavior is for the track's MIDI destination to be set to the first of the newly created input nodes, not to all of them simultaneously. As a result, the track's MIDI destination is set to the MIDI input node of the first (left) multi-mono instance of the plug-in.
+
+To route MIDI to all channels of a multi-mono plug-in in Pro Tools, ctrl-select the MIDI destination and choose the additional MIDI nodes.
+
+\subsection AAXSDK-186
+C99Compatibility constructs are incorrect when used with VS2012
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.1.1
+
+\subsection AAXSDK-162
+Misleading warning message when attempting hardware debugging using a non-local TIShell.out
+
+The "Load ProTools Plug-in Symbols" script gives the following warning:
+<TT>D:/Code_7/dev.ws.backup-win7-concert/AAX/Internal/SystemSoftware/TIShell/CCS_Project/TIShell/../../../../../../WinBag/x64/Release/bin/TIShell.out does not exist! Please question everything.</TT>
+
+This error message includes a hard-coded path that is not relevant to the running system. This error is benign but it can be confusing.
+
+Resolution:
+This bug is unresolved
+
+\subsection AAXSDK-16
+%AAX SDK: Win32 example plug-in GUI does not appear in Windows 8
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.2.0
+
+\subsection AAXSDK-14
+%AAX DemoGain_VST: Text box entry is not acknowledged upon click outside of window
+
+Resolution:
+This bug is unresolved
+
+\subsection AAXSDK-13 AAXSDK-13 / AAX-579 / PTSW-158381
+%AAX SDK Win32 example plug-in does not "snap to default" on option-click
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.2.0
+
+\subsection AAXSDK-11 AAXSDK-11 / AAX-581 / PTSW-158348
+%AAX SDK VSTGUI example plug-in does not respond to 'alt' or 'win' modifier keys (Windows)
+
+Resolution:
+This bug is fixed as of %AAX SDK 2.2.0
+
+\subsection AAXSDK-10 AAXSDK-10 / AAX-580 / PTSW-154083
+%AAX DemoGain_VST and DemoGain_Cocoa require initial click on GUI to take focus before editing (OS X)
+
+Resolution:
+This bug is not yet resolved.  For OS X, one workaround is to modify VSTGUI's
+cocoasupport.mm file in order to add a handler for the acceptsFirstMouse selector:
+
+  \code{.mm}
+  static BOOL VSTGUI_NSView_acceptsFirstMouse(
+    id self,
+    SEL _cmd)
+  {
+    return YES;
+  }
+
+  // In VSTGUI_NSView_isOpaque()
+  res = class_addMethod(
+    viewClass,
+    @selector(acceptsFirstMouse:),
+    IMP (VSTGUI_NSView_acceptsFirstMouse),
+    "B@:@:");
+  \endcode
+
+Special thanks to Nick Protokowicz for suggesting this workaround.
+
+\subsection AAXSDK-6 AAXSDK-6 / AAX-646
+%AAX SDK: Incorrect output from scatter/gather DMA example plug-in when increasing playback buffer size while audio is present (Native decks)
+
+Resolution:
+This bug is unresolved
+
+Workaround:
+The workaround for this issue is to not run audio through this plug-in while increasing the playback buffer size.
+
+\subsection AAXSDK-5
+\ref AAX_CChunkDataParser::LoadChunk doesn't handle unknown chunk items well
+
+Resolution:
+This bug will not be fixed
+
+Discussion:
+\ref AAX_CChunkDataParser does not store the size of each chunk item in the data stream. Therefore there is no way to determine the correct size for each data element when reading a chunk that was generated by this parser.
+
+Workaround:
+If you know the correct size of each data element in a chunk when it is read by the plug-in, you can override the \ref AAX_CChunkDataParser methods to ensure that each data element is correctly sized.
+
+\subsection AAXSDK-2 AAXSDK-2 / AAX-648
+%AAX SDK: Output from DMA example plug-in is one buffer early
+
+Resolution:
+This bug is unresolved
+
+\subsection AAX-582 AAX-582 / PTSW-157726
+%AAX SDK example plug-ins' controls do not write automation properly when in 'touch' mode (frequently revert to default value while writing)
+
+Resolution:
+This bug is fixed as of the 1.0.4 SDK
+
+\subsection AAX-585 AAX-585 / PTSW-157451
+%AAX DemoGain GUI example plug-ins do not correctly handle alt/opt-click for resetting controls to their default state
+
+Resolution:
+This bug is partially resolved as of %AAX SDK 1.0.4.  See also PTSW-158348 and PTSW-158381.
+
+\subsection AAX-578 AAX-578 / PTSW-158310
+%AAX SDK JUCE example plug-in does not "snap to default" on option-click
+
+Resolution:
+This bug is fixed as of %AAX SDK 1.0.4
+
+
+
+
+
+\section knownissues_ptsw Known Issues in Pro Tools
+
+\subsection PT-274717
+AudioSuite settings are saved with the system rather than with the session
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-271830
+Crash when re-sizing a window for a plug-in that uses JUCE with OpenGL rendering enabled
+
+Details:
+When Pro Tools resizes an %AAX plug-in window it can cause the the GL <tt>rendercontext</tt> used by JUCE to become invalidated. Plug-ins must take care not to use this object within the scope of a concurrent window re-size request via \ref AAX_IViewContainer::SetViewSize() .
+
+Resolution:
+Plug-in developers must synchronize access to any OpenGL objects that are not thread-safe.
+
+\subsection PT-263909
+Clipboard is pasted twice when pasting text into a JUCE plug-in text box
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-263859
+Committing up to an insert that is followed by a width-converting insert also commits the width-converting insert
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-261394
+Frame rate offsets are calculated incorrectly for plug-ins when the session is at a higher frame rate
+
+Resolution:
+This bug is fixed as of Pro Tools 2020.5
+
+\subsection PT-258560 PT-258560 / PT-256919
+Multi-input only AudioSuite plug-ins are processed as multi-mono
+
+Details:
+Plug-ins that define \ref AAX_eProperty_MultiInputModeOnly actually get mono mode only
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-258394
+JUCE AAX plug-ins which use images from <tt>BinaryData</tt> crash on Catalina
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-256704
+Pro Tools Plug-In Folder permissions (macOS) are set to allow write access by anyone
+
+Resolution:
+This bug is fixed as of Pro Tools 2019.12
+
+\subsection PT-255800
+%AAX Hybrid plug-in output on HDX contains a gap which varies with host buffer size
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-255408
+Changing one plug-in insert results in a redundant audio buffer on a later insert in the chain
+
+Resolution:
+This bug from an external report has not been verified by Avid
+
+\subsection PT-254203
+Reverb and Delay AudioSuite plug-ins cannot provide an "Analysis" button
+
+Resolution:
+This bug is unresolved; the \ref AAX_eProperty_DisableAudiosuiteReverse property has not yet been implemented.
+
+\subsection PT-254118 PT-254118 / PT-275441
+Dynamic Plug-In Processing doesn't work during playback
+
+Details:
+Plug-ins are processed continuously during playback even when Dynamic Plug-In Processing is engaged.
+
+Resolution:
+This bug is unresolved
+
+
+\subsection PT-250751
+AudioSuite plug-ins do not set a \ref AAX_IHostProcessor::GetClipNameSuffix() "custom suffix" on a clip in case the selection reference is "Clips list"
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-249791
+AudioSuite: \ref AAX_IHostProcessor::GetClipNameSuffix() "Custom clip name" is not applied to generated audio file on disk
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-249790
+AudioSuite plug-ins cannot set a \ref AAX_IHostProcessor::GetClipNameSuffix() "custom clip name suffix"
+
+Resolution:
+This bug is fixed as of Pro Tools 2019.10
+
+\subsection PT-248000
+Plug-in partial bypass should support more than just EQ and Dynamics categories
+
+Resolution:
+This enhancement is not yet supported
+
+\subsection PT-245693
+Dynamic plug-in processing on HDX cuts off reverb tails
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-243211
+Crash when closing a plug-in window unless the plug-in leaks its \ref AAX_IViewContainer reference counts
+
+Resolution:
+This bug is fixed as of Pro Tools 2019.5
+
+\subsection PT-237857
+Custom EQ curve display ranges are not supported
+
+Resolution:
+This enhancement is not yet supported
+
+\subsection PT-236755
+Up-mixing plug-ins with AOS drop output channels on HDX
+
+Resolution:
+This bug is fixed as of Pro Tools 2018.7
+
+\subsection PT-235831
+The plug-in frame overlaps the plug-in window header if the plug-in GUI is taller than the screen height less the plug-in window header height.
+
+Resolution:
+This bug is unresolved
+
+Workaround:
+Avoid resizing the plug-in GUI to a height greater than the display height.
+
+\subsection PT-235333
+Dynamic plug-in processing incorrectly shuts off processing in mixed multi-mono/multichannel chains that should force processing
+
+This bug can occur if a multi-mono plug-in preceeds a multichannel plug-in which sets \ref AAX_eProperty_Constraint_AlwaysProcess
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-234681
+%AAX plug-in parameter handling may cause audio glitches on Windows for plug-ins with very long \ref AAX_IEffectParameters::GenerateCoefficients() "GenerateCoefficients()" execution time
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-233726
+Unprintable characters in four-char parameter IDs may result in -9105 errors
+
+Resolution:
+This bug is fixed as of Pro Tools 2018.1
+
+\subsection PT-233176
+%AAX digital signature check fails on pre-Sierra systems for plug-ins signed on Sierra
+
+Resolution:
+This bug has been reported to Avid but is not yet confirmed. Contact PACE Anti-Piracy, Inc. if you encounter this behavior.
+
+\subsection PT-232678 PT-232678 / PT-236755
+Plug-in aux outputs are silent for upmix plug-ins when using %AAX Native plug-ins with the HDX playback engine
+
+Resolution:
+This bug is fixed as of Pro Tools 2018.1
+
+\subsection PT-232403
+ProTools shows error if the plug-in's multi-chunk preset file contain incorrect chunk listed in the end
+
+For example, if a new chunk type has been added to a later version of a plug-in and a preset from that version is opened in an earlier version of the plug-in.
+
+Resolution:
+This bug is fixed as of Pro Tools 12.8.2
+
+\subsection PT-232159
+%AAX Hybrid plug-ins with more than 16 total input channels (direct input and hybrid input) raise AAE -14382 error upon instantiation at 192 kHz sample rate
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-230327
+The %AAX related types feature is broken (\ref AAX_IACFPropertyMap_V3 inheritance is incorrect)
+
+Resolution:
+This bug was introduced in Pro Tools 12.8 and is fixed as of Pro Tools 12.8.1
+
+\subsection PT-230290
+The plug-in preset menu takes a long time to build for plug-ins with a very large number of preset .tfx files
+
+Resolution:
+This bug is fixed as of Pro Tools 2018.7
+
+\subsection PT-230288
+The plug-in preset menu contains empty folders for other Effects in the same .aaxplugin bundle
+
+Resolution:
+This bug is fixed as of Pro Tools 12.8.2
+
+\subsection PT-229026
+Pro Tools may crash after plug-in parameter tweaks on Windows
+
+Resolution:
+This crash has not been reproduced starting with Pro Tools 2018.1
+
+\subsection PT-227655
+\ref AAX_ITransport::GetTimelineSelectionStartPosition() provides incorrect values for real-time plug-ins - value depends on transport time display selection in Pro Tools
+
+Resolution:
+This bug is fixed as of Pro Tools 12.8
+
+\subsection PT-227173
+Incorrect timecode is sent to plug-ins when delay is present before the plug-in
+
+Resolution:
+This bug is unresolved
+
+Workaround:
+Attach a debugger after opening a session in Pro Tools. After the first session open, subsequent session open actions will not result in a crash.
+
+\subsection PT-226559
+Transport location provided to plug-ins is incorrect during half-speed playback
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-225763
+Incorrect AudioSuite processing modes are available for multichannel random access plug-ins
+
+Resolution:
+This bug is unresolved
+
+\subsection PT-223581
+Pro Tools removes plug-ins from the insert menu if unsupported stem formats are detected
+
+Resolution: This bug is fixed as of Pro Tools 12.8
+
+This bug is also now fixed in earlier versions of Pro Tools via a workaround which is now built into the %AAX SDK during Describe. See \ref AAX_VPropertyMap::AddProperty()
+
+\subsection PT-218545
+There is no way for %AAX plug-ins to opt out of the default settings chunk sequence during plug-in instantiation
+
+Resolution:
+This enhancement will be supported in a Pro Tools 2019 release; see \ref AAX_eProperty_Constraint_DoNotApplyDefaultSettings
+
+\subsection PT-210904 PT-210904 / VSW-14216
+HDX errors can occur due to over-allocation of certain plug-ins
+
+This bug applies specifically to %AAX DSP plug-ins which register the same DLL and algorithm entry point name for multiple modules with different \ref AAX_eProperty_TI_MaxInstancesPerChip requirements.
+
+In VENUE, this bug causes a 'No Information Available' error dialog on a single DSP chip
+
+Resolution:
+This bug is fixed as of Pro Tools 12.5 and VENUE 5.1
+
+\subsection PT-206995
+AOS is not cleaned up in \ref AAX_IComponentDescriptor::Clear
+
+Resolution:
+This bug will not be fixed
+
+\subsection PT-206541
+%AAX automation playback is late and non-deterministic
+
+Resolution:
+This bug will not be fixed
+
+\subsection PT-206161
+HDX: %AAX packets are not delivered to ports 16 or 24 (zero-indexed) when \ref AAX_IController::PostPacket() "PostPacket()" is called outside of \ref AAX_IEffectParameters::GenerateCoefficients() "GenerateCoefficients()"
+
+Workaround:
+Make all calls to \ref AAX_IController::PostPacket() within the scope of \ref AAX_IEffectParameters::GenerateCoefficients()
+
+Resolution:
+This bug will not be fixed
+
+\subsection PT-205610
+%AAX Hybrid: transport location and clock methods do not provide correct values when called from the Hybrid render callback
+
+Resolution:
+This bug is fixed as of Pro Tools 12.4
+
+\subsection PT-203420
+<TT>TestGetCurveData</TT> DigiOption results in incorrect plug-in view offset for plug-ins with MIDI
+
+Resolution:
+This bug will not be fixed
+
+Workaround:
+Temporarily disable MIDI in your plug-in while developing or debugging the plug-in's curve data, then re-enable MIDI once you have finished using the <TT>TestGetCurveData</TT> DigiOption.
+
+\subsection PT-202345
+Pro Tools may incorrectly identify plug-ins when a single plug-in uses identical plug-in IDs across different Effects
+
+Resolution:
+This bug is fixed as of Pro Tools 12.2
+
+\subsection PTSW-200437 PTSW-200437 / PTSW-197598
+Plug-Ins that use the "Related Types" feature cannot relate to plug-ins with a different ProductID
+
+Resolution:
+This bug is fixed as of Pro Tools 11.3.2 and Pro Tools 10.3.11
+
+\subsection PTSW-197651 PTSW-197651 / PT-218405
+In some cases %AAX plug-ins do not show the correct Control Name Variation and just read out the automation name
+
+Resolution:
+This bug is will not be fixed
+
+\subsection PTSW-197601 PTSW-197601 / PT-218459
+Control surfaces can send illegal parameter values to plug-ins
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-197593 PTSW-197593 / PT-218480
+HDX: A chip may be full with just a small percent of the System Usage meter filled
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-197540
+AudioSuite: Analyze mode is not working properly when processing method is set to "clip-by-clip"
+
+Resolution:
+This bug is fixed as of Pro Tools 11.3.1
+
+\subsection PTSW-197472
+Dynamic Plug-In Processing is unnecessarily disabled for plug-ins in the "Other" category
+
+Resolution:
+This bug is fixed as of Pro Tools 12
+
+\subsection PTSW-197471
+AudioSuite only analyzes the first clip in "clip list" mode
+
+Resolution:
+This bug is fixed as of Pro Tools 12
+
+\subsection PTSW-197468 PTSW-197468 / PT-218460
+Pro Tools may incorrectly change a plug-in instance when another instance is edited
+
+Resolution:
+This bug is fixed in Pro Tools 2018.1
+
+Discussion:
+This issue only happens when the two plug-in types use the same Manufacturer and Plug-In IDs and use Product IDs with unprintable chars when interpreted as four-char values.
+
+We strongly recommend that you select Product IDs in the printable ASCII four-char range.
+
+\subsection PTSW-197431 PTSW-197431 / PT-218414
+Pro Tools 10: Plug-in Side-chain input is silent when the plug-in supports Aux Outputs
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-197075
+Plug-in preset files for some plug-ins are not cross-compatible between Mac and Windows
+
+Resolution:
+This bug is fixed as of Pro Tools 11.2 and Pro Tools 10.3.10
+
+\subsection PTSW-196772 PTSW-196772 / PT-218423
+A \ref AAX_eNotificationEvent_MaxViewSizeChanged "View Size Changed" notification is not sent when connecting/disconnecting a display
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-196604
+Cannot adjust plug-in parameters with large numbers of steps using control surface (Artist Series)
+
+Resolution:
+This bug is fixed as of Pro Tools 12.4
+
+\subsection PTSW-196428 PTSW-196428 / PT-218488
+AudioSuite preview allows processing with incorrect number of channels
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-195316 PTSW-195316 / PT-218485
+EQ/Dyn graphs on EUCON surfaces are not always updated for plug-ins with many EQ/Dyn parameters
+
+Resolution:
+This bug will not be fixed
+
+Discussion:
+Currently, EUCON surfaces only update a plug-in's EQ/Dyn curve plots when an update occurs to one of the parameters which is mapped to the plug-in's "center section" EQ/Dyn page tables. Other parameters will not trigger an update to the plug-in's EQ/Dyn curve plot.
+
+\subsection PTSW-195257
+Calling \ref AAX_ICollection::AddEffect() multiple times using the same \c iEffectID only returns an error if called with the same \ref AAX_IEffectDescriptor "effect descriptor", but this is always illegal
+
+Resolution:
+This bug is fixed as of Pro Tools 12
+
+Discussion:
+Calling \ref AAX_ICollection::AddEffect() using the same ID will now return an error in all cases
+
+\subsection PTSW-195256 PTSW-195256 / PT-218429
+Plug-in is not notified of preset load when loading factory default presets
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-195209 PTSW-195209 / PT-218474
+\ref AAX_IViewContainer::HandleParameterMouseUp() returns \ref AAX_ERROR_UNIMPLEMENTED when using control-command-option-click on a plug-in GUI control
+
+Resolution:
+This bug will not be fixed
+
+Discussion:
+See the discussion of this bug in the \ref AAX_IViewContainer documentation.
+
+\subsection PTSW-195113
+Automation problems with plug-in parameter names > 31 characters
+
+Resolution:
+This bug is fixed as of Pro Tools 11.2.1
+
+Discussion:
+This bug was introduced in Pro Tools 11.1
+
+\subsection PTSW-194698 PTSW-194698 / PT-218478
+Very hard to edit plug-in parameters with many steps using a control surface rotary encoder
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-194231 PTSW-194231 / PT-218434
+When the output on a track is set to "no output" then no audio is sent to Auxiliary Outputs of the plug-ins on the track
+
+Resolution:
+This bug is unresolved
+
+Workaround:
+Users can work around this issue by ensuring that a track output is always assigned for tracks with plug-ins that generate Auxiliary Output channels. For example, the user may pull down the track's output gain fader, enable MUTE, or select an unused output channel or bus.
+
+\subsection PTSW-193646
+AudioSuite plug-ins are not able to partially re-name clips
+
+Resolution:
+This bug is fixed as of Pro Tools 12
+
+\subsection PTSW-193400
+AOS plug-ins become active when moving an inactive plug-in to another insert
+
+Resolution:
+This bug is fixed as of Pro Tools 11.2
+
+\subsection PTSW-193345
+AudioSuite processing notifications are not sent at the start and end of a processing event
+
+Resolution:
+This bug is fixed as of Pro Tools 12
+
+Discussion:
+Two new notifications were added to provide this behavior. The existing AudioSuite notifications retain their behavior: they are sent before and after each processing pass, i.e. at the beginning and end of each audio channel that is processed, even if the current selection includes multiple channels. For more information, see \ref AAX_EProcessingState
+
+\subsection PTSW-193339
+Pro Tools does not update plug-in settings when a new setting's name matches an old setting and the modification date is later
+
+Resolution:
+This bug will not be fixed
+
+Workaround:
+To update the settings that are bundled with a plug-in, the plug-in's installer should search for and remove any deprecated settings files on the system.
+
+\subsection PTSW-193051
+Using Aux Output Stems on DSP plug-ins causes them to crash
+
+Resolution:
+This bug is fixed as of Pro Tools 11.2
+
+Discussion:
+This bug was introduced in Pro Tools 11.1
+
+\subsection PTSW-192863 PTSW-192863 / PT-218498
+Plug-in side chain input is not properly delay compensated: aligned with output instead of input, no individual tap per insert
+
+Resolution:
+This bug is fixed as of Pro Tools 2021.6
+
+\subsection PTSW-192755
+Key focus is not returned to a plug-in after it launches a dialog
+
+Resolution:
+This bug will not be fixed (design limitation)
+
+\subsection PTSW-192720 PTSW-192720 / PT-218467
+External source (SideChain) key input is not reported to DSP Dynamics plug-ins after HDX re-shuffle, hence no Gain Reduction occurs.
+
+Resolution:
+This bug is unresolved
+
+\subsection PTSW-192635
+Implement Manufacturer ID byteswap
+
+Resolution:
+This bug is fixed as of Pro Tools 11.2 and Pro Tools 10.3.10
+
+\subsection PTSW-192456 PTSW-192456 / PT-218490
+Plug-in settings chunks with incorrect fSize result in junk data
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-192251 PTSW-192251 / PT-218394
+EUCON surface cells sometimes behave inconsistently when discrete plug-in parameters are mapped to rotary encoders
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-192086 PTSW-192086 / PT-218465
+AudioSuite %AAX: Pro Tools performs multiple unnecessary render passes when rendering in multi-input mode
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-191875
+Pro Tools uses a hard-coded version string when publishing its version to %AAX plug-ins (\ref AAX_IController::GetHostName)
+
+Resolution:
+This bug is fixed as of Pro Tools 12.4
+
+\subsection PTSW-191446 PTSW-191446 / PT-218600
+Global symbols due to statically linked boost libs in Pro Tools components may conflict with plug-in components that use boost
+
+Resolution:
+This bug is unresolved
+
+\subsection PTSW-191317 PTSW-191317 / PT-218425
+The Pro Tools meter decay setting is not applied to plug-in meters
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-191139
+Plug-ins do not receive parameter touch state when automation-enabled in Pro Tools 11.1
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1.2
+
+\subsection PTSW-190722
+Some plug-in state changes do not trigger the Pro Tools session "dirty" flag
+
+Resolution:
+This bug is fixed as of Pro Tool 11.1.2 and and Pro Tools 10.3.9
+
+\subsection PTSW-190719
+Unexpected behavior for plug-in auxiliary output channels > 128
+
+Resolution:
+This bug will be fixed as of Pro Tools 11.1.3
+
+\subsection PTSW-190340
+In some cases %AAX plug-ins do not show the correct Control Name Variation on control surfaces
+
+This bug can occur when a page table references parameters by ID and some parameters' ID strings are exactly as long as the control surface's display. In this scenario, the control surface will display the parameter's ID string rather than a Control Name Variations (abbreviation) string of equivalent length.
+
+Resolution:
+This bug is fixed as of Pro Tools 12
+
+\subsection PTSW-189928 PTSW-189928 / PT-218456
+Failure to load %AAX plug-ins with spaces in DLL filename
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-189738 PTSW-189738 / PT-218494
+%AAX: \ref AAX_IController::PostPacket() doesn't return any error if you attempt to post to a private data field
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-189725 PTSW-189725 / PT-218397
+Auto-generated AudioSuite plug-in GUIs are non-functional for the first plug-in loaded into the window
+
+This bug applies to AudioSuite plug-ins wich use the \ref AAX_eProperty_UsesClientGUI property. This bug is present in all Pro Tools versions which support %AAX.
+
+Workaround:
+This bug only applies when an AudioSuite window is first created. To resolve the issue, toggle an open AudioSuite window between different plug-ins. After toggling to another plug-in and back to the original plug-in, the auto-generated GUI will again be functional.
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-189439 PTSW-189439 / PT-218427
+Attempts to set signal latency by non-linear AudioSuite plug-ins should fail, but do not
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-189279
+An AudioSuite plug-in ID may be incorrectly used as a related type, preventing type-swapping
+
+Resolution:
+This bug is fixed as of Pro Tools 11.2 and Pro Tools 10.3.10.
+
+\subsection PTSW-188836 PTSW-188836 / PT-218428
+\ref AAX_CMidiPacket::mIsImmediate field is not getting set for real-time MIDI messages
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-188830
+AudioSuite: \ref AAX_IACFHostProcessor::PreRender() "PreRender()" is not called before each preview pass
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-188653 PTSW-188653 / PT-218451
+Plug-ins are not unloaded and cannot be swapped when EnablePlugInHotSwap option is enabled
+
+Resolution:
+This bug will not be fixed
+
+The workaround for this issue is to re-launch Pro Tools after installing a new build of the plug-in
+
+\subsection PTSW-188161
+It is not possible to launch some Pro Tools 11 and later development builds from a debugger
+
+Resolution:
+This bug is unresolved. It applies to all Pro Tools 11 and higher development builds on Windows and to some development builds on Mac.
+
+Workaround
+Use the PauseDuringLaunchToAttachDebugger \ref aax_pro_tools_guide_06c_digioptions "DigiOption" to attach the debugger at a safe point in the Pro Tools launch process
+
+\subsection PTSW-187670
+Plug-in preset menu takes a long time to load with many presets
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-187220 PTSW-187220 / PT-218584
+\ref AAX_ePrivateDataOptions_KeepOnReset is not implemented
+
+Resolution:
+This bug is unresolved
+
+\subsection PTSW-187216 PTSW-187216 / PT-218491
+Pro Tools has a problem with \ref AAX_IController::PostPacket() being called during \ref AAX_IEffectParameters::TimerWakeup()
+
+Resolution:
+This bug will not be fixed
+
+Workaround:
+This bug occurs only with unbuffered plug-ins' ports for coefficients, so the workaround for this issue is to use buffered ports instead.
+
+\subsection PTSW-187159
+Plug-in parameters can get stuck in touched state; touch/release tokens do not always match
+
+One race condition that could result in this bug behavior has been addressed in Pro Tools 11.1.0. However, the bug can still occur when using EUCON control surfaces due to a mismatch in touch/release tokens sent from those surfaces.
+
+Resolution:
+This bug is resolved as of Pro Tools 11.1.3. It is unresolved in Pro Tools 10
+
+\subsection PTSW-187066 PTSW-187066 / PT-218391
+\ref AAX_ITransport::GetCurrentNativeSampleLocation() returns invalid value on the start of playback
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-186864
+Automatable parameter values may change between \ref AAX_CParameter<>::SetValue "Set" and \ref AAX_IACFEffectParameters::UpdateParameterNormalizedValue "Update"
+
+Resolution:
+This bug is unresolved
+
+\subsection PTSW-186725
+Related types do not work when used with \ref AAX_eProperty_SampleRate
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-186627
+%AAX plug-ins whose context field IDs are not defined in Describe cause a crash in Pro Tools
+
+Resolution:
+This bug is closed (unable to reproduce)
+
+\subsection PTSW-186253
+AudioSuite GUI work causes audio playback glitches and stutters
+
+Resolution:
+This bug is fixed as of Pro Tools 11.2.
+
+\subsection PTSW-186189
+If an %AAX plug-in does not declare all the fields in its context block, undefined behavior may occur (possibly a crash)
+
+Resolution:
+This bug is fixed as of Pro Tools 10.3.8 and Pro Tools 11.0.2
+
+\subsection PTSW-186182
+On Windows, VSTGUIv4 plug-in GUIs do not receive key events (PT11 only)
+
+Resolution:
+This bug is addressed with a patch to the %AAX SDK's VSTGUI extension implementation as of %AAX SDK 2.1.0
+
+\subsection PTSW-185868 PTSW-185868 / PT-218439
+%AAX: Calls to \ref AAX_CParameter<>::SetValue() "SetValue()" early in plug-in life may not propagate to \ref AAX_IACFEffectParameters::UpdateParameterNormalizedValue() "UpdateParameterNormalizedValue()"
+
+Resolution:
+This bug will not be fixed
+
+The workaround for this issue is to call SetValue redundantly until the desired value is updated.
+
+\subsection PTSW-185867 PTSW-185867 / PT-218470
+Session tempo should be available during \ref AAX_CEffectParameters::EffectInit "EffectInit()"
+
+Resolution:
+This bug will not be fixed
+
+Workaround:
+The workaround for this issue is to poll the transport interface in \ref AAX_IACFEffectParameters::TimerWakeup() "TimerWakeup()" or otherwise call it after \ref AAX_CEffectParameters::EffectInit "EffectInit()" completes.
+
+\subsection PTSW-185866
+Pro Tools does not respond to \ref AAX_IACFEffectParameters::SetParameterNormalizedValue() "SetParameterNormalizedValue()" while offline bouncing
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1. However, note that we do not recommend implementing linked parameters using direct calls to \ref AAX_IACFEffectParameters::SetParameterNormalizedValue() "SetParameterNormalizedValue()". For an explanation of the correct approach to parameter linking, see \ref advancedTopics_linkedParameters, with examples provided in the SDK example plug-ins.
+
+\subsection PTSW-185825 PTSW-185825 / PT-218464
+Undo key events do not reach plug-ins (Windows)
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-185537
+Use of DigiTrace results in \c eTISysSwapScriptTimeout
+
+Resolution:
+This bug fixed as of Pro Tools 11.1
+
+\subsection PTSW-185484
+\ref AAX_TRACE_RELEASE crashes at highest optimization setting in %AAX DSP plug-ins
+
+Resolution:
+This bug is unresolved
+
+\subsection PTSW-185483
+DigiTrace: Only one parameter can be sent per trace on HDX
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-185462
+AudioSuite: Error 1224 on AudioSuite render when significantly changing the length of a clip (Windows 8)
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-185343
+\ref AAX_ITransport::GetTimeCodeInfo returns invalid values for %AAX Instruments
+
+Resolution:
+This bug is fixed as of Pro Tools 10.3.7 and Pro Tools 11.0.2
+
+\subsection PTSW-185341
+Related types come up as inactive when going from HDX > Native
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-184777 PTSW-184777 / PT-218483
+%AAX plug-in meters are not cleared during silence
+
+This bug is new to Pro Tools 11. It does not occur in Pro Tools 10.
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-184770
+%AAX Hybrid plug-ins cannot be opened as AudioSuite (AAE -7103 error)
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-184682
+Incorrect audio buffer length provided when a native plug-in (erroneously) registers \ref AAX_eProperty_AudioBufferLength
+
+Resolution:
+Since this is an unsupported plug-in configuration this bug will not be fixed
+
+\subsection PTSW-184642 PTSW-184642 / PT-218627
+Re-add support for AudioSuite "progress" dialog re-naming (was supported in Pro Tools 9 and earlier)
+
+Resolution:
+This bug is unresolved
+
+\subsection PTSW-184619 PTSW-184619 / PT-218473 / AAX-600
+%AAX MIDI plug-ins' MIDI channels are not uniquely labeled
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-184541
+Native engine strides by 2048 samples at 96kHz (expect <= 1024)
+
+Resolution:
+This bug fixed as of Pro Tools 11.0.1
+
+\subsection PTSW-183902 PTSW-183902 / PT-218479
+\ref AAX_IHostProcessorDelegate::GetAudio() responds to invalid iLocation as if everything succeeded
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-183848 PTSW-183848 / PT-218390
+\ref AAX_IHostProcessorDelegate::GetAudio() ignores input audio buffer parameter
+
+Resolution:
+This bug will not be fixed
+
+The workaround for this issue is to make sure that HostProcessor plug-ins only request valid audio - do the boundary-condition checking inside the plug-in.
+
+\subsection PTSW-183841
+Plug-ins defining \ref AAX_eProperty_RequestsAllTrackData quit when processing a timeline region with no audio
+
+Resolution:
+This bug is fixed as of Pro Tools 11.0.2
+
+\subsection PTSW-183731
+Failures returned by 3P AAX-AS PIs in Pre- Analyze/Render are not used by the host
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-183708
+AudioSuite: plug-in parameters are not changed upon 1st click after you click Bypass. [Win]
+
+Resolution:
+This was found to be an issue in certain plug-ins with JUCE-based GUI implementations. In JUCE, the real-time variants of the of the modifiers key getter method can cause seemingly unrelated problems with the responsiveness of the GUI. In this instance, the symptom was that plug-in parameters would not be changed on the first click inside the GUI window.
+
+The workaround for this issue, and for other unusual GUI behavior in these plug-ins, is to always use <TT>juce::ModifierKeys::getCurrentModifiers()</TT>; do not use <TT>juce::ModifierKeys::getCurrentModifiersRealtime()</TT>.
+
+\subsection PTSW-168222
+Sample rate specific plug-ins cause Pro Tools to throw a misleading error message when opened in non-supported sample rate sessions
+
+Resolution:
+This bug is fixed as of Pro Tools 11.1
+
+\subsection PTSW-165992
+Make automation link by Parameter ID instead of Parameter Name.  Fall-back to Parameter Name if no match
+
+Resolution:
+This behavior is supported starting in Pro Tools 11.1
+
+\subsection PTSW-163739
+AudioSuite works incorrectly in Clip List mode.
+
+Resolution:
+This bug is fixed as of Pro Tools 12
+
+\subsection PTSW-161674
+Stereo instrument plug-ins: "MIDI Node" field in plug-in window header disappears when insert is dragged to a new slot
+
+Resolution:
+This bug is unresolved in Pro Tools and will not be fixed for the foreseeable future.
+
+\subsection PTSW-160778
+After making a Preview pass, AudioSuite plug-ins no longer make calls to InitOutputBounds()
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2.1
+
+\subsection PTSW-160620
+%AAX plug-ins receive meaningless Clock data on Native decks, and less-than-ideal data on DSP decks
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-159702
+%AAX VI Issue - All %AAX VIs do not have MIDI Nodes
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-159700
+%AAX VI Issue - Instrument Tracks do not automatically map to the %AAX VI that is instantiated on them
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-159524
+Incorrect error message when power is not connected to HDX card (EDIT: occurs with pre-A1 HDX prototypes only)
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-158119
+Some plug-ins' DSP Instance counts are much lower in Pro Tools 10.2 than in Pro Tools 10.1
+
+Resolution:
+This issue affects plug-ins that employ more than one buffered data port and that
+support many instances per DSP chip on HDX.  As of Pro Tools 10.2, there is a limit of
+164 buffered data ports per DSP (this is equal to the total I/O limit per DSP.)
+
+To work around this issue, use as few data ports in your plug-in's algorithm context as
+possible.  Note that DMA transfers on HDX occur in 128-byte chunks, so packet sizes
+below 128 bytes do not increase transfer efficiency on HDX.
+
+\nodox
+
+See this forum post for more information:
+https://developer.digidesign.com/index.php?L1=5&L2=13&L3=56&LC=/viewtopic.php?f=93&t=228
+
+\endnodox
+
+\subsection PTSW-157745
+Plug-ins write automation with pairs of updates, causing undesired "stepping" in recorded automation
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2 and 10.1.1
+
+\subsection PTSW-157518
+Poor plug-in performance with multiple processors selected; plug-ins are not consistently assigned to the same worker/thread by DAE, leading to cache thrashing.
+
+Resolution:
+This bug is fixed as of the audio engine changes in Pro Tools 11
+
+\subsection PTSW-157012
+%AAX DSP plug-ins with same DLL name are not properly labeled in the System Usage window
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-156310
+Mouse cursor does not reliably update when positioned over plug-ins. Instead the mouse cursor shows the current Edit Tool.
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-156286
+GUI elements fill window in some 3P %AAX plug-ins GUIs on Windows
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-156216
+<TT>pluginGestalt_SupportsControlChangesInThread</TT> is not properly implemented for %AAX plug-ins
+
+Resolution:
+Parameter updates are handled by a non-main thread for all %AAX plug-ins as of Pro Tools 10.1
+
+\subsection PTSW-156195
+Silent failure when plug-ins attempt to register components with different platform support
+
+Resolution:
+This bug is not yet resolved. This is an expected constraint, but the silent failure is unexpected
+
+\subsection PTSW-156035
+<TT>GetCurrentTDMSampleLocation()</TT> returns the wrong value.
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-155300 PTSW-155300 / PT-218458
+When an AudioSuite plug-in modifies the output audio length, the audio is not positioned at the correct location
+
+This bug is due to AudioSuite handles processing. A plug-in that modifies the output audio length may move audio from the handle region into the visible clip region, which is unexpected behavior from the user's perspective.
+
+Resolution:
+This bug will not be fixed
+
+The workaround is for plug-ins that experience this issue to disable AudioSuite handles, thereby only processing the audio that the user sees on the timeline.
+
+\subsection PTSW-155177
+<TT>eFicGestalt_GetASPreHandleLength</TT> and <TT>eFicGestalt_GetASPostHandleLength</TT> return the wrong handle length values upon a call to <TT>AnalyzeAudio</TT> with 'WHOLE FILE' mode selected
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-154361
+Highlight info sent to plug-ins before GUI is created.
+
+Resolution:
+This bug is fixed as of Pro Tools 10.0
+
+\subsection PTSW-153140
+Crash on Pro Tools quit when plug-in GUI is open (OSX)
+
+Resolution:
+This bug is unresolved in Pro Tools and will not be fixed for the foreseeable future.
+Plug-in workarounds are demonstrated in the DemoGain_GUIExtensions example plug-ins:
+
+  a) Separating all Obj-C elements into a separate bundle that is loaded manually
+     by the main plug-in bundle (see DemoGain_Cocoa)
+  b) Applying an NSAutoreleasePool to the %AAX GUI object destructors (see
+     DemoGain_VST and DemoGain_JUCE)
+
+\nodox
+
+See this forum post for more information:
+https://developer.digidesign.com/index.php?L1=5&L2=13&L3=56&LC=/viewtopic.php?f=93&t=228
+
+\endnodox
+
+\subsection PTSW-150047
+%AAX MIDI plug-ins do not get correct MIDI routing on Instrument tracks
+
+Resolution:
+This bug is fixed as of Pro Tools 10.2
+
+\subsection PTSW-149880
+Configurations with duplicate PlugInID properties are silently hidden with no error
+
+Resolution:
+As of Pro Tools 10.2, duplicate PlugInID properties will trigger the following DigiTrace
+log:
+
+	DTF_AAXHOST
+	DTP_NORMAL
+
+	"AAXH ERROR: Attempted to add new configuration with duplicate ID: %x"
+		existingID
+
+\subsection PTSW-149819
+MIDI packet alignment is not identical between DAE and %AAX
+
+This is a known bug in Pro Tools 10.0. This bug results in corrupted MIDI stream data to %AAX plug-ins.
+
+Resolution:
+This bug is fixed as of Pro Tools 10.0.1
+
+\subsection PTSW-135536 PTSW-135536 / PT-218412
+Erroneous transport location information provided to plug-ins after playback (new to PT9)
+
+Resolution:
+This bug will not be fixed
+
+\subsection PTSW-3020 PTSW-3020 / PT-218463
+Groups do not follow changes to "Inserts" Globals group settings
+
+Resolution:
+This bug will not be fixed
+
+The workaround for this issue is to modify the group's settings to de-select "follow globals", then re-modify the group's settings to select "follow globals". This will apply the current Globals settings as well as any future changes to the Globals without need for additional workarounds.
+
+\subsection AAX-686
+Re-add support for AudioSuite "progress" dialog re-naming (was supported in PT 9 and earlier) (see PTSW-159768)
+
+Resolution:
+This bug is unresolved
+
+\subsection AAX-583 AAX-583 / PTSW-157743
+%AAX SDK Win32 GUI example plug-in does not draw correctly
+
+Resolution:
+Duplicate of PTSW-156286 (see above.)  Resolved as of Pro Tools 10.2
+
+
+
+
+
+\section knownissues_venue Known Issues in Venue Live Sound Systems
+
+\subsection VSW-13857
+Plug-in installers cannot associate a single thumbnail image with multiple variants
+
+Resolution:
+This capability is supported starting in Venue 6.3
+
+Prior to this change a plug-in thumbnail filename always contained 24 hexadecimal digits:
+<ol>
+  <li>
+    The first 8 digits refer to the plug-in's Manufacturer ID
+  </li>
+  <li>
+    The middle 8 digits refer to the plug-in's Product ID
+  </li>
+  <li>
+    The last 8 digits refer to the plug-in's "plug-in ID", which is usually a plug-in variant (Mono, Stereo, etc.).
+  </li>
+</ol>
+
+With this change, Venue supports using a generic thumbnail file for all variants, thus having only the first 16 identifying digits.
+
+\subsection VSW-13292
+Plug-in parameters are not mapped to S6L if custom page tables are not provided
+
+Details:
+S6L does not fall back to using the <TT>'PgTL'</TT> page table type if a plug-in does not provide any parameter mapping for the primary <TT>'Av46'</TT> or secondary <TT>'FrTL'</TT> page tables. If a plug-in does not provide any of these page tables then its parameters will not display on the console.
+
+Resolution:
+This bug will not be fixed
+
+\subsection other_knownissues_venue Other Known Issues
+
+<UL>
+  <LI>
+    \ref PT-210904
+  </LI>
+</UL>
+
+
+
+
+
+\section knownissues_mc Known Issues in Media Composer
+
+\subsection MCDEV-2904
+Optional analysis is not applied to every channel in a multi-channel selection
+
+Resolution:
+This bug is fixed as of Media Composer 8.4
+
+Discussion:
+When an optional analysis pass is triggered in Media Composer, only the channel that is currently represented in the AudioSuite Dialog will be analyzed. Other channels in a multi-channel selection will not be analyzed.
+
+This issue is fixed in Media Composer 8.4; now the following behavior will occur for AudioSuite plug-ins:
+
+\li If a plug-in defines only \ref AAX_eProperty_RequiresAnalysis then an Analyze pass will be performed before Render/Preview and the "Analyze" button will be disabled
+\li If a plug-in defines only \ref AAX_eProperty_OptionalAnalysis then an Analyze pass will be performed before Render/Preview as well as when the "Analyze" button is clicked, and the "Analyze" button will be enabled
+\li If a plug-in defines both \ref AAX_eProperty_RequiresAnalysis and \ref AAX_eProperty_OptionalAnalysis then an Analyze pass will be performed before Render/Preview as well as when the "Analyze" button is clicked, and the "Analyze" button will be enabled
+
+
+
+
+
+\section knownissues_cs Known Issues in Control Surfaces
+
+\subsection PT-226228
+On EUCON control surfaces, Dynamics curves are not displayed if a plug-in does not provide a custom curve display range
+
+Workaround:
+In order for a plug-in's Dynamics curve to be displayed, the plug-in must implement \ref AAX_IEffectParameters::GetCurveDataDisplayRange() for whichever Dynamics \ref AAX_ECurveType "curve types" it supports
+
+\subsection PT-226227
+EUCON control surfaces do not support custom EQ curve display ranges
+
+Resolution:
+This feature is not yet implemented
+
+\subsection GWSW-8470
+S6: Knob velocity changes are too sensitive for plug-in parameters with a large number of steps
+
+Resolution:
+Resolved as of S6 Software 2.0
+
+\subsection GWSW-6694
+S6: Plug-in parameter order is inverted when using ProControl page tables
+
+Resolution:
+Resolved as of S6 Software 1.3
+
+
+
+
+
+\section knownissues_other Known Issues in Other Software
+
+\subsection XPACE-23
+Performance issues on Azure VMs with some copy protected binaries
+
+Pro Tools and Media Composer support operation in an Azure VM environment. Some early versions of Eden copy protection by PACE Anti-Piracy, Inc. does not perform well in this environment.
+
+Resolution:
+This issue is resolved in PACE Eden versions 5 and later. To avoid this issue be sure to update to the latest version of your copy protection.
+
+
+
+
+
+\section knownissues_tools Known Issues in AAX Tools
+
+For a list of known issues in %AAX Tools such as Pro Tools Developer Builds, \ref DSH_Guide "DigiShell" or the \ref subsection_creating_page_tables_in_pete "AAX Plug-In Page Table Editor", see the dedicated ReadMe file that is distributed with each tool.
+
+
+ */

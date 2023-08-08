@@ -1,0 +1,4214 @@
+<?xml version='1.0' encoding='US-ASCII' standalone='yes'?>
+<PageTables vers='1.0.0.0'>
+	<PageTableLayouts>
+		<Plugin manID='AVID' prodID='DmgM' plugID='DG50'>
+			<Desc>Generated PageTable 9 by Avid Inc.</Desc>
+			<Layout>5dot0</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DG50'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='DG51'>
+			<Desc>Generated PageTable 8 by Avid Inc.</Desc>
+			<Layout>5dot1</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DG51'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='DG60'>
+			<Desc>Generated PageTable 7 by Avid Inc.</Desc>
+			<Layout>6dot0</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DG60'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='DG61'>
+			<Desc>Generated PageTable 6 by Avid Inc.</Desc>
+			<Layout>6dot1</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DG61'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='DGMR'>
+			<Desc>Generated PageTable 14 by Avid Inc.</Desc>
+			<Layout>Mono</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DGMR'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='DGQa'>
+			<Desc>Generated PageTable 10 by Avid Inc.</Desc>
+			<Layout>Quad</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DGQa'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='DGRs'>
+			<Desc>Generated PageTable 11 by Avid Inc.</Desc>
+			<Layout>LCRS</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DGRs'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='DGST'>
+			<Desc>Generated PageTable 13 by Avid Inc.</Desc>
+			<Layout>Stereo</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DGST'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='DGcR'>
+			<Desc>Generated PageTable 12 by Avid Inc.</Desc>
+			<Layout>LCR</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='DGcR'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='G70R'>
+			<Desc>Generated PageTable 5 by Avid Inc.</Desc>
+			<Layout>7dot0SDDS</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='G70R'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='G70r'>
+			<Desc>Generated PageTable 3 by Avid Inc.</Desc>
+			<Layout>7dot0</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='G70r'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='G712'>
+			<Desc>Generated PageTable 1 by Avid Inc.</Desc>
+			<Layout>7dot1dot2</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='G712'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='G71R'>
+			<Desc>Generated PageTable 4 by Avid Inc.</Desc>
+			<Layout>7dot1SDDS</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='G71R'-->
+		<Plugin manID='AVID' prodID='DmgM' plugID='G71r'>
+			<Desc>Generated PageTable 2 by Avid Inc.</Desc>
+			<Layout>7dot1</Layout>
+		</Plugin><!--manID='AVID' prodID='DmgM' plugID='G71r'-->
+		<PTLayout name='5dot0'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='2'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='5dot0'-->
+		<PTLayout name='5dot1'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<Cell row='1' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='2'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID>Gain6</ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain6</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+				<Page num='7'>
+					<ID>Gain6</ID>
+				</Page><!--num='7'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='5dot1'-->
+		<PTLayout name='6dot0'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='2'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID>Gain6</ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+				<Page num='7'>
+					<ID>Gain6</ID>
+				</Page><!--num='7'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='6dot0'-->
+		<PTLayout name='6dot1'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain7"/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain7"/>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='2'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain7"/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain7</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+				<Page num='7'>
+					<ID>Gain6</ID>
+				</Page><!--num='7'-->
+				<Page num='8'>
+					<ID>Gain7</ID>
+				</Page><!--num='8'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='6dot1'-->
+		<PTLayout name='7dot0'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='2'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID>Gain6</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='3'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+				<Page num='7'>
+					<ID>Gain6</ID>
+				</Page><!--num='7'-->
+				<Page num='8'>
+					<ID>Gain7</ID>
+				</Page><!--num='8'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='7dot0'-->
+		<PTLayout name='7dot0SDDS'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='2'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID>Gain6</ID>
+					<ID>Gain5</ID>
+					<ID>Gain3</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>MasterBypassID</ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain3</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain3</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+				</Page><!--num='3'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+				<Page num='7'>
+					<ID>Gain6</ID>
+				</Page><!--num='7'-->
+				<Page num='8'>
+					<ID>Gain7</ID>
+				</Page><!--num='8'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='7dot0SDDS'-->
+		<PTLayout name='7dot1'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain8"/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain8"/>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='2'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain8"/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID>Gain8</ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain8</ID>
+					<ID>Gain7</ID>
+					<ID>Gain6</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='3'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain8</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID>Gain8</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+				<Page num='7'>
+					<ID>Gain6</ID>
+				</Page><!--num='7'-->
+				<Page num='8'>
+					<ID>Gain7</ID>
+				</Page><!--num='8'-->
+				<Page num='9'>
+					<ID>Gain8</ID>
+				</Page><!--num='9'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='7dot1'-->
+		<PTLayout name='7dot1SDDS'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain8"/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain8"/>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='2'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain8"/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID>Gain8</ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain8</ID>
+					<ID>Gain7</ID>
+					<ID>Gain6</ID>
+					<ID>Gain5</ID>
+					<ID>Gain3</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID>Gain8</ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain3</ID>
+					<ID>Gain5</ID>
+					<ID>Gain8</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain8</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID>Gain8</ID>
+				</Page><!--num='3'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID>Gain8</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+				<Page num='7'>
+					<ID>Gain6</ID>
+				</Page><!--num='7'-->
+				<Page num='8'>
+					<ID>Gain7</ID>
+				</Page><!--num='8'-->
+				<Page num='9'>
+					<ID>Gain8</ID>
+				</Page><!--num='9'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='7dot1SDDS'-->
+		<PTLayout name='7dot1dot2'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain10"/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID="Gain8"/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID="Gain9"/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="Gain9" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="Gain10" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain9" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain10" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="Gain9" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain5" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="Gain10" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="Gain8" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain7" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain6" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain5" inOutButtonID="" selectButtonID="Gain9"/>
+					<Cell row='4' col='1' knobID="Gain4" inOutButtonID="" selectButtonID="Gain8"/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID="Gain10"/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID>Gain8</ID>
+					<ID>Gain5</ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID>Gain10</ID>
+					<ID>Gain9</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain8</ID>
+					<ID>Gain7</ID>
+					<ID>Gain6</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID>Gain10</ID>
+					<ID>Gain9</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID>Gain9</ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID>Gain5</ID>
+					<ID>Gain10</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID> </ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='3'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID>Gain9</ID>
+					<ID>Gain10</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain9</ID>
+					<ID>Gain10</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+				</Page><!--num='3'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain8</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+					<ID>Gain8</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain9</ID>
+					<ID>Gain10</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+				</Page><!--num='4'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID>Gain5</ID>
+					<ID>Gain6</ID>
+					<ID>Gain7</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain8</ID>
+					<ID>Gain9</ID>
+					<ID> </ID>
+					<ID>Gain10</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+				<Page num='6'>
+					<ID>Gain5</ID>
+				</Page><!--num='6'-->
+				<Page num='7'>
+					<ID>Gain6</ID>
+				</Page><!--num='7'-->
+				<Page num='8'>
+					<ID>Gain7</ID>
+				</Page><!--num='8'-->
+				<Page num='9'>
+					<ID>Gain8</ID>
+				</Page><!--num='9'-->
+				<Page num='10'>
+					<ID>Gain9</ID>
+				</Page><!--num='10'-->
+				<Page num='11'>
+					<ID>Gain10</ID>
+				</Page><!--num='11'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='7dot1dot2'-->
+		<PTLayout name='LCR'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='LCR'-->
+		<PTLayout name='LCRS'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='LCRS'-->
+		<PTLayout name='Mono'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='Mono'-->
+		<PTLayout name='Quad'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="Gain4" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="Gain3" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain4</ID>
+					<ID>Gain3</ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='2'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID>Gain3</ID>
+					<ID>Gain4</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+				<Page num='4'>
+					<ID>Gain3</ID>
+				</Page><!--num='4'-->
+				<Page num='5'>
+					<ID>Gain4</ID>
+				</Page><!--num='5'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='Quad'-->
+		<PTLayout name='Stereo'>
+			<PageTable type='Av18' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av18' pgsz='24'-->
+			<PageTable type='Av1F' pgsz='48'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='9' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='10' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='11' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='12' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='13' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='14' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='15' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='16' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av1F' pgsz='48'-->
+			<PageTable type='Av41' pgsz='12'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av41' pgsz='12'-->
+			<PageTable type='Av46' pgsz='72'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av46' pgsz='72'-->
+			<PageTable type='Av48' pgsz='96'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='2' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='3' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='4' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='4' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='5' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='5' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='6' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='7' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='1' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='8' knobID="" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av48' pgsz='96'-->
+			<PageTable type='Av81' pgsz='24'>
+				<Page num='1'>
+					<Cell row='1' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='2' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='3' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='4' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='5' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='6' col='1' knobID="" inOutButtonID="" selectButtonID=""/>
+					<Cell row='7' col='1' knobID="Gain2" inOutButtonID="" selectButtonID=""/>
+					<Cell row='8' col='1' knobID="Gain1" inOutButtonID="" selectButtonID=""/>
+				</Page><!--num='1'-->
+			</PageTable><!--type='Av81' pgsz='24'-->
+			<PageTable type='BkCS' pgsz='12'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain2</ID>
+					<ID>Gain1</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkCS' pgsz='12'-->
+			<PageTable type='BkSF' pgsz='16'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='BkSF' pgsz='16'-->
+			<PageTable type='FrTL' pgsz='24'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='FrTL' pgsz='24'-->
+			<PageTable type='HgTL' pgsz='8'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='HgTL' pgsz='8'-->
+			<PageTable type='MkTL' pgsz='8'>
+				<Page num='1'>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='MkTL' pgsz='8'-->
+			<PageTable type='PcTL' pgsz='16'>
+				<Page num='1'>
+					<ID>Gain1</ID>
+					<ID>Gain2</ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+					<ID> </ID>
+				</Page><!--num='1'-->
+			</PageTable><!--type='PcTL' pgsz='16'-->
+			<PageTable type='PgTL' pgsz='1'>
+				<Page num='1'>
+					<ID>MasterBypassID</ID>
+				</Page><!--num='1'-->
+				<Page num='2'>
+					<ID>Gain1</ID>
+				</Page><!--num='2'-->
+				<Page num='3'>
+					<ID>Gain2</ID>
+				</Page><!--num='3'-->
+			</PageTable><!--type='PgTL' pgsz='1'-->
+		</PTLayout><!--name='Stereo'-->
+	</PageTableLayouts>
+	<ControlNamesVariations>
+		<Ctrl ID='Gain1'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain1'-->
+		<Ctrl ID='Gain10'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+			<name typ='PgTL' sz='5'>Gain </name>
+		</Ctrl><!--ID='Gain10'-->
+		<Ctrl ID='Gain2'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain2'-->
+		<Ctrl ID='Gain3'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain3'-->
+		<Ctrl ID='Gain4'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain4'-->
+		<Ctrl ID='Gain5'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain5'-->
+		<Ctrl ID='Gain6'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain6'-->
+		<Ctrl ID='Gain7'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain7'-->
+		<Ctrl ID='Gain8'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain8'-->
+		<Ctrl ID='Gain9'>
+			<name typ='PgTL' sz='1'>G</name>
+			<name typ='PgTL' sz='2'>Ga</name>
+			<name typ='PgTL' sz='3'>Gai</name>
+			<name typ='PgTL' sz='4'>Gain</name>
+		</Ctrl><!--ID='Gain9'-->
+		<Ctrl ID='MasterBypassID'>
+			<name typ='PgTL' sz='1'>M</name>
+			<name typ='PgTL' sz='2'>Ma</name>
+			<name typ='PgTL' sz='3'>Mas</name>
+			<name typ='PgTL' sz='4'>Mast</name>
+			<name typ='PgTL' sz='5'>Maste</name>
+			<name typ='PgTL' sz='6'>Master</name>
+			<name typ='PgTL' sz='7'>Master </name>
+			<name typ='PgTL' sz='8'>Master B</name>
+			<name typ='PgTL' sz='9'>Master By</name>
+			<name typ='PgTL' sz='10'>Master Byp</name>
+			<name typ='PgTL' sz='11'>Master Bypa</name>
+			<name typ='PgTL' sz='12'>Master Bypas</name>
+			<name typ='PgTL' sz='13'>Master Bypass</name>
+		</Ctrl><!--ID='MasterBypassID'-->
+	</ControlNamesVariations>
+	<Editor vers='1.3.7.1'>
+		<PluginList>
+			<TDM>
+			</TDM>
+			<RTAS>
+				<PluginID manID='AVID' prodID='DmgM' plugID='G712'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), None</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='G712'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='G71r'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), 7.1</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='G71r'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='G70r'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), 7.0</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='G70r'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='G71R'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), 7.1 SDDS</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='G71R'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='G70R'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), 7.0 SDDS</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='G70R'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DG61'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), 6.1</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DG61'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DG60'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), 6.0</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DG60'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DG51'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), 5.1</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DG51'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DG50'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), 5.0</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DG50'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DGQa'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), Quad</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DGQa'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DGRs'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), LCRS</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DGRs'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DGcR'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), LCR</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DGcR'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DGST'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), Stereo</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DGST'-->
+				<PluginID manID='AVID' prodID='DmgM' plugID='DGMR'>
+					<MenuStr>AAX Native: Demo Gain (UpMixer), Mono</MenuStr>
+				</PluginID><!--manID='AVID' prodID='DmgM' plugID='DGMR'-->
+			</RTAS>
+		</PluginList>
+		<DiscCtrls>
+			<CtrlID>MasterBypassID</CtrlID>
+		</DiscCtrls>
+	</Editor><!--vers='1.3.7.1'-->
+</PageTables><!--vers='1.0.0.0'-->

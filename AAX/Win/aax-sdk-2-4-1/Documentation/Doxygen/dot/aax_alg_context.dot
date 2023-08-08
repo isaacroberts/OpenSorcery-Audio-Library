@@ -1,0 +1,158 @@
+//        Copyright 2016, 2021 by Avid Technology, Inc.
+digraph aax_alg_context {
+	graph [ fontname=Helvetica ];
+	rankdir=LR;
+	
+	node [shape=record, fontname=Helvetica, fontsize=10];
+	
+	alg [ label="Algorithm callback" URL="\ref CommonInterface_Algorithm" shape=egg color="gray"];
+	
+	icontext [ shape=none, margin=0, tooltip="Custom context structure" label=<
+		<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+			<TR>
+				<TD PORT="head" BGCOLOR="lightgray"><B>Custom context structure</B></TD>
+			</TR>
+			<TR>
+				<TD PORT="audioin">Audio input</TD>
+			</TR>
+			<TR>
+				<TD PORT="audioout">Audio output</TD>
+			</TR>
+			<TR>
+				<TD PORT="metertaps">Meter taps</TD>
+			</TR>
+			<TR>
+				<TD PORT="coef1">Coefficients</TD>
+			</TR>
+			<TR>
+				<TD PORT="coef2">Coefficients</TD>
+			</TR>
+			<TR>
+				<TD PORT="pd1">Private Data</TD>
+			</TR>
+			<TR>
+				<TD PORT="pd2">Private Data</TD>
+			</TR>
+		</TABLE>> ];
+		
+	audioin [ shape=none, margin=0, tooltip="Custom context structure" label=<
+		<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+			<TR>
+				<TD PORT="L1"></TD>
+				<TD PORT="L2"></TD>
+				<TD PORT="L3"></TD>
+				<TD PORT="Letc">...</TD>
+			</TR>
+			<TR>
+				<TD PORT="R1"></TD>
+				<TD PORT="R2"></TD>
+				<TD PORT="R3"></TD>
+				<TD PORT="Rtc">...</TD>
+			</TR>
+		</TABLE>> ];
+		
+	audioout [ shape=none, margin=0, tooltip="Custom context structure" label=<
+		<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+			<TR>
+				<TD PORT="L1"></TD>
+				<TD PORT="L2"></TD>
+				<TD PORT="L3"></TD>
+				<TD PORT="Letc">...</TD>
+			</TR>
+			<TR>
+				<TD PORT="R1"></TD>
+				<TD PORT="R2"></TD>
+				<TD PORT="R3"></TD>
+				<TD PORT="Rtc">...</TD>
+			</TR>
+		</TABLE>> ];
+		
+	metertaps [ shape=none, margin=0, tooltip="Custom context structure" label=<
+		<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+			<TR>
+				<TD PORT="T1"></TD>
+				<TD PORT="T2"></TD>
+				<TD PORT="T3"></TD>
+			</TR>
+		</TABLE>> ];
+		
+	coef1 [ shape=none, margin=0, tooltip="Custom context structure" label=<
+		<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+			<TR>
+				<TD PORT="head" BGCOLOR="lightgray"><B>Coefficient block</B></TD>
+			</TR>
+			<TR>
+				<TD PORT="dot1">.</TD>
+			</TR>
+			<TR>
+				<TD PORT="dot2">.</TD>
+			</TR>
+			<TR>
+				<TD PORT="dot3">.</TD>
+			</TR>
+		</TABLE>> ];
+		
+	coef2 [ shape=none, margin=0, tooltip="Custom context structure" label=<
+		<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+			<TR>
+				<TD PORT="head" BGCOLOR="lightgray"><B>Coefficient block</B></TD>
+			</TR>
+			<TR>
+				<TD PORT="dot1">.</TD>
+			</TR>
+			<TR>
+				<TD PORT="dot2">.</TD>
+			</TR>
+			<TR>
+				<TD PORT="dot3">.</TD>
+			</TR>
+		</TABLE>> ];
+		
+	pd1 [ shape=none, margin=0, tooltip="Custom context structure" label=<
+		<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+			<TR>
+				<TD PORT="head" BGCOLOR="lightgray"><B>Private data block</B></TD>
+			</TR>
+			<TR>
+				<TD PORT="dot1">.</TD>
+			</TR>
+			<TR>
+				<TD PORT="dot2">.</TD>
+			</TR>
+			<TR>
+				<TD PORT="dot3">.</TD>
+			</TR>
+		</TABLE>> ];
+		
+	pd2 [ shape=none, margin=0, tooltip="Custom context structure" label=<
+		<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4">
+			<TR>
+				<TD PORT="head" BGCOLOR="lightgray"><B>Private data block</B></TD>
+			</TR>
+			<TR>
+				<TD PORT="dot1">.</TD>
+			</TR>
+			<TR>
+				<TD PORT="dot2">.</TD>
+			</TR>
+			<TR>
+				<TD PORT="dot3">.</TD>
+			</TR>
+		</TABLE>> ];
+		
+		
+	// Connections
+	alg -> icontext:head [arrowhead="none" constraint=false];
+	icontext:audioin -> audioin:L1;
+	icontext:audioout -> audioout:L1;
+	icontext:metertaps -> metertaps:T1;
+	icontext:coef1 -> coef1:head;
+	icontext:coef2 -> coef2:head;
+	icontext:pd1 -> pd1:head;
+	icontext:pd2 -> pd2:head;
+	
+	
+	// Layout requirements
+	{ rank=same; alg; icontext; }
+		
+}

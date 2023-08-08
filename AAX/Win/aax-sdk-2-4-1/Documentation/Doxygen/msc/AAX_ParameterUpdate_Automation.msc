@@ -1,0 +1,41 @@
+/*===================================================================================================
+
+Copyright 2016 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+msc {
+	// Display properties
+	hscale = "1";
+	
+	// Declare entities
+	 host              [label = "Host", textbgcolor = "#edebff", arctextbgcolor = "#edebff"]
+	,plugin            [label = "Plug-In", textbgcolor = "#eafbef", arctextbgcolor = "#eafbef"]
+	;
+			
+	// -------------------
+	|||;
+	|||;
+	host note plugin [label = "Parameter value automation handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	host rbox host [label = "Automation value changed"];
+	host => plugin [label = "UpdateParameterNormalizedValue()\niSource: AAX_eUpdateSource_Unspecified", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	... [label = "(see sequence above)"];
+	plugin >> host;
+		
+	// -------------------
+	|||;
+	|||;
+	host note plugin [label = "Current value handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	|||;
+	... [label = "(see sequence above)"];
+	|||;
+	
+	
+	// [label = "", URL = "\ref "];
+		
+}

@@ -1,0 +1,66 @@
+/*===================================================================================================
+AAX_ParameterAutomation.doxygen
+
+Copyright 2016, 2018 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup advancedTopics_ParameterAutomation Parameter automation
+	@ingroup AdvancedTopics
+	
+	@brief Information about parameter automation
+	
+	\section parameterAutomation_contents On this page
+
+<DIV CLASS="section">
+	\section parameterAutomation_overview Overview
+		The term "automation" can mean two things in %AAX:
+		<OL>
+			<LI>
+				A host feature allowing users to record and play back plug-in parameter changes. In this documentation, this data is referred to as <em><b>automation data</b></em>, and it is stored in <em><b>automation lanes</b></em> in the host.
+			</LI>
+			<LI>
+				A system for arbitrating between changes from different parameter editors such as the plug-in GUI, control surfaces, and pre-recorded automation values. In this documentation, this is referred to as the <em><b>event system</b></em> for parameters.
+			</LI>
+		</OL>
+		
+		Here are some examples of how these two different meanings are used in %AAX:
+		\li The \ref AAX_IAutomationDelegate provides methods for interacting with the host's parameter event system.
+		\li \ref AAX_IACFEffectParameters::GetParameterIsAutomatable() and the \c automatable parameter in the \ref AAX_CParameter constructor reflect whether a parameter can have automation written and read by the host.
+		\li \ref AAX_IController::GetCurrentAutomationTimestamp() gets the timestamp for pre-recorded automation data when it is received by the plug-in during playback
+		
+		For more information about the parameter event system, see the \ref advancedTopics_ParameterUpdates pages, and particularly the information on the \ref advancedTopics_parameterUpdates_tokenProtocol
+</DIV>
+	
+	
+<DIV CLASS="section">
+	\section parameterAutomation_elements Plug-in elements used for automation
+	
+		\dotfile aax_automation_components.dot "Plug-in elements used for events and automation"
+	
+		\subsection parameterAutomation_definingParameters Defining automatable parameters
+		
+			In order for a parameter to be available for automation recording, editing, and playback, the plug-in must meet the following criteria:
+			\li It must provide \c true when the host calls \ref AAX_IACFEffectParameters::GetParameterIsAutomatable() "GetParameterIsAutomatable()" for the parameter. In nearly all plug-ins, this means providing \c true to the \c automatable parameter in the parameter's \ref AAX_CParameter constructor.
+			\li It must expose the parameter to the parameter event system (see below.)
+			
+			In order for a parameter to be exposed to the event system, the plug-in must meet the following criteria:
+			\li It must respond to all parameter methods in the \ref AAX_IEffectParameters interface, particularly \ref AAX_IACFEffectParameters::GetNumberOfParameters() "GetNumberOfParameters()" and \ref AAX_IACFEffectParameters::GetParameterIDFromIndex() "GetParameterIDFromIndex()". Generally this is accomplished by adding an \ref AAX_CParameter object for each parameter to the plug-in's \ref AAXLibraryFeatures_ParameterManager.
+			\li It must include the parameter in its one-parameter-per-page <tt>'PgTL'</tt> (default) page tables. See \ref aax_page_table_guide_05_implementing_page_tables in the \ref AAX_Page_Table_Guide for more information about defining this page table type.
+			
+			All plug-in parameters must be registered with the host's event system in order for editors, including the plug-in's GUI, to work properly. Therefore a plug-in should always define a complete <tt>'PgTL'</tt> (default) page table including all of its parameters, even the parameters that are not "automatable".
+		
+	
+</DIV>
+
+<DIV CLASS="section">
+	\section parameterAutomation_advanced Advanced automation topics
+	
+		\li \ref advancedTopics_linkedParameters
+		
+		
+	
+</DIV>
+	
+*/

@@ -1,0 +1,218 @@
+/*===================================================================================================
+AAX_ParameterUpdateProtocol.doxygen
+
+Copyright 2016, 2018 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup advancedTopics_ParameterUpdates Parameter updates
+	@ingroup AdvancedTopics
+	
+	@brief The anatomy of a parameter update
+*/
+
+/** @defgroup advancedTopics_parameterUpdates_tokenProtocol Token protocol
+	@ingroup advancedTopics_ParameterUpdates
+	
+	@brief Communicating parameter state with the host
+	
+	\section advancedTopics_parameterUpdates_tokenProtocol_contents On this page
+		\li \ref tokenProtocol_introductionToTokens
+		\li \ref tokenProtocol_standardTokenOperation
+
+<DIV CLASS="section">
+	\section tokenProtocol_introductionToTokens An Introduction to Tokens
+One way in which a plug-in can communicate with the "outside world" is through Shared Data Services, also known as the Token System. This is a mechanism that allows Pro Tools to share parameter information with external hardware and software modules. While the %AAX SDK only uses the Token System indirectly, knowing how it works will provide a good understanding of how linked parameters should operate.
+		
+		\subsection tokenProtocol_introductionToTokens_touch Touch
+Touch tokens inform the system of user interaction with a parameter. When a parameter is being touched the system knows to stop sending automation data to the plug-in and just use the SET value of the parameter. It is also used to tell the system when to start/stop recording new automation data.
+
+In %AAX, the touch message is sent to the host by \ref AAX_IAutomationDelegate::PostTouchRequest(). The most common way to call this method is via the following methods:
+
+\code
+class AAX_IEffectParameters
+{
+	virtual AAX_Result TouchParameter ( AAX_CParamID inParameterID );
+	virtual AAX_Result ReleaseParameter ( AAX_CParamID inParameterID );
+};
+
+class AAX_IParameter
+{
+	virtual void Touch ();						
+	virtual void Release ();
+};
+\endcode
+
+However, %AAX plug-ins will rarely need to call these methods directly since the \ref AAX_CParameter and \ref AAX_CEffectParameters implementations will automatically handle parameter touch and release tokens whenever a new value is set on the parameter by the plug-in.
+
+Other clients besides the plug-in may touch a parameter. Since the TOUCH token can come from a control surface the touch state will actually come back to the plug-in via:
+
+\code
+class AAX_IEffectParameters
+{
+	virtual AAX_Result UpdateParameterTouch ( AAX_CParamID iParameterID, AAX_CBoolean iTouchState );
+};
+\endcode
+
+This method is mainly important for \ref advancedTopics_linkedParameters "linked parameters".
+		
+\dotfile aax_parameter_entities_touch_handled.dot "Touch request from a view controller, with resulting async touch update"
+		
+		\subsection tokenProtocol_introductionToTokens_set Set			
+SET tokens can come from many different locations: the plug-in GUI, a control surface, loading a chunk or automation playback. Eventually the value of a SET token comes into the plug-in and that's when the internal value of the parameter gets updated. In %AAX the SET token will be sent as a result of calling the following method:
+
+\code
+class AAX_CParemeter<T>
+{
+	void SetValue ( T newValue );
+};
+\endcode
+
+which will be called from many other supporting methods:
+
+\code
+class AAX_CParameter<T>
+{
+	bool SetValueWithBool ( bool value );
+	bool SetValueWithInt32 ( int32_t value );
+	bool SetValueWithFloat ( float value );
+	bool SetValueWithDouble ( double value );
+	void SetToDefaultValue ();
+	void SetNormalizedValue ( double normalizedNewValue );
+	bool SetValueFromString ( const AAX_CString & newValueString );
+};
+\endcode
+
+When a SET token enters the system from the GUI, control surface or automation the value comes bak to the plug-in via the following method:
+
+\code
+class AAX_CEffectParameters
+{
+	AAX_Result UpdateParameterNormalizedValue ( AAX_CParamID iParameterID, double aValue, AAX_EUpdateSource inSource);
+};
+\endcode
+
+At this point the internal contents of the plug-in are set.
+		
+\dotfile aax_parameter_entities_update.dot "Set token asynchronously changes state of the parameter data"
+		
+		\subsection tokenProtocol_introductionToTokens_update Update		
+An update token is generated when the internal value of a parameter has been set. GUIs and control surfaces listen for UPDATE tokens to update the displayed values. In %AAX the UPDATE token is sent by calling the following method:
+
+\code
+class AAX_CParameter<T>
+{
+	void UpdateNormalizedValue ( double newNormalizedValue );
+};
+\endcode
+
+All views of the parameter are then asynchronously notified that the value has changed. The plug-in GUI is notified via a call to \ref AAX_IEffectGUI::ParameterUpdated().
+
+\dotfile aax_parameter_entities_curvalue.dot "Update token triggers async updates to all views"
+</DIV>
+
+
+<DIV CLASS="section">
+	\section tokenProtocol_standardTokenOperation Basic Token Operation		
+The lists below indicate how the system works in a few different standard update scenarios. To enable logging for these events set <TT>DTF_AUTOMATION=file\@DTP_LOW</TT> in the \ref AAX_DigiTrace_Guide "DigiTrace" configuration file. For more detailed information about the sequence of calls used to update parameters in different situations, see \ref advancedTopics_parameterUpdates_sequences.
+
+		\subsection tokenProtocol_standardTokenOperation_userEditing User Editing		
+-# User clicks on a parameter in the GUI or grabs a parameter on the controls surface. A TOUCH token should be sent at this point.
+-# The user changes the parameter from the GUI or controls surface. A SET token should be sent at this point.
+-# The SET token goes into the system and comes back to the plugin via UpdateParameterNormalizedValue().
+-# The plug-in updates it's internal state and sends an UPDATE token.
+-# Repeat steps 2-4 while changing the parameter.
+-# The user lets go of the GUI or controls surface. A TOUCH token with the released state should be sent.
+		
+		\subsection tokenProtocol_standardTokenOperation_automationPlayback Automation Playback		
+-# The SET token comes from the automation system and enters the plugin via UpdateParameterNormalizedValue().
+-# The plug-in updates it's internal state and sends an UPDATE token.
+-# Repeat steps 1-2 while playing back automation.
+		
+		\subsection tokenProtocol_standardTokenOperation_chunkRestoring Chunk Restoring		
+-# Plug-in loads the chunk.
+-# The plug-in sets every parameters value. Another thing to note is that the 
+-# SetValue() method also contains Touch() and Release() calls. So, while setting every parameter there is a combination of TOUCH and SET tokens sent to the system.
+-# The SET tokens comes back to the plugin via UpdateParameterNormalizedValue().
+-# The plug-in updates it's internal state and sends out UPDATE tokens.
+
+</DIV>
+
+*/
+
+
+
+
+
+
+/** @defgroup advancedTopics_parameterUpdates_sequences Basic parameter update sequences
+	@ingroup advancedTopics_ParameterUpdates
+	
+	@brief Sequence diagrams for some common parameter update scenarios
+	
+	\section advancedTopics_parameterUpdates_sequences_contents On this page
+		\li \ref parameterUpdates_sequences_user
+		\li \ref parameterUpdates_sequences_automation
+		\li \ref parameterUpdates_sequences_initialization
+		
+	\note To enable logging for these events at run time set <TT>DTF_AUTOMATION=file\@DTP_LOW</TT> in the \ref AAX_DigiTrace_Guide "DigiTrace" configuration file.
+		
+		\subsection advancedTopics_parameterUpdates_sequences_notes Notes on threading for these sequences
+			- Calls from the host into \ref AAX_IEffectParameters may occur on any thread. In general, the only synchronization that is guaranteed for data model calls in these diagrams is that the call will follow whatever event is indicated as its trigger.
+			- Calls from the host into \ref AAX_IEffectGUI will occur on the main application thread unless indicated otherwise in the \ref AAX_IEffectGUI documentation.
+			- Host-driven updates to the algorithm context are always synchronized with the real-time processing thread
+		
+	\section parameterUpdates_sequences_user User-generated update
+		This is the sequence of calls for a basic, unlinked parameter update triggered by the user. For this sequence, we assume that the edit was triggered by a GUI event.
+		
+		\subsection parameterUpdates_sequences_updateSequences_user_highlevel High-level interface calls and events
+			\mscfile AAX_ParameterUpdate_GUI_HighLevel.msc "High-level sequence of interface calls and events for a parameter update following a user-generated edit"
+		
+		\subsection parameterUpdates_sequences_user_details Detailed sequence for default implementation
+			Note that this diagram assumes a GUI implementation that uses \ref AAX_IACFEffectParameters::SetParameterNormalizedValue() "SetParameterNormalizedValue()". The implementation could also use other parameter set methods, either in \ref AAX_IEffectParameters or directly on an \ref AAX_IParameter. The overall sequence would remain the same.
+	
+			\mscfile AAX_ParameterUpdate_GUI.msc "Detailed sequence of method calls and events for a parameter update following a user-generated edit on the plug-in GUI"
+	
+		\subsection parameterUpdates_sequences_user_controlsurface Updates from control surfaces
+			Updates from control surfaces are handled in exactly the same way. In this case, though, the parameter touch, set value, and release tokens are generated by the control surface.
+			
+			\msc
+				hscale = "1";
+				 
+				 controlsurface    [label = "Control Surface"]
+				,host              [label = "Host", textbgcolor = "#edebff", arctextbgcolor = "#edebff"]
+				;	
+					
+				|||;
+				|||;
+				controlsurface note host [label = "Edit event handling", textbgcolor = "#f0f0f0"];
+	
+				controlsurface rbox controlsurface [label = "Control Surface Edit Event"];
+				controlsurface -> host [label = "touch"];
+				controlsurface -> host [label = "set value"];
+				controlsurface -> host [label = "set value"];
+				...;
+				controlsurface -> host [label = "release"];
+				
+				|||;
+				|||;
+				controlsurface note host [label = "Set value handling, etc.", textbgcolor = "#f0f0f0"];
+				
+				... [label = "Proceeds as above"];
+			\endmsc
+		
+	\section parameterUpdates_sequences_automation Automation playback
+		Automation playback handling is similar to the handling for user-generated parameter updates. However, parameters are never touched/released during automation playback. This allows touches from other clients, such as the GUI or control surfaces, to override the automation playback.
+		
+		\mscfile AAX_ParameterUpdate_Automation.msc "Sequence of method calls and events for playback of parameter automation"
+	
+	\section parameterUpdates_sequences_initialization Initialization
+		This is the sequence of calls for the initial parameter updates made during data model initialization. Steps that are redundant with sections of the \ref parameterUpdates_sequences_user_details "standard user-generated update sequence" are elided.
+		
+		\todo Update this section with information about default chunk setting, which is a separate step following the procedure described below.
+		
+		\mscfile AAX_ParameterUpdate_Initialization.msc "Sequence of method calls and events for parameter updates at plug-in initialization
+		
+*/

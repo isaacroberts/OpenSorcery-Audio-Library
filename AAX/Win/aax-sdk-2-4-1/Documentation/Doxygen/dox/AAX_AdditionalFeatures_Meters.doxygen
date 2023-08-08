@@ -1,0 +1,108 @@
+/*===================================================================================================
+AAX_AdditionalFeatures_Meters.doxygen
+
+Copyright 2011-2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup AdditionalFeatures_Meters Plug-in meters
+ 	@ingroup AdditionalFeatures
+ 	
+ 	@brief How to manage metering data for %AAX plug-ins
+ 
+ 	\section AdditionalFeatures_Meters_overview Overview of metering in AAX
+ 	
+ 		%AAX provides a host-managed metering system for plug-ins.  The host buffers, thins, and
+ 		applies ballistics to each of the plug-in's meters.  When the plug-in GUI retrieves this
+ 		processed data, it receives the exact same information that is displayed on control surfaces
+ 		and other metering devices.
+ 	
+ 	\section AdditionalFeatures_Meters_adding Adding meters to an Effect
+ 	
+ 		Meters are added to an algorithm Component in \ref CommonInterface_Describe "Describe" using
+ 		\ref AAX_IComponentDescriptor::AddMeters().  The resulting meter context field will be
+ 		populated with an array of meter "tap" values, one for each of the Component's meters.
+ 		
+ 		\subsection AdditionalFeatures_Meters_adding_properties Customizing meter behavior
+ 		
+			Using the \ref AAX_IEffectDescriptor "Effect Descriptor", each meter in the Effect may
+			optionally be associated with a \ref AAX_IPropertyMap "property map" that applies a
+			particular set of display properties to the meter.  These are the properties that may be set
+			on a meter:
+			
+				\li \ref AAX_EMeterOrientation
+				\li \ref AAX_EMeterBallisticType
+				\li \ref AAX_EMeterType
+			
+			Note that, because meter properties are added at the Effect level, it is not possible to
+			describe different meter property configurations for different algorithms in the same
+			Effect.
+ 	
+ 	\section AdditionalFeatures_Meters_reporting Reporting meter values
+ 	
+ 		Meter values are reported by the algorithm using one "tap" per channel per buffer.  For each
+ 		tap, the algorithm must report the maximum metered sample value for each processing buffer.
+ 		
+ 		Meter tap values can be interpreted as the maximum value of the meter per buffer, on a scale
+ 		of [0.0 1.0]. In all cases the plug-in's meter position should be normalized between 0 and 1,
+ 		where 0 is no gain reduction. For example:
+ 		
+ 			\li An input meter should report the maximum absolute sample value that is present in
+ 			the input audio buffer for the appropriate channel
+ 			\li An output meter should report the maximum absolute sample value that is present in
+ 			the output audio buffer for the appropriate channel
+ 			\li A gain-reduction meter (CL or EG types) should report the largest amount of gain
+ 			reduction in the current buffer for the appropriate channel.  If no gain reduction
+ 			occurred for a buffer then a value of 0.0 should be reported.  If a full-scale signal
+ 			was reduced to silence then a value of 1.0 should be reported.
+ 		
+ 		Gain-reduction meter values should report peak gain reduction, not RMS or other algorithms,
+ 		and may use any normalization mapping (e.g. linear, exponential) which is desired. Ideally
+ 		the gain-reduction metering UI in the host and on attached control surfaces will match
+ 		the Peak gain redution metering in the plug-in's GUI.
+ 		
+ 		\legacy The gain-reduction meter handling for %AAX plug-ins is different from that for
+ 		RTAS/TDM plug-ins.  %AAX plug-ins must invert their gain-reduction meter values manually
+ 		before reporting these values from the audio processing callback.  The %AAX host will always
+ 		thin reported meter data using a "max" operation, and will later invert gain-reduction
+ 		meter values before they are available to the plug-in GUI or to control surfaces.  
+ 	
+ 	\section AdditionalFeatures_Meters_displaying Displaying meter values
+ 	
+ 		The meter values that are reported to the system from the algorithm are available, in
+ 		buffered and (optionally) ballistics-smoothed form, from \ref AAX_IController .  The meter
+ 		values returned from methods such as 
+ 		\ref AAX_IController::GetCurrentMeterValue() "GetCurrentMeterValue()" and
+ 		\ref AAX_IController::GetMeterPeakValue() "GetMeterPeakValue()" are the same values used
+ 		by the system when displaying plug-in meters on control surfaces, and when a plug-in clears
+ 		the peak value using \ref AAX_IController::ClearMeterPeakValue() "ClearMeterPeakValue()" this
+ 		change will likewise be reflected throughout the system.
+ 		
+ 		The literal values provided by these methods can be interpreted as the distance from "rest"
+ 		that the meter must travel to represent the current value, again on a scale of [0.0 1.0].
+ 		Note that this is not necessarily equivalent to the semantics of the meter's reported
+ 		values in the algorithm:
+ 		
+ 			\li For "standard" meters such as input meters, this corresponds to the value provided
+ 			by the algorithm, since a maximum metered sample value (1.0) corresponds to a meter
+ 			that should be drawn "furthest from rest" (1.0), i.e. at the top of a standard
+ 			bottom-to-top meter graphic, or at the far right of a standard left-to-right graphic.
+ 			\li For "inverted" meters, such as gain-reduction meters, these semantics are reversed:
+ 			a maximum metered sample value (1.0) corresponds to a meter drawn "at rest" (0.0), i.e.
+ 			at the bottom of a bottom-to-top meter graphic or at the far left of a left-to-right
+ 			graphic.
+ 		
+ 		These values are independent of \ref AAX_EMeterOrientation "meter orientation": an input
+ 		or output meter that is oriented with \ref AAX_eMeterOrientation_TopRight will still use
+ 		0.0 as its "at rest" position, and likewise a gain-reduction meter that is oriented with
+ 		\ref AAX_eMeterOrientation_BottomLeft will still use 1.0.
+ 	
+  	\section AdditionalFeatures_Meters_alternatives Alternatives
+  	
+  		For advanced metering applications a single tap value may not be sufficient.  To transmit
+  		more detailed information from the algorithm to its other components, a plug-in must use
+  		the \ref AuxInterface_DirectData "Direct Data" interface.
+	
+ */

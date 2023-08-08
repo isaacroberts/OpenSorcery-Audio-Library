@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{72627630-3ac7-4121-bc81-103254c9f33f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\AAX">
+      <UniqueIdentifier>{8dc5c384-261a-4244-a846-117df56e1e66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{6932bb04-e1d3-4ba3-a54e-a2f33effd861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\Debug">
+      <UniqueIdentifier>{174694ea-eeab-4e3d-a487-436d41d5c9b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\Release">
+      <UniqueIdentifier>{8b1ed3dc-f301-48a3-90dd-3f65b102e925}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Extensions\GUI\AAX_CEffectGUI_Juce.h">
+      <Filter>Source Files\GUI\AAX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DemoGainResource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoGain_Alg.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoGain_Defs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoGain_Describe.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DemoGain_Parameters.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\DemoGain_SliderJuce.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\DemoGain_GUI_Juce.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GUI\DemoGain_ViewComponent.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Extensions\GUI\AAX_CEffectGUI_Juce.cpp">
+      <Filter>Source Files\GUI\AAX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Interfaces\AAX_Exports.cpp">
+      <Filter>Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\DemoGain_ViewComponent.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\DemoGain_GUI_Juce.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GUI\DemoGain_SliderJuce.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DemoGain_AlgProc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DemoGain_Describe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\DemoGain_Parameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\DemoGain.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\Libs\Release\jucelib_static_Win32.lib">
+      <Filter>Libs\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary_x64.lib">
+      <Filter>Libs\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Release\AAXLibrary.lib">
+      <Filter>Libs\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\jucelib_static_x64_debug.lib">
+      <Filter>Libs\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\jucelib_static_Win32_debug.lib">
+      <Filter>Libs\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_x64_D.lib">
+      <Filter>Libs\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Debug\AAXLibrary_D.lib">
+      <Filter>Libs\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\..\Libs\Release\jucelib_static_x64.lib">
+      <Filter>Libs\Release</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,407 @@
+﻿/*===================================================================================================
+DSH_Guide.doxygen
+
+Copyright 2016-2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup DSH_Guide DSH Guide
+        @ingroup CompatibleEnvironmentsDocs
+        
+        @brief How to test basic functionality of %AAX plug-ins using DSH test tool
+        
+        @section dsh_guide_contents Contents
+		\li \ref dsh_guide_00_what_is_dsh_and_how_it_works
+                \li \ref dsh_guide_01_basic_set_of_commands_of_dae_dish
+                \li \ref dsh_guide_02_basic_plugin_tests
+		\li \ref dsh_guide_03_debugging_and_tracing
+		\li \ref dsh_guide_04_scripting_interface_and_batch_profiling
+
+
+<DIV CLASS="section">
+        @section dsh_guide_00_what_is_dsh_and_how_it_works What is DSH and how it works
+
+DigiShell is a software tool that provides a general framework for running tests on Avid audio hardware. As a command-line application, DigiShell may be driven as part of a standard, automated test suite for maximum test coverage. DSH supports loading all types of %AAX plug-ins except AS, and is especially useful when running performance and cancellation tests of AAX-TI types. DigiShell is included in Pro Tools Development Builds as dsh.exe (Windows) or as dsh in the CommandLineTools directory (Mac).
+
+After it is launched, DigiShell waits for a command name and parameters to be entered via stdin; command results are output via stdout. DigiShell parses its input as command name, followed by a single space, and then command parameters. The command parameters are expected to be a yaml-encoded string. Here are two examples of strings in compact (single-line) yaml format:
+<UL>
+<LI CLASS="Bullet">
+A hash containing lists in compact yaml syntax
+<DIV CLASS="TextInd1">
+<TT>{ key1: [val1, val2], key2: [val3, val4] }</TT></DIV>
+<BR />
+</LI>
+<LI CLASS="Bullet">
+A list of two lists
+<DIV CLASS="TextInd1">
+<TT>[[PIO, 0, 1], [DSP, 1, 1]]</TT></DIV>
+</LI>
+
+</UL>
+</DIV>
+
+<DIV CLASS="section">
+        @section dsh_guide_01_basic_set_of_commands_of_dae_dish Basic set of commands of the DAE dish
+
+DigiShell has built-in commands for getting help, creating a DigiTrace configuration and loading DigiShell modules known as "dishes". One can see the command list by running the help command without any parameters. Passing a command name as a single string parameter to the help command will give a more detailed command description.
+
+The default installation of DigiShell includes a few dishes, including the DAE dish. This dish loads the AAE audio engine and can be used for loading and testing basic functionality of plug-ins. The DAE dish can also be used to load a plug-in for basic debugging purposes, and provides a ligher-weight debugging environment than the full Pro Tools application.
+
+Another dish supplied with DSH, the aaxh dish, provides a lower-level hosting environment for AAX plug-ins. This dish loads a dedicated AAX host component without audio routing logic or other audio engine responsibilities. In this guide we will focus on loading and running plug-ins using the DAE dish, but we encourage you to also explore the commands available in the aaxh dish and to learn how to exercise your plug-ins in that environment.
+
+                @subsection subsection__loading_plugins Loading plug-ins in DSH
+
+The following commands can be used to load and configure the DAE dish:
+<UL>
+<LI CLASS="Bullet">
+<TT>load_dish DAE</TT>
+<DIV CLASS="TextInd1">
+Loads the DAE dish</DIV>
+<BR />
+</LI>
+<LI CLASS="Bullet">
+<TT>init_dae 48000</TT>
+<DIV CLASS="TextInd1">
+This command is optional. It configures AAE to work at a specific sample rate. By default it will work at 44100 Hz.</DIV>
+</LI>
+</UL>
+
+Loading the DAE dish into the DigiShell environment with the built-in <TT>load_dish</TT> command will extend the set of available commands. Amoung them there is a <TT>run</TT> command. The <TT>run</TT> command can be used in two ways:
+
+<UL>
+<LI CLASS="Bullet">
+Execute with no arguments: List all plug-in configurations which are available to AAE
+</LI>
+<LI CLASS="Bullet">
+Execute with arguments specifying a particular plug-in configuration: Load a plug-in instance using the specified configuration
+</LI>
+</UL>
+
+You can also search for the id and spec of the specific plug-in with the <TT>findpi</TT> command, which takes a plug-in's name or part of it as an argument, and then searches through the whole list of available plug-ins using this pattern.
+
+<IMG width="50%" alt="DSH commands for loading plug-ins" src="dsh_02.png" />
+<DIV CLASS="imagecaption">Figure 1: DSH command for loading plug-ins.</DIV>
+
+If the plug-ins was instantiated successfully, then DSH will list all its parameters, just like on the screenshot. If instantiation fails, then DSH in most cases will output the error code, although it is not always obvoius what this error code means. Here is the list or possible reasons of some failures:
+<UL>
+   <LI CLASS="Bullet">
+      -9060
+      <DIV CLASS="TextInd1">failed to load DSP Hybrid plug-in</DIV>
+      <BR />
+   </LI>
+   <LI>
+      -14140
+      <DIV CLASS="TextInd1">IO interface is not connected</DIV>
+      <BR />
+   </LI>
+   <LI>
+      -7050
+      <DIV CLASS="TextInd1">not enough resources for instantiating plugin</DIV>
+      <BR />
+   </LI>
+   <LI>
+      -14378
+      <DIV CLASS="TextInd1">plug-in exceeded memory limits</DIV>
+      <BR />
+   </LI>
+   <LI>
+      -14003
+      <DIV CLASS="TextInd1">something is wrong with your HDX card</DIV>
+      <BR />
+   </LI>
+</UL>
+
+-30xxx errors are dynamically-generated and can indicate different failures. Failures due to plug-ins exceeding the cycle limit of the DSP CPU will often appear as -30xxx errors. See \ref subsection__30xxx_dynamic_error_codes in the \ref AAX_TI_Guide for more information.
+
+\note <TT>run</TT> command works for Native and DSP plug-ins, but not for the Audio Suite ones. Also it will fail for DSP Hybrid plug-ins. To be able to instantiate them, one should run <TT>acquiredeck</TT> command.   
+
+There are several DAE dish commands for operating with plug-ins' instances:
+<UL>
+<LI CLASS="Bullet">
+   <TT>getcurrentinstance</TT>
+   <DIV CLASS="TextInd1">Returns the index of the current instance. The counting strarts from 0 for the first instance that has been instantiated, and increments by one for every next instance.</DIV>
+   <BR />
+</LI>
+<LI>
+   <TT>getinstanceproperties</TT>
+   <DIV CLASS="TextInd1">Returns the effect name for the Native plug-ins, and much more detailed info for the DSP instances.</DIV>
+</LI>
+<LI>
+   <TT>setcurrentinstance</TT>
+   <DIV CLASS="TextInd1">Sets the instance with the given index as the current instance.</DIV>
+</LI>
+</UL>
+
+                @subsection subsection__working_with_hdx_card_from_dsh Working with HDX card from DSH
+
+One of the benefits of the DAE dish in DigiShell is that it has direct access to the shell environment that loads DSP plug-ins. The included facilities for retrieving load error information from the DSP manager can be very helpful for debugging DSP plug-in load failures. For example, you can use the following DAE dish commands to determine what resource requirement is preventing additional instances from loading onto a single DSP:
+<OL>
+<LI CLASS="List">
+   <TT>reservetidsp all</TT>
+   <DIV CLASS="TextInd1">Reserves all unused DSPs in the system</DIV>
+</LI>
+<LI CLASS="List">
+   <TT>unreservetidsp 0</TT>
+   <DIV CLASS="TextInd1">Frees the first DSP for plug-in allocation</DIV>
+</LI>
+<LI CLASS="List">
+   <TT>getlastdsploaderror</TT>
+   <DIV CLASS="TextInd1">Retrieve the text of the error that was generated when the final Effect instance attempted to load</DIV>
+</LI>
+<LI CLASS="List">
+   <TT>getdspinfo 0</TT>
+   <DIV CLASS="TextInd1">Returns detailed info about the DSP chip with the given index. By executing this command you can figure out whether particular chip is in use currently, which plug-ins are instantiated there, how many resources they consume and how many resources are still available.</DIV>
+   <BR/>
+   <IMG width="40%" alt="Info about the DSP chip with the given index" src="dsh_03.png" />
+   <IMG width="40%" alt="Info about the DSP chip with the given index" src="dsh_04.png" />
+   <DIV CLASS="imagecaption">Figure 2: Info about the DSP chip with the given index.</DIV>
+</LI>
+</OL>
+
+
+
+				@subsection subsection__dsh_tips DAE dish tips
+
+<UL>
+<LI CLASS="Bullet">
+With the standard configuration, the system's AAX plug-ins folder will be used by DSH and DTT. To override this, create a folder named "Plug-Ins" next to the DTT and CommandLineTools directories. While that directory exists, AAE will only scan the plug-ins in the new Plug-Ins folder.
+</LI>
+</UL>
+
+</DIV>
+
+
+
+<DIV CLASS="section">
+        @section dsh_guide_02_basic_plugin_tests Basic plug-in tests 
+
+There are some basics tests that can be performed for %AAX plug-ins in DSH. Among them are instantiation test, measuring of amount of processor cycles that DSP plug-in may consume on different settings, cancellation test and so on.
+
+                @subsection subsection__cyclessharedtest Cycle count performance test 
+
+Use the DAE.cyclesshared command in the DAE dish to profile a DSP algorithm's cycle count performance. This command measures both the shared and the per-instance cycles used by a plug-in, both of which must be reported to the host. This command also includes the option to load a custom plug-in preset so that various algorithm code paths may be exercised. It is important to report the maximum possible number of cycles that the plug-in may need, so that it had enough resources, even in the worst case. Otherwise one can obtain noise and clicks in the output audio on the extreme plug-in's settings.
+
+The full syntax of this command is as follows:
+<DIV CLASS="TextInd1">
+<TT>cyclesshared &lt;index — spec — {key:value, key:value, etc.}&gt;</TT> </DIV>
+<DIV CLASS="TextInd2">
+<TT>index</TT> - Index of the plug-in as listed by the <TT>DAE.run</TT> command</DIV>
+<DIV CLASS="TextInd2">
+<TT>spec</TT> - Plug-in ID triplet in array, e.g. ['<TT>AVID</TT>', '<TT>DmGn</TT>', '<TT>DGDT</TT>']</DIV>
+<DIV CLASS="TextInd2">
+<TT>key:value</TT> hash options: </DIV>
+<DIV CLASS="TextInd3">
+<TT>idx</TT> - Index of the plug-in</DIV>
+<DIV CLASS="TextInd3">
+<TT>spec</TT> - Plug-in ID triplet array</DIV>
+<DIV CLASS="TextInd3">
+<TT>run_cached: &lt;true — false&gt;</TT> - Whether to use cached code when measuring. Defaults to false.</DIV>
+<DIV CLASS="TextInd3">
+<TT>load_preset: &lt;filename&gt;</TT> - Load the specified preset for each instance before measuring performance</DIV>
+<DIV CLASS="TextInd3">
+<TT>adjust_controls: &lt;true - false&gt;</TT> - Randomly change the plug-in's parameter state before running the test</DIV>
+
+Examples:
+<UL>
+<LI CLASS="DashInd">
+<TT>cyclesshared 21 </TT></LI>
+<LI CLASS="DashInd">
+<TT>cyclesshared ['AVID', 'DmGn', 'DGDT']</TT> </LI>
+<LI CLASS="DashInd">
+<EM CLASS="Bold"><TT>cyclesshared {spec: ['AVID', 'DmGn', 'DGDT'], load_preset: "mySettings.tfx"} </TT></EM></LI>
+<LI CLASS="DashInd">
+<EM CLASS="Bold"><TT>cyclesshared {spec: ['AVID', 'DmGn', 'DGDT'], adjust_controls: true} </TT></EM></LI>
+<LI CLASS="DashInd">
+<TT>cyclesshared {idx: 21, run_cached: true} </TT> <EM CLASS="Italics">Do not use cached measurements for reported cycle counts!</EM></LI>
+</UL>
+
+Normal output of this command should look like this:
+
+<IMG width="70%" alt="Normal cyclesshared command output" src="dsh_05.png" />
+<DIV CLASS="imagecaption">Figure 3: Normal cyclesshared command output.</DIV>
+
+Sometimes during the development process it may happen that this test fails, and the reason of such a failure can be different:
+
+<OL>
+<LI CLASS="List"> 
+   <DIV CLASS="TextInd1">Plug-in exceeded the DSP chip's memory limit</DIV>
+   <BR/>
+   <IMG width="60%" alt="Plug-in exceeded the memory limit" src="dsh_06.png" />
+   <DIV CLASS="imagecaption">Figure 4: Plug-in exceeded the memory limit.</DIV>
+</LI>
+<LI CLASS="List"> 
+   <DIV CLASS="TextInd1">Plug-in exceeded the processors cycles budget</DIV>
+   <UL>
+	<LI CLASS="List">
+   	   <DIV CLASS="TextInd2">The number of instance and shared cycles looks acceptable, but expected number of plug-in's instances that can be instantiated on the chip/card at different sample rates is zero. Resultant cycle count can be used for calculating how much plug-in has exceeded the limit, and how much it should be optimized.</DIV>
+           <BR/>
+   	   <IMG width="60%" alt="Plug-in exceeded the processors cycles budget" src="dsh_07.png" />
+           <DIV CLASS="imagecaption">Figure 5: Plug-in exceeded the processor cycles budget.</DIV>
+	</LI>
+	<LI CLASS="List">
+	   <DIV CLASS="TextInd2">If plug-in exceeds the processor's cycles budget too much, then cyclesshared test will most likely output the warning that is highlighted with orange color on the screenshot below. Also the number of both instance and shared cycles will be shown as zero or one.</DIV>
+           <BR/>
+   	   <IMG width="60%" alt="Plug-in exceeded the processors cycles budget very much" src="dsh_08.png" />
+           <DIV CLASS="imagecaption">Figure 6: Plug-in exceeded the processor cycles budget very much.</DIV>
+	</LI>
+   </UL>
+</LI>
+<LI CLASS="List"> 
+   <DIV CLASS="TextInd1">Plug-in processing is not balanced.
+
+   If some big parts of code, which do not really depend on the specific plug-in settings, are located under condition structures, and if they make plug-in to do more calculations in one case and less in another case, then that means that plug-in's processing is not balanced. This may cause some problems, because it is hard to predict when this or that condition may become true and how much the amount of processor's cycles that plug-in needs will increase. So it is better to remove such conditional blocks and to performe those calculations every time, even if their result is not really needed in particular cases.
+
+   To indicate such situations the correlation coefficient can be used. If its value close to zero, then plug-in has the described problems.</DIV>
+   <BR/>
+   <IMG width="60%" alt="Plug-in processing is not balanced" src="dsh_10.png" />
+   <DIV CLASS="imagecaption">Figure 7: Plug-in processing is not balanced.</DIV>
+</LI>
+</OL>
+
+				@subsubsection subsubsection__performance_profiling_and_test_signals_ Performance profiling and test signals
+
+Some algorithms' performance characteristics are program-dependent, and in such cases use of the the cycles command alone may not be sufficient. To route a test signal to your plug-in while measuring cycles, use of the cycles command along with the <TT>load_wav_file</TT> command in the DAE dish. The basic approach is as follows:
+<UL>
+<LI CLASS="Bullet">
+Use single-buffer manual processing, rather than continuous </LI>
+<LI CLASS="Bullet">
+Split your test signal into several pieces, with each piece to be processed using different settings </LI>
+<LI CLASS="Bullet">
+Loop on:
+<UL>
+<LI CLASS="DashInd">
+Load or adjust the PI's settings, </LI>
+<LI CLASS="DashInd">
+process the next piece of audio while measuring cycles </LI>
+</UL>
+</LI>
+</UL>
+
+Example:
+<OL>
+<LI CLASS="List">
+<TT>piproctrigger manual</TT> 
+<DIV CLASS="TextInd1">
+set to single-buffer processing </DIV>
+</LI>
+<LI CLASS="List">
+<TT>load_wav_file "testaudio_pt1.wav"</TT> </LI>
+<LI CLASS="List">
+<TT>load_wav_file "testaudio_pt2.wav"</TT> </LI>
+<LI CLASS="List">
+<TT>load_wav_file "testaudio_pt3.wav"</TT>
+<DIV CLASS="TextInd1">
+load audio buffers; take note of return ...</DIV>
+</LI>
+<LI CLASS="List">
+<TT>run &lt;mypluginIndex&gt;</TT></LI>
+<LI CLASS="List">
+<TT>load_settings "mySavedSettings.tfx" </TT>
+<DIV CLASS="TextInd1">
+load the settings</DIV>
+<DIV CLASS="TextInd1">
+OR</DIV>
+<DIV CLASS="TextInd1">
+<TT>control [1,24] </TT># set controls directly </DIV>
+</LI>
+<LI CLASS="List">
+<TT>cycles b1</TT>
+<DIV CLASS="TextInd1">
+measure cycles while processing first file</DIV>
+</LI>
+<LI CLASS="List">
+<TT>load_settings "mySavedSettings2.tfx"</TT>
+<DIV CLASS="TextInd1">
+load the next settings</DIV>
+</LI>
+<LI CLASS="List">
+<TT>cycles b2</TT>
+<DIV CLASS="TextInd1">
+measure cycles while processing second file</DIV>
+<DIV CLASS="TextInd1">
+... etc. </DIV>
+</LI>
+</OL>
+
+                @subsection subsection__cancellationtest Cancellation test
+
+When porting plug-ins from RTAS to %AAX platform, or form 32-bit to 64-bit architecture, or from Native to DSP, it may be useful to compare output of two plug-in's versions to make sure that it is still the same and nothing has been broken. For this purpose DSH cancellation test can be used.
+
+In the simplest case, when both plug-ins are present in the same version of Pro Tools (Native and DSP version of the same plug-in for example), then <TT>diff</TT> command can be used to perform the test:
+<DIV CLASS="TextInd1"><TT>diff [ \<spec1\>, \<spec2\>, \<frames\> ]</TT></DIV>
+which reports the peak difference in the output amplitude of plug-ins \<spec1\> and \<spec2\> after processing \<frames\> frames of a 1 kHz full-scale sine wave. The maximum difference will be provided in dB.
+
+Another way to perform the cancellation test is to process audio with each plug-in separately manually and to compare the result after that. This scenario allows you to load custom input audio file and special plug-in settings:
+<OL>
+<LI CLASS="List">
+   <TT>piproctrigger manual</TT>
+   <DIV CLASS="TextInd1">This command should be run for DSP plug-ins before loading them. When this option is set, DSP plug-in will start process audio only after piproc command is called. Otherwise it will start processing right after the instatiation process.</DIV>
+   <BR />
+</LI>
+<LI CLASS="List">
+   <TT>run 81</TT>
+   <DIV CLASS="TextInd1">Laoding plug-in</DIV>
+   <BR />
+</LI>
+<LI CLASS="List">
+   <TT>load_settings "/Users/settings/pitch_settings.tfx"</TT>
+   <DIV CLASS="TextInd1">Loading settings file</DIV>
+   <BR />
+</LI>
+<LI CLASS="List">
+   <TT>load_wav_file "/Users/audio_files/mono_file.wav"</TT>
+   <DIV CLASS="TextInd1">Wav file will be loaded in a buffer, or in several buffer if it has more than one channel. Command will output references to the buffers, like b1, b2 ...</DIV>
+\note It is not recoomended to choose very long audio files for the DSP proceesing, since the test is very slow, and processing of 10 sec audio file may take up to 1 min depending on the complexity of the plug-in's algorithm.
+   <BR />
+</LI>
+<LI CLASS="List">
+   <TT>bclone b1</TT>
+   <DIV CLASS="TextInd1">The easiest way to create the output buffer of the same size is to copy th einput buffer. Command will also output references to the resultant buffers.</DIV>
+   <BR />
+</LI>
+<LI CLASS="List">
+   <TT>piproc [b1, b2]</TT>
+   <DIV CLASS="TextInd1">Command which actually is doing passes the input audio through the current plug-in, and is recording the result to the output buffer (which is b2 here). For stereo plug-in command will look like piproc <TT>[[b1,b2],[b3,b4]]</TT></DIV>
+   <BR />
+</LI>
+<LI CLASS="List">
+   <TT>bfsave [b2, "/Users/saved_buffer"]</TT>
+   <DIV CLASS="TextInd1">Output buffer can be stored to the disk. This may be needed for the cases, when one wants to compare the output of plug-ins, which can not be loaded in the same instance of the DSH. So the output of one plug-in can be saved to disk and then loaded later in the anothe instance of DSH. Also output buffer can be saved as .wav file with <TT>save_wav_file</TT> command.</DIV>
+   <BR />
+</LI>
+<LI CLASS="List">
+   <TT>bfload "/Users/saved_buffer"</TT>
+   <DIV CLASS="TextInd1">Saved buffer can be loaded again by this command. It will output the reference to the newly created buffer.</DIV>
+   <BR />
+</LI>
+<LI CLASS="List">
+   <TT>bacmp [b1,b2]</TT>
+   <DIV CLASS="TextInd1">This command will compare the contents of the buffers b1 and b2. So it can compare the output buffers of two plug-ins and thus make the cancellation test.</DIV>
+   <BR />
+</LI>
+</OL> 
+
+</DIV>
+
+<DIV CLASS="section">
+        @section dsh_guide_03_debugging_and_tracing Debugging and tracing in DSH
+
+DSH provides a lighter-weight debugging environment than the full Pro Tools application. So it should be easier to step though the description code of the plug-in there, rather the in PT, because DSH does significantly less initialization work than PT during the loading process.
+
+Also DSH is very useful in situations, when one wants to debug the plug-in's algorithm on a specific audio buffer. The only way to follow plug-in's algorithm work step-by-step on the certain piece of audio is to debug the <TT>piproc</TT> command.
+
+DSH supports tracing, which is based on Avid's DigiTrace. To enable trace logs in DSH, one should create a dsh.digitrace config file for it and put it next to dsh executable file. It can be the same as .digitrace file for the Pro Tools. DSH has built-in commands to generate a DigiTrace config file. The clear_trace_config command creates (or clears if it already exists) a DigiTrace config file. The enable_trace_facility command enables logging of a specified facility/priority pair.
+\note On the Mac, DigiShell must be relaunched before a new DigiTrace configuration will take effect.  
+
+</DIV>
+
+
+<DIV CLASS="section">
+	@section dsh_guide_04_scripting_interface_and_batch_profiling Scripting interface and batch profiling
+
+DigiShell can be scripted using DishTestTool, a Ruby-based command line tool. More details can be found in \ref DTT_Guide.
+
+</DIV> 
+
+*/

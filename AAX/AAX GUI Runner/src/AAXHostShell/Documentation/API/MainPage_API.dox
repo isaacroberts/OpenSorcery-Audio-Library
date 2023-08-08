@@ -1,0 +1,8 @@
+/** @mainpage notitle
+ 
+ @copydoc AAXHostShell_API
+ 
+ @ref AAXHostShell_API "AAXHostShell framework API documentation"
+	- @ref AAXHostShell_Operations "AAXHostShell direct operations"
+	- @ref AAXHostShell_Commands "AAXHostShell command interface"
+ */

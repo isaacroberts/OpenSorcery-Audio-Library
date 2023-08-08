@@ -1,0 +1,139 @@
+/*===================================================================================================
+AAX_AdditionalFeatures_AOSandSidechain.doxygen
+
+Copyright 2016-2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup additionalFeatures_AOS Auxiliary Output Stems
+ 	@ingroup AdditionalFeatures
+ 	
+ 	@brief Routing custom audio streams from a plug-in
+ 	
+ 	\section additionalFeatures_AOS_overview Overview of Auxiliary Output Stems in AAX
+ 	
+ 		Pro Tools has the capability to show and route multiple "auxiliary" outputs from a plug-in to other tracks. These are known as Auxiliary Output Stems (AOS), a stem referring to one set of outputs. A stereo stem contains two outputs, left and right, and a mono stem contains one output. The outputs will appear in the input assignment pop-up menu of each track under the category "plug-in". 
+ 		
+ 		Your plug-in is responsible for the definition of valid aux output paths. This definition includes the total number of outputs and the desired order of stereo and mono paths. Pro Tools will query each plug-in for available valid paths and populate its track input selector popup menus accordingly.
+ 		
+ 		Plug-ins must define the lowest available aux output number. In other words, the port number of an aux output needs to be the lowest available port number after the main outputs of the track the plug-in is instantiated on. For example, the first available aux output for the plug-in residing on a 5.1 surround track would have a port number of 7, since there are 6 main outputs for the track. 
+ 		
+ 		Additionally, port numbers must be declared sequentially and in the order aux output stems are added. For example, a stem cannott be added with the port number 10 if it precedes a stem with the port number 4.
+ 	
+ 	\section additionalFeatures_AOS_adding Implementing Auxiliary Output Stems
+ 	
+ 		The Auxiliary Output Stems API has a specific descriptor associated with it that needs to be added in Describe: \ref AAX_IComponentDescriptor::AddAuxOutputStem(). Make sure this method is called for each component that supports a different stem format. For example, a mono aux output would be defined as follows:
+ 		
+\code
+// ***************************************************************************
+// ROUTINE:	DescribeAlgorithmComponent
+// Algorithm component description
+// ***************************************************************************
+static void DescribeAlgorithmComponent( AAX_IComponentDescriptor * outDesc )
+{
+	AAX_Result					err = AAX_SUCCESS;
+			
+	[...]
+	err = outDesc->AddAuxOutputStem(0 /* first parameter is not used */,
+	                                AAX_eStemFormat_Mono,
+	                                "My Auxiliary Output Channel");
+	AAX_ASSERT (err == AAX_SUCCESS);
+	[...]
+}	
+\endcode
+		
+		The auxiliary output buffers for the plug-in will be appended to the normal output buffer array in the plug-in algorithm.
+		
+		\warning Some hosts, such as Media Composer, do not support Auxiliary Output Stems. You must clearly document that your plug-ins are not supported on these hosts; attempts by the plug-in to write data beyond the end of the audio output buffer may cause crashes and other bugs in these hosts. See \ref HostSupport for more information.
+		
+		In your plug-in's algorithm, you will simply need to account for the extra outputs when it processes the audio. Pro Tools will not automatically route your processed audio to all the extra outputs. As with main outputs, make sure the processed audio samples are placed in the auxiliary outputs' buffers as well.
+ 		
+ */
+ 
+ 
+ 
+ 
+ 
+/** @defgroup additionalFeatures_Sidechain Sidechain Inputs
+ 	@ingroup AdditionalFeatures
+ 	
+ 	@brief Routing custom audio streams to a plug-in
+
+	\section additionalFeatures_Sidechain_overview Overview of Sidechain Inputs
+	
+		If applicable, plug-ins may choose to enable sidechain inputs. If a sidechain is enabled, a menu is added to the plug-in's header that allows the user to choose an interface or bus as the sidechain, or "key input". Once enabled, the plug-in will be able to access sidechain input just like any other input signal. Currently, DAE is limited to mono sidechain inputs.
+		
+	\section additionalFeatures_Sidechain_adding Adding a Sidechain Input to an Effect
+		
+		Setting up a sidechain input is fairly straight forward. You will want to add a physical address within your context structure, and then "describe" the sidechain in Describe.
+		
+		Context Structure:
+				
+\code
+//=============================
+// Component context definitions
+//=============================
+
+// Context structure
+struct SMyPlugIn_Alg_Context
+{
+   [...]
+   int32_t	* mSideChainP;
+   [...]
+};
+
+// Physical addresses within the context
+enum EDemoDist_Alg_PortID
+{
+	[...]
+	,MyPlugIn_AlgFieldID_SideChain	= AAX_FIELD_INDEX (SDemoDist_Alg_Context, mSideChainP)
+	[...]
+};
+\endcode
+
+		Describe:
+\code
+// ***************************************************************************
+// ROUTINE:	DescribeAlgorithmComponent
+// Algorithm component description
+// ***************************************************************************
+static void DescribeAlgorithmComponent( AAX_IComponentDescriptor * outDesc )
+{
+	AAX_Result					err = AAX_SUCCESS;
+
+	[...]
+	err = outDesc.AddSideChainIn(eDemoDist_AlgFieldID_SideChain);
+	[...]
+	properties->AddProperty ( AAX_eProperty_SupportsSideChainInput, true );
+	[...]
+}
+\endcode
+
+\todo Is properties->AddProperty ( AAX_eProperty_SupportsSideChainInput, true ) even necessary?!?! I believe I saw a p.i. that does not declare this...
+
+
+	In order to tell whether there is sidechain information available to your plug-in, check for a null pointer within your algorithm's process function. The sidechain channel will show up as an additional stem from the original stem format you declare. That is to stay, for a stereo plug-in, the sidechain channel will be the third channel passed in.
+	
+\code
+//==============================================================================
+// Processing function definition
+//==============================================================================
+
+void
+AAX_CALLBACK
+MyPlugIn_AlgorithmProcessFunction (
+	SMyPlugIn_Alg_Context * const	inInstancesBegin [],
+	const void *					inInstancesEnd)
+{
+	[...]
+	int32_t sideChainChannel = *instance->mSideChainP;   
+	float * AAX_RESTRICT sideChainInput = 0;
+	if ( sideChainChannel )
+	  sideChainInput = instance->mInputPP [sideChain]Channel;
+	[...]
+}
+\endcode
+ 	
+ */

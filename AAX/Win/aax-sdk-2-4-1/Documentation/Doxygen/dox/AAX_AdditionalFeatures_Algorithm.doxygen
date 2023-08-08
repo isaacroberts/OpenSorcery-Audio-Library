@@ -1,0 +1,148 @@
+/*===================================================================================================
+AAX_AdditionalFeatures_Algorithm.doxygen
+
+Copyright 2016, 2018, 2021 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+ 
+/**	@defgroup additionalFeatures_BackgroundProc Background processing callback
+	@ingroup additionalFeatures
+ 	
+ 	@brief Background processing support for %AAX DSP and Native plug-in algorithms
+ 	
+	\section algbgpagecontents On this page
+		\li \ref alg_bg_desc
+		\li \ref alg_bg_restrict
+		\li \ref alg_bg_perf
+		\li	\ref alg_bg_memmgmt	
+		\li \ref alg_bg_additionalinformation
+ 	
+ 	\section alg_bg_desc Background thread description
+ 	
+		Each algorithm render callback may optionally be associated with a background processing
+		callback.  This background callback will be triggered regularly in an idle context on a
+		separate thread, and can be used to perform any background task required by the algorithm.
+		
+		Background thread processing is supported for both %AAX DSP and %AAX Native plug-ins.
+ 	
+ 	\section alg_bg_restrict Restrictions and limitations of background threads
+ 	
+ 		\li An %AAX DSP Effect that registers for background processing will not share a DSP with
+ 		any other Effect type.  It may share a DSP with multiple instances of its own type,
+ 		but only if its resource requirements allow for this.
+ 		\li The frequency of background thread executions relative to render thread executions
+ 		will vary depending on the processing situation. For example, a host may pre-process a
+ 		series of audio buffers as quickly as possible during an offline render. In this case
+ 		there would be many executions of the render thread callback for each execution of the
+ 		background thread callback. Be sure to consider this when using the background thread
+ 		feature in plug-ins that support an AudioSuite processing type.
+ 	
+ 	\section alg_bg_perf Background thread performance characteristics on DSP systems
+ 	
+		The background processing callback is called from a true idle thread context.  On
+		DSP accelerated platforms, this means that the callback will be triggered continuously
+		whenever the chip is not executing an interrupt, i.e. the algorithm render callback.
+		Since the render callback's resource requirements are well-defined (or at least
+		strictly bounded,) the background thread's available cycles are also deterministically
+		bounded.
+
+		However, the background thread itself has a lower priority than the DSP shell.
+		While the background callback's execution will not be interrupted by shell operations,
+		it will be blocked in the event of a contention for memory resources with the shell.
+		As a result, the number of memory operations that may be performed in this callback will
+		be less well-defined when the host is consuming memory resources,e.g. when delivering a
+		very large coefficient block to the DSP.
+
+		If your TDM plug-in does not perform any resource-intensive memory operations then you
+		can assume a guaranteed performance level for its DSP background thread.  Development
+		tools are available that will test a plug-in by refreshing its entire context memory
+		at every interrupt, and the background thread performance characteristics measured by
+		these tools, plus an additional buffer to account for any pathological cases that may be
+		missed by the performance check, should provide a guaranteed performance baseline for the
+		background thread that will be completely safe for any Pro Tools operation scenario.
+ 	
+ 	\section alg_bg_memmgmt Background thread memory management
+ 	
+ 		The background processing callback is not provided with any data pointers and does not
+ 		have access to any facilities for managed communication with the rest of the plug-in.
+ 		Therefore, the background process must use shared global data structures to interact
+ 		with the render callback.  Your plug-in will need to manually synchronize access to this
+ 		data.
+ 		
+ 		Usually the background callback will want to interact with the render callback via the
+ 		algorithm's private data blocks.  Therefore, private data blocks that are provided to an
+ 		algorithm's context will not be relocated by the host between calls to the render
+ 		callback, and background processes can reliably access this data once provided with a
+ 		pointer.  The same is not true for audio buffers, meters, coefficient ports, etc. - this
+ 		data can all be relocated by the host when the render callback is not executing.
+ 	
+ 	\section alg_bg_additionalinformation Additional information
+ 		
+ 		<B>TI DSP Guide</B>
+ 		\li \ref subsubsection__background_processing_
+ 		\li \ref subsubsection__dma_and_background_thread_performance_reporting_
+ */
+ 
+/**	@defgroup additionalFeatures_DMA Direct Memory Access
+ 	@ingroup additionalFeatures
+ 	
+ 	@brief DMA support for %AAX DSP plug-ins, with emulation for %AAX Native
+ 	
+ 	\section algdmapagecontents On this page
+ 		\li \ref alg_dma_overview
+ 		\li \ref alg_dma_modes
+ 		\li \ref alg_dma_registration
+ 		\li \ref alg_dma_restrictions
+ 		\li \ref alg_dma_additionalinformation
+ 	
+ 	\section alg_dma_overview DMA facility overview
+ 	
+ 		%AAX provides an \ref AAX_IDma "abstract interface" for accessing the host environment's DMA or other
+ 		memory-transfer facilities.  All platform-specific details are handled by the %AAX
+ 		host environment, allowing plug-ins that use this interface to be re-targeted to
+ 		to Native or DSP environments without changing their memory transfer implementation.
+ 	
+ 	\section alg_dma_modes DMA transfer modes
+ 		
+ 		%AAX hosts may support the following DMA modes, as listed in \ref AAX_IDma::EMode :
+ 		
+ 		\li In \ref AAX_IDma::eMode_Scatter "Scatter" mode, data is transferred from a
+ 			linear buffer to a series of offset segments in a circular buffer.  This mode is
+ 			most often used to transfer data from linear internal memory to a large external
+ 			memory buffer.
+ 		
+ 		\li In \ref AAX_IDma::eMode_Gather "Gather" mode, data is collected from a series of
+ 			offset segments in a circular buffer and concatenated in a linear buffer.  This
+ 			mode is most often used to transfer data from an external memory buffer to an
+ 			internal memory buffer.
+ 		
+ 		\li In \ref AAX_IDma::eMode_Burst "Burst" mode, data is written linearly from one
+ 			location to another.  Burst mode transfers may be used for linear transfers of
+ 			data to or from external memory. During the transfer, the source data is broken
+ 			into a series of individual bursts.  This mode is included for completeness, though
+ 			the Scatter/Gather modes are expected to be more appropriate for the vast majority
+ 			of real-world DMA use cases.
+ 		
+ 	\section alg_dma_registration Registering for DMA transfers
+ 	
+ 		Algorithm Components register for DMA transfers by adding one or more DMA fields to their
+ 		context via \ref AAX_IComponentDescriptor::AddDmaInstance().  At runtime, each field will
+ 		be populated with a valid \ref AAX_IDma "DMA interface" for the specified DMA mode.
+ 	
+ 	\section alg_dma_restrictions DMA restrictions
+ 	
+ 		The following restrictions apply to DMA transfers on all %AAX platforms:
+ 	
+ 		\li The maximum burst size for any DMA transfer is 64B.  The minimum burst size is 1B.
+ 		\li Only one DMA transfer request may be posted per \ref AAX_IDma object per processing callback.
+ 		\li Scatter and Gather requests each require that the circular memory buffer be padded by at least the size of one burst
+ 	
+ 	\section alg_dma_additionalinformation Additional information
+ 		
+ 		<B>TI DSP Guide</B>
+ 		\li \ref subsubsection__dma_support_
+ 		\li \ref subsubsection__dma_and_background_thread_performance_reporting_
+ 	
+ */

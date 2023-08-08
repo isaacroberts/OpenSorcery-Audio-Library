@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="h6HK6O" name="Template" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" defines="RT_INCLUDED=1"
+              cppLanguageStandard="17">
+  <MAINGROUP id="cWU6dy" name="Template">
+    <GROUP id="{66CDDC8C-0353-ECE5-4174-1AA198101084}" name="Source">
+      <FILE id="cFa41Y" name="Editor.cpp" compile="1" resource="0" file="Source/Editor.cpp"/>
+      <FILE id="vkze6w" name="Editor.h" compile="0" resource="0" file="Source/Editor.h"/>
+      <FILE id="vi5ISA" name="Preset.cpp" compile="1" resource="0" file="Source/Preset.cpp"/>
+      <FILE id="EV6bcD" name="Preset.h" compile="0" resource="0" file="Source/Preset.h"/>
+      <FILE id="zYO0pX" name="ProcessChain.cpp" compile="1" resource="0"
+            file="Source/ProcessChain.cpp"/>
+      <FILE id="OJCnzm" name="ProcessChain.h" compile="0" resource="0" file="Source/ProcessChain.h"/>
+      <FILE id="ewd7AE" name="Processor.cpp" compile="1" resource="0" file="Source/Processor.cpp"/>
+      <FILE id="PzUDYv" name="Processor.h" compile="0" resource="0" file="Source/Processor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Template" headerPath="/opt/local/include"
+                       libraryPath="/opt/local/lib"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Template" headerPath="/opt/local/include"
+                       libraryPath="/opt/local/lib"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../modules"/>
+        <MODULEPATH id="juce_core" path="../modules"/>
+        <MODULEPATH id="juce_data_structures" path="../modules"/>
+        <MODULEPATH id="juce_events" path="../modules"/>
+        <MODULEPATH id="juce_graphics" path="../modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../modules"/>
+        <MODULEPATH id="RTGraphics" path="../../JUCE_Library"/>
+        <MODULEPATH id="RTGuiBasics" path="../../JUCE_Library"/>
+        <MODULEPATH id="RT" path="../../JUCE_Library"/>
+        <MODULEPATH id="RTCore" path="../../JUCE_Library"/>
+        <MODULEPATH id="juce_dsp" path="../modules"/>
+        <MODULEPATH id="RTPreset" path="../../JUCE_Library"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="RT" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="RTCore" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="RTGraphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="RTGuiBasics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="RTPreset" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>

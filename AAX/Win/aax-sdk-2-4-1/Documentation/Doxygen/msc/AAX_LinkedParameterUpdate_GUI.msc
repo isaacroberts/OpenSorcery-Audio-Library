@@ -1,0 +1,133 @@
+/*===================================================================================================
+
+Copyright 2016 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+msc {
+	// Display properties
+	hscale = "1.8";
+	
+	// Declare entities
+	 host              [label = "Host", arctextbgcolor = "#edebff"]
+	,autodelegate      [label = "AAX_IAutomationDelegate", URL = "\ref AAX_IAutomationDelegate", arctextbgcolor = "#edebff"]
+	,controller        [ label = "AAX_IController", URL = "\ref AAX_IController", arctextbgcolor = "#edebff"]
+	,effectparams      [label = "AAX_CEffectParameters", URL = "\ref AAX_CEffectParameters", arctextbgcolor = "#eafbef"]
+	,param_linked      [label = "Linked AAX_CParameter", URL = "\ref AAX_CParameter", arctextbgcolor = "#eafbef"]
+	,param_linker      [label = "Linker AAX_CParameter", URL = "\ref AAX_CParameter", arctextbgcolor = "#eafbef"]
+	,packetdispatcher  [label = "AAX_CPacketDispatcher", URL = "\ref AAX_CPacketDispatcher", arctextbgcolor = "#eafbef"]
+	,gui               [label = "Plug-in GUI", arctextbgcolor = "#fbfbea"]
+	;
+	
+	// Describe implementation scopes
+	 host box controller [label = "Implemented by Host", textbgcolor = "#edebff"]
+	,effectparams box packetdispatcher [label = "Default AAX Library Implementation", textbgcolor = "#eafbef"]
+	,gui box gui [label = "Implemented by Plug-in", textbgcolor = "#fbfbea"]
+	;
+	
+	// -------------------
+	|||;
+	|||;
+	host note gui [label = "Edit event handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	gui rbox gui [label = "OS Edit Event"];
+	gui => gui [label = "Convert to normalized"];
+	gui => effectparams [label = "SetParameterNormalizedValue()\niParameterID: linker", URL = "\ref AAX_IACFEffectParameters::SetParameterNormalizedValue()"];
+	effectparams => param_linker [label = "SetNormalizedValue()", URL = "\ref AAX_IParameter::SetNormalizedValue()"];
+	param_linker => param_linker [label = "SetNormalizedValue", URL = "\ref AAX_CParameter::SetNormalizedValue()"];
+	param_linker -> autodelegate [label = "PostTouchRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()"];
+	param_linker -> autodelegate [label = "PostSetValueRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostSetValueRequest()"];
+	param_linker -> autodelegate [label = "PostReleaseRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostReleaseRequest()"];
+	param_linker >> effectparams;
+	effectparams >> gui;
+	
+	// -------------------
+	|||;
+	|||;
+	host note gui [label = "Set value handling\nfor linker param", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	host rbox controller [label = "PostTouchRequest() processed"];
+	host => effectparams [label = "UpdateParameterTouch()\niParameterID: linker\niTouchState: true", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	effectparams => param_linked [label = "Touch()", URL = "\ref AAX_IParameter::Touch()", linecolor = "red"];
+	param_linked -> autodelegate [label = "PostTouchRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()", linecolor = "red"];
+	param_linked >> effectparams [linecolor = "red"];
+	effectparams >> host;
+	
+	host rbox controller [label = "PostSetValueRequest() processed"];
+	host => effectparams [label = "UpdateParameterNormalizedValue()\niParameterID: linker\niSource: AAX_eUpdateSource_Unspecified", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	effectparams => effectparams [label = "IsParameterLinkReady()\ninParameterID: linker\ninSource: AAX_eUpdateSource_Unspecified\nreturns true", URL = "\ref AAX_CEffectParameters::IsParameterLinkReady()", ID = "3", linecolor = "red"];
+	effectparams rbox packetdispatcher [label = "Linked parameter edit"];
+	effectparams => param_linked [label = "SetValueWithFloat()", URL = "\ref AAX_IParameter::SetValueWithFloat()", linecolor = "red"];
+	param_linked => param_linked [label = "SetValue()", URL = "\ref AAX_CParameter::SetValue()", linecolor = "red"];
+	param_linked -> autodelegate [label = "PostTouchRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()", linecolor = "red"];
+	param_linked -> autodelegate [label = "PostSetValueRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostSetValueRequest()", linecolor = "red"];
+	param_linked -> autodelegate [label = "PostReleaseRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostReleaseRequest()", linecolor = "red"];
+	param_linked >> effectparams [linecolor = "red"];
+	effectparams rbox packetdispatcher [label = "Continue handling linker parameter update"];
+	effectparams => param_linker [label = "UpdateNormalizedValue()", URL = "\ref AAX_IParameter::UpdateNormalizedValue()"];
+	param_linker => param_linker [label = "Update parameter state"];
+	param_linker -> autodelegate [label = "PostCurrentValue()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostCurrentValue()"];
+	param_linker >> effectparams;
+	effectparams => packetdispatcher [label = "SetDirty()", URL = "\ref AAX_CPacketDispatcher::SetDirty()"];
+	packetdispatcher >> effectparams;
+	effectparams => effectparams [label = "Increment number of changes", URL = "\ref AAX_IACFEffectParameters::GetNumberOfChanges()"];
+	effectparams >> host;
+	
+	host rbox controller [label = "PostReleaseRequest() processed"];
+	host => effectparams [label = "UpdateParameterTouch()\niParameterID: linker\niTouchState: false", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	effectparams => param_linked [label = "Release()", URL = "\ref AAX_IParameter::Release()", linecolor = "red"];
+	param_linked -> autodelegate [label = "PostReleaseRequest()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()", linecolor = "red"];
+	param_linked >> effectparams [linecolor = "red"];
+	effectparams >> host;
+	
+	// -------------------
+	|||;
+	|||;
+	host note gui [label = "Set value handling\nfor linked param", textbgcolor = "#fff0f0"];
+	// -------------------
+	
+	host rbox controller [label = "PostTouchRequest() processed"];
+	host => effectparams [label = "UpdateParameterTouch()\niParameterID: linked\niTouchState: true", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	effectparams => param_linker [label = "Touch()", URL = "\ref AAX_IParameter::Touch()", linecolor = "red"];
+	param_linker -X autodelegate [label = "PostTouchRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()", ID = "1", linecolor = "red"];
+	param_linker >> effectparams [linecolor = "red"];
+	effectparams >> host;
+	
+	host rbox controller [label = "PostSetValueRequest() processed"];
+	host => effectparams [label = "UpdateParameterNormalizedValue()\niParameterID: linked\niSource: AAX_eUpdateSource_Parameter", ID = "2", URL = "\ref AAX_IEffectParameters::UpdateParameterNormalizedValue()"];
+	effectparams => effectparams [label = "IsParameterLinkReady()\ninParameterID: linked\ninSource: AAX_eUpdateSource_Parameter\nreturns false", URL = "\ref AAX_CEffectParameters::IsParameterLinkReady()", ID = "4", linecolor = "red"];
+	effectparams rbox packetdispatcher [label = "No linker parameter edit"];
+	effectparams rbox packetdispatcher [label = "Continue handling linked parameter update"];
+	effectparams => param_linked [label = "UpdateNormalizedValue()", URL = "\ref AAX_IParameter::UpdateNormalizedValue()"];
+	param_linked => param_linked [label = "Update parameter state"];
+	param_linked -> autodelegate [label = "PostCurrentValue()\nfor linked param", URL = "\ref AAX_IAutomationDelegate::PostCurrentValue()"];
+	param_linked >> effectparams;
+	effectparams => packetdispatcher [label = "SetDirty()", URL = "\ref AAX_CPacketDispatcher::SetDirty()"];
+	packetdispatcher >> effectparams;
+	effectparams => effectparams [label = "Increment number of changes", URL = "\ref AAX_IACFEffectParameters::GetNumberOfChanges()"];
+	effectparams >> host;
+	
+	host rbox controller [label = "PostReleaseRequest() processed"];
+	host => effectparams [label = "UpdateParameterTouch()\niParameterID: linked\niTouchState: false", URL = "\ref AAX_IEffectParameters::UpdateParameterTouch()"];
+	effectparams => param_linker [label = "Release()", URL = "\ref AAX_IParameter::Release()", linecolor = "red"];
+	param_linker -X autodelegate [label = "PostReleaseRequest()\nfor linker param", URL = "\ref AAX_IAutomationDelegate::PostTouchRequest()", ID = "1", linecolor = "red"];
+	param_linker >> effectparams [linecolor = "red"];
+	effectparams >> host;
+	
+	// -------------------
+	|||;
+	|||;
+	host note gui [label = "Current value handling", textbgcolor = "#f0f0f0"];
+	// -------------------
+	
+	|||;
+	... [label = "Identical to standard (unlinked) sequence"];
+	|||;
+	
+	
+	// [label = "", URL = "\ref "];
+		
+}

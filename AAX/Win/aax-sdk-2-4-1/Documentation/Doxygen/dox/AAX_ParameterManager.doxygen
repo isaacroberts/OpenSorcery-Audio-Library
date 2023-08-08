@@ -1,0 +1,230 @@
+/*===================================================================================================
+AAX_ParameterManager.doxygen
+
+Copyright 2016, 2018 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup AAXLibraryFeatures_ParameterManager Parameter Manager
+	@ingroup AAXLibraryFeatures
+	
+	@brief Optional (but recommended) system for managing %AAX plug-in parameters
+
+		\dotfile aax_cparammgr_contained.dot
+
+		The Parameter Manager is a generic container for a plug-in's parameters, which constitute
+		the complete externally-facing state of a plug-in's data model.  Additional internal state
+		data may be stored via settings chunks.  The Parameter Manager is owned and operated by
+		the plug-in's \ref CommonInterface_DataModel.
+		
+		The Parameter Manager provides a convenient and consistent interface by which a plug-in's
+		data model implementation may access its parameters.  Other plug-in components that require
+		access to the data model may also use this interface, or a proxy of it, to view the current
+		state of the plug-in.
+		
+		In the Parameter Manager, implementation-specific parameter behaviors such as taper and
+		display formatting are modular and are applied through delegation.  Because of this model,
+		it is possible to easily create a wide variety of behavior combinations without additional
+		subclassing; any display behavior may be combined with any taper behavior, and a newly
+		written behavior can be quickly "mixed in" to many parameters.
+		
+		\section concepts Parameter concepts
+		
+		\li \ref parameter_value_domains
+		\li \ref taper
+		\li \ref delegates
+		\li \ref model_view_controller
+		
+			\subsection parameter_value_domains Parameter value domains
+			In %AAX, parameter values can be represented in one of two "domains".  Developers work
+			with parameters in the \em real domain, while the host handles parameters in a scaled,
+			\em normalized format.
+
+				\par Real (or "logical") domain
+				%AAX plug-ins and parameter controllers work with typed parameter values that
+				represent the \em real (logical) state of the parameter.  The type, form, and
+				meaning of this value is dependent on the parameter's implementation and is unknown
+				to the host.
+			
+				\par Normalized domain
+				The %AAX host works with parameter values that have been scaled (\em normalized) to
+				a type-agnostic format.  Although normalized values make little logical sense, they
+				provide the host with a consistent means of handling, storing, and communicating
+				parameters' values without having to worry about the actual implementation or meaning
+				of the parameters. Normalized parameter values are 64-bit floating point and are
+				scaled to a range of [0, 1].
+					
+			For more information about conversion between parameter domains, see AAX_IParameter.
+				
+			\note The AAX_IEffectParameters interface currently utilizes a secondary normalization
+			to full-scale int32_t values.  In the future, this will be unified with the double
+			precision floating point normalization documented above.
+		
+			\subsection taper Taper
+			A \em taper is the conversion function that translates a parameter's value between its
+			real and normalized forms.
+			
+			For example, a taper could be created that converts between a normalized value ([0, 1])
+			and a real frequency value ranging from [20 2000].  The conversion between these two
+			ranges could be linear or logarithmic, or could use any other desired mapping.  This
+			mapping, as well as the specific range of the possible logical values, is defined by
+			the taper.
+			
+			For more information about tapers in %AAX, see AAX_ITaperDelegate.
+			
+			\subsection delegates Delegates
+			In %AAX, individual parameters achieve their own unique behavior by being associated with
+			behavioral delegates.
+			
+			For example, when AAX_CParameter::SetNormalizedValue() is called on a particular
+			parameter through its AAX_IParameter interface, the AAX_CParameter calls into a
+			AAX_ITaperDelegate that it owns in order to convert the normalized value to its real
+			equivalent.  This real value is then set as the parameter's new state.
+			
+			For more information about how delegates are used to create a parameter's behavior see
+			AAX_CParameter
+			
+			\subsection model_view_controller  Model-View-Controller
+			%AAX adheres roughly to a Model-View-Controller pattern.  The Parameter Manager
+			functions within the context of AAX_IEffectParameters, which in turn acts as an %AAX
+			plug-in's Data Model in an MVC sense.  Views, such as the
+			plug-in's GUI, attached control surfaces, or the automation facilities in the %AAX host,
+			are given access to the Data Model via a central Controller, which is represented by
+			the AAX_IController interface.
+			
+			For more information about how MVC applies to %AAX, see the
+			\ref CommonInterface_DataModel documentation page.
+			
+ */
+
+/**	@defgroup AAXLibraryFeatures_ParameterManager_TaperDelegates Taper delegates
+	@ingroup AAXLibraryFeatures_ParameterManager
+	
+	@brief Classes for conversion to and from normalized parameter values
+
+		Taper delegates are used to convert real parameter values to and from their
+		normalized representations.  All taper delegates implement the AAX_ITaperDelegate<T>
+		interface template, which contains two conversion functions:
+	
+		\code
+		virtual T		NormalizedToReal(double normalizedValue) const = 0;
+		virtual double	RealToNormalized(T realValue) const = 0;	
+		\endcode
+		
+		In addition, tapers may incorporate logical value constraints via the following
+		interface methods:
+		
+		\code
+		virtual T		GetMaximumValue()  const = 0;
+		virtual T		GetMinimumValue() const = 0;
+		virtual T		ConstrainRealValue(T value)	const = 0;
+		\endcode		
+
+		For more information, see the \ref AAX_ITaperDelegate class documentation.
+	
+ */
+ 
+/**	@defgroup AAXLibraryFeatures_ParameterManager_DisplayDelegates Display delegates
+	@ingroup AAXLibraryFeatures_ParameterManager
+	
+	@brief Classes for parameter value string conversion
+
+		Display delegates are used to convert real parameter values to and from their
+		formatted string representations.  All display delegates implement the
+		\ref AAX_IDisplayDelegate interface, which contains two conversion functions:
+	
+		\code
+		virtual bool	ValueToString(T value, std::string& valueString) const = 0;
+		virtual bool	StringToValue(const std::string& valueString, T& value) const = 0;		
+		\endcode
+		
+		\section displaydelegates_decorators Display delegate decorators
+		
+		The %AAX SDK utilizes a decorator pattern in order to provide code re-use while accounting
+		for a wide variety of possible parameter display formats.  The SDK includes a number of
+		sample display delegate decorator classes.
+		
+		Each concrete display delegate decorator implements \ref AAX_IDisplayDelegateDecorator and
+		adheres to the decorator pattern. The decorator pattern allows multiple display behaviors to
+		be composited or wrapped together at run time.  For instance it is possible to implement a
+		dBV (dB Volts) decorator, by wrapping an \ref AAX_CDecibelDisplayDelegateDecorator with an
+		\ref AAX_CUnitDisplayDelegateDecorator.
+
+		\subsection displaydelegates_decorators_implementation Display delegate decorator implementation
+		By implementing \ref AAX_IDisplayDelegateDecorator, each concrete display delegate decorator
+		class implements the full \ref AAX_IDisplayDelegate interface.  In addition, it retains a
+		pointer to the \ref AAX_IDisplayDelegateDecorator that it wraps.  When the decorator performs
+		a conversion, it calls into its wrapped class so that the wrapped decorator may apply
+		its own conversion formatting.  By repeating this pattern in each decorator, all of the
+		decorator subclasses call into their "wrapper" in turn, resulting in a final string to
+		which all of the decorators' conversions have been applied in sequence.
+		
+		Here is the relevant implementation from \ref AAX_IDisplayDelegateDecorator :
+		
+		\code
+		template <typename T>
+		AAX_IDisplayDelegateDecorator<T>::AAX_IDisplayDelegateDecorator(const AAX_IDisplayDelegate<T>& displayDelegate)  :
+			AAX_IDisplayDelegate<T>(),
+			mWrappedDisplayDelegate(displayDelegate.Clone())
+		{
+
+		}
+
+		template <typename T>
+		bool		AAX_IDisplayDelegateDecorator<T>::ValueToString(T value, AAX_CString* valueString) const 
+		{
+			return mWrappedDisplayDelegate->ValueToString(value, valueString);
+		}
+
+		template <typename T>
+		bool		AAX_IDisplayDelegateDecorator<T>::StringToValue(const AAX_CString& valueString, T* value) const
+		{
+			return mWrappedDisplayDelegate->StringToValue(valueString, value);
+		}
+		\endcode
+
+		\subsection example Decibel decorator example
+		Here is a concrete example of how a decibel decorator might be implemented
+
+		\code
+		template <typename T>
+		bool	AAX_CDecibelDisplayDelegateDecorator<T>::ValueToString(T value, AAX_CString* valueString) const 
+		{
+			if (value <= 0)
+			{
+				*valueString = AAX_CString("--- dB");
+				return true;
+			}
+			
+			value = 20*log10(value);
+			bool succeeded = AAX_IDisplayDelegateDecorator<T>::ValueToString(value, valueString);
+			*valueString += AAX_CString("dB");
+			return succeeded;
+		}
+		\endcode
+
+		Notice in this example that the \ref AAX_IDisplayDelegateDecorator::ValueToString() "ValueToString()"
+		method is called in the parent class, \ref AAX_IDisplayDelegateDecorator.  This results in a
+		call into the wrapped class' implementation of \ref AAX_IDisplayDelegateDecorator::ValueToString() "ValueToString()",
+		which converts the decorated value to a redecorated string, and so forth for additional
+		decorators.
+
+ */
+ 
+/** @defgroup AAXLibraryFeatures_ParameterManager_DisplayDelegates_Decorators Display delegate decorators
+	@ingroup AAXLibraryFeatures_ParameterManager_DisplayDelegates
+	
+	@brief Classes for adapting parameter value strings
+	
+	The %AAX parameter display strategy uses a decorator pattern for parameter value formatting.
+	This approach allows developers to maximize code re-use across display delegates with many
+	different kinds of varying formatting, all without creating interdependencies between
+	the different display delegates themselves.
+	
+	For more information, see \ref displaydelegates_decorators.  For even more information, about
+	the Decorator design pattern, please consult the GOF design patterns book.
+*/
+	
+

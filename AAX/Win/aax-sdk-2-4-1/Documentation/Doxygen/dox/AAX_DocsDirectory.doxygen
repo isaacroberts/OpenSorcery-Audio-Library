@@ -1,0 +1,412 @@
+/*===================================================================================================
+AAX_DocsDirectory.doxygen
+
+This file includes the top-level AAX documentation Groups page contents and "forward declares" all
+sub-groups. This guarantees that the sub-groups will be presented in the correct order in the groups
+tab in Doxygen (at least with the current version of Doxygen 1.8.5) See the INPUT command in the
+doxygen config file AAX_SDK_Doxyfile
+
+If groups are not included on this page then their placement may not be correct in the main Group
+tree presentation in the Doxygen output, but they will still be included on all relevant pages.
+
+If you make any changes to the group declarations here be sure to make the corresponding change to
+the "real" group documentation.
+
+Copyright 2016-2017, 2019-2021 by Avid Technology, Inc.
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup manual_docs AAX SDK Manual
+
+	\section welcome Welcome to AAX
+
+	<EM>Select the "Manual" tab to see a full list of documentation pages, or choose from the topics below.</EM>
+
+	\note Looking for something? The search function only includes indexing of code symbols and page titles. To search for specific text strings in the %AAX SDK manual it is best to use a text search tool such as grep or FINDSTR on the %AAX SDK directory or search for the desired text within the PDF version of the %AAX SDK documentation.
+
+	\subsection welcome_basics The Basics
+
+	New to %AAX? Read through the documentation pages listed below to get started!
+
+	\li See \ref AAX_Getting_Started_Guide for a general overview of %AAX and a walk-through of the DemoGain example plug-in
+	\li Read through the first few sections of the \ref AAX_Pro_Tools_Guide if you are new to Pro Tools
+	\li Read the \ref subsection__digital_signature_ section of the \ref AAX_Pro_Tools_Guide to review the digital signing requirements for compatibility with Pro Tools
+	\li Review the \ref ExamplePlugIns "sample plug-ins" for examples of both basic and advanced %AAX features
+	\li See \ref MainInterface to find out more about the basic structure of %AAX plug-ins
+	\li See \ref CommonInterface_Algorithm to learn more about audio processing in %AAX
+	\li See \ref CommonInterface_DataModel to learn about adding parameters and controls to your plug-in,
+	\li See \ref CommonInterface_Describe for more information about plug-in configuration and initial set-up
+	\li See the \ref AAX_TI_Guide to find out how to add %AAX DSP support to your plug-in for Avid's HDX and Pro Tools | Carbon products
+	\li Ready to ship your new plug-in? See \ref AAX_DistributingYourPlugIn for information about finalizing and distributing your %AAX products
+	\li Check out the \ref AAX_Troubleshooting page if you're having problems, or post a question to the <a href="https://dev.avid.com" target="_blank">developer forums</a> and an Avid engineer will be happy to assist you.
+
+	\subsection welcome_more More Topics
+
+	Have a more specific question? Review the pages below or view the full list of documentation pages under the "Manual" tab above.
+
+	\li See \ref AAX_IController to see the interface that an %AAX plug-in's host-based modules use to interact with the host
+	\li See \ref CommonInterface_Communication to find out more about how different modules in an %AAX plug-in communicate with one another
+	\li See \ref AuxInterface_HostProcessor for information about creating advanced non-real-time %AAX plug-ins
+	\li See \ref AAXLibraryFeatures_ParameterManager_TaperDelegates and \ref AAXLibraryFeatures_ParameterManager_DisplayDelegates for more information about implementing custom parameter and control behavior
+	\li Look in the /TI/SignalProcessing folder for signal processing utility classes and functions available for optimizing on Native and DSP
+
+	\subsection welcome_testtools Test Tools & Utilities
+
+	\li The \ref DSH_Guide has information about the tool for testing basic functionality of your plug-in
+	\li See \ref DTT_Guide to learn how to automate different test scenarios for DSH
+
+	\subsection welcome_supplemental Supplemental Information
+
+	\li \ref ExamplePlugIns
+	\li \ref ChangeLog
+	\li \ref HostSupport
+	\li \ref KnownIssues
+
+
+	\n
+	\n
+	\section folders SDK Folder Hierarchy
+
+	\par Documentation
+	SDK documentation
+
+	\par ExamplePlugIns
+	Example plug-in projects <EM>\ref ExamplePlugIns "More information"</EM>
+
+	\par Extensions
+	Demonstrations of how to extend the %AAX SDK, for example
+	by incorporating third-party GUI frameworks into %AAX
+	plug-ins. <EM>\ref ExtensionsDocs "More information"</EM>
+
+	\par Interfaces
+	Interface headers and other resources required for use of
+	the %AAX SDK library
+
+	\par Libs
+	Source code for the %AAX SDK library, a collection of
+	default implementations and utility classes for use in
+	all %AAX plug-ins
+
+	\par TI
+	Various resources for use with TI's Code Composer Studio
+	IDE and Avid's TI testing toolset
+
+	\par Utilities
+	Common SDK utilities and resources
+
+
+	\n
+	\n
+	\section contact Contacting Avid
+
+	Your personal <a href="https://my.avid.com">avid user account</a> is your hub for %AAX Toolkit services and developer support.
+
+	Log in at <a href="https://www.avid.com">avid.com</a> for access to the full range of tools and services provided to %AAX developers, including the %AAX <a href="https://dev.avid.com">developer forum</a>. If you have any questions on the %AAX SDK documentation or require support with %AAX development, we encourage you to post them to the forum as your first line of inquiry.
+
+	If you have time-sensitive or critical support inquiries, contact the %AAX development team directly at devservices@avid.com. Any %AAX questions sent to this alias will be promptly addressed by the most appropriate contact here at Avid.
+
+	If you require NFR (Not For Resale) licenses to Avid software for %AAX development please send an e-mail to <a href="mailto:devauth@avid.com?subject=License Request">devauth@avid.com</a> with "License Request" in the subject.
+
+	If you require access to the digital signing toolkit from PACE Anti-Piracy, Inc. for compatibility with Pro Tools then please follow the instructions \ref subsection__digital_signature_ "here".
+
+	The following chart describes these and other ways of connecting with Avid to take advantage of the services provided to %AAX developers:
+
+	\nodox Image files must be copied to the /output/html directory \endnodox
+<IMG width="60%" style="padding: 40px 5px;" alt="AAX developer resources flowchart" src="aax_developer_resources_flow.png" />
+<DIV CLASS="imagecaption"><!-- no caption --></DIV>
+
+	\section welcome_licensing Licensing
+
+	Unless you have entered into a commercial agreement with Avid, you are using this SDK under an evaluation agreement. To review this agreement, see the <a href="https://my.avid.com/products/cppsdk?toolkit=AAX">AAX Toolkit downloads</a> section under your <a href="https://my.avid.com">my.avid.com</a> account.
+
+	As an Avid Developer, you are invited to offer your products on <a href="https://shop.avid.com/">Avid Marketplace</a> and via <a href="https://www.avid.com/products/avid-link">Avid Link</a>. If you wish to sell them independently or through other commercial outlets, an authorized representative from your organization is required to sign our Commercial License,  which you can read and click through <a href="http://www.avid.com/alliance-partner-program/how-to-apply">here</a>.
+
+
+
+ */
+
+
+
+
+
+
+/** @defgroup AAX_Getting_Started_Guide Getting Started with AAX
+	@ingroup manual_docs
+ */
+
+
+
+
+
+
+/** @defgroup MainInterface Core AAX Interface
+	@ingroup manual_docs
+
+	@brief Main classes, callbacks, and format specification details for a standard %AAX plug-in
+
+		\dotfile maininterface.dot "Main classes and callbacks for a standard AAX plug-in"
+
+		These interfaces and components represent the standard interface between an %AAX plug-in
+		and the host.  Default implementations for each interface are provided in the SDK. See
+		the following modules for more information about each component.
+
+		\sa \ref subsection__component_structure in the \ref AAX_Getting_Started_Guide "Getting Started Guide"
+ */
+
+	/** @defgroup CommonInterface_Describe Description callback
+		@ingroup MainInterface
+	*/
+
+	/** @defgroup CommonInterface_Algorithm Real-time algorithm callback
+		@ingroup MainInterface
+	*/
+
+	/** @defgroup CommonInterface_DataModel Data model interface
+		@ingroup MainInterface
+	 */
+
+	/** @defgroup CommonInterface_GUI GUI interface
+		@ingroup MainInterface
+	*/
+
+	/** @defgroup CommonInterface_Communication AAX communication protocols
+		@ingroup MainInterface
+	*/
+
+	/** @defgroup CommonInterface_FormatSpecification AAX Format Specification
+		@ingroup MainInterface
+	*/
+
+
+
+
+
+
+/** @defgroup AdditionalFeatures Additional AAX features
+ 	@ingroup manual_docs
+
+ 	@brief How to use additional features and functionality supported by %AAX
+ */
+
+	/** @defgroup AuxInterface_DirectData Direct data access interface
+		@ingroup AdditionalFeatures
+	*/
+
+	/** @defgroup AuxInterface_HostProcessor Offline processing interface
+		@ingroup AdditionalFeatures
+	*/
+
+	/** @defgroup additionalFeatures_Hybrid Hybrid Processing architecture
+		@ingroup AdditionalFeatures
+	*/
+
+	/** @defgroup additionalFeatures_MIDI MIDI
+		@ingroup AdditionalFeatures
+	*/
+
+	/** @defgroup AdditionalFeatures_Meters Plug-in meters
+		@ingroup AdditionalFeatures
+	*/
+
+	/** @defgroup additionalFeatures_Sidechain Sidechain Inputs
+		@ingroup AdditionalFeatures
+	*/
+
+	/** @defgroup additionalFeatures_AOS Auxiliary Output Stems
+		@ingroup AdditionalFeatures
+	*/
+
+	/**	@defgroup additionalFeatures_DMA Direct Memory Access
+		@ingroup AdditionalFeatures
+	*/
+
+	/**	@defgroup additionalFeatures_BackgroundProc Background processing callback
+		@ingroup AdditionalFeatures
+	*/
+
+	/**	@defgroup AdditionalFeatures_CurveDisplays EQ and Dynamics Curve Displays
+		@ingroup AdditionalFeatures
+	*/
+
+
+
+
+
+
+/** @defgroup AAXLibraryFeatures AAX Library features
+	@ingroup manual_docs
+
+	@brief %AAX Library core support for the %AAX interface
+
+	The %AAX Library includes several built-in features that are designed to facilitate plug-in
+	development and to make it easy to create plug-ins with correct and consistent behavior.
+	Although these features are not a part of the %AAX API, they are a core part of the SDK.
+*/
+
+	/** @defgroup AAXLibraryFeatures_ParameterManager Parameter Manager
+		@ingroup AAXLibraryFeatures
+	*/
+
+		/**	@defgroup AAXLibraryFeatures_ParameterManager_TaperDelegates Taper delegates
+			@ingroup AAXLibraryFeatures_ParameterManager
+		*/
+
+		/**	@defgroup AAXLibraryFeatures_ParameterManager_DisplayDelegates Display delegates
+			@ingroup AAXLibraryFeatures_ParameterManager
+		*/
+
+			/** @defgroup AAXLibraryFeatures_ParameterManager_DisplayDelegates_Decorators Display delegate decorators
+				@ingroup AAXLibraryFeatures_ParameterManager_DisplayDelegates
+			*/
+
+
+
+
+
+
+/** @defgroup AdvancedTopics Additional Topics
+	@ingroup manual_docs
+
+	@brief Additional information about the %AAX design
+ */
+
+ 	/** @defgroup advancedTopics_RealTimePerformance Real-time performance
+		@ingroup AdvancedTopics
+	*/
+
+ 	/** @defgroup advancedTopics_ParameterAutomation Parameter automation
+		@ingroup AdvancedTopics
+	*/
+
+	/** @defgroup advancedTopics_ParameterUpdates Parameter updates
+		@ingroup AdvancedTopics
+	*/
+		/** @defgroup advancedTopics_parameterUpdateTiming Parameter update timing
+			@ingroup advancedTopics_ParameterUpdates
+		*/
+
+		/** @defgroup advancedTopics_parameterUpdates_tokenProtocol Token protocol
+			@ingroup advancedTopics_ParameterUpdates
+		*/
+
+		/** @defgroup advancedTopics_parameterUpdates_sequences Basic parameter update sequences
+			@ingroup advancedTopics_ParameterUpdates
+		*/
+
+		/** @defgroup advancedTopics_linkedParameters Linked parameters
+			@ingroup advancedTopics_ParameterUpdates
+		*/
+
+		/** @defgroup advancedTopics_linkedParameters_sequences Linked parameter update sequences
+			@ingroup advancedTopics_ParameterUpdates
+		*/
+
+	/** @defgroup advancedTopics_relatedTypes Plug-in type conversion
+		@ingroup AdvancedTopics
+	*/
+
+	/** @defgroup ACFInterface The Avid Component Framework (ACF)
+		@ingroup AdvancedTopics
+	*/
+
+		/** @defgroup ACFInterface_Elements ACF Elements
+			@ingroup ACFInterface
+		*/
+
+
+
+
+
+
+/**	@defgroup CompatibleEnvironmentsDocs AAX Host Guides
+	@ingroup manual_docs
+
+	@brief Documentation for specific %AAX host environments
+*/
+
+	/** @defgroup AAX_Pro_Tools_Guide Pro Tools Guide
+		@ingroup CompatibleEnvironmentsDocs
+	*/
+
+	/** @defgroup AAX_Media_Composer_Guide Media Composer Guide
+		@ingroup CompatibleEnvironmentsDocs
+	*/
+
+	/** @defgroup AAX_TI_Guide TI DSP Guide
+		@ingroup CompatibleEnvironmentsDocs
+	*/
+
+	/** @defgroup AAX_Page_Table_Guide Page Table Guide
+		@ingroup CompatibleEnvironmentsDocs
+	*/
+
+	/** @defgroup AAX_DigiTrace_Guide DigiTrace Guide
+		@ingroup CompatibleEnvironmentsDocs
+	*/
+
+    /** @defgroup DSH_Guide DSH Guide
+        @ingroup CompatibleEnvironmentsDocs
+    */
+
+    /** @defgroup DTT_Guide DTT Guide
+        @ingroup CompatibleEnvironmentsDocs
+    */
+
+
+
+
+/** @defgroup ExtensionsDocs Extensions
+	@ingroup manual_docs
+
+	@brief Extensions to the %AAX SDK
+*/
+
+	/** @defgroup GUIExtensions GUI Extensions
+		@ingroup ExtensionsDocs
+	*/
+
+	/** @defgroup AAXLibraryFeatures_InstrumentParameters Monolithic VIs and Effects
+		@ingroup ExtensionsDocs
+	*/
+
+	/** @defgroup OtherExtensions Other Extensions
+		@ingroup ExtensionsDocs
+	*/
+
+
+
+
+/** @defgroup AdditionalInformation Supplemental Information
+	@ingroup manual_docs
+
+	@brief Supplemental documents beyond the scope of the %AAX SDK
+*/
+
+	/** @defgroup AAX_Troubleshooting Troubleshooting
+		@ingroup AdditionalInformation
+	*/
+
+	/**	@defgroup AAX_DistributingYourPlugIn Distributing Your AAX Plug-In
+		@ingroup AdditionalInformation
+	*/
+
+	/**	@defgroup aax_interfacelist AAX Interfaces
+		@ingroup AdditionalInformation
+	*/
+
+	/** @defgroup HostSupport Host Support
+		@ingroup AdditionalInformation
+	*/
+
+	/** @defgroup KnownIssues Known Issues
+		@ingroup AdditionalInformation
+	*/
+
+	/** @defgroup ChangeLog Change Log
+		@ingroup AdditionalInformation
+	*/
+
+	/** @defgroup ExamplePlugIns Example Plug-Ins
+		@ingroup AdditionalInformation
+	*/

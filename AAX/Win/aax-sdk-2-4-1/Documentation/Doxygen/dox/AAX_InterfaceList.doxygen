@@ -1,0 +1,39 @@
+/*===================================================================================================
+AAX_ImplementationLists.doxygen
+
+Copyright 2013-2015, 2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup aax_interfacelist AAX Interfaces
+	@ingroup AdditionalInformation
+	
+	@brief Full list of %AAX interfaces
+*/
+
+/**	@page aax_host_implementation Interfaces Implemented by the AAX Host
+	@ingroup aax_interfacelist
+	
+	These interfaces are implemented by the %AAX Host. References to the host-managed
+	objects are provided to the plug-in through accessor methods, most commonly
+	\ref IACFUnknown::QueryInterface().
+	
+*/
+
+/**	@page aax_plugin_implementation Interfaces Implemented by the AAX Plug-In
+	@ingroup aax_interfacelist
+
+	These interfaces must be implemented by the %AAX plug-in. Default implementations are
+	provided in the %AAX Library via the \c AAX_C classes. Plug-in classes may inherit from
+	the \c AAX_C classes to override the default behavior.
+*/
+ 
+/**	@page aax_sdk_internal Interfaces internal to the AAX SDK
+	@ingroup aax_interfacelist
+	
+	These classes and interfaces are used internally within the %AAX Library. References to
+	objects implementing these classes are never passed between the plug-in and the %AAX
+	Host, and the %AAX Host has no knowledge of these classes.
+	
+*/

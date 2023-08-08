@@ -1,0 +1,85 @@
+//        Copyright 2016, 2021 by Avid Technology, Inc.
+digraph aax_acf_versioning {
+	graph [ fontname=Helvetica ];
+	ranksep=0.75;
+	rankdir=BT;
+	
+	node [shape=record, fontname=Helvetica, fontsize=10];
+	
+	iacfunknown [ label="IACFUnknown" URL="\ref IACFUnknown"];
+	cacfunknown [ label="CACFUnknown"];
+	
+	iacfdata [ label="AAX_IACFEffectParameters" URL="\ref AAX_IACFEffectParameters"];
+	iacfdata2 [ label="AAX_IACFEffectParametersV2"];
+	idata [ label="AAX_IEffectParameters" URL="\ref AAX_IEffectParameters"];
+	cdata [ label="AAX_CEffectParameters" URL="\ref AAX_CEffectParameters"];
+	mydata [ label="My Data Model", color="gray"];
+	
+	iacfcontroller [ label="AAX_IACFController" URL="\ref AAX_IACFController"];
+	iacfcontroller2 [ label="AAX_IACFControllerV2"];
+	icontroller [ label="AAX_IController" URL="\ref AAX_IController"];
+	vcontroller [ label="AAX_VController"];
+	
+//	host_idata [ label="AAXH_IEffectParameters"];
+//	host_vdata [ label="AAXH_VEffectParameters"];
+//	hostplugin [ label="Host Plug-In", color="gray"];
+	
+	subgraph cluster_plugin {
+		node [shape=record, fontname=Helvetica, fontsize=10];
+	
+		label = "AAX Effect";
+		URL = "\ref CommonInterface_DataModel";
+		color = lightgrey;
+
+		cdata -> idata [arrowhead="onormal"];
+		mydata -> cdata [arrowhead="onormal"];
+	
+		cdata -> icontroller [ arrowhead="open", arrowtail="odiamond", dir="both", style="dashed", weight=0.1];
+		vcontroller -> icontroller [arrowhead="onormal"];
+	}
+	
+	subgraph cluster_host {
+		node [shape=record, fontname=Helvetica, fontsize=10];
+	
+		label = "AAX Host"
+		color = lightgrey;
+		
+//		hostplugin -> host_idata [ arrowhead="open", arrowtail="odiamond", dir="both", style="dashed", weight=0.1];
+//		host_vdata -> host_idata [arrowhead="onormal"];
+	}
+	
+	subgraph cluster_acfinterfaces {
+		node [shape=record, fontname=Helvetica, fontsize=10];
+		
+		label = "AAX ACF Interfaces";
+		color = lightgrey;
+		
+		idata -> iacfdata2 [arrowhead="onormal"];
+		iacfdata2 -> iacfdata [arrowhead="onormal"];
+		
+		vcontroller -> iacfcontroller [ arrowhead="open", arrowtail="odiamond", dir="both", style="dashed", weight=0.1];
+		vcontroller -> iacfcontroller2 [ arrowhead="open", arrowtail="odiamond", dir="both", style="dashed", weight=0.1];
+//		hostplugin -> iacfcontroller2 [arrowhead="onormal"/*, constraint=false*/];
+		iacfcontroller2 -> iacfcontroller [arrowhead="onormal"];
+		
+//		host_vdata -> iacfdata [ arrowhead="open", arrowtail="odiamond", dir="both", style="dashed", weight=0.1/*, constraint=false*/];
+//		host_vdata -> iacfdata2 [ arrowhead="open", arrowtail="odiamond", dir="both", style="dashed", weight=0.1/*, constraint=false*/];
+	}
+	
+	subgraph cluster_acf {
+		node [shape=record, fontname=Helvetica, fontsize=10];
+		
+		label = "ACF";
+		color = lightgrey;
+		
+		iacfdata -> iacfunknown [arrowhead="onormal"];
+		idata -> cacfunknown [arrowhead="onormal"];
+		
+		iacfcontroller -> iacfunknown [arrowhead="onormal"];
+//		hostplugin -> cacfunknown [arrowhead="onormal"];
+	}
+	
+	// Layout requirements
+//	{ rank=same; idata; host_idata;}
+//	{ rank=same; mydata; hostplugin;}
+}

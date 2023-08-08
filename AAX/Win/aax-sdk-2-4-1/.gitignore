@@ -1,0 +1,38 @@
+# Copyright 2020-2021 Avid Technology, Inc.
+
+build/
+
+# macOS
+.DS_Store
+project.xcworkspace
+xcuserdata/
+Libs/Debug/*.a
+Libs/AAXLibrary.build
+Libs/Release/*.a
+Extensions/GUI/MacBuild/VST.xcodeproj/project.pbxproj.back
+
+# Windows
+ExamplePlugIns/*/WinBuild/vs*/Debug/
+ExamplePlugIns/*/WinBuild/vs*/Release/
+ExamplePlugIns/*/WinBuild/vs*/int/
+Extensions/*/WinBuild/vs*/Debug/
+Extensions/*/WinBuild/vs*/Release/
+Extensions/*/WinBuild/vs*/int/
+Libs/AAXLibrary/WinBuild/vs*/Debug/
+Libs/AAXLibrary/WinBuild/vs*/Release/
+Libs/AAXLibrary/WinBuild/vs*/int/
+Libs/*/*.lib
+*.vcxproj.user
+*.sdf
+*.suo
+*.VC.db
+*.VC.db
+*.ipch
+
+# Doxygen
+Documentation/Doxygen/output
+doxygen_log.txt
+xcode/AAX_SDK.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+# VS Code
+.vscode

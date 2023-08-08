@@ -1,0 +1,3925 @@
+/*===================================================================================================
+AAX_TI_Guide.doxygen
+
+Copyright 2016-2017, 2021 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup AAX_TI_Guide TI DSP Guide
+	@ingroup CompatibleEnvironmentsDocs
+	
+	@brief How to write %AAX plug-ins for Avid's TI DSP-based platforms
+	
+	@section aax_ti_guide_contents Contents
+		\li \ref aax_ti_guide_00_overview_of_ti_algorithms
+		\li \ref aax_ti_guide_001_getting_started
+		\li \ref aax_ti_guide_01_the_hdx_platform
+		\li \ref aax_ti_guide_03_requirements_for_ti_plug_ins
+		\li \ref aax_ti_guide_04_ti_development_tools
+		\li \ref aax_ti_guide_05_common_issues_with_ti_development
+		\li \ref aax_ti_guide_06_ti_optimization_guide
+		\li \ref aax_ti_guide_07_error_codes
+	
+	
+<DIV CLASS="section">
+	@section aax_ti_guide_00_overview_of_ti_algorithms Overview of TI DSP Algorithms in AAX
+Avid's hardware-accelerated audio systems allow %AAX plug-ins to offload their real-time processing tasks to a dedicated processor, guaranteeing reliable performance at ultra-low latency. Avid's TI DSP-based products utilize Texas Instruments DSP chips to host plug-ins in a managed shell environment.
+
+The %AAX host handles all system-level communications and resources on the DSP and provides a consistent API to manage communication between the plug-in's real-time algorithm and its other components. This design allows %AAX plug-ins to use the same communication methods whether they are running natively, on a TI-based accelerated system, or in some other distributed environment.
+
+Each %AAX plug-in contains a real-time algorithm callback. For TI DSP-based platforms, this callback is compiled into a relocatable ELF DLL. This library is loaded onto the appropriate DSP by the host, and may share the DSP with other plug-ins if the host determines that the required system resources are available. A real-time execution environment called the TI Shell is also loaded onto each DSP. The TI Shell manages the DSP's memory and interrupts and guarantees reliable real-time performance even at single sample operation.
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_ti_guide_001_getting_started Getting Started with HDX DSP
+This section provides a quick overview of what you will need for creating an %AAX DSP plug-in to run on Avid's TI-based HDX DSP platforms.
+
+<UL CLASS="paragraphs">
+
+<LI>
+<DIV CLASS="SectionHead">
+Plug-in structure</DIV>
+
+TThe algorithm component for an %AAX DSP plug-in is compiled into a binary that runs on the TI DSP. Because this algorithm callback runs on a separate device than the rest of the plug-in, the algorithm must be separated from the plug-in's other components and no pointers may be shared between the two. All memory used by the algorithm must be set up via fields in the algorithm's context structure, and the %AAX packet system must be used for transmitting coefficients from the plug-in data model to the algorithm.
+
+For more information about the structure of an %AAX plug-in algorithm and features for communicating with the algorithm, see \ref CommonInterface_Algorithm .
+
+</LI>
+
+<LI>
+<DIV CLASS="SectionHead">
+Development Environment</DIV>
+
+To compile your plug-in's %AAX DSP binary you will need to run TI's free Code Composer Studio (CCS) IDE on a Windows system or VM.
+
+The latest Code Composer Studio versions no longer support compilation for C6727 DSPs, so you must use CCS version 7 or earlier.
+
+To get Code Composer Studio version 7, visit <a href="https://www.ti.com/tool/ccstudio">https://www.ti.com/tool/ccstudio</a> and navigate to Previous Versions > Legacy versions > Code Composer Studio Version 7 Downloads
+
+For additional steps to set up Code Composer Studio see \ref aax_ti_guide_04_ti_development_tools
+
+</LI>
+
+<LI>
+<DIV CLASS="SectionHead">
+Language support</DIV>
+
+The C6727 compiler for %AAX DSP plug-ins supports C and C++ up to C++98. In particular, note that no C++11 or later language support is available. For more specific details see \ref subsubsection__cpp_standard_support_ .
+
+</LI>
+
+</UL>
+
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_ti_guide_01_the_hdx_platform The HDX DSP Platform	
+HDX DSP is Avid's core mixer and plug-in accelerator platform. Avid's HDX and Pro Tools | Carbon systems both use the HDX DSP platform, with multiple TI C6727 DSPs each clocked at 350 MHz. These DSPs utilize a 32-bit floating-point architecture, with the option to perform 64-bit double-precision operations at some performance cost. Each HDX card includes 18 DSPs and is connected to the host system over a high bandwidth PCIe connection, while each Pro Tools | Carbon system includes 8 DSPs and is connected to the host system over a Gigabit Ethernet connection.
+
+		@subsection subsection__dsp_characteristics_instruction_processing DSP characteristics: instruction processing
+
+The C6727 DSP utilizes a VLIW architecture and contains dual data paths. Each data path includes four independent functional units, so the DSP can accommodate up to 8 parallel instructions per cycle. To take advantage of this architecture, the TI compiler relies heavily on instruction pipelining for optimization.
+
+		@subsection subsection__dsp_characteristics_audio_buffers DSP characteristics: audio buffers
+
+In order to realize the maximum possible performance benefit from this architecture, the algorithm routine for a single HDX DSP plug-in is always called with the same buffer size. By guaranteeing that each algorithm will be called with a consistent buffer size, the TI compiler is able to properly account for any possible iterative instruction pipelining, resulting in large performance gains.
+
+HDX DSP uses a four-sample processing quantum by default for plug-in instances. Plug-ins that require additional processing time per callback, e.g. to mitigate the overhead cost of the chip's DMA facilities, may optionally request a 16, 32, or 64-sample quantum. Note that at higher block sizes, the number of potential I/O channels available to plug-ins on a chip will be reduced.
+
+\compatibility 
+32 and 64-sample quantum is available in Pro Tools 10.2 and higher
+
+		@subsection subsection__dsp_characteristics_memory DSP characteristics: memory
+
+Each DSP on the HDX DSP platform includes 16 MB of external RAM and 256 kB of internal RAM. The DSP has the ability to execute code from either internal or external RAM, though the real-time performance cost of external RAM accesses is significant. The chip's internal RAM is addressable at the core clock rate.
+
+Each DSP also has a program cache of 32 kB. Plug-in code is loaded into this cache from internal memory, so for best performance your plug-in should not use more than 32 kB for its program code. You can look at the CCS-generated .map file to find your plug-in's program code size.
+
+			@subsubsection subsubsection__sdram_performance_ SDRAM performance
+
+Asynchronous access to data in the C6727's SDRAM is very slow, requiring 50 cycles/word to read and 15 cycles/word to write. This is primarily due to clock domain bridging, lack of data caching, and the fact that data from the core is given a low priority in order to avoid stalling real-time DMA transfers. 
+			@subsubsection subsubsection__executing_program_code_from_external_memory_ Executing program code from external memory
+
+The TI C6727 supports executing program code from external memory. When executing from uncached external memory, expect cycle counts to increase by a factor of 4x to 5x compared with the equivalent internal-memory code. Assuming that no cache thrashing occurs, subsequent calls will be cached and thus the program's location in either external or internal memory will produce similar cycle counts.
+
+\note The CCSv4 Profiler contains a bug that produces incorrect cycle counts for cached external-memory program code. Therefore, when gathering cycle count data for a plug-in that stores its program data in external memory, an RTI-based timing method should be used.
+
+		@subsection subsection__system_characteristics_dsphost_data_transfers System characteristics: DSP/host data transfers
+
+Plug-ins loaded onto the HDX DSP platform may transfer arbitrarily large data blocks between the DSP and the host, within the limits of available DSP memory and system bandwidth.
+
+			@subsubsection subsubsection__dsphost_bandwidth_ DSP/host bandwidth
+
+Neither AAX nor the HDX DSP platform include any explicit plug-in bandwidth limiting constraints. If a plug-in's data transfer requests bump up against the physical bandwidth limit for the system then this will delay the blocking data transfer request on the host, as the transfer will be held off for higher-priority operations on the DSP, and may also delay automation data from reaching other plug-ins on the affected DSPs in the same group.
+
+The recommended upper limit for DSP/host data transfer requests in an individual plug-in when running on an HDX PCIe card is 10 MB/s, divided by the maximum number of plug-in instances that will run on a single chip. On the HDX card, DSPs are wired to the FPGA crossbar in groups of three, with a data bandwidth of approximately 67 MB/s for each group. The overall system bandwidth for each DSP is therefore approximately 20 MB/s. This bandwidth is shared by all data reads and writes, including custom data transfer requests as well as plug-in and mixer automation and metering data.
+
+This limit is significantly lower on Pro Tools | Carbon. Carbon uses a single group for all eight DSPs, so the overall system bandwidth for each DSP is approximately 8 MB/s. In addition, data transfers between Carbon and the host system must be executed over a Gigabit Ethernet connection with up to 75% of its bandwidth already reserved for AVB audio data. This leaves 250 Gb/s for all other command traffic. If your plug-in utilizes frequent or large DSP/host data transfers then be sure to test it on Pro Tools | Carbon to verify whether it is compatible.
+
+			@subsubsection subsubsection__dsphost_data_transfer_characteristics_ DSP/host data transfer characteristics
+
+The minimum data transfer size for all host-to-DSP communications for HDX PCIe cards is 128 bytes. This limit applies to all host-to-DSP data transfers, including data sent to buffered ports, unbuffered ports, and private data blocks (via the %AAX Direct Data interface.)
+
+Since each transfer has a minimum size of 128 bytes, the use of many small packets does not increase transfer efficiency or save system bandwidth. Quite the opposite: updating a single 64-byte packet would require less bandwidth than updating two 4-byte packets in an HDX PCIe system, since the former would require only one 128-byte transfer while the latter will require two.
+
+On Pro Tools | Carbon there is no minimum data transfer size. That said, for best performance on Carbon it is still recommended to minimize the number of data packets that are sent.
+
+		@subsection subsection__ti_shell_characteristics_memory_allocation TI Shell characteristics: Memory allocation
+
+			@subsubsection subsubsection__memory_resource_availability_ Memory resource availability
+
+The TI Shell code that is loaded onto each DSP uses approximately 56 kB of internal memory, leaving 200 kB of internal memory per DSP. This memory is shared between the plug-ins on the chip and holds the plug-ins' code and data, per-instance blocks declared in Describe(), and instance overhead.
+
+As a general guideline, plug-in instances should not use more than 200 / n kB of internal memory, where n is the number of instances of your plug-in that will run on a single chip based on its cycle count requirements. If each plug-in instance on the chip requires more internal memory than this then the plug-in may need to declare an explicit number of instances that can run per chip based on this memory usage rather than declaring its cycle count utilization.
+
+			@subsubsection subsubsection__shared_and_perinstance_memory_allocation_ Shared and per-instance memory allocation
+
+When a plug-in instance is created on a DSP, its program code is loaded onto that DSP. This copy of the program code is then re-used for all subsequent instances of the effect that are loaded onto the DSP. Static and global data are also shared between all instances of an effect on the DSP. Other allocations, such as coefficient and private data blocks, are per-instance.
+
+\compatibility
+Beginning in Pro Tools 11, %AAX DSP algorithms also support optional temporary data spaces that can be described in the Describe module and are shared among all instances on a DSP. This is an alternative to declaring large data blocks on the stack for better memory management and to prevent stack overflows. Please refer to \ref AAX_IComponentDescriptor::AddTemporaryData() for usage instructions.
+
+
+			@subsubsection subsubsection__placing_data_into_external_memory_ Placing data into external memory
+
+An %AAX plug-in may optionally request that its private data or program code be placed into external memory. Because standard access calls to the DSP's SDRAM are very slow, it is strongly recommended that all of a plug-in's real-time data be placed in internal RAM, and the TI Shell will load a plug-in's program code and all private plug-in data blocks into internal memory by default.
+
+Requesting more than 256 kB of data in internal memory for plug-in data plus the memory required by the TI Shell will lead to undefined behavior, so it is important to explicitly request external memory for plug-in data when appropriate.
+
+For private data blocks that should be loaded into external memory, use the \ref AAX_ePrivateDataOptions_External flag when calling \ref AAX_IComponentDescriptor::AddPrivateData() . This flag will be ignored by the host, so Native %AAX plug-ins will have the same functionality with or without this property.
+
+To load program code, static data, or global variables into external memory, use the <TT>TI SECTION</TT> pragmas. For example, <TT>\#pragma CODE_SECTION_(".extmem")</TT> can be used before function definitions that are either initialization code, or infrequently used background code. For static variables, use <TT>\#pragma DATA_SECTION_(".extmemdata")</TT>
+ before each variable definition.
+
+			@subsubsection subsubsection__dma_support_ DMA support
+
+Because of the slower access time of external RAM, you should consider using a \ref additionalFeatures_DMA "DMA transfer" for recurring transfers, and possibly even for larger one-time transfers. This is of particular relevance for data reads, which must traverse the various clock domains and priority switches twice (address send, and then data return.)
+
+The TI Shell supports three DMA modes: Scatter (for transfers from internal to external memory), Gather (for transfers from external to internal memory), and Burst (contiguous block copies). The Scatter mode can accomplish transfer speeds of up to 2.1 DSP cycles/byte transferred, while the Gather mode can accomplish 2.7 cycles/byte transferred.
+
+The Scatter and Gather DMA facilities use a linear buffer for internal memory and a FIFO for external memory. It is possible to transfer to or from multiple offsets within the external memory FIFO using an offset table, which can contain up to 65,536 (2^16) entries. The offset (burst) length may be 4, 8, 16, 32, or 64 bytes long.
+
+The TI Shell also supports a Burst DMA mode which implements linear data reads or writes.
+
+For more information on DMA support and for example code, see  <TT>\\ExamplePlugIns\\DemoGain_DMA</TT> in the SDK.
+
+	@subsection subsection__ti_shell_characteristics_data_packet_services TI Shell characteristics: Data packet services
+
+In addition to supporting direct transfers of arbitrary data via DMA, the TI Shell also supports a packetized data delivery mechanism for host-to-DSP data transfers. Packet delivery ports may be either unbuffered or buffered, and are described using the \ref AAX_EDataInPortType parameter in \ref AAX_VComponentDescriptor::AddDataInPort().
+
+						@subsubsection subsubsection__unbuffered_ports_ Unbuffered ports
+
+Unbuffered ports use a straightforward implementation that delivers posted packets to the algorithm as soon as possible. In an unbuffered port, newer packets will always override older packets. Therefore, an algorithm may not receive every packet that was posted to an unbuffered port, but it will always receive the most up-to-date information possible.
+
+Unbuffered ports deliver their data without blocking or synchronizing with the algorithm's execution. Although bus arbitration guarantees that a read from the algorithm callback will not occur in the middle of a write from the host, it is important to note that the data in an unbuffered port may change during algorithm execution.
+
+			@subsubsection subsubsection__buffered_ports_ Buffered ports
+
+Buffered data ports store incoming packets in a host-managed queue. This queue acts as a buffer and provides the host with more flexibility in how it delivers packets. A key feature of buffered data ports is that new data will never be delivered to these ports during algorithm execution.
+
+The behavior of buffered data ports varies depending on the host platform. In HDX DSP plug-ins, Buffered data ports use a FIFO to queue data packets as they are posted. New packets are dequeued and delivered to the algorithm individually, with the next packet arriving before each algorithm render callback.
+
+			@subsubsection subsubsection__data_port_overhead_and_restrictions_ Data port overhead and restrictions
+
+Each HDX DSP supports a maximum of 164 buffered data ports, which matches the maximum I/O limit for each DSP. System overhead costs associated with using the on-chip packet services are as follows:
+<H4 CLASS="Head3">
+Memory Overhead</H4>
+<UL>
+<LI CLASS="Bullet">
+The memory overhead for an unbuffered data port is simply the size of the data packet. </LI>
+<LI CLASS="Bullet">
+This DSP memory overhead for a buffered data port is two times the size of the data packet. A large (&gt;100-element) packet queue is also allocated on the host. </LI>
+</UL>
+<H4 CLASS="Head3">
+CPU overhead</H4>
+Unbuffered ports do not incur any additional CPU overhead.
+
+Individual buffered ports incur non-trivial CPU overhead. For example, in Pro Tools 10.2 each buffered port requires 5 cycles of overhead per render callback. This overhead can quickly add up in "small" plug-ins that contain many buffered data ports. Therefore, we strongly recommend that plug-ins use consolidated coefficient packets when possible in order to minimize this overhead. This optimization can result in large performance gains for callbacks that require  1000 or fewer cycles to operate.
+
+The trade-off of this optimization is that more work ends up being done on the host and more data must be transmitted to the algorithm, since the entire coefficient packet must be re-calculated and re-sent every time any of its input parameters change. This is usually beneficial trade-off to make, especially given the 128-Byte per-transfer minimum for HDX PCIe cards discussed above. However, care must be taken in extreme cases such as when packet delivery threatens to bump up against the maximum recommended bandwidth for host/DSP data transfers, especially on Pro Tools | Carbon.
+
+		@subsection subsection__ti_shell_characteristics_instance_allocation TI Shell characteristics: Instance allocation
+
+			@subsubsection subsubsection__multishell_packing_ Multi-shell packing
+
+With a few exceptions, %AAX DSP plug-ins will share DSPs with other plug-ins. This occurs transparently to the plug-in due to the fact that all system resource management is handled by the TI Shell.
+
+When a new plug-in instance is created, the TI Shell and %AAX host will attempt to intelligently allocate it to a DSP based on both memory and CPU resource requirements. If one plug-in on the chip requires a large amount of memory and very few processing cycles, it may be packed with another plug-in that does not require much memory but that is very CPU intensive.
+
+The exceptions to this model are plug-ins that use DMA, register for a background processing callback, register a maximum number of instances per chip or use a processor affinity constraint when reporting CPU requirements. With the exception of a processor affinity, these plug-ins will receive dedicated DSPs to which only additional instances of the same plug-in type will be added.
+
+\compatibility Beginning with Pro Tools 10.2, the TI shell supports a "processor affinity" property, which indicates that a DSP ProcessProc should be preferentially loaded onto the same DSP as other instances from the same DLL binary. This is a requirement for some designs that must share global data between different processing configurations.\n \n Note that this property should only be used when absolutely required, as it will constrain the DSP manager and reduce overall DSP plug-in instance counts on the system.
+
+			@subsubsection subsubsection__dsp_shuffles_ DSP Shuffles
+
+A DSP shuffle will occur in Pro Tools when the engine must re-allocate DSP resources in order to make more processing power available. A shuffle will force the re-instantiation of the plug-in's DSP algorithm component, potentially on a new chip, while leaving the plug-in's host objects intact. During a shuffle, the engine will perform the following steps:
+<OL>
+<LI CLASS="List">
+Disconnect audio from an effect </LI>
+<LI CLASS="List">
+Call instance initialization with the removing instance flag on the old location </LI>
+<LI CLASS="List">
+Repeat for all instances of all DSP Effects in the system </LI>
+<LI CLASS="List">
+Load the effect in the new location </LI>
+<LI CLASS="List">
+Re-send the last packets to all data-in ports </LI>
+<LI CLASS="List">
+Call private data init for any private data </LI>
+<LI CLASS="List">
+Call instance init with the 'adding instance' flag, in the new location </LI>
+<LI CLASS="List">
+Begin audio processing </LI>
+<LI CLASS="List">
+Reconnect audio </LI>
+<LI CLASS="List">
+Repeat the instantiation and connection process for all instances of all DSP Effects in the system </LI>
+</OL>
+
+Note that the system may perform some audio processing with each new instance before all of the Effect instances in the system have been re-instantiated.
+
+		@subsection subsection__additional_ti_shell_services Additional TI Shell services
+
+		
+			@subsubsection subsubsection__background_processing_ Background processing
+
+%AAX plug-ins may request idle time from the main TI Shell thread. This results in a true idle context callback which can be used for non-critical \ref additionalFeatures_BackgroundProc "background processing" tasks on the DSP. This facility restricts the DSP to only allocate plug-in instances of the same type.
+
+A plug-in's background processing callback is not provided with a reference to the plug-in's data structures and must therefore access plug-in data via global variables. The background process will be interrupted by system events and the audio render callback. For more information and an example on how to create a plug-in that relies on background processing, see <TT>\\ExamplePlugins\\DemoGain_Background</TT> in the SDK.
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_ti_guide_03_requirements_for_ti_plug_ins Requirements for HDX DSP Plug-Ins
+		@subsection subsection__plugin_description Plug-in description
+To support HDX DSP platforms, a plug-in must add a TI ProcessProc (real-time processing entrypoint) for each of its algorithms. This is done via a call to AAX_IComponentDescriptor::AddProcessProc_TI(), which is parametrized with the names of both the algorithm's TI DLL and of its exported entrypoint.
+
+At minimum, the TI ProcessProc requires the following %AAX Properties:
+<UL>
+<LI CLASS="Bullet">
+A TI plug-in ID: \ref AAX_eProperty_PlugInID_TI </LI>
+<LI CLASS="Bullet">
+The audio buffer size that will be used by the ProcessProc: \ref AAX_eProperty_DSP_AudioBufferLength, set with a value from \ref AAX_EAudioBufferLengthDSP </LI>
+</UL>
+
+		@subsection subsection__performance_measurement_and_reporting Performance measurement and reporting
+In order to determine each algorithm's resource requirements, the host collects cycle count information from the plug-in via the plug-in's Describe callback. Each plug-in Effect is responsible for correctly reporting its algorithms' cycle counts for each accelerated platform that it supports. For plug-ins that use DMA or background threads, a maximum per-chip instance count is also required.
+
+\note All reported values must represent the algorithm's worst case performance.
+
+Each of these values are reported as properties of a given algorithm ProcessProc and are provided by the plug-in via \ref AAX_IComponentDescriptor::AddProcessProc_TI(). If an effect does not report its cycle count usage then it will be limited to a single instance per TI chip. This can be useful during development, but is not a supported mode for general use; all shipped plug-ins must correctly report their cycle requirements.
+
+The DigiShell utility can be used to accurately measure plug-in cycle count requirements. For more information about DigiShell, see \ref DSH_Guide.
+
+			@subsubsection subsubsection__shared_vs_perinstance_cycles_ Shared vs. per-instance cycles
+
+Because a single call into a plug-in is used to process multiple instances of that effect on that chip, two cycle count properties must be reported for each TI algorithm:
+<OL>
+<LI CLASS="List">
+\ref AAX_eProperty_TI_SharedCycleCount
+<DIV CLASS="TextInd1">
+This property describes the algorithm's one-time processing overhead that doesn't change as instances are added to a chip.</DIV>
+</LI>
+<LI CLASS="List">
+\ref AAX_eProperty_TI_InstanceCycleCount
+<DIV CLASS="TextInd1">
+This property describes the additional cycle counts that each instance adds to the base shared overhead.</DIV>
+</LI>
+</OL>
+
+Many plug-ins exhibit different performance characteristics for both of these metrics depending on the plug-in's state. When reporting a plug-in's shared and per-instance cycle count requirements it is important to ensure that the reported values are the <EM CLASS="Bold">maximum possible requirements</EM> of the algorithm.
+
+Often a plug-in will experience its worst-case per-instance processing load in one configuration and its worst-case shared processing load in another configuration. In this situation, the plug-in's reported cycle count requirements should reflect the state in which the <EM CLASS="Italic">sum</EM> of the two metrics is highest.
+
+It's a common practice to not describe \ref AAX_eProperty_TI_InstanceCycleCount and \ref AAX_eProperty_TI_SharedCycleCount for the plug-ins during development and debugging process of the DSP plug-ins. This is acceptable, although in this case the one instance of such a plug-in will require the whole chip. In %AAX SDK example plug-ins this is implemented using <TT>AAX_TI_BINARY_IN_DEVELOPMENT</TT> macros. If defined, it turns off the cycle count properties for the plug-in.
+
+			@subsubsection subsubsection__measuring_shared_cycles_ Measuring shared cycles
+
+Measuring shared cycle counts requires instantiating multiple instances of an effect and observing how the processing time changes as instances are added. The shared and instance cycle counts are then calculated by performing a linear regression on the number of uncached cycle counts as the number of plug-in instances on the chip increases.
+
+Note that these values will differ between debug and release builds of an algorithm, so a plug-in's describe function should report the correct cycle count values based on the relevant build configuration.
+
+DigiShell includes the ability to measure shared cycle counts using the <TT>DAE.cyclesshared</TT> command. For more information about performance profiling using DigiShell, see \ref subsection__cyclessharedtest.
+
+\note HDX DSP requires reporting of an algorithm's <EM CLASS="Bold">worst-case</EM> cycle counts.
+
+\note Because HDX PCIe and Pro Tools | Carbon use the same HDX DSP platform, either product may be used to take plug-in cycle count measurements.
+
+			@subsubsection subsubsection__dma_and_background_thread_performance_reporting_ DMA and background thread performance reporting
+
+For algorithms that use \ref additionalFeatures_DMA "DMA" or \ref additionalFeatures_BackgroundProc "background thread" facilities, the maximum number of algorithm instances that will fit on a chip is difficult to predict from cycle counts alone. Due to the asynchronous behavior and limited capacity of the DMA system, the DMA system may begin to miss its deadlines before the CPU is fully loaded. In addition, due to differences in background processing requirements between algorithms, an effect's background process may begin to miss its deadlines and be starved before the interrupt-time audio processing is at capacity. Plug-ins that use these facilities must therefore report the maximum number of instances that will run reliably at a given sample rate, in addition to reporting their shared and per-instance cycle counts as above.
+
+Some other plug-ins may also wish to report the maximum number of instances that will run reliably at each sample rate. For example, plug-ins that use a lot of host/DSP data bandwidth may need to limit the number of instances per DSP chip in order to run successfully on Pro Tools | Carbon.
+
+Maximum reliable instance counts are reported using an additional property, \ref AAX_eProperty_TI_MaxInstancesPerChip. A plug-in should register separate components for the following three sample rate ranges in order to register distinct values for this property:
+<OL>
+<LI CLASS="List">
+Sample rates from 42kHz to 50kHz </LI>
+<LI CLASS="List">
+Sample rates from 84kHz to 100kHz </LI>
+<LI CLASS="List">
+Sample rates from 168kHz to 200kHz </LI>
+</OL>
+
+Notes regarding DMA and background thread performance reporting:
+<UL>
+<LI CLASS="Bullet">
+Because the number of instances will decrease as sample rate increases, the plug-in must be tested at the highest available pulled-up sample rate (i.e. 50kHz instead of 48kHz) in each of these three ranges. </LI>
+<LI CLASS="Bullet">
+On the HDX platform, effects that use DMA or background threads will not be mixed with effects of other types on a given chip. </LI>
+<LI CLASS="Bullet">
+The maximum number of instances per DSP cannot be measured via DSH in these cases, so careful listening tests must be manually performed in order to determine whether a certain number of instances of a DMA or background-enabled plug-in actually operate correctly on a DSP.</LI>
+</UL>
+
+			@subsubsection subsubsection__dynamic_resource_usage_ Dynamic resource usage
+
+All resources used by an %AAX DSP plug-in algorithm are considered static. Plug-ins may not dynamically change the amount of memory or DSP cycles that are allocated to them after these metrics are provided in Describe.
+
+The ability to dynamically change DSP cycle count requirements at run time is provided in the %AAX SDK but is not currently supported by any host.
+
+		@subsection subsection__plugin_compilation_and_packaging Plug-in compilation and packaging
+
+			@subsubsection subsubsection__exported_symbols_ Exported symbols
+
+Each HDX DSP algorithm (ELF DLL) may contain multiple entrypoints. A single DLL may be used for all of your plug-in's entrypoints and program code, or you may divide your plug-in's entrypoints and program code between multiple DLLs.
+
+Your plug-in must export one "C"-style callback for each algorithm ProcessProc that your plug-in registers. This entrypoint must conform to the standard %AAX real-time algorithm callback prototype:
+
+\code
+# include "elf_linkage_aax_ccsv5.h" // Includes required TI_EXPORT definition
+extern "C"
+TI_EXPORT
+void
+MyEffect_AlgorithmProcessFunction(
+	SMyEffect_Alg_Context * const  inInstancesBegin  [],
+	const void *    inInstancesEnd)
+\endcode
+<DIV CLASS="fragmentcaption">
+Listing 1.1: The standard %AAX real-time algorithm callback prototype</DIV>
+
+See \ref subsubsection__compilation_exported_symbols if you are running into problems linking your AAX DSP binary.
+
+			@subsubsection subsubsection__packaging_ Packaging
+
+The ELF DLLs for an %AAX DSP plug-in must be placed in the ./Content/Resources directory within the plug-in bundle.
+</DIV>
+
+
+<DIV CLASS="section">
+	@section aax_ti_guide_04_ti_development_tools TI Development Tools
+Development for TI algorithms is primarily performed in TI's Code Composer Studio. Code Composer Studio (CCS) is a full-featured, Eclipse-based IDE providing JTAG hardware debugger support, a hardware simulator, and a suite of profiling tools. Most importantly, CCS includes an excellent C compiler that is capable of providing highly optimized DSP instructions without too much tuning.
+
+	@note As of this writing, Code Composer Studio for Mac does not support the C6000 series processor. CCS for Windows is required for %AAX DSP plug-in development. See <a href="http://processors.wiki.ti.com/index.php/MacOS_Host_Support_CCSv7">MacOS Host Support CCSv7</a> on the Texas Instruments wiki for current compatibility information.
+
+		@subsection subsection__code_composer_studio Code Composer Studio
+The %AAX SDK supports Code Composer Studio versions 4 ("CCSv4") and higher ("CCSv5", etc.), with hardware debugging support beginning in version 4.2. As of the writing of this documentation, CCS versions 4, 5, and 7 have been tested by Avid.
+
+\note This documentation was originally written for CCSv4 and was later updated with instructions for updating from CCSv4 to CCSv5. Versions 5 and higher use a different project file format from version 4; when this documentation describes changes required for version 5 then these changes will also be required by other later versions which use this new project format.
+
+			@subsubsection subsubsection__installation_ Installation
+<OL>
+<LI CLASS="List">
+Download and install the latest Code Composer Studio from TI's website.
+
+\note Windows 10 requires Code Composer Studio version 6.1.3 or higher
+
+\note As of Code Composer Studio version 7 TI does not charge for licenses. You can simply download the tool and start using it. Along with this the end user license agreement has changed to a simple TSPA compatible license.	For more information see the TI web site.
+</LI>
+<LI CLASS="List">
+The default installation will work fine, but a custom install will be smaller. You only need support for the C6000 chipset and the Spectrum Digital JTAG drivers, so you can deselect all the other chipsets and JTAG drivers. </LI>
+<LI CLASS="List">
+Go to<EM CLASS="Comment">
+ </EM>
+<EM CLASS="Hyperlink">
+<A HREF="https://www-a.ti.com/downloads/sds_support/TICodegenerationTools/download.htm" CLASS="URL">TI's Code Generation Tools</A></EM>
+<EM CLASS="Comment">
+ </EM>
+page. You will need to log in.</LI>
+<LI CLASS="List">
+Download and install the C6000 Code Generation Tools v7.0.x or later, using the typical installation settings. For AAX DSP development you will only need support for the C6000 chipset and, if you will be using a hardware debugger, for the Spectrum Digital JTAG drivers, so you may deselect all the other chipsets and JTAG drivers.
+
+<OL>
+<LI CLASS="List">
+Launch CCS and go to Help &gt; Install New Software... 
+</LI>
+<LI CLASS="List">
+In the opened dialog select "Code Generation Tools Updates" in the "Work with:" drop-down list.
+</LI>
+<LI CLASS="List">
+Select "TI Compiler Updates" &gt; "C6000 Compiler Tools [version]". 
+</LI>
+<LI CLASS="List">
+Press Next and continue installation using the "typical" installation settings. 
+</LI></OL>
+
+As of the publishing of this version of the %AAX SDK Avid is internally using v7.4.6. Avid has tested 7.4.4 and 7.4.6, but we assume that later revisions will work as well. The latest CGTools version available as of this writing is v7.4.21.
+
+For more information about configuring your CCS workspace with CGTools v7.4.x, see \ref subsubsection__workspace_setup_</LI>
+</OL>
+
+
+
+			@subsubsection subsubsection__workspace_setup_ Workspace setup
+
+The idea of a CCS workspace is similar to a Visual Studio solution file. Note that workspaces tend to store absolute paths and developer-specific info, so you may wish to avoid checking them in to your source control server.
+<H4 CLASS="Head3">
+Setting up workspace-global macros </H4>
+<EM CLASS="Infinitive">
+To set up workspace global macros: </EM>
+<OL>
+<LI CLASS="List">
+When you open CCS for the first time, select a directory for your "workspace". As mentioned above, we recommend that this be outside of your source tree. </LI>
+\note Pay attention that you can not reuse your Code Composer Studio workspace after updating to a later versions. In particular, we have found the CCSv4 workspaces are incompatible with CCSv5. After updating your system to a later Code Composer Studio version you must create a new workspace and import your existing projects into this new workspace.
+<LI CLASS="List">
+Go to File &gt; Import... and select Code Composer Studio &gt; Build Variables (CCS &gt; Managed Build Macros in CCSv4.) Click Next. </LI>
+<LI CLASS="List">
+Browse to TI/Common/macros.ini in your %AAX SDK directory and click Finish. </LI>
+<LI CLASS="List">
+This will define an "SDK_SOURCE_ROOT" Linked Resource path variable and Managed Build macro, which associates the CCS workspace with a single %AAX SDK installation.
+\note A side effect of this is that you cannot use projects from multiple distinct %AAX SDK installations in the same CCS workspace.
+</LI>
+<LI CLASS="List">
+To verify that the correct path has been set, go to Window &gt; Preferences... and look in General &gt; Workspace &gt; Linked Resources, and C/C++ &gt; Build &gt; Build Variables (C/C++ &gt; Managed Build &gt; Macros for CCSv4.)</LI>
+</OL>
+<H4 CLASS="Head3">
+Importing projects into your workspace </H4>
+<EM CLASS="Infinitive">
+To import projects into your workspace:</EM>
+<OL>
+<LI CLASS="List">
+In the IDE, go to Project &gt; Import Existing CCS/CCE Eclipse Project </LI>
+<LI CLASS="List">
+In Select search-directory, select the root of your %AAX SDK installation </LI>
+<LI CLASS="List">
+The projects in the resulting Projects list will automatically be selected </LI>
+<LI CLASS="List">
+Click Finish, and then wait while the projects are imported. </LI>
+</OL>
+
+In order to import CCSv4 projects into later versions of Code Composer Studio it is necessary to add a .cdtproject file to the project. If you don't have this file in your project, then you can copy it from any other existing project which was created using CCSv5 or later. Otherwise you will most likely see something similar to this error:
+
+<em class="Italics"><blockquote>"Error: Import failed for project 'xxxx' because its meta-data cannot be interpreted."</blockquote></em>
+
+If you try to build this newly imported CCSv4 project in a later version of Code Composer Studio then you will get the warning:
+
+<em class="Italics"><blockquote>"This project was created using a version of compiler that is not currently installed: 7.0.5 [C6000]. Another version of the compiler will be used during build: 7.4.6. Please install the compiler of the required version, or migrate the project to one of the available compiler versions by adjusting project properties."</blockquote></em>
+
+This warning may be cleared by changing Properties &gt; General &gt; Compiler Version from TI v7.0.x to the current version (e.g. TI v7.4.x).  After that the <em>"Output format"</em> field, which is next one to the <em>"Compiler version"</em> field and is typically grayed out, will become active. You should choose "eabi (ELF)" there. Otherwise Code Composer the build will fail with errors:
+<UL type="none">
+<LI><em class="Italics">"--dynamic=lib not supported when producing TI-COFF output files"</em></LI>
+<LI><em class="Italics">"--export=_auto_init_elf not supported when producing TI-COFF output"</em></LI>
+</UL>
+
+\note After successful convertion of the project and successful build, the remeasurement of cycle count should be done, because it may change. Most likely it will decrease, as compared to the version which was built with CCSv4, but that is not guaranteed. Also the size of the DLL may increase, which may require reducing code size in order to properly instantiate the plug-in.
+
+			@subsubsection subsubsection__creating_new_projects_ Creating new projects
+<H4 CLASS="Head3">
+New project setup</H4>
+<EM CLASS="Infinitive">
+Use the following settings in the "New Project..." wizard. Defaults are in italics.</EM>
+<UL>
+<LI CLASS="SingleStep">
+Project Type: <TT>C6000</TT> </LI>
+<LI CLASS="SingleStep">
+Output type: <TT>Executable</TT> </LI>
+<LI CLASS="SingleStep">
+Device Variant: <TT>Generic C67x+ Device</TT> </LI>
+<LI CLASS="SingleStep">
+Device Endianness: <TT>little</TT> </LI>
+<LI CLASS="SingleStep">
+Code Generation Tools: <TT>7.4.6</TT> or later (<TT>7.0.5</TT> for CCSv4) </LI>
+<LI CLASS="SingleStep">
+Output format: eabi (ELF) (in CCSv4 this field will be grayed out.)
+<LI CLASS="SingleStep">
+Linker Command File: <TT>CommonPlugIn_LinkerCmd.cmd</TT> (see note below) </LI>
+<LI CLASS="SingleStep">
+Runtime Support Library: <EM CLASS="Italic">
+&lt;automatic&gt;</EM>
+ </LI>
+</UL>
+
+\note You can edit the Linker Command File setting to use the <TT>SDK_SOURCE_ROOT</TT> macro by manually editing the project's .project XML file or by adding the file to your project using a relative path. See the SDK sample plug-in projects for an example.
+
+			@subsubsection subsubsection__recommended_settings_for_aax_plugin_projects_ Recommended settings for AAX plug-in projects
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Compiler </DIV>
+<DIV CLASS="TextInd2">
+Include Options </DIV>
+<DIV CLASS="TextInd3">
+-<TT>include_path "${SDK_SOURCE_ROOT}/Interfaces"</TT></DIV>
+<DIV CLASS="TextInd3">
+-<TT>include_path "${SDK_SOURCE_ROOT}/[Plug-in directory]"</TT></DIV>
+
+The <TT>SDK_SOURCE_ROOT</TT> macro is defined via the macros.ini file, located in the SDK's /TI/CCSv4 directory. If you encounter errors using this macro, import the file using File &gt; Import... &gt; CCS &gt; Managed Build Macros.
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Compiler </DIV>
+<DIV CLASS="TextInd2">
+Command Files </DIV>
+<DIV CLASS="TextInd2">
+<TT>-cmd_file "${SDK_SOURCE_ROOT}\\TI\\CCSv4\\CommonPlugIn_CompilerCmd.cmd"</TT></DIV>
+
+This file contains additional compiler commands that should be common to all %AAX plug-in projects
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Linker </DIV>
+<DIV CLASS="TextInd2">
+Basic Options </DIV>
+<DIV CLASS="TextInd2">
+<TT>-o "${ConfigDir}/${PackageName}/Contents/Resources/${ProjName}.dll"</TT></DIV>
+
+This path will ensure that your compiled TI DLL is placed in the appropriate location inside your %AAX plug-in bundle.
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Linker </DIV>
+<DIV CLASS="TextInd2">
+Runtime Environment </DIV>
+<DIV CLASS="TextInd3">
+(No "Initialization model" options set)</DIV>
+<BR />
+<DIV>
+Build Settings </DIV>
+<DIV CLASS="TextInd1">
+Artifact name </DIV>
+<DIV CLASS="TextInd2">
+<TT>${ConfigDir}/${PackageName}/Contents/Resources/${ProjName}</TT></DIV>
+
+This path will ensure that your compiled TI DLL is placed in the appropriate location inside your %AAX plug-in bundle.
+
+<DIV>
+Build Settings </DIV>
+<DIV CLASS="TextInd1">
+Artifact extension </DIV>
+<DIV CLASS="TextInd2">
+<TT>dll</TT></DIV>
+
+%AAX TI libraries should use the .dll extension
+
+<DIV>
+Binary Parser </DIV>
+<DIV CLASS="TextInd1">
+Elf Parser</DIV>
+
+%AAX TI libraries should use the Elf binary parser only
+
+<DIV>
+Macros </DIV>
+<DIV CLASS="TextInd1">
+Project </DIV>
+<DIV CLASS="TextInd2">
+User Macros </DIV>
+<DIV CLASS="TextInd3">
+ConfigDir = <TT>${OutDir}/${ConfigName}</TT></DIV>
+<DIV CLASS="TextInd3">
+IntDir = <TT>${ConfigDir}/int/${PackageName}/TI/${ProjName}</TT></DIV>
+<DIV CLASS="TextInd3">
+OutDir = <TT>${ProjDirPath}/../../WinBuild</TT></DIV>
+<DIV CLASS="TextInd3">
+PackageName = [Plug-in name]</DIV>
+
+These macros are used by the other settings here to ensure proper path set-up and artifact naming. Don't worry that <TT>ConfigName</TT> shows up as undefined - it will be defined as Debug/Release at compilation.
+
+			@subsubsection subsubsection__recommended_release_configuration_settings_ Recommended Release configuration settings
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Compiler </DIV>
+<DIV CLASS="TextInd2">
+Basic Options </DIV>
+<DIV CLASS="TextInd3">
+<TT>-symdebug:none</TT></DIV>
+<DIV CLASS="TextInd3">
+<TT>-O3</TT></DIV>
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Compiler </DIV>
+<DIV CLASS="TextInd2">
+Predefined Symbols </DIV>
+<DIV CLASS="TextInd3">
+<TT>-define=NDEBUG</TT></DIV>
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Compiler </DIV>
+<DIV CLASS="TextInd2">
+Optimizations </DIV>
+<DIV CLASS="TextInd3">
+<TT>-os</TT></DIV>
+<DIV CLASS="TextInd3">
+<TT>-on2</TT></DIV>
+<DIV CLASS="TextInd3">
+<TT>-op3</TT></DIV>
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Compiler </DIV>
+<DIV CLASS="TextInd2">
+Assembler Options </DIV>
+<DIV CLASS="TextInd3">
+<TT>-keep_asm</TT> </DIV>
+
+			@subsubsection subsubsection__other_useful_project_settings_ Other useful project settings
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Compiler </DIV>
+<DIV CLASS="TextInd2">
+Predefined Symbols </DIV>
+<DIV CLASS="TextInd3">
+<TT>-define _DEBUG</TT></DIV>
+
+This option is useful for differentiating cycle count reporting for Debug vs. Release builds.
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Compiler </DIV>
+<DIV CLASS="TextInd2">
+Directory Specifier </DIV>
+<DIV CLASS="TextInd3">
+<TT>-ft "${IntDir}"</TT></DIV>
+<DIV CLASS="TextInd3">
+<TT>-fr "${IntDir}"</TT></DIV>
+<DIV CLASS="TextInd3">
+<TT>-fs "${IntDir}"</TT></DIV>
+
+Useful for collecting intermediate files
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Linker </DIV>
+<DIV CLASS="TextInd2">
+Basic Options </DIV>
+<DIV CLASS="TextInd3">
+<TT>-m "${IntDir}/${ProjName}.map"</TT></DIV>
+
+Useful for placing the map file alongside all other intermediates
+
+<DIV>
+Tool Settings </DIV>
+<DIV CLASS="TextInd1">
+C6000 Linker </DIV>
+<DIV CLASS="TextInd2">
+File Search Path </DIV>
+<DIV CLASS="TextInd3">
+<TT>-l (nothing)</TT></DIV>
+
+You can exclude libc.a, which is included by default, from this option unless you require C library features.
+
+			@subsubsection subsubsection__adding_files_and_folders_ Adding files and folders
+
+In CCS, dragging files into the project, using "Add Files to Project...", or using "Link Files to Project..." will either copy the file into the project directory or create an absolute path to the file. This is usually not the desired behavior. Use the following steps to add a file using a relative path:
+<EM CLASS="Infinitive">
+&nbsp;</EM>
+<OL>
+<LI CLASS="List">
+Right click on the project you'd like to add files to, and select New &gt; File (NOT "Source File" or "Header File"). </LI>
+<LI CLASS="List">
+Click \"Advanced &gt;&gt;\". </LI>
+<LI CLASS="List">
+Check the box that says "Link to the file in the system". Click "Variables..." </LI>
+<LI CLASS="List">
+Select the appropriate variable (usually either \c SDK_SOURCE_ROOT or \c SOURCE_ROOT) and click "Extend..." </LI>
+<LI CLASS="List">
+Find the file you want to add. Click OK. Click Finish. </LI>
+</OL>
+
+Note that, when adding folders, <EM>everything</EM> in the folder will be built by default. You can exclude files to work around this behavior.
+
+			@subsubsection subsubsection__compilation_exported_symbols Settings for exported symbols
+
+<UL>
+<LI>There is a compiler option in Code Composer Studio that will add an underscore to the exported entrypoint's name. We recommend keeping this option disabled in order to avoid ambiguity between the exported symbol name and the function name as it appears in your source code. </LI>
+<LI> If you encounter undefined symbol errors when linking to a DSP library that uses a C-style interface then add the extern "C" keyword before the lib function prototypes. This should resolve the majority of such linker errors.</LI>
+</UL>
+
+		@subsection subsection__the_tms320c6000_cpp_compiler The TMS320C6000 C++ compiler
+
+One of the primary goals of %AAX is to provide a platform-agnostic development architecture in which products can easily be developed and re-used across a wide variety of platforms. However, it is still occasionally necessary to write platform-specific code. This section will document methods for producing code that is specific to the TI C6727 platform using the TMS320C6000 C++ compiler.
+
+			@subsubsection subsubsection__cpp_standard_support_ C++ standard support
+
+The TMS320C6000 compiler supports C++ as defined in the ISO/IEC 14882:1998 standard. The exceptions to the standard are as follows:
+<UL>
+<LI CLASS="Bullet">
+Complete C++ standard library support is not included. C subset and basic language support is included. </LI>
+<LI CLASS="Bullet">
+These C++ headers for C library facilities are not included:
+<UL>
+<LI CLASS="DashInd">
+	<TT>&lt;clocale&gt; </TT></LI>
+<LI CLASS="DashInd">
+	<TT>&lt;csignal&gt;</TT> </LI>
+<LI CLASS="DashInd">
+	<TT>&lt;cwchar&gt;</TT> </LI>
+<LI CLASS="DashInd">
+	<TT>&lt;cwctype&gt;</TT> </LI>
+<LI CLASS="DashInd">
+	<TT>&lt;ciso646&gt;</TT> </LI>
+</UL>
+</LI>
+<LI CLASS="Bullet">
+These C++ headers are the only C++ standard library header files included:
+<UL>
+<LI CLASS="DashInd">
+	<TT>&lt;new&gt;</TT> </LI>
+<LI CLASS="DashInd">
+	<TT>&lt;typeinfo&gt;</TT> </LI>
+</UL>
+</LI>
+<LI CLASS="Bullet">
+No support for <TT>bad_cast</TT> or <TT>bad_type_id</TT> is included in the typeinfo header. </LI>
+<LI CLASS="Bullet">
+Run-time type information (RTTI) is disabled by default. RTTI can be enabled with the -rtti compiler option. </LI>
+<LI CLASS="Bullet">
+The <TT>reinterpret_cast</TT> type does not allow casting a pointer to member of one class to a pointer to member of a another class if the classes are unrelated. </LI>
+<LI CLASS="Bullet">
+Two-phase name binding in templates, as described in tesp.res and temp.dep of the standard, is not implemented. </LI>
+<LI CLASS="Bullet">
+The export keyword for templates is not implemented. </LI>
+<LI CLASS="Bullet">
+A typedef of a function type cannot include member function cv-qualifiers. </LI>
+<LI CLASS="Bullet">
+A partial specialization of a class member template cannot be added outside of the class definition. </LI>
+</UL>
+
+			@subsubsection subsubsection__predefined_environment_symbols_ Predefined environment symbols
+
+The following symbols are predefined by the compiler on the TI architecture, and should be used in code concerned with cross-platform support:
+
+<UL>
+<LI CLASS="Bullet">
+<TT>_TMS320C6X</TT> Identifies that the chip is a C6000 variant. This is the symbol that we commonly use to distinguish whether code is being compiled for AAX-Native (Mac/Windows) or AAX-TI.</LI>
+<LI CLASS="Bullet">
+<TT>_TMS320C6700_PLUS</TT> Identifies that the chip is a C6700-plus variant </LI>
+</UL>
+
+Although you should not require them for %AAX development, equivalent assembly predefines are as follows:
+
+<UL>
+<LI CLASS="Bullet">
+<TT>.TMS320C6X</TT> Identifies that the chip is a C6000 variant </LI>
+<LI CLASS="Bullet">
+<TT>.TMS320C6700_PLUS</TT> Identifies that the chip is a C6700-plus variant</LI>
+</UL>
+
+			@subsubsection subsubsection__loop_controls_ Loop controls
+
+The TI compiler supports several pragmas that can be used to give the compiler additional information about loops.
+
+<UL>
+<LI CLASS="Bullet">
+<TT>\#pragma MUST_ITERATE( min, max, multiple )</TT>
+<DIV>
+This pragma helps the compiler optimize loops. min is the minimum number of times the loop will execute, max is the maximum number of times the loop will execute, and modulo is used if the loop will only execute a certain multiple of some number.</DIV>
+<BR />
+</LI>
+<LI CLASS="Bullet">
+	<TT>\#pragma PROB_ITERATE( min , max )</TT>
+<DIV>
+If extreme cases prevent the use of <TT>MUST_ITERATE</TT>, <TT>PROB_ITERATE</TT> allows you to specify the usual number of times a loop executes. For example, <TT>PROB_ITERATE</TT> could be applied to a loop that executes for eight iterations in the majority of cases but that sometimes may execute more or less than eight iterations.</DIV>
+<BR />
+</LI>
+<LI CLASS="Bullet">
+<TT>pragma UNROLL( n )</TT>
+<DIV>
+Helps the compiler use SIMD instructions, where <TT>n</TT> is the unrolling factor. By specifying <TT>UNROLL(1)</TT> you can prevent the compiler from automatically unrolling a loop. In general, we recommend using <TT>MUST_ITERATE</TT> instead unless you have specifically identified a situation where manually unrolling a loop improves performance.</DIV>
+</LI>
+</UL>
+
+		@subsection subsection__digishell_test_tool DigiShell test tool (DSH)
+
+DigiShell is a software tool that provides a general framework for running tests on Avid audio hardware. As a command-line application, DigiShell may be driven as part of a standard, automated test suite for maximum test coverage. DSH supports loading all types of %AAX plug-ins including Native and DSP, and is especially useful when running performance and cancellation tests of AAX-TI types. DigiShell is included in Pro Tools Development Builds as <TT>dsh.exe</TT> (Windows) or as <TT>dsh</TT> in the <TT>CommandLineTools</TT> directory (Mac).
+
+More information on DSH test tool can be found in \ref DSH_Guide.
+
+		@subsection subsection__hardware_debugging Hardware Debugging
+		
+			@subsubsection subsubsection__requirements_ Requirements
+
+Relocatable ELF DLLs (TI algorithms) can be debugged with some help from the DIDL loader, the TI Shell Manager, and a script called DLLView_Elf_Avid.js.
+
+These are the minimum requirements for hardware debugging for TI plug-ins:
+<UL>
+<LI CLASS="Bullet">
+Code Composer Studio version 4.2 or later </LI>
+<LI CLASS="Bullet">
+XDS510 hardware debugger </LI>
+<LI CLASS="Bullet">
+JTAG-enabled HDX card </LI>
+</UL>
+
+We recommend using Spectrum Digital's XDS510 USB Plus JTAG Emulator, as it is the only one our internal developers have used and tested in-house. Both Spectrum Digital and TI have useful technical reference/installation guides, both of which can be found on the %AAX Developer Forum under the 'Development Tools' discussion.
+
+			@subsubsection subsubsection__how_it_works_ How it works
+
+The ridl ELF loader inside DIDL stores a module and segment list containing the paths of all loaded modules and where their segments are loaded. The TI Shell Manager gets a serialized version of this table and loads it to a block of external memory on the chip at a known location. The DLLView_Elf_Avid.js script queries this memory via the debugger and extracts the paths of the modules and the ELF segment load locations, which it then passes on to the <TT>GEL_SymbolAddELFRel</TT> scripting console command (new to CCSv4.2). You can also use that command directly at the console.
+
+			@subsubsection subsubsection__connecting_a_jtag_emulator Connecting a JTAG Emulator
+			
+A JTAG-enabled HDX development card includes a "riser" PCB section extending about a centimeter above the production card PCB. This riser includes two JTAG connectors. The two connectors correspond to the two banks of 9 DSPs on the HDX card. Assuming that you are instantiating your plug-in for debugging on the first available DSP, you will want to connect your JTAG emulator to the connector that is closest to the card's user-visible ports. This connector corresponds to the first 9 DSPs on the card.
+
+			@subsubsection subsubsection__linking_to_tishellout_ Linking to TIShell.out
+
+Hardware debugging, as well as several other debugging facilities, requires that the DSP plug-in project is linked to TIShell.out in Code Composer Studio.
+
+<EM CLASS="Infinitive">
+To link a plug-in project to TIShell.out, follow these steps:</EM>
+<OL>
+<LI CLASS="List">
+Open the plug-in project's properties window and navigate to the <EM CLASS="Italic">C/C++ Build &gt; Tool Settings &gt; C6000 Linker &gt; File Search Path</EM> properties pane. </LI>
+<LI CLASS="List">
+Add "TIShell.out" to the "Include library file" (<TT>-l</TT>) property list. </LI>
+<LI CLASS="List">
+Under "Add <dir> to library search path" (<TT>-i</TT>), add the file path of the Pro Tools build you will be using to test the plug-in. This directory should already include the build's TIShell.out file. </LI>
+<LI CLASS="List">
+Repeat this process for each Configuration of the plug-in project that you will be testing. </LI>
+<LI CLASS="List">
+Add "[path to AAX SDK root]\\TI" to the project's list of source file include directories </LI>
+</OL>
+
+			@subsubsection subsubsection__adding_the_hdx_target_descriptor_file_ Adding the HDX Target Descriptor File
+
+<EM CLASS="Infinitive">
+To add the HDX Target Descriptor File:</EM>
+<OL>
+<LI CLASS="List">
+In the IDE, go to Window &gt; Preferences, CCS &gt; Debug. Point the "Shared target configuration directory" to /TI/Common in your %AAX SDK source tree </LI>
+<LI CLASS="List">
+In the IDE, go to Window &gt; Show View &gt; Target Configurations. </LI>
+<LI CLASS="List">
+Click refresh if you don't see the configuration file </LI>
+<LI CLASS="List">
+Right click Raven_C672x_XDS510_USB.ccxml, and click "Set as Default". </LI>
+</OL>
+
+			@subsubsection subsubsection__setting_up_the_dllview_script_ Setting up the DLLView script
+
+Once you have successfully installed the XDS510, you will have to do a little bit of setup with CCS. Before starting this process, verify that you are running CCSv4.2 or later and the C6000 code generation tools v7.4 or later (or 7.0.5 for CCSv4). CCS should recognize the installed emulator and prompt you to download the necessary drivers. Once completed, you will then want to setup your DLLView script.
+
+<EM CLASS="Infinitive">
+To set up the DLLView script:</EM>
+<OL>
+<LI CLASS="List">
+In the IDE, open the Scripting Console under View &gt; Scripting Console </LI>
+<LI CLASS="List">
+At the Scripting console, type one of the following to load the DLLView script (insert your own source tree path, and make sure to load the version that corresponds to your installed CCS version): 
+<DIV CLASS="TextInd1">
+Code Composer Studio 4: <TT>loadJSFile "[PATH TO AAX SDK]/TI/CCSv4/dllView_Elf_Avid.js" true </TT>
+Code Composer Studio 5 and later: <TT>loadJSFile "[PATH TO AAX SDK]/TI/CCSv5/dllView_Elf_Avid.js" true </TT></DIV>
+</LI>
+</OL>
+
+You should now see a new menu item under the Scripts menu: "DLLView -Load Pro Tools Plug-In Symbols" This should load every time CCS starts.
+
+			@subsubsection subsubsection__loading_symbols_for_debugging_ Loading Symbols for Debugging
+
+You will need to get your code loaded and running on the TI before you load symbols. You can do this directly through Pro Tools, or by using our DigiShell test tool. If using the DigiShell test tool, load the DAE dish and then a plug-in via the following commands:
+<DIV CLASS="TextInd1">
+<TT>load_dish DAE</TT> </DIV>
+<DIV CLASS="TextInd2">
+Loads the DAE dish</DIV>
+<DIV CLASS="TextInd1">
+<TT>run </TT></DIV>
+<DIV CLASS="TextInd2">
+Lists available plug-ins with their index and spec</DIV>
+<DIV CLASS="TextInd1">
+<TT>run&lt;index&gt;</TT> </DIV>
+<DIV CLASS="TextInd2">
+Instantiates the &lt;index&gt; plug-in</DIV>
+
+Use the DLLView script to load symbols for ELF DLLs. After setting up the DLLView script and connecting to the desired chip in the Debug pane, run the "DLLView -Load Pro Tools Plug-In Symbols" script from the Scripts menu in Code Composer Studio.
+
+\note The chip will need to be Suspended in the debugger in order to load symbols.
+
+<EM CLASS="Infinitive">
+To load symbols for debugging:</EM>
+<OL>
+<LI CLASS="List">
+In CCS, Launch the TI Debugger (Target &gt; Launch TI Debugger) </LI>
+<LI CLASS="List">
+Connect the debug target to the appropriate chip</LI>
+<LI CLASS="List">
+Suspend the chip </LI>
+<LI CLASS="List">
+Run Scripts &gt; DLLView -Load Pro Tools Plug-In Symbols.
+\note This script can take a moment to load; look at the Scripting Console to view its progress if you like
+\note This script may print a warning about TIShell.out not existing. This warning is benign for plug-in debugging since the TIShell symbols are not required in this case.
+</LI>
+</OL>
+
+This will load symbols for all symbol-rich modules running on the chip(s) connected to the debugger. If you load or unload plug-ins after this, you can simply repeat the "DLLView -Load Pro Tools Plug-In Symbols" command, which will synchronize the debugger with the current configuration.
+
+\note When running a plug-in in Pro Tools, the first DSP chip is reserved for the HDX mixer. Therefore the first available DSP chip for plug-in instantiation is \c C672x_1. Under DSH, the first available DSP chip is \c C672x_0.
+
+			@subsubsection subsubsection__breaking_on_first_entry_into_algorithm_ Breaking on first entry into algorithm
+
+To break on the first entry into the plug-in's processing routine, use the manual single-buffer processing mode in DSH:
+<DIV CLASS="TextInd1">
+<TT>piproctrigger manual</TT> </DIV>
+<DIV CLASS="TextInd1">
+<TT>run&lt;index&gt; </TT></DIV>
+<DIV CLASS="TextInd2">
+Attach debugger, suspend the chip, load symbols, set breakpoint, resume </DIV>
+<DIV CLASS="TextInd1">
+<TT>piproctrigger auto </TT></DIV>
+
+			@subsubsection subsubsection__breaking_on_algorithm_initialization Breaking in the on-chip algorithm initialization callback
+
+It is not currently possible to hit a breakpoint in the optional on-chip algorithm initialization callback for a plug-in. If you need to troubleshoot this callback then you should use tracing to print debug information to a log file.
+
+		@subsection subsection__tracing Tracing
+Avid's %AAX DSP platforms provide tracing functionality based on Avid's \ref AAX_DigiTrace_Guide "DigiTrace" tool.
+
+To enable trace logging for TI plug-ins, use the \ref AAX_TRACE or \ref AAX_TRACE_RELEASE macros defined in <TT>AAX_Assert.h</TT>. A separate macro, \ref AAX_ASSERT, is also available for conditional tracing. These macros are cross-platform and will function whether the algorithm is running on the TI or on the host.
+
+			@subsubsection subsubsection__tracing_requirements_ Tracing requirements
+<UL>
+<LI CLASS="Bullet">
+The \ref AAX_ASSERT and \ref AAX_TRACE macros are debug-only and will not provide tracing output from release builds of your plug-in. \ref AAX_TRACE_RELEASE may be used for tracing in both debug and release configurations. </LI>
+<LI CLASS="Bullet">
+These macros require that the <TT>DTF_AAXPLUGINS</TT> facility is enabled in the DigiTrace configuration file. You can toggle this facility to enable or disable %AAX algorithm-level tracing. </LI>
+<LI CLASS="Bullet">
+In order for tracing to be successful on TI platforms, your plug-in's ELF DLL must dynamically link against TIShell.out, a component that is installed alongside the Pro Tools application. This file includes the 'glue' that is required in order for the linker to resolve the DigiTrace entrypoint symbol in the DLL. </LI>
+</UL>
+
+To link your plug-in project to TIShell.out in Code Composer Studio, follow the steps listed in \ref subsubsection__linking_to_tishellout_ .
+
+			@subsubsection subsubsection__tracing_example_ Tracing example
+
+
+\code
+int32_t
+AAX_CALLBACK
+MyExamplePlugIn_AlgorithmInit ( SExample_Alg_Context const *
+	 inInstance , AAX_EComponentInstanceInitAction inAction )
+{
+	AAX_TRACE_RELEASE (
+	  kAAX_Trace_Priority_Normal ,
+	  "MyExamplePlugIn_AlgorithmInit called for action : %d",
+	  inAction );
+	return 0;
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 2: Adding trace code on TI</DIV>
+
+			@subsubsection subsubsection__usage_notes_ Usage notes
+<UL>
+<LI CLASS="Bullet">
+When running on the DSP, the actual handling of each tracing call occurs in a separate thread. This can lead to incorrect data reporting if volatile data, such as a pointer to an audio sample, is passed in to the tracing statement as a parameter. </LI>
+<LI CLASS="Bullet">
+DSP tracing is most reliable when using debug TI builds and when all TI compiler optimizations have been disabled </LI>
+<LI CLASS="Bullet">
+Known and resolved issues with DSP tracing are logged on the \ref KnownIssues page </LI>
+</UL>
+
+		@subsection subsection__testing_in_pro_tools Testing in Pro Tools
+		
+			@subsubsection subsubsection__the_system_usage_window_ The System Usage window
+
+The System Usage window in Pro Tools includes some features specifically targeted at testing DSP plug-ins, and particularly for testing shuffle events. Starting in Pro Tools 10, the System Usage window includes the following test features:
+<UL>
+<LI CLASS="Bullet">
+Shift + Drag DSP Meter - This shuffles everything on the chosen chip to another chip, which allows you to quickly test shuffle for a given chip. </LI>
+<LI CLASS="Bullet">
+Hover mouse over DSP - Presents a tooltip to show the running plug-ins on a chip </LI>
+<LI CLASS="Bullet">
+Cmd+Option+Shift Hover - Detailed debugging tooltip info </LI>
+<LI CLASS="Bullet">
+Cmd+Option+Shift Click - Forces a full shuffle of all chips / cards</LI>
+<LI CLASS="Bullet">
+Click on empty chip - Reserves a DSP to prevent allocation on that chip</LI>
+</UL>
+
+			@subsubsection subsubsection__dsp_information_tooltip_ DSP information tooltip
+
+Pro Tools can display additional information for DSP plug-ins using some debug tooltips that are hidden in the plug-in window header and the System Usage window.
+
+The tooltip in the plug-in window header displays information about the particular plug-in instance that is currently shown in the window. To display this tooltip, hold Command-Option-Shift (Mac) or Control-Alt-Shift (Windows) and hover the mouse cursor over the DSP &gt; Native button in the plug-in header.
+
+The tooltip in the System Usage window displays usage information for each DSP chip in the system. You can reveal this tooltip for a particular chip by mousing over the chip's usage meter while holding Command-Option-Shift (Mac) or Control-Alt-Shift (Windows). This tooltip shows the chip's total allocated cycles, internal, and external memory.
+
+The information in these tooltips is generally targeted at systems-level debugging, but can prove useful for some plug-in troubleshooting as well.
+
+\nodox Image files must be copied to the /output/html directory \endnodox
+<IMG width="40%" alt="DSP tooltip in the Pro Tools plug-in window header" src="TI_Development_Tools_PlugInHeaderDSPTooltip.png" />
+<DIV CLASS="imagecaption">
+Figure 1: DSP tooltip in the Pro Tools plug-in window header. </DIV>
+
+\nodox Image files must be copied to the /output/html directory \endnodox
+<IMG width="40%" alt="DSP tooltip in the System Usage window" src="TI_Development_Tools_SystemUsageDSPTooltip.png" />
+<DIV CLASS="imagecaption">
+Figure 2: DSP tooltip in the Pro Tools System Usage window. </DIV>
+
+</DIV>
+
+
+
+
+<DIV CLASS="section">
+	@section aax_ti_guide_05_common_issues_with_ti_development Common Issues with TI Development
+	
+	@subsection subsection__data_structure_compatibility Data structure compatibility
+%AAX DSP plug-ins use a set of custom data structures to exchange information with host. In order to preserve a consistent binary interface between the plug-in's host and algorithm, the layout of these structures must be identical on both platforms. Each structure must have the same size when compiled by both the host platform compiler and the TI DSP compiler, and any members that are referenced by both the host code and the DSP code must reside at the same offset within the struct on both platforms.
+
+In order to satisfy this requirement, it is essential that an %AAX plug-in's algorithm context structure and any other data structures that are passed between the host and the DSP use appropriate alignment. Data structures are usually aligned to 32-bit boundaries, and both Intel and TI compilers use identical struct alignment and packing for most cases. However, this behavior is not explicitly defined in the C standard.
+
+Furthermore, different compilers may use different sizes for some built-in data types. It is therefore very important to use explicitly-sized types such as \c int32_t and \c float rather than ambiguous types such as \c bool or \c int. One particularly tricky data type is pointers, which may be compiled as 64-bit values on a 64-bit Intel system but as 32-bit values on the TI DSP.
+
+Here are some specific scenarios when an unexpected difference in alignment or data type size may occur and cause an ABI incompatibility between a plug-in's host and DSP components:
+
+<UL>
+<LI CLASS="Bullet">\ref subsubsection__nested_structures </LI>
+<LI CLASS="Bullet">\ref subsubsection__pragma_pack </LI>
+<LI CLASS="Bullet">\ref subsubsection__dynamic_allocation_of_memory </LI>
+<LI CLASS="Bullet">\ref subsubsection__incorrect_use_of_pointer_data </LI>
+<LI CLASS="Bullet">\ref subsubsection__pointer_data_size_incompatibility </LI>
+</UL>
+
+		@subsubsection subsubsection__nested_structures Nested structures
+It can be particularly difficult to debug alignment issues in nested data structures. One reason is that nested structs do not necessarily have the same alignment as the parent struct. A nested structure will have the alignment that is set preceding its declaration, not the alignment of the structure in which it is contained.
+
+Aside from avoiding nested structs entirely, one way to avoid potential issues is to make sure that nested structs always contain a double. This will guarantee that the structure is double-word aligned. We have also found that placing nested structs near the beginning of the parent struct results in more consistent alignment between Intel and TI compilers, even in cases where the actual alignment of each member is strictly ambiguous according to the standard.
+
+Another important rule of thumb with nested structs is to define them inline in the enclosing structure. We have found that including one data structure as a member in another data structure will only be reliably aligned between Visual Studio and the TI compiler tools if the member structure's type is defined in-line. This does not appear to be an issue between clang and the TI compiler - the data structure alignment for the nested structure is consistent between those two compilers regardless of the location of the internal structure's definition.
+
+\code
+#include AAX_ALIGN_FILE_ALG
+struct SomeStruct
+{
+   float a;
+   float b;
+};
+#include AAX_ALIGN_FILE_RESET
+
+// Somewhere else...
+#include AAX_ALIGN_FILE_ALG
+class SomeClass
+{
+public:
+   SomeStruct s; // Don't do this! Inconsistent between Visual Studio and TI
+
+   // other stuff...
+};
+#include AAX_ALIGN_FILE_RESET
+\endcode
+<DIV CLASS="fragmentcaption">
+Listing 3: Problematic code: nested struct not defined in-line</DIV>
+
+\code
+#include AAX_ALIGN_FILE_ALG
+class SomeClass
+{
+public:
+   struct SomeStruct
+   {
+      float a;
+      float b;
+   } s; // This is fine - consistent between Visual Studio, clang, and TI
+
+   // other stuff...
+};
+#include AAX_ALIGN_FILE_RESET
+\endcode
+<DIV CLASS="fragmentcaption">
+Listing 4: Fixed code: nested struct defined in-line</DIV>
+
+		@subsubsection subsubsection__pragma_pack Usage of pragma pack
+If you use pragmas to align your structs, then you should know that in most cases it will only decrease the natural struct alignment of a compiler. That means that if you have
+
+\code
+#pragma pack(8)
+struct x
+{
+   char a;
+   float b;
+};\endcode
+<DIV CLASS="fragmentcaption">
+Listing 5: Example of usage of <TT>\#pragma pack</TT> where it has no effect</DIV>
+
+then struct x most likely won't be aligned to the 8 byte boundary. Therefore the pack pragma is not really useful for addressing alignment issues. Instead of using pack, one way to guarantee that a structure is double-word aligned, is to include at least one double member.
+ 
+\code
+#pragma pack(8)
+struct x
+{
+   float a;
+   double b;
+};\endcode
+<DIV CLASS="fragmentcaption">
+Listing 6: Example of usage of <TT>\#pragma pack</TT> where it actually affects the alignment of the structure</DIV>
+
+In this case data will be double-word aligned.
+ 
+		@subsubsection subsubsection__dynamic_allocation_of_memory Dynamic allocation of memory in structures and algorithm
+The problem with dynamic allocation is that it's difficult to enforce specific alignment of the resulting block beyond the natural alignment of the structure. Newly allocated blocks are not double-word aligned by default. This prevents double-word memory access optimizations (see \ref subsubsection__additional_data_type_optimizations_) from working.
+
+\code
+// blocks are not aligned to 8-byte boundaries by default. This prevents double-word
+// memory access optimizations from working
+float* floatBlock = new float[100];
+delete[] floatBlock;
+
+// Though AAX_Alignment.h does include some aligned memory allocators to counteract the alignment
+// problem, their use is still strongly discouraged.
+float* floatBlock2 = alignMalloc<float>(100, 8);
+alignFree(floatBlock2);\endcode
+<DIV CLASS="fragmentcaption">
+Listing 7: Problems which may arise when using dynamic allocation of memory in algorithm</DIV>
+
+		@subsubsection subsubsection__incorrect_use_of_pointer_data Incorrect use of pointer data
+In general, you should avoid storing pointers to anything in any data structures that are passed between the host and the DSP. There are many possible problems and bugs that can be caused by this, for example:
+
+<UL>
+<LI CLASS="Bullet">Often the memory map of packets can change out from under the plug-in </LI>
+<LI CLASS="Bullet">It is easy to accidentally reference data in the wrong memory space when setting pointer values </LI>
+<LI CLASS="Bullet">Pointer data types are not explicitly sized (see \ref subsubsection__pointer_data_size_incompatibility "below".) </LI>
+</UL>
+
+One alternative to using raw data pointers is to store data offsets into a coefficient array rather than using direct pointers to other structure elements. A solution such as this that does not involve pointer data types will almost always end up being easier to implement, easier to troubleshoot, and easier to maintain than a solution that uses pointer data.
+
+That said, if you must use pointer data types in any data structures that are passed between the %AAX host and DSP components then you should be very careful to avoid the problems listed above.
+
+		@subsubsection subsubsection__pointer_data_size_incompatibility Pointer data size incompatibility
+Problems due to pointer data size incompatibility can be particularly difficult to debug. Pointer data types are not explicitly sized in C, and, starting with the 64-bit Pro Tools 11 release, pointers will have different lengths for host and TI binaries. This can cause subtle portability problems in certain circumstances, if proper care is not taken.
+
+Consider the following state block:
+
+\code
+struct SMyPlugInStateBlock
+{
+     float mInGain_Smoothed;
+     some_t* mPointerP;
+     float mOutGain_Smoothed;
+};\endcode
+
+Notice the pointer \c mPointerP (the type that it points to is irrelevant for this discussion). Perhaps it is a pointer that can reference different sets of coefficients, or perhaps it points to some sort of global variable. In any case, this pointer is 64-bits long on the host, and 32-bits long on TI.
+
+In most cases, this won't cause a problem because the host simply allocates a bit more space for the state block than the TI needs and fills the allocated memory with 0s. But consider the case where we overload \ref AAX_CEffectParameters::ResetFieldData() "ResetFieldData()" to set \c mOutGain_Smoothed to something other than 0:
+
+\code
+AAX_Result MyPlugIn_Parameters::ResetFieldData (AAX_CFieldIndex inFieldIndex, void * inData, uint32_t inDataSize) const
+{
+     AAX_Result result;
+     switch (inFieldIndex)
+     {
+     	case (eMyAlgFieldIndex_State):
+     	{
+			memset(inData, 0, inDataSize);
+			SMyPlugInStateBlock* stateP = static_cast<SMyPlugInStateBlock*>(inData);
+			stateP->mOutGain_Smoothed = mOutGain_Target;
+			result = AAX_SUCCESS;
+        	break;
+     	}
+     	default:
+     	{
+     		result = AAX_CEffectParameters::ResetFieldData(inFieldIndex, inData, inDataSize);
+     		break;
+     	}
+     }
+     return result;
+}\endcode
+
+We might be doing this if \c mOutGain_Smoothed was a smoothing parameter and we want to start it at the target gain value (rather than having it smooth from 0.0 at instantiation). But if the Host and TI can't agree on where in the state block mOutGain_Smooth is located, then the result will be unexpected behavior that is difficult to debug.
+
+The most direct way to avoid this problem is to use an explicitly-sized 32-bit type for any pointers in your state block:
+
+\code
+struct SMyPlugInStateBlock
+{
+     float mInGain_Smoothed;
+     uint32_t mPointerP;
+     float mOutGain_Smoothed;
+};\endcode
+
+It will be necessary to use <TT>reinterpret_cast<float*>(stateP->mPointerP)</TT> to recast the pointer to a pointer data type on the TI, but that should not result in any extra processing cycles.
+
+		@subsubsection subsubsection__alignment_reference Alignment Reference
+These are the data type sizes and default alignments for some common compilers when compiling for 64-bit binary formats:
+
+<TABLE>
+  <TR>
+    <TH></TH>
+    <TH COLSPAN="2" ALIGN="CENTER">TI</TH>
+    <TH COLSPAN="2" ALIGN="CENTER">MS Visual C++</TH>
+    <TH COLSPAN="2" ALIGN="CENTER">C++ Builder</TH>
+    <TH COLSPAN="2" ALIGN="CENTER">GCC</TH>
+  </TR>
+  <TR>
+    <TH>char</TH>
+    <TD ALIGN="RIGHT">1 byte</TD>
+    <TD ALIGN="LEFT">1-byte aligned</TD>
+    <TD ALIGN="RIGHT">1 byte</TD>
+    <TD ALIGN="LEFT">1-byte aligned</TD>
+    <TD ALIGN="RIGHT">1 byte</TD>
+    <TD ALIGN="LEFT">1-byte aligned</TD>
+    <TD ALIGN="RIGHT">1 byte</TD>
+	<TD ALIGN="LEFT">1-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>short</TH>
+    <TD ALIGN="RIGHT">2 bytes</TD>
+    <TD ALIGN="LEFT">2-byte aligned</TD>
+    <TD ALIGN="RIGHT">2 bytes</TD>
+    <TD ALIGN="LEFT">2-byte aligned</TD>
+    <TD ALIGN="RIGHT">2 bytes</TD>
+    <TD ALIGN="LEFT">2-byte aligned</TD>
+    <TD ALIGN="RIGHT">2 bytes</TD>
+	<TD ALIGN="LEFT">2-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>int</TH>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+    <TD ALIGN="LEFT">4-byte aligned</TD>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+    <TD ALIGN="LEFT">4-byte aligned</TD>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+    <TD ALIGN="LEFT">4-byte aligned</TD>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+	<TD ALIGN="LEFT">4-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>long</TH>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+    <TD ALIGN="LEFT">4-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+	<TD ALIGN="LEFT">8-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>long long</TH>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+	<TD ALIGN="LEFT">8-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>bool</TH>
+    <TD ALIGN="RIGHT">1 byte</TD>
+    <TD ALIGN="LEFT">1-byte aligned</TD>
+    <TD ALIGN="RIGHT">1 byte</TD>
+    <TD ALIGN="LEFT">1-byte aligned</TD>
+    <TD ALIGN="RIGHT">1 byte</TD>
+    <TD ALIGN="LEFT">1-byte aligned</TD>
+    <TD ALIGN="RIGHT">1 byte</TD>
+	<TD ALIGN="LEFT">1-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>float</TH>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+    <TD ALIGN="LEFT">4-byte aligned</TD>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+    <TD ALIGN="LEFT">4-byte aligned</TD>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+    <TD ALIGN="LEFT">4-byte aligned</TD>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+	<TD ALIGN="LEFT">4-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>double</TH>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+	<TD ALIGN="LEFT">8-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>long double</TH>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">16 bytes</TD>
+	<TD ALIGN="LEFT">16-byte aligned</TD>
+  </TR>
+  <TR>
+    <TH>pointer</TH>
+    <TD ALIGN="RIGHT">4 bytes</TD>
+    <TD ALIGN="LEFT">4-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+    <TD ALIGN="LEFT">8-byte aligned</TD>
+    <TD ALIGN="RIGHT">8 bytes</TD>
+	<TD ALIGN="LEFT">8-byte aligned</TD>
+  </TR>
+</TABLE>
+
+Also here are some useful links to web resources on the topic:
+<UL>
+<LI CLASS="Bullet">
+<DIV CLASS="TextInd1">
+A good resource for the TI DSP is <A HREF="http://www.ti.com/lit/an/sprab89/sprab89.pdf" target="_top">http://www.ti.com/lit/an/sprab89/sprab89.pdf</A> (Section 2 especially). This document includes some graphs of simple alignment examples.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<DIV CLASS="TextInd1">
+Another good reference regarding general struct alignment issues is available from publib.boulder.ibm.com: <A HREF="http://publib.boulder.ibm.com/infocenter/macxhelp/v6v81/index.jsp?topic=/com.ibm.vacpp6m.doc/compiler/ref/rnpgpack.htm" target="_top">http://publib.boulder.ibm.com/infocenter/macxhelp/v6v81/index.jsp?topic=/com.ibm.vacpp6m.doc/compiler/ref/rnpgpack.htm</A>
+</DIV>
+</LI>
+</UL>
+
+
+
+
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_ti_guide_06_ti_optimization_guide TI Optimization Guide
+Optimizing %AAX real-time algorithms for Avid's TI-based platforms is very similar to optimizing real-time algorithms for any architecture. When developers think about optimization, they often think "I want to make my code run faster". In reality, however, optimization is about making the processor do less. After all, the processor's clock rate is fixed and can only perform a limited number of instructions in a set amount of time. Therefore, our focus in this section will be on helping the compiler produce code with shorter execution paths and make full use of the TI chip's architecture.
+
+Modern compilers have become extremely powerful at being able to optimize code, which is fortunate given the complicated architectures of today's DSP products. In this section we will not focus on instruction-level "optimizations" like the one below, which will automatically be done by the compiler. Instead of making our code faster, which it won't, little "tricks" like this really just make code harder to read:
+
+\code
+int y = x;
+y = y >> 1; // y = y / 2; \endcode
+<DIV CLASS="fragmentcaption">
+Listing 8: The kind of optimization that you won't be seeing in this section</DIV>
+
+Rather, we will focus on refactoring audio processing algorithms to be more efficient and on giving the TI compiler better information about the code, pointers, and data it is working with so it can perform more effective compile-time optimizations.
+
+Finally, our optimization efforts will focus on the worst-case code path. For example, developers often try to optimize algorithms by conditionally bypassing portions of code that may be disabled by particular parameter states. This is counter-productive, because the system has to assume a plug-in's worst-case execution performance regardless of how much time the plug-in is actually using. Therefore, in the context of real-time algorithms running on %AAX DSP platforms, it is best to only worry about worst-case execution time.
+
+For more information about using TI's toolset to profile your code's performance, see \ref subsection__cyclessharedtest.
+
+\note The optimizations described in this section assume that you are using version 7 or higher of TI's C6000 Code Generation Tools (CGTools). We strongly recommend using v7.0.5 as earlier versions throw linking errors.
+
+		@subsection subsection__optimization_quick_start Optimization quick start
+Here is a quick outline of the general optimization steps for an %AAX DSP algorithm:
+<OL>
+<LI CLASS="List">
+Before beginning your DSP optimizations, make sure that your Native algorithm has basic optimizations in place. In our experience, beginning the TI optimization process with a slow or needlessly precise Native algorithm will result in a long porting process. Here are some suggestions for common Native optimizations: 
+<UL>
+<LI CLASS="DashInd">
+Identify unnecessary double precision </LI>
+<LI CLASS="DashInd">
+Identify tables that have too high of granularity </LI>
+</UL>
+</LI>
+<LI CLASS="List">
+Make sure your compiler Release settings enable the compiler to optimize fully and give full optimization comments:
+<DIV CLASS="TextInd1">
+<TT>-k -s -pm -op3 -os -o3 -mo -mw –consultant –verbose -mv67p</TT></DIV>
+</LI>
+<LI CLASS="List">
+Use the load/update/store design pattern to reduce memory accesses in inner loops </LI>
+<LI CLASS="List">
+Move any processing that does not directly depend on the audio signal out of the real-time algorithm </LI>
+<LI CLASS="List">
+Declare non-changing variables and pointers (both local and in parameter lists) as <TT>const</TT> </LI>
+<LI CLASS="List">
+Declare non-aliased pointers (both local variables and function parameters) as AAX_RESTRICT </LI>
+<LI CLASS="List">
+Change any <TT>long</TT> variables to<EM CLASS="Default-Font">
+ </EM>
+<TT>int</TT>, and change <TT>double</TT> variables to <TT>float</TT> if the reduced precision does not affect signal integrity (usually defined as cancellation with the plug-in's Native algorithm.) </LI>
+<LI CLASS="List">
+Restructure inner processing loops so that they do not contain large conditional statements or other branches </LI>
+<LI CLASS="List">
+Declare any functions that are called within the innermost processing loop as <TT>inline</TT> in order to allow the inner loops to pipeline </LI>
+<LI CLASS="List">
+Add loop count information when known, using <TT>\#pragma MUST_ITERATE(min,max,quant)</TT></LI>
+</OL>
+
+		@subsection subsection__compiler_and_linker_options Compiler and linker options
+As with any complex environment, many performance gains on the TI rely on the appropriate compiler and linker options. The options documented here will allow CGTools to apply its optimization logic to your algorithm.
+
+When tweaking compiler options on the TI, keep in mind that, like on any CPU, it is useless to optimize Debug code or to profile its performance. This is especially true on TI processors because of the fact that generated Debug and Release assembly is almost completely different, assuming that heavy optimization options were chosen for the Release configuration.
+
+In general, all recommended compiler options should be set correctly in the %AAX SDK's example plug-in projects, and these settings may be used as a guide for your own plug-in projects. See the SDK files CommonPlugIn_CompilerCmd.cmd and CommonPlugIn_LinkerCmd.cmd for the latest recommended settings.
+
+			@subsubsection subsubsection__overview_of_optimizationrelated_compiler_options_ Overview of optimization-related compiler options
+
+<UL>
+<LI CLASS="Bullet">
+<TT>-g</TT>
+<DIV CLASS="TextInd1">
+Full symbolic debug. This setting should be used in debug configurations to make stepping through code easier. It should not be defined in release configurations, as it will prevent the compiler from being able to fully optimize code.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-k</TT>
+<DIV CLASS="TextInd1">
+Keep generated .asm files. This should be turned on in release configuraions so that you can use the ASM output as feedback when making optimization decisions and performance improvements.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-d"_DEBUG"</TT>
+<DIV CLASS="TextInd1">
+Defines the <TT>_DEBUG</TT> preprocessor macro that alters how certain code is generated (asserts, stdlib, etc). This should be turned on in debug configurations only. Note that TI does not require NDEBUG to be defined in release configurations.
+
+\note This will eventually be deprecated in favor of the pre-defined "_TMS320C6X" macro. 
+
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-mv67p</TT>
+<DIV CLASS="TextInd1">
+Specifies that the compiler should build code for the C67x+ chip variant we are using, which has some improvements beyond the original C67x. This option should be enabled in all build configurations that target the HDX platform.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-s</TT>
+<DIV CLASS="TextInd1">
+Specifies Opt-C/ASM interlisting. This interweaves modified C-code and ASM in the .ASM file produced by the <TT>-k</TT> option. You should use <TT>-s</TT> in release configurations so that the ASM file can be read more easily.
+
+\note Do NOT use the \c -ss option in release configurations. This option will negatively affect optimization
+
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-pm</TT>
+<DIV CLASS="TextInd1">
+Program mode compilation. Instructs the C compiler to compile all files in the same compilation unit, so that it can optimize code further using information from all files being compiled. See \ref subsubsection__program_mode_optimization_pm_ for more information.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-op3</TT>
+<DIV CLASS="TextInd1">
+A modifier for the -pm option, this specifies that there are no external variable references in the project. This option is appropriate for TI algorithms, which do have an external function reference (the process entry point) but do not have external variable references. This option allows the compiler to further optimize global variables without worrying whether they will be accessed outside of the compilation unit. See \ref subsubsection__program_mode_optimization_pm_ for more information
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-o3</TT>
+<DIV CLASS="TextInd1">
+File-level optimization. This flag gives the compiler full ability to optimize C-code by reordering instructions, inlining functions, and performing other optimizations. Note that the resulting ASM code will be very difficult to parse back into the original C and will make debugging very difficult, so this flag should only be used for Release code. See \ref subsubsection__optimization_flags_o_ for more information.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-mo</TT>
+<DIV CLASS="TextInd1">
+Use Function Subsections. This instructs the compiler to place all functions into their own separate subsection in the linker map. This allows the linker to remove unused functions in order to reduce memory usage.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-mw</TT>
+<DIV CLASS="TextInd1">
+Generate a single iteration view of SP loops. This flag adds important information to the ASM output file that is useful when optimizing your code for pipelined loops.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>–verbose</TT>
+<DIV CLASS="TextInd1">
+Output verbose status messages when compiling files. Though not very useful for humans, verbose output will produce some key information that text parsers can use, such as compiler versions and other details.
+</DIV>
+</LI>
+
+</UL>
+
+			@subsubsection subsubsection__overview_of_optimizationrelated_linker_options_ Overview of optimization-related linker options
+			
+<UL>
+<LI CLASS="Bullet">
+<TT>–relocatable</TT>
+<DIV CLASS="TextInd1">
+Generate a relocatable non-executable.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-m"file.map"</TT>
+<DIV CLASS="TextInd1">
+Generate a map file. This file contains useful information about the memory footprint of your plug-in, which is useful for fixing large plug-ins that may not have fit into available program memory.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-w</TT>
+<DIV CLASS="TextInd1">
+Warn about output sections. This flag generates very useful information that tells you if there might be a problem with memory output sections you are trying to generate.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>-x</TT>
+<DIV CLASS="TextInd1">
+Exhaustively read libraries. This is a useful flag if you do not want to worry about the order in which you specify required libraries.
+</DIV>
+</LI>
+
+</UL>
+
+			@subsubsection subsubsection__optimization_flags_o_ Optimization flags (-o)
+
+<UL>
+<LI CLASS="Bullet">
+Register (<TT>-o0</TT>)
+<DIV CLASS="TextInd1">
+This option allows for some performance gains over non-optimized code by allocating variables to registers, inlining functions declared inline, etc.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+Local (<TT>-o1</TT>)
+<DIV CLASS="TextInd1">
+This option enables local optimizations, with very similar results to the register-level optimizations of -o0.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+Function (<TT>-o2</TT>) 
+<DIV CLASS="TextInd1">
+This is the standard optimization level, and provides large gains over unoptimized code. This optimization level allows function-level optimizations such as software pipelining, loop optimization/unrolling, etc.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+File (-<TT>o3</TT>)
+<DIV CLASS="TextInd1">
+This option can provide some speedup beyond function-level optimizations, but also mutilates assembly code beyond recognition. At this optimization level the compiler will remove unused functions, simplify code in the case of unused return values, auto-inline small functions, etc. 
+</DIV>
+</LI>
+
+</UL>
+
+Like the corresponding Visual Studio options,<TT>-o0</TT> and <TT>-o1</TT> allow you to step through code line-by-line for debugging, at the cost of reduced performance. <TT>-o2</TT> and <TT>-o3</TT> sacrifice the ability to step through code and watch memory in favor of optimized code.
+
+			@subsubsection subsubsection__program_mode_optimization_pm_ Program Mode optimization (-pm)
+
+Program mode optimization gives the compiler further optimization information by compiling all files at once rather than individually. Thus global constants, function implementations, etc. can be made known to the entire program at compilation. This allows the compiler to inline functions more effectively and to determine loop unrolling based on constant loop iterators.
+
+There are a few <TT>-pm</TT> options:
+
+<UL>
+<LI CLASS="Bullet">
+	<TT>-pm -op0</TT>
+<DIV CLASS="TextInd1">
+Contains functions and variables that are called or modified from outside the source code provided to the compiler.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+	<TT>-pm -op1</TT>
+<DIV CLASS="TextInd1">
+Contains variables modified from outside the source code provided to the compiler but does not use functions called from outside the source code.
+</DIV>
+
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+This option is not appropriate for %AAX plug-in algorithms, because the algorithm component will be exported and called from outside the compiled source code.</EM>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+	<TT>-pm -op2</TT>
+<DIV CLASS="TextInd1">
+Contains no functions or variables that are called or modified from outside the source code provided to the compiler.
+</DIV>
+
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+This option is not appropriate for %AAX plug-in algorithms, because the algorithm component will be exported and called from outside the compiled source code.</EM>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+	<TT>-pm -op3</TT>
+<DIV CLASS="TextInd1">
+Contains functions that are called from outside the source code provided to the compiler but does not use variables modified from outside the source code.
+</DIV>
+</LI>
+
+<DIV CLASS="TextInd1">
+This is the recommended Program Mode optimization level for TI plug-ins. This optimization level requires that no global variables are used outside of the algorithm callback. In general, any such variables should be passed in to a TI algorithm via the algorithm's context structure. </DIV>
+</UL>
+
+			@subsubsection subsubsection__compiler_options_to_avoid_ Compiler options to avoid
+
+The following information was taken from the TMS320C6000 Programmer's Guide:
+
+<UL>
+<LI CLASS="Bullet">
+<TT>-g/-s/-ss</TT>
+<DIV CLASS="TextInd1">
+These options limit the amount of optimization across C statements, leading to larger code size and slower program execution.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+	<TT>-mu</TT>
+<DIV CLASS="TextInd1">
+This option disables software pipelining for debugging. If a reduction in code size is necessary, use the <TT>-ms2</TT>/<TT>-ms3</TT> options. These options will disable software pipelining among their other code size optimizations.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+	<TT>-mz</TT>
+<DIV CLASS="TextInd1">
+This option is obsolete. When using 3.00+ compilers, this option will decrease performance and increase code size. 
+</DIV>
+</LI>
+
+</UL>
+
+		@subsection subsection__the_loadupdatestore_pattern The load-update-store pattern
+
+The load-update-store pattern is one of the cornerstones of a fast iterative algorithm. This pattern specifies that locally accessed data should be loaded into memory at the start of processing, accessed during processing, and stored or saved after processing has completed. By using this pattern you will move memory reads and writes outside of your plug-in's innermost processing loop, which reduces data dependencies and shortens the critical inner loop.
+
+As an example, consider the following unoptimized filter code:
+
+
+\code
+inline void
+ProcessDirectFormII(float* input, float* output, float* state, float*
+	coefs, int nsamp)
+{
+	// eB0 .. eB2 and eA0, eA1 are just integer enums to partition
+	// the filter coefficients into A and B
+	for(int i = 0; i < nsamp; ++i)
+	{
+		output[i] = input[i]*coefs[eB0] + state[0];
+		state[0] = input[i]*coefs[eB1] + state[1] - output[i]*coefs[eA0];
+		state[1] = input[i]*coefs[eB2] - output[i]*coefs[eA1];
+	}
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 9: Unoptimized filter algorithm</DIV>
+
+Notice that in this code there are at least 15 memory accesses per loop iteration! This algorithm will be very inefficient as the value of <TT>nsamp</TT> increases.
+
+The compiler should be able to optimize this algorithm to some extent by pulling certain memory accesses outside of the loop. However, the compiler cannot completely optimize the loop because it must assume that the input/output/state/coefs pointers are aliased in memory. We will discuss the <TT>const</TT> and <TT>restrict</TT> keywords later, which are ways to give the compiler additional information it can use to optimize this loop. However, for now let's focus back on the basic design of this code.
+
+Using load-update-store, we can refactor this loop to pull the memory accesses outside of the loop:
+
+
+\code
+void
+ProcessDirectFormII (float* input, float* output, float* state, float *
+	coefs, int nsamp)
+{
+	// eB0 .. eB2 and eA0, eA1 are just integer enums to partition
+	// the filter coefficients into A and B
+
+	// ---- LOAD ----
+	float coefA0 = coefs [eA0];
+	float coefA1 = coefs [eA1];
+	float coefB0 = coefs [eB0];
+	float coefB1 = coefs [eB1];
+	float coefB2 = coefs [eB2];
+
+	float state0 = state [0];
+	float state1 = state [1];
+
+	float output;
+
+	// ---- UPDATE ----
+	for (int i = 0; i < nsamp; ++i)
+	{
+		output = input [i]* coefB0 + state0;
+		state0 = input [i]* coefB1 + state1 - output * coefA0;
+		state1 = input [i]* coefB2 - output * coefA1;
+		output [i] = output;
+	}
+
+	// ---- STORE ----
+	state [0] = state0;
+	state [1] = state1;
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 10: Refactored filter algorithm with load-update-store pattern applied. Not fully optimized.</DIV>
+
+Though the code initially appears longer, you will notice that we have reduced the loop to only 4 memory accesses! Though we have an additional 9 memory accesses outside the loop, they will only occur once per function call, resulting in significant savings at higher values of <TT>nsamp</TT>.
+
+\note we are not finished with this loop yet, because we can make some very significant gains by using the \c restrict and \c const keywords, as discussed in the section on \ref subsection__c_keywords.
+
+Before moving on from load-update-store, let's consider how this pattern should be applied to different categories of data that may be provided in an %AAX DSP processing context:
+
+<UL>
+<LI CLASS="Bullet">
+Coefficients and parameters
+<DIV CLASS="TextInd1">
+Coefficients and parameters are read-only by definition. As such, they should be loaded into a local variable at the beginning of the algorithm callback and should not be modified further.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+Private state
+<DIV CLASS="TextInd1">
+State parameters are writable and may be changed by the algorithm. Therefore, private state data should be loaded into a local variable copy, then stored back into memory after the local copy is updated.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+Output
+<DIV CLASS="TextInd1">
+Output is write-only, so all calculations may be performed on a local variable and then stored into memory once per loop. 
+</DIV>
+</LI>
+
+</UL>
+
+		@subsection subsection__case_study_iir_filter_implemenation_on_ti_672x_dsps Case study: IIR filter implemenation on TI 672x DSPs
+
+In this section we will examine various IIR filter implementations as a specific example of the considerations that must be made when optimizing DSP code for the 672x.
+
+The TI 67xx family of DSPs is notably different from some other typical DSP processors, such as the 56k and the Intel FPU, in that the TI DSP does not have an implicit higher-precision multiply-accumulate. It is of course capable of double precision accumulation, but this must be coded explicitly. In some ways, this is similar to the Intel SSE processing unit, which jetisonned the 80-bit floating point stack used in the Intel FPU. The lack of higher precision accumulation in TI (and SSE) can sometimes result in unacceptable quantization noise performance for single precision filter implementations. Luckily, with the right choice of filter structure or coding for explicit double precision accumulation, excellent results can be achieved. 
+
+On fixed-point DSPs such as 56k, Direct Form I (DF1) implementation is the standard due to moderately good fixed point scaling properties, decent noise performance, and simple implementation. However, on a 672x DSP a single precision DF1 filter can have terrible noise performance (depending on the filter coefficients and the audio material being processed.) A degenerate case is a DF1 highpass filter processing low frequency material; in DF1, the feedforward coefficients subtract the previous sample from the current sample, and for low frequency material this produces very small numbers with low precision. Single precision DF2 structures also produce similarly poor results in this respect.
+
+One option to improve upon these results is to use double precision throughout the 672x filter implementation. However, this results in a heavy cycle performance penalty due to the high cost of double operations on the TI DSP. Another, often better, option is to use single precision coefficients and state, with double precision accumulation:
+
+
+\code
+float in, b0, b1, a1, state1;
+double accum ;
+accum = double (b0) * double (in) +
+        double (b1) * double (state1) +
+        double (a1) * double (accum);
+state1 = in; \endcode
+<DIV CLASS="fragmentcaption">
+Listing 11: Mixed-precision DF1 filter implementation</DIV>
+
+The TI compiler will implement this using the mpysp2dp instruction, since it knows that the operands started out as single precision and end up as double precision. This is considerably faster than going to a full double precision implementation, but it is still relatively slow compared to straight single precision. Making the state double precision will improve noise performance further, with some increase in cycle usage.
+
+Another option that generally gets good results is the single precision DF2 Transpose (DF2T) filter. On TI the DF2T implementation is fast and generally has good noise performance. If you are looking for a simple recommendation that should work well enough for most applications, DF2T is a good choice.
+
+The optimized C filter library available from TI uses the DF2 structure in its implementation. Even though DF2 has some limitations, this is a good starting point for seeing how to optimize filter code on TI; peak performance on TI is 2.25 cycles per biquad, so it's pretty amazing what can be done (to achieve that level of performance multiple series or parallel biquads need be put in a tight loop.) We have adapted some of this filter code to DF2T, and still achieved fairly similar cycle performance.
+
+If the single precision DF2T noise performance is not good enough for your application, then either double precision or one of the myriad other filter structures, such as State Space, Gold-Rader, Lattice or Zolzer, should do the job. In fact, there is one relatively new filter structure which we think stands out, called the Direct Wave Form (DWF) filter. Details about this filter structure can be found in <EM CLASS="Italic">
+Direct Wave Form Digital Filter Structure: an Easy Alternative for the Direct Form</EM>
+ by Jean H.F. Ritzerfel. According to the author the noise performance is 3dB within optimal, it's relatively efficient (5 multiplies per biquad), free of limit cycles, has simple coefficient generation and low coefficient quantization sensitivity. It might just be the perfect filter structure, but we'll let you be the judge of that; keep in mind that all filter structures have some tradeoffs, and the recommendations made here might not be the best for your particular application.
+
+		@subsection subsection__understanding_cgtoolsgenerated_asm_files Understanding CGTools-generated ASM files
+
+The ability to read the ASM files that are generated by CGTools is essential when optimizing a TI algorithm. Specifically, the information in these files will allow you to determine if anything is preventing software pipelining from occurring, which is the single most effective form of optimization on the C6727.
+
+To view your project's ASM file, turn on the <TT>-k</TT> compiler option ("Keep Generated .asm Files", found under Build Options > Compiler > Assembly in the Code Composer Studio IDE.) By default, ASM files will be placed in the same directory as the corresponding source file.
+
+\note You should only examine ASM listings of Release code that has been optimized by the compiler. Debug code should not be optimized.
+
+Each ASM file for a TI algorithm callback should contain text that marks the start of the assembly listing for the processing loop. For example:
+
+\code
+;**********************************************************************
+;* FUNCTION NAME: // [Your algorithm's ProcessProc symbol] ___________*
+;*____________________________________________________________________*
+;* Regs Modified: A0,A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14, _*
+;*________________A15,B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12, _____*
+;* _______________B13,SP,A16,A17,A18,A19,A20,A21,A22,A23,A24,A25, ____*
+;*________________A26,A27,A28,A29,A30,A31,B16,B17,B18,B19,B20,B21, ___*
+;* _______________B22,B23,B24,B25,B26,B27,B28,B29,B30, B31 ___________*
+;* Regs Used____: A0,A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14, _*
+;* _______________A15,B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12, _____*
+;* _______________B13,DP,SP,A16,A17,A18,A19,A20,A21,A22,A23,A24, _____*
+;* _______________A25,A26,A27,A28,A29,A30,A31,B16,B17,B18,B19,B20, ___*
+;* _______________B21,B22,B23,B24,B25,B26,B27,B28,B29,B30,B31 ________*
+;* Local Frame Size: 0 Args + 148 Auto + 44 Save = 192 byte __________*
+;********************************************************************** \endcode
+<DIV CLASS="fragmentcaption">
+Listing 12: CGTools-generated header for a processing loop assembly listing</DIV>
+
+Within this listing, you are looking for several things:
+<OL>
+<LI CLASS="List">
+Function calls </LI>
+<LI CLASS="List">
+Branches or control code </LI>
+<LI CLASS="List">
+Software pipelining notes </LI>
+</OL>
+
+			@subsubsection subsubsection__function_calls_ Function calls
+
+
+\code
+   [!B0]  CALL  .S1   __divd         ; |213|
+|| [!B0]  MVKH  .S2   0x40080000 ,B5 ; |213|
+|| [ B0]  MV    .L1X  B10 ,A4        ; |213|
+$C$RL9 : ; CALL OCCURS {__divd}      ; |213| \endcode
+<DIV CLASS="fragmentcaption">
+Listing 13: Function call in a CGTools-generated assembly listing</DIV>
+
+Function calls, such as the call in the listing above, cannot be effectively pipelined. If you find a function call figure out what C instruction it is caused by. Sometimes a function call will be made implicitly, such as when casting from float to int or when doing division. All function calls should be removed from the processing loop or inlined in order for the compiler to optimize effectively.
+
+			@subsubsection subsubsection__branches_ Branches
+
+
+\code
+    NOP          1
+    B     .S1    $C$L5                 ; |213|
+    NOP          4
+    MPYDP .M1X   A5:A4 ,B5:B4 ,A11:A10 ; |213|
+||  LDW   .D2T2  *+ SP (124) ,B5       ; |218|
+    ; BRANCH OCCURS { $C$L5 }          ; |213| \endcode
+<DIV CLASS="fragmentcaption">
+Listing 14: Branch in a CGTools-generated assembly listing</DIV>
+
+Branches can also prevent loop pipelining. If you find a branch in your algorithm's assembly, determine whether it is preventing the compiler from pipelining a loop. If it is preventing pipelining, you must figure out how to rewrite the conditional in your C code so that it will not be compiled into a branch.
+
+			@subsubsection subsubsection__software_pipelining_notes_ Software pipelining notes
+
+For each loop the compiler finds and is able to pipeline, the .ASM file should contain a section similar to the one below:
+
+&nbsp;
+
+
+\code
+;*--------------------------------------------------------------------*
+;* SOFTWARE PIPELINE INFORMATION
+;*
+;* Loop source line : 68
+;* Loop opening brace source line : 69
+;* Loop closing brace source line : 124
+;* Loop Unroll Multiple : 2x
+;* Known Minimum Trip Count : 1
+;* Known Max Trip Count Factor : 1
+;* Loop Carried Dependency Bound (^) : 15
+;* Unpartitioned Resource Bound : 20
+;* Partitioned Resource Bound (*) : 20
+;* Resource Partition :
+;* A- side B- side
+;* .L units 0 0
+;* .S units 0 1
+;* .D units 20* 20*
+;* .M units 7 5
+;* .X cross paths 5 6
+;* .T address paths 20* 20*
+;* Long read paths 5 1
+;* Long write paths 0 0
+;* Logical ops (. LS) 5 4 (.L or .S unit )
+;* Addition ops (. LSD) 0 1 (.L or .S or .D unit )
+;* Bound (.L .S .LS) 3 3
+;* Bound (.L .S .D .LS .LSD) 9 9
+;*
+;* Searching for software pipeline schedule at ...
+;* ii = 20 Schedule found with 3 iterations in parallel \endcode
+<DIV CLASS="fragmentcaption">
+Listing 15: Pipelined loop header in a CGTools-generated assembly listing</DIV>
+
+These are the important items to note in this listing:
+
+<UL>
+<LI CLASS="Bullet">
+<TT>Loop Carried Dependency Bound</TT> and <TT>Partitioned Resource Bound</TT>
+<DIV CLASS="TextInd1">
+The maximum of these numbers is the minimum number of clock cycles one instance of the loop will require in its current form. You can reduce these numbers by performing some of the optimizations listed in this guide.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>Loop Unroll Multiple</TT>
+<DIV CLASS="TextInd1">
+This line will appear if the compiler is partially unrolling the loop to improve performance. 
+</DIV>
+</LI>
+
+</UL>
+
+If a loop section instead displays <TT>Disqualified loop</TT>: then some of the conditions required to enable software pipelining have not been met:
+
+<UL>
+<LI CLASS="Bullet">
+<TT>-o2</TT> or -<TT>o3</TT> optimizations must be enabled </LI>
+<LI CLASS="Bullet">
+The loop cannot contain a function call. Make all called functions inline. </LI>
+<LI CLASS="Bullet">
+The loop cannot contain any branches or jumps, often caused by large conditional statements </LI>
+<LI CLASS="Bullet">
+Software pipelining will not work with nested loops; only the innermost loop will be pipelined. You should completely unroll the inner loop or refactor the algorithm so that the loop can be pipelined </LI>
+</UL>
+
+For more information about pipelining and loop/branch optimization, see \ref subsection__refactoring_conditionals_and_branches.
+
+		@subsection subsection__c_keywords C keywords
+There are a few keywords in C that give the compiler additional information about the variables you declare and parameters you pass into functions. This allows the compiler to further optimize the code it is compiling, which can result in significant performance gains.
+
+			@subsubsection subsubsection__const_ const
+
+Effective use of <TT>const</TT> lets the compiler know whether pointers, scalars, or objects will remain constant in memory.
+
+Let's add the <TT>const</TT> keyword to the filter function from our example of \ref subsection__the_loadupdatestore_pattern.
+
+\code
+void
+ProcessDirectFormII (
+	const float * const input, // read - only
+	float * const output, // read - write
+	float * const state, // read - write
+	const float * const coefs , // read - only
+	int nsamp )
+{
+	// eB0 .. eB2 and eA0, eA1 are just integer enums to partition
+	// the filter coefficients into A and B
+
+	// ---- LOAD ----
+	const float coefA0 = coefs [ eA0 ];
+	const float coefA1 = coefs [ eA1 ];
+	const float coefB0 = coefs [ eB0 ];
+	const float coefB1 = coefs [ eB1 ];
+	const float coefB2 = coefs [ eB2 ];
+
+	float state0 = state [0];
+	float state1 = state [1];
+
+	// ---- UPDATE ----
+	for (int i =0; i&lt; nsamp; ++i)
+	{
+		const float output = input [i]* coefB0 + state0 ;
+		state0 = input [i]* coefB1 + state1 - output * coefA0 ;
+		state1 = input [i]* coefB2 - output * coefA1;
+		output [i] = output;
+	}
+
+	// ---- STORE ----
+	state [0] = state0;
+	state [1] = state1;
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 16: Refactored filter algorithm with load-update-store pattern and const keyword applied. </DIV>
+
+It is especially important to note that the declaration of <TT>const float output</TT> was moved inside the loop. Why did we do this? Because we see that output is constant over an iteration of the loop, but it does change between iterations. By declaring it <TT>const</TT> inside the loop body we remove the data dependency that existed in output and allow the loop to optimize more effectively.
+
+As demonstrated by this change to <TT>const float output</TT>, <TT>const</TT> is useful for manually breaking dependencies in DSP code. Variable re-use introduces unnecessary data dependencies in code, which can be avoided by using individual local const variables.
+
+			@subsubsection subsubsection__restrict_ restrict
+
+The <TT>restrict</TT> keyword tells the compiler that a specific pointer is not aliased, meaning that none of the memory locations accessed by the pointer are read or written to by any other variable within its local scope. This keyword is very important when optimizing TI code that involves pointers, as all %AAX algorithms do due to the nature of the algorithm context structure.
+
+<TT>restrict</TT> was introduced with the C99 standard. %AAX plug-ins use the <TT>AAX_RESTRICT</TT> keyword, which is a cross-platform macro for the C99 standard restrict.
+
+\note Now that MSVC has added C99 support to its compiler, <TT>AAX_RESTRICT</TT> will eventually be deprecated in favor of the <TT CLASS="Italic">restrict</TT> keyword.
+
+The following example demonstrates the use of restrict in our filter code.
+
+\code
+void
+ProcessDirectFormII (
+	const float * const AAX_RESTRICT input,
+	float * const AAX_RESTRICT output,
+	float * const AAX_RESTRICT state,
+	const float * const AAX_RESTRICT coefs ,
+	int nsamp )
+{
+	// eB0 .. eB2 and eA0, eA1 are just integer enums to partition
+	// the filter coefficients into A and B
+
+	// ---- LOAD ----
+	const float coefA0 = coefs [ eA0 ];
+	const float coefA1 = coefs [ eA1 ];
+	const float coefB0 = coefs [ eB0 ];
+	const float coefB1 = coefs [ eB1 ];
+	const float coefB2 = coefs [ eB2 ];
+
+	float state0 = state [0];
+	float state1 = state [1];
+
+	// ---- UPDATE ----
+	for (int i =0; i&lt; nsamp; ++i)
+	{
+		const float output = input [i]* coefB0 + state0;
+		state0 = input [i]* coefB1 + state1 - output * coefA0;
+		state1 = input [i]* coefB2 - output * coefA1;
+		output [i] = output;
+	}
+
+	// ---- STORE ----
+	state [0] = state0;
+	state [1] = state1;
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 17: Refactored filter algorithm with load-update-store pattern and const and restrict keywords applied.</DIV>
+
+\note
+<UL>
+<LI CLASS="Bullet">
+This example applies <TT>restrict </TT>to the algorithm's input and output audio buffer pointers. These pointers do not alias each other in most algorithms, but this may not be the case for all algorithms and should be verified by the developer before applying <TT>restrict</TT>. </LI>
+
+<LI CLASS="Bullet">
+The <TT>restrict</TT> keyword is somewhat redundant when used with the load-update-store pattern. This is because by asserting to the compiler that the pointers are not aliased, it should be able to partially do the load-update-store refactoring automatically. However, because some compilers have limited or no support for the <TT>restrict</TT> keyword, using the load-update-store pattern is still recommended. </LI>
+</UL>
+
+			@subsubsection subsubsection__keywords_to_avoid_ Keywords to avoid
+
+There are some keywords which do more harm than good, but are still being used either due to legacy code or developer superstitions. These keywords should not be used in %AAX plug-ins.
+
+<UL>
+<LI CLASS="Bullet">
+<TT>register</TT>
+<DIV CLASS="TextInd1">
+The <TT>register</TT> keyword is a suggestion to the compiler that a certain variable will be accessed frequently and should be stored in a register rather than a memory location. Use this keyword only when you are sure that the compiler is placing a frequently-used variable in memory when it would be advantageous to keep it in a register. Note that the <TT>register</TT> keyword has no effect if the CGTools optimizations are enabled.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>static</TT>
+<DIV CLASS="TextInd1">
+In C, the <TT>static</TT> keyword tells the compiler to initialize the variable at compilation time and retain the value between calls. Though there are some valid situations to use the <TT>static</TT> keyword, its use in %AAX plug-ins on all platforms is extremely limited. One of its most "popular" uses, declaring local variables inside a function as <TT>static</TT> in order to achieve a type of global counter, should never be used in AAX algorithm code. If you are using <TT>static</TT> to make a local variable hold its variable across calls to a function, it is always preferable to either pass it in to the function as a modifiable parameter or declare it as a member variable of the method (if C++). 
+</DIV>
+</LI>
+
+</UL>
+
+		@subsection subsection__data_types Data types
+The TI C672x+ is a 32-bit floating point DSP platform, and has a few peculiarities that you should be aware of.
+
+<UL>
+<LI CLASS="Bullet">
+Use <TT>int</TT> instead of <TT>long</TT>
+<DIV CLASS="TextInd1">
+Integers of type <TT>long int</TT> are 40 bits wide on TI, and are very inefficient. Always use the <TT>int</TT> data type (or, even better, the C99-standard <TT>int32_t</TT>) instead.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+Use <TT>float</TT> instead of <TT>double</TT>
+<DIV CLASS="TextInd1">
+Double-precision floating-point data types have a significant performance penalty on TI processors. Use <TT>float</TT> instead of <TT>double</TT> wherever possible, as long as this substitution does not affect signal integrity or cancellation.
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+Use unsigned values when referencing memory
+<DIV CLASS="TextInd1">
+In general, explicitly typed pointers should always be used to reference memory. If you do have need of a generic memory representation, use an unsigned integer to avoid implicit conversion costs.
+</DIV>
+</LI>
+
+</UL>
+
+			@subsubsection subsubsection__unintended_data_type_conversions_ Unintended data type conversions
+
+When developing for the TI platform it is important to keep an eye out for unintended type conversions, and especially for implicit double-precision instructions. The following points are helpful for both program efficiency and for future maintenance of the code, since they clarify the developer's understanding of how the code should operate, e.g. by specifying that a cast is occurring, and make it obvious that steps such as data type conversions are an intentional part of the algorithm.
+<UL>
+<LI CLASS="Bullet">
+Explicitly declare constants as single-precision. For example, use <TT>0.0f</TT> instead of <TT>0.0</TT>. Often a compiler will be able to do this automatically at compile time, but it is better to be explicit with your intended precision. </LI>
+<LI CLASS="Bullet">
+If any casts are required in your code, make them explicit. For example, <TT>float output = (float)doubleVar</TT> as opposed to <TT>float output = doubleVar</TT>. </LI>
+<LI CLASS="Bullet">
+Use single-precision math.h functions (such as <TT>%fabsf()</TT>) instead of the double-precision equivalents (<TT>%fabs()</TT>). </LI>
+<LI CLASS="Bullet">
+Do not directly reference memory addresses using integer data types; instead, use a pointer data type. If an integer data type is required, use an unsigned 32-bit type. </LI>
+</UL>
+
+To help ensure that you are not violating these principles, always be aware of any warnings generated by the compiler. In particular, do not ignore warnings related to "implicit conversion from 'double' to 'float'" or "implicit conversion from 'double' to 'int'"; these warnings may indicate that you are declaring a double when a float would be just as good.
+
+In the final stages of optimization, examine the generated assembly code to make sure there are no unintended double-precision instructions or memory accesses.
+
+			@subsubsection subsubsection__additional_data_type_optimizations_ Additional data type optimizations
+
+The %AAX SDK includes cross-platform macros that can be used to convert two single-precision float loads to one double-precision load. The coefficient smoothing case study below includes an example use case for these macros.
+
+\code
+	const float * pTable = &SmoothCoefTable[address];
+	AAX_ALIGNMENT_HINT(pTable,8);
+	float firstCoef  = AAX_LO(*pTable);
+	float secondCoef = AAX_HI(*pTable);
+\endcode
+<DIV CLASS="fragmentcaption">
+Listing 18: Example of using %AAX macros for converting two <TT>float</TT> loads to one <TT>double</TT> load.</DIV>
+
+In this example the \ref AAX_ALIGNMENT_HINT macro checks whether data is aligned on a 8-byte boundary, then the double word is loaded, and finally the \ref AAX_LO and \ref AAX_HI macros get the double word's first and second (<TT>float</TT>) parts. 
+
+If <TT>SmoothCoefTable</TT> consists of floats and is 8-byte aligned, then this scenario will work fine for loads when <TT>address</TT> is even. This raises the question about how to load double word from <TT>&SmoothCoefTable[address]</TT>, when <TT>address</TT> is odd. Since this kind of optimization is most useful for loading data from external memory, where the CPU savings of a single double word load vs two 32-bit loads is greatest, then one trick which can help is to trade off memory (as external memory is plentiful) for performance. Specifically, <TT>SmoothCoefTable</TT> can be orginized in a such way that for every member of this table, except the first and the last ones, there will be two consequent entries.
+
+\code
+	const int32_t size = 4;
+	// instead of this classic variant...
+	const float SmoothCoefTable[size] = {
+		-0.1, -0.2, -0.3, -0.4
+	}
+	
+	// ...table can be organized this way
+	const float SmoothCoefTable[size*2 - 2] = {
+		-0.1, -0.2, 
+		-0.2, -0.3,
+		-0.3, -0.4,
+		-0.4,  0.0 /* last member is dummy */
+	}
+\endcode
+<DIV CLASS="fragmentcaption">
+Listing 19: Example of restructuring the table so that it can be easily used in the optimization scenario given above.</DIV>
+
+In this case the number of loads will be halved at the cost of doubling the size of the table. If the table is located in external memory then the additional memory requirement can be an excellent trade-off for the performance gained.
+
+		@subsection subsection__case_study_efficient_parameter_smoothing_at_single_and_double_precision Case study: Efficient parameter smoothing at single and double precision
+
+Coefficient smoothing ("de-zippering") can often be one of the most difficult parts of a plug-in to optimize for real-time operation. This is especially true in cases when full double-precision smoothing filters have been used in a plug-in's Native code, with the possibility of very small coefficients. In these cases it can be difficult to optimize the smoothing code while also satisfying requirements for audio data parity between the plug-in's Native and DSP configurations.
+
+&nbsp;
+
+
+\code
+double * const AAX_RESTRICT deZipper = dzCoefsP->mDeZip [ch ][0];
+const double * AAX_RESTRICT coefs = myCoefsP->mBiqCoefsBuf [0];
+
+// Double - precision
+for (int i = 0; i < eNumBiquads * eNumCoefs ; ++i)
+{
+	double dz = deZipper [i];
+	dz += zeroCoef * ( coefs [i] - deZipper [i]);
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 20: Example of double-precision smoothing.</DIV>
+
+In this section we will describe three specific approaches that may be taken to perform optimized real-time smoothing without compromising sound quality.
+
+			@subsubsection subsubsection__method_1_clamped_singleprecision_smoothing_ Method 1: Clamped single-precision smoothing
+
+The simplest approach for optimization of a double-precision smoothing filter is to replace it with modified single-precision smoothing. Unfortunately, we have found that this approach can lead to glitches and instability at higher sample rates when adjusting controls due to transient innacuraccies in the smoothing. 
+
+
+\code
+double * const AAX_RESTRICT deZipper = dzCoefsP->mDeZip [ch ][0];
+const double * AAX_RESTRICT coefs = myCoefsP->mBiqCoefsBuf [0];
+
+// Method 1 - single - precision
+for (int i = 0; i < eNumBiquads * eNumCoefs ; ++i)
+{
+	float dz = deZipper [i];
+	dz += zeroCoef * ( coefs [i] - deZipper [i]);
+
+	// If the de -zip step is so small that the coefficient doesn't change then clamp
+	// the value to the target to ensure we are using exactly the desired value .
+	deZipper [i] = (dz == deZipper [i]) ? coefs [i] : dz;
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 21: Example of clamped single-precision smoothing.</DIV>
+
+			@subsubsection subsubsection__method_2_mixedprecision_smoothing_ Method 2: Mixed-precision smoothing
+
+To resolve the stability issues at high sample rates, the state may be accumulated at double-precision. This results in mixed-precision operations that are much faster on TI DSPs than full double-precision calculations, though still slower than single-precision.
+
+
+\code
+float * const AAX_RESTRICT deZipper = dzCoefsP->mDeZip [ch ][0];
+double * const AAX_RESTRICT deZipState = dzCoefsP->mDZState [ch][0];
+const float * AAX_RESTRICT coefs = myCoefsP->mBiqCoefsBuf [0];
+
+// Method 2 - partial double precision
+# pragma UNROLL ( CBiquad::eNumCoefs )
+for(int i = 0; i < eNumBiquads * eNumCoefs ; i ++)
+{
+	double dz = deZipState [i];
+	dz += zeroCoef * ((coefs [i]) - ( deZipper [i]));
+	deZipState [i] = dz;
+	deZipper [i] = float (dz);
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 22: Example of mixed-precision smoothing.</DIV>
+
+			@subsubsection subsubsection__method_3_loop_unrolling_and_doubleword_memory_accesses_ Method 3: Loop unrolling and double-word memory accesses
+
+Further performance gains can be made by unrolling the loop and using double word memory accesses. This code is faster, but is still not as fast as full single-precision.
+
+
+\code
+float * const AAX_RESTRICT deZipper = dzCoefsP->mDeZip [ch][0];
+double * const AAX_RESTRICT deZipState = dzCoefsP->mDZState [ch][0];
+const float * AAX_RESTRICT coefs = myCoefsP->mBiqCoefsBuf [0];
+
+// Method 3 - partial double precision - unrolled with double-precision memory accesses for(int i = 0; i < (eNumBiquads * eNumCoefs); i +=2 )
+{
+	double dz0 = deZipState [i];
+	double dz1 = deZipState [i+1];
+	dz0 += zeroCoef * (AAX_LO ( coefs [i]) - AAX_LO ( deZipper [i]));
+	dz1 += zeroCoef * ( AAX_HI ( coefs [i]) - AAX_HI ( deZipper [i]));
+	deZipState [i] = dz0;
+	deZipper [i] = float (dz0);
+	deZipState [i+1] = dz1;
+	deZipper [i+1] = float (dz1);
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 23: Example of loop unrolling and double-precision memory accesses for smoothing optimization.</DIV>
+
+			@subsubsection subsubsection__coefficient_smoothing_example_summary_ Coefficient smoothing example summary
+
+<UL>
+<LI CLASS="Bullet">
+Full single-precision smoothing (method 1) is an excellent and simple solution for gain coefficients and other scalar values which are not extremely sensitive to coefficient quantization at small values. This method does not always reach the target value, so clamping should be used to ensure signal integrity. </LI>
+<LI CLASS="Bullet">
+Mixed-precision smoothing (method 2) uses slightly more CPU, but gives full double precision accuracy. This approach should generally be used for EQs and other sensitive coefficients. </LI>
+<LI CLASS="Bullet">
+Further low-level optimizations are also possible via manual loop unrolling and double-precision memory access (method 3). </LI>
+</UL>
+
+		@subsection subsection__refactoring_conditionals_and_branches Refactoring conditionals and branches
+		
+\note
+For more detailed information on how to reduce or eliminate the use of branches in algorithms, see section 5.2 of the <B>Hand-Tuning Loops and Control Code on the TMS320C6000</B> guide provided by TI.
+
+An important technique in refactoring algorithms to enhance loop performance is to reduce or eliminate conditionals and branches in code. The TI compiler focuses a lot of its optimization energy on keeping its pipeline full of inside loops. However, it cannot pipeline a loop if the one of the following is true:
+
+<UL>
+<LI CLASS="Bullet">
+The loop contains a branch </LI>
+<LI CLASS="Bullet">
+The loop contains a function call </LI>
+<LI CLASS="Bullet">
+The loop is too long </LI>
+</UL>
+
+To demonstrate this, we will again begin with an unoptimized example:
+
+
+\code
+for ( int i = 0; i &lt; numSamples ; ++i)
+{
+	if (! bypass )
+	{
+		const float filtOutput1 = input [i] * coef0 + state0 * coef1 ;
+		const float filtOutput2 = filtOutput1 * coef2 + state1 * coef3 ;
+		output [i] = filtOutput2 ;
+	}
+	else
+	{
+		output [i] = input [i];
+	}
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 24: Another unoptimized filter algorithm.</DIV>
+
+Though trivial, this example illustrates the problem with conditionals inside of loops. In TI assembly, conditional code usually translates into code branches, which prevents loops from pipelining effectively see \ref subsection__understanding_cgtoolsgenerated_asm_files. Let's refactor the loop in our example to reduce the size of its conditional branch:
+
+
+\code
+for (int i = 0; i &lt; numSamples ; ++i)
+{
+	const float filtOutput1 = input [i] * coef0 + state0 * coef1 ;
+	const float filtOutput2 = filtOutput1 * coef2 + state1 * coef3 ;
+	output [i] = filtOutput2 ;
+
+	if ( bypass )
+	{
+		output [i] = input [i];
+	}
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 25: Filter algorithm with a refactored conditional branch.</DIV>
+
+At first, it may seem wasteful to perform the filter calculation if <TT>bypass</TT> will simply throw away the result. In reality, however, the opposite is true: as a real-time algorithm, this code is constrained by its maximum, worst-case cycle count. It is important to understand this point: essentially, the cycle count of the plug-in is always its worst-case performance.
+
+By reducing the algorithm's maximum cycle count we are therefore reducing waste, even though we are increasing the plug-in's cycle count when it is bypassed. In fact, the ideal scenario for most algorithms is to use only one code path (and, consequentially, a single deterministic cycle count) despite the fact that this can result in worse performance for some specific states. To state this fundamental principle in a different way:
+
+<DIV CLASS="TextInd1">
+<EM>The performance of specific states in an %AAX DSP algorithm is not relevant if there is another possible state with worse performance.</EM>
+</DIV>
+
+Going back to our optimized example, you may also notice that the conditional still exists. Doesn't this create a branch in the assembly code as well and prevent pipelining? 
+
+In the case of very brief conditionals such as this, the answer is usually no. On TI processors, most instructions can be executed conditionally, depending on the value of a control register. Thus, the single assignment <TT>(output = input)</TT> inside this conditional will reduce to a few conditional instructions without having to execute a branch. As a result, the TI compiler will be able to efficiently pipeline this loop.
+
+That said, it is occasionally necessary to eliminate conditionals entirely. One effective solution for these situations is to execute the branched logic algorithmically rather than conditionally. To demonstrate this approach, here is our filter example again, this time with the the conditional completely eliminated from the loop:
+
+
+\code
+for (int i = 0; i &lt; numSamples ; ++i)
+{
+	const float filtOutput1 = input [i] * coef0 + state0 * coef1 ;
+	const float filtOutput2 = filtOutput1 * coef2 + state1 * coef3 ;
+	output [i] = (! bypass ) * filtOutput2 + bypass * input [i];
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 26: Filter algorithm with branching logic executed algorithmically.</DIV>
+
+This code is shorter and completely eliminates the conditional from inside the loop body. However, there is an associated cost in readability, in that it is not initially obvious how exactly <TT>bypass</TT> affects the output. This is of course a tradeoff that you will need to consider on a case-by-case basis. In general, we encourage you to consider this technique only when you have verified in the assembly code that simply reducing the size of the conditional is not enough to achieve effective instruction pipelining.
+
+Another useful technique for optimizing loops is to use <TT>pragma MUST_ITERATE</TT> and <TT>pragma PROB_ITERATE</TT> (see more about these pragmas in \ref subsubsection__loop_controls_), which help the compiler guess the number of iterations for the loop. It is extremely useful when you know the exact number of the iterations, and this number never changes during plug-in processing. For example, this is applicable for the loops which iterate through the audio samples in the input and output buffers. The number of input samples is always constant for an %AAX DSP plug-in algorithm; the buffer length must be described with the option \ref AAX_eProperty_DSP_AudioBufferLength for each DSP component in the plug-in's description.
+
+The following code example shows an algorithm processing function template. For convenience, this function template takes the audio buffer length as a template parameter:
+
+\code
+template<int kAudioWindowSize>
+void AAX_CALLBACK
+Example_AlgorithmProcessFunction( SExample_Alg_Context * const inInstancesBegin [], const void * inInstancesEnd)
+{
+   for (SExample_Alg_Context * const * walk = inInstancesBegin; walk != inInstancesEnd; ++walk)
+   {
+      SExample_Alg_Context* const AAX_RESTRICT contextP = *walk;
+      const float * const AAX_RESTRICT inputP = contextP->mInputPP;
+      float * const AAX_RESTRICT outputP = contextP->mOutputPP;
+
+      #pragma MUST_ITERATE( kAudioWindowSize, kAudioWindowSize, kAudioWindowSize )
+      for (int32_t i = 0; i < kAudioWindowSize; ++i)
+      {
+         outputP[i] = inputP[i];
+      }
+   }
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 27: Optimizing loop using pragma MUST_ITERATE.</DIV>
+
+Note that the audio buffer length property takes a \ref AAX_EAudioBufferLengthDSP value. The values of this enum are set to the power-of-two for each buffer length, so in this case the <TT>kAudioWindowSize</TT> value would be set to match <TT>2 << AAX_eProperty_DSP_AudioBufferLength</TT> when compiling this algorithm callback into the TI DLL
+
+The same optimization can be used for the loops that iterate through input/output channels, as demonstrated by the DemoDist example plug-in.
+
+		@subsection subsection__case_study_pipeline_refactoring_in_avids_eq3_and_dyn3_plugins Case study: pipeline refactoring in Avid's EQ3 and Dyn3 plug-ins
+
+While optimizing the "stock" Pro Tools equalization and dynamics processors we came across many real-world optimization scenarios that will be applicable to a broad variety of plug-ins. In this section we will consider specific techniques that we used to enable software pipelining of these algorithms by the TI compiler, including an in-depth look at the pseudo-speculative execution approach used in our Dyn3 plug-in's polynomial gain calculation loop.
+
+			@subsubsection subsubsection__move_individual_processing_operations_into_separate_loops_ Move individual processing operations into separate loops
+
+Oftentimes a sample-by-sample iterative loop that is not software pipelining can be broken up into individual loops that incrementally apply changes to the audio buffer. These smaller loops have a much better chance of being successfully pipelined by the compiler. In EQ3, moving our biquad audio processing stages to dedicated loops that do not include coefficient smoothing or other tasks resulted in large performance gains.
+
+			@subsubsection subsubsection__avoid_pipeline_dependencies_ Avoid pipeline dependencies
+
+The goal of the above optimization is to allow the compiler to successfully pipeline each iterative loop. However, even a pipelined loop may be optimized further. One of the best ways of optimizing loops is to keep the processor busy while pipeline dependencies are cleared.
+
+For example, in EQ3 we found that it was better to perform the plug-in's input and output meter calculations in the same loop rather than separating them out into individual loops. This is because each meter calculation has a dependency on its previous value, which puts a dependency in the pipeline. Doing both at the same time gives the process more to do while waiting for the next value. In Dyn3 we had similar results merging table lookup, attack, and release loops into a single iterative loop. As long as the loop is still successfully pipelined by the compiler, these "larger" loops tended to have much better performance due to the reduction in blocking dependencies.
+
+			@subsubsection subsubsection__detailed_example_of_loop_optimization_in_dyn3_ Detailed example of loop optimization in Dyn3
+
+At this point it will be helpful to go into greater detail about our optimizations for Dyn3's polynomial gain calculation loop, because the increase in performance was quite large and is fairly representative of other algorithms. The unoptimized code took 43 cycles to execute one iteration of the loop. After rearranging the code it now takes 6 cycles. The basic problem was numerous pipeline dependencies: the <EM CLASS="Italic">
+Loop Carried Dependency Bound</EM>
+ was 42 cycles, yet the <EM CLASS="Italic">
+Partitioned Resource Bound</EM>
+ was 4 cycles. In other words, if all of these dependencies were removed the loop could potentially execute in 4 cycles. 
+
+
+\code
+2760 ;* SOFTWARE PIPELINE INFORMATION
+2761 ;*
+2762 ;* Loop source line : 199
+2763 ;* Loop opening brace source line : 200
+2764 ;* Loop closing brace source line : 213
+2765 ;* Known Minimum Trip Count : 4
+2768 ;* Loop Carried Dependency Bound (^) : 42
+2769 ;* Unpartitioned Resource Bound : 4
+2770 ;* Partitioned Resource Bound (*) : 4
+2785 ;*
+2786 ;* Searching for software pipeline schedule at ...
+2787 ;* ii = 42 Did not find schedule
+2788 ;* ii = 43 Schedule found with 1 iterations in parallel
+2789 ;* Done
+
+for (int i =0; i&lt; kAudioWindowSize ; i++) // cSmoothingBlockSize
+{
+	const float * smoothCoeffs = stateP -&gt; mSmoothedPoly ;
+
+	float logEnv = logEnvArray [i]; // logEnvArray [ fIdx +i];
+	logEnv -= smoothThrLow ;
+
+	if( logEnv &gt;= 0.0 f) // In the knee
+		smoothCoeffs += eCpdPolyOrder ;
+	if( logEnv &gt;= 0.0 f) // In the knee
+		logEnv -= smoothThrLowDelta ;
+	if( logEnv &gt;= 0.0 f) // In the linear GR stage
+		smoothCoeffs += eCpdPolyOrder ;
+
+	const float filteredLogEnv = smoothCoeffs [ eCpdPolyCoeffsC ] +
+		logEnv *( smoothCoeffs [ eCpdPolyCoeffsB ] +
+		smoothCoeffs [ eCpdPolyCoeffsA ]* logEnv );
+	filtLogEnvArray [i] = filteredLogEnv + smoothedMakeupGain ;
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 28: Dyn3's unoptimized polynomial gain calculation loop and asm listing.</DIV>
+
+<UL>
+<LI CLASS="Bullet">
+<TT>logEnv -= smoothThrLow </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depends on the result of <TT>logEnvArray[i]</TT></EM>
+<TT></TT>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>if(logEnv &gt;= 0.0f) </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depends on the result of <TT>logEnv -= smoothThrLow</TT></EM>
+<TT></TT>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>logEnv -= smoothThrLowDelta </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depends on the result of <TT>logEnv -= smoothThrLow</TT></EM>
+<TT></TT>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>Thrid if(logEnv &gt;= 0.0f) </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depends on the result of <TT>logEnv -= smoothThrLowDelta</TT></EM>
+<TT></TT>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>Second smoothCoeffs += eCpdPolyOrder </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depends on the result of the first <TT>smoothCoeffs += eCpdPolyOrder</TT></EM>
+<TT></TT>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>logEnv*smoothCoeffs[eCpdPolyCoeffsB] </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depends on the result of <TT>logEnv -= smoothThrLowDelta</TT></EM>
+<TT></TT>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>smoothCoeffs[eCpdPolyCoeffs], etc. </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depend on the result of the second <TT>smoothCoeffs += eCpdPolyOrder</TT></EM>
+<TT></TT>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>filteredLogEnv+smoothedMakeupGain </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depends on the result of <TT>filteredLogEnv = smoothCoeffs[eCpdPolyCoeffsC]</TT></EM>
+</DIV>
+</LI>
+
+<LI CLASS="Bullet">
+<TT>filtLogEnvArray[i] </TT>
+<DIV CLASS="TextInd1">
+<EM CLASS="Italic">
+depends on the result of <TT>filteredLogEnv + smoothedMakeupGain</TT></EM>
+</DIV>
+</LI>
+
+</UL>
+
+And I don't think that even covers every case, but you get the idea. The bottom line is there is no way this loop can pipeline well. In contrast, here is the optimized code and listing file output once these dependencies have been removed: 
+
+
+\code
+2476 ;* Loop opening brace source line : 167
+2477 ;* Loop closing brace source line : 179
+2446 ;* Known Minimum Trip Count : 4
+2482 ;* Loop Carried Dependency Bound (^) : 1
+2483 ;* Unpartitioned Resource Bound : 4
+2484 ;* Partitioned Resource Bound (*) : 4
+2512 ;* ii = 6 Schedule found with 5 iterations in parallel
+
+for (int i =0; i&lt; cProcessingBlockSize ; i++)
+{
+	float logEnv = logEnvArray [i];
+	float logEnvThrHi = logEnv - smoothThrHigh ;
+	const float gainSlope = smoothThrSlope +
+		logEnv * smoothSlope ;
+	const float gainKnee = smoothKneeC +
+		logEnvThrHi *( smoothKneeB +
+		smoothKneeA * logEnvThrHi );
+
+	const bool bKnee = ( logEnv &gt; smoothThrLow );
+	const bool bSlope = ( logEnv &gt; smoothThrHigh );
+
+	float filteredLogEnv = bKnee ? gainKnee : 0.0f;
+	filteredLogEnv = bSlope ? gainSlope : filteredLogEnv ;
+	filtLogEnvArray [i] = filteredLogEnv ;
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 29: Dyn3's optimized polynomial gain calculation loop and asm listing</DIV>
+
+In this case <TT>gainSlope</TT> is only dependent on the loading of <TT>logEnv</TT>, so that can begin almost immediately. <TT>GainKnee</TT> must wait for <TT>logEnvThrHi</TT>, but <TT>gainSlope</TT> can be calculated during that time. <TT>bKnee</TT> and <TT>bSlope</TT> are also only dependent on <TT>logEnv</TT>, and start right away. The main dependency is <TT>filteredLogEnv</TT> which is dependent on <TT>bKnee</TT> and <TT>gainKnee</TT> and then <TT>bSlope</TT> and <TT>gainSlope</TT>. Anyhow, this is far fewer dependencies. Here is another version which runs in exactly the same number of cycles. (In fact, under the hood it may be creating the same asm code; we have not compared instruction-by-instruction.) 
+
+
+\code
+for (int i =0; i&lt; kAudioWindowSize ; i++)
+{
+	float logEnv = logEnvArray [i];
+	float logEnvThrHi = logEnv - smoothThrHigh ;
+
+	const bool bKnee = ( logEnv &gt; thrLow );
+	const bool bSlope = ( logEnv &gt; thrHigh );
+
+	float filteredLogEnv = bKnee ?
+		kneeC + logEnvThrHi *( kneeB + kneeA * logEnvThrHi ) :
+		0.0 f;
+	filteredLogEnv = bSlope ?
+		thrSlope + logEnv * slope :
+		filteredLogEnv ;
+	filtLogEnvArray [i] = filteredLogEnv ;
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 30: An alternative optimization for Dyn3's polynomial gain calculation loop.</DIV>
+
+			@subsubsection subsubsection__but_what_about_native__ But what about Native? 
+
+You might expect this altered code to execute well on a TI DSP but poorly on x86. However, keep in mind that a large degree of speculative execution is used on Intel's processors. This means that pipeline dependencies due to conditionals can be broken because multiple paths are executed. In these cases, only one of the results is used and the others are thrown away. In other words, if you saw pseudo code showing the literal execution of the unoptimized code above on Intel then it would probably look a lot like the optimized code. The lesson?  For TI it is important to rearrange your code so that essentially it implements speculative execution as much as possible, and if applied correctly this optimization should not negatively impact your plug-in's native performance.
+
+		@subsection subsection__case_study_additional_optimization_lessons_from_eq3_and_dyn3 Case study: Additional optimization lessons from EQ3 and Dyn3
+
+The pipeline optimization example above is just one example, and the following techniques also helped us achieve many-fold increases in performance. Note that many of these techniques are discussed in greater detail in the sections above.
+
+			@subsubsection subsubsection__watch_the_assembly_listing_ Watch the assembly listing
+
+In the process of optimizing these plug-ins we found their asm listing files very helpful, especially the <EM CLASS="Italic">
+Loop Carried Dependency Bound</EM>
+ and the <EM CLASS="Italic">
+Partitioned Resource Bound</EM>
+ information. The listing file shows how many cycles the code is taking to execute, and we could make an estimate of how far away we were from the optimal implementation by seeing how well the pipeline is being utilized.
+
+			@subsubsection subsubsection__divide_processing_tasks_over_multiple_calls_ Divide processing tasks over multiple calls
+
+In the old RTAS version of EQ3 the coefficients were updated (smoothed) every 8 samples. Initially, this was changed to every 4 samples in the %AAX version in order to easily work with 4-sample blocks on HDX. However, we were able to achieve better results by adding "ping pong" logic that alternates between smoothing the first and second half of the coefficients on each pass. To make this work in our odd-banded EQ we had to pad the smoothing coefficients by one biquad's worth to make an even number of biquads, but regardless of this inefficiency we still achieved performance gains.
+
+			@subsubsection subsubsection__eliminate_branches_that_block_pipelining_ Eliminate branches that block pipelining
+
+Eliminating large conditional branches is critical to optimal performance on TI. This can be an especially tempting pitfall for developers who are used to coding only for x86 processors.
+
+Consider the "ping pong" optimization described above. This logic does not break pipelining because the conditional logic that checks the state of the flag does not result in a large branch; once the ping pong value is set, the exact same logic operates in every processing callback. If instead we used an if statement to determine which "side" should execute, this would prevent pipelining optimizations and would seriously impact performance.
+
+			@subsubsection subsubsection__remove_doubleprecision_operations_where_they_are_not_required_ Remove double-precision operations where they are not required
+
+Here is some coefficient smoothing code from our pre-optimization EQ3 algorithm. This code was embedded in the inner biquad processing loop:
+
+
+\code
+# pragma UNROLL ( CBiquad::eNumCoefs )
+for (int k = 0; k < CBiquad::eNumCoefs; ++k)
+{
+	double &dz = deZipper[k];
+	AAX::DeDenormal (dz);
+	step[k] = zeroCoef * ( coefs[k] - dz);
+}
+ 
+# pragma UNROLL ( CBiquad::eNumCoefs )
+for(int k = 0; k < CBiquad::eNumCoefs; ++k)
+{
+	double nm1_dz = deZipper[k]; // read state
+	nm1_dz += step[k];
+	biquadCoefs[k] = static_cast< float > ( nm1_dz );
+	deZipper[k] = nm1_dz ; // write state
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 31: Unoptimized coefficient smoothing in EQ3</DIV>
+
+To optimize this code, we converted the logic to use single-precision de-zipper values. However, this resulted in a sonic difference due to the fact that the smoothed coefficients would not necessarily ramp all the way to the correct target value. To solve that we added a conditional "clamp" that halts the smoothing once there is no difference between the 32-bit smoothed value and the target value. On examination of the assembler output, we found that this conditional pipelines very well.
+
+\code
+# pragma UNROLL ( CBiquad::eNumCoefs )
+for(int i = 0; i < (cMaxNumBiquadsWithPad / 2) * CBiquad::eNumCoefs; ++i)
+{
+	float dz = deZipper[i];
+	dz += zeroCoef * ( coefs[i] - deZipper[i]);
+	deZipper[i] = (dz == deZipper[i]) ? coefs[i] : dz; // clamp
+} \endcode
+<DIV CLASS="fragmentcaption">
+Listing 32: Optimized coefficient smoothing in EQ3</DIV>
+
+			@subsubsection subsubsection__make_coefficients_contiguous_ Make coefficients contiguous
+
+We were able to achieve significant performance gains in iterative loops like the smoothing code shown above by ensuring that all of the coefficients that would be accessed by the loop are contiguous in memory. In addition, note that in the optimized code there is only one loop, which iterates <TT>NumBiquads*NumCoefs</TT> times. This optimization is possible due to the fact that each filter's coefficients are contiguous in the <TT>coefs</TT> array.
+
+			@subsubsection subsubsection__use_aax_restrict_wherever_applicable_ Use AAX_RESTRICT wherever applicable
+
+We have found that the <TT>restrict</TT> keyword is vital for optimal performance on TI DSPs. For example, the parameter smoothing logic in our Dyn3 plug-in was reduced from 18 cycles to 3 cycles per loop iteration simply by the addition of this keyword to the applicable pointer variables.
+
+For more information about the <TT>restrict</TT> keyword, see \ref subsubsection__restrict_.
+
+			@subsubsection subsubsection__be_aware_of_shell_overhead_ Be aware of shell overhead
+
+In the TI Shell there is code that loops through every buffered coefficient FIFO before every sample buffer in order to swap the algorithm's context field pointers to a new set of coefficients if one is available. This uses a nominal number of cycles per buffered port, which can add up very quickly in small plug-ins.
+
+For example, before our optimizations EQ3 used eight individual buffered coefficient blocks. On investigation, we found that the shell overhead from managing these buffers added up to be roughly equivalent to the algorithm's total processing cycles! To work around this we merged the 8 coefficient blocks into one large block. The trade-off of this optimization is that more work must be done on the host to re-generate and copy the whole coefficient state every time any parameter changes, so this is an optimization that should be applied only when appropriate for the individual plug-in.For example, before our optimizations EQ3 used eight individual buffered coefficient blocks. On investigation, we found that the shell overhead from managing these buffers added up to be roughly equivalent to the algorithm's total processing cycles! To work around this we merged the 8 coefficient blocks into one large block. The trade-off of this optimization is that more work must be done on the host to re-generate and copy the whole coefficient state every time any parameter changes, so this is an optimization that should be applied only when appropriate for the individual plug-in.
+
+			@subsubsection subsubsection__watch_for_opportunities_to_merge_or_eliminate_operations_ Watch for opportunities to merge or eliminate operations
+
+Keep an eye out for unnecessary processing stages performed by your algorithm. Gain stages, phase toggles, and "dummy" coefficients are particularly good candidates for this kind of optimization. For example:
+
+<UL>
+<LI CLASS="Bullet">
+In our EQ3 plug-in, we found that we could achieve significant performance improvement by merging the plug-in's input and output gain stages with the overall gain of the first and last biquads. As a side benefit, this reduced the total quantization noise in the algorithm. </LI>
+<LI CLASS="Bullet">
+In our Dyn3 plug-in, we found that we were applying smoothing logic to filter coefficients that would always be zero. </LI>
+<LI CLASS="Bullet">
+When we looked more closely at Dyn3 we found that we were also computing and discarding sidechain filter information for the LFE, which is not part of the sidechain </LI>
+</UL>
+
+			@subsubsection subsubsection__read_the_ti_documentation_ Read the TI documentation
+
+There are many helpful optimization resources available from Texas Instruments. Out of all of the TI optimization documents we encountered, we found the <EM CLASS="Italic">Hand-Tuning Loops and Control Code on the TMS320C6000</EM> guide to be the most helpful and complete.
+
+		@subsection subsection__optimization_on_the_hdx_platform Optimization on the HDX platform
+		
+			@subsubsection subsubsection__interrupt_latency_ Interrupt latency
+
+Besides the large latency due to context switching (lots of data file registers to store) and the pipeline (many stages), interrupts can be disabled around pipelined loops, which cannot be interrupted. This can be controlled with the -mi=X compiler option, which will disallow unsafe pipelining for loops that are longer than X cycles. See TI's documentation (SPRU187O Section 2.12) for more details and references regarding this behavior.
+
+			@subsubsection subsubsection__external_memory_access_ External memory access
+
+A loop which performs many reads and writes may require access to external memory. In this scenario, the loop may take 10's or even 100's of times longer to execute than the compiler expects it to! 
+
+There are two options for dealing with this:
+<OL>
+<LI CLASS="List">
+Search and destroy these loops individually
+<UL>
+<LI CLASS="DashInd">
+Move all the data used by the loop to internal RAM. </LI>
+<LI CLASS="DashInd">
+Use HDX's DMA facilities for external memory accesses. </LI>
+<LI CLASS="DashInd">
+<TT>\#pragma FUNC_INTERRUPT_THRESHOLD</TT> can be used to disable pipelining on a case by case basis. </LI>
+</UL>
+</LI>
+<LI CLASS="List">
+For modules that are known to have these loops but are not worth hand optimizing, then turn off pipelined loop optimization altogether. (<TT>-mu aka –disable_software_pipelining</TT>). </LI>
+</OL>
+
+\note
+This is only a problem in the C67(0-2)x ISAx used on the HDX platform. In The C64xx and C674x ISA, there is an SPLOOP command which can buffer the branches within pipelined loops to allow them to be interruptable.
+
+		@subsection subsection__code_composer_studio_optimization_tools Code Composer Studio optimization tools
+
+			@subsubsection subsubsection__compiler_consultant_ Compiler Consultant
+
+The Compiler Consultant tool can be used to suggest additional optimizations.
+
+<EM CLASS="Infinitive">
+To enable the Compiler Consultant in Code Composer Studio, do the following:</EM>
+<OL>
+<LI CLASS="List">
+Set an optimization level of <TT>-o2</TT> or <TT>-o3</TT> (Found in CCSv4 under Build Options > Compiler > Basic) </LI>
+<LI CLASS="List">
+Set the –consultant: <TT>Generate Compiler Consultant Advise</TT> switch (Found in CCSv4 under Build Options > Compiler > Feedback) </LI>
+</OL>
+
+			@subsubsection subsubsection__optimization_information_file_ Optimization information file
+
+Optimization information files can be generated in Code Composer Studio by selecting the option Build Options &gt; Compiler &gt; Feedback &gt; Opt Info File. Optimization information files have an .nfo extension and are placed into the project's intermediate build products directory. In general, these files list function call-graph information and describe whether or not individual functions can be inlined.
+</DIV>
+
+
+
+<DIV CLASS="section">
+	@section aax_ti_guide_07_error_codes Error Codes
+The following appendices document error codes that are specific to plug-in hosting in Pro Tools HDX and other %AAX platforms based on the TI DSP environment.
+
+		@subsection subsection__138xx_dhm_core_dsp_errors -138xx: DHM Core DSP errors
+
+These errors relate to routing and assignment problems on Pro Tools HDX hardware. Plug-ins should never be able to trigger these error codes, which indicate low-level problems in the system.
+
+<TABLE>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<B>Table 1: DHM Core DSP error codes</B>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TH ROWSPAN="1" COLSPAN="1">
+Value
+</TH>
+<TH ROWSPAN="1" COLSPAN="1">
+Definition
+</TH>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+ -13801
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_WrongSampleRate</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13802
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_NoFreeStreams</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13803
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_StreamCreationTimeout</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13804
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_StreamDestruction</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13805
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_InactiveStream</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13806
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_StreamCorrupted</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13807
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_QueueFull</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13808
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_NullPointer</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13809
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_WrongStreamID</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13810
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_ImageError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13811
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_ResetError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13812
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_ImageVerify</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13813
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_DSPAlreadyInBootOrReset</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13814
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_TriggerInterrupt</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13815
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_BufferSizeNotAligned</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13816
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_TimeoutWaitingForHPIC</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13817
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_SetUHPIError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-13818
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>ePSError_CTIDSP_UHPINotReady</TT>
+</TD>
+</TR>
+</TABLE>
+
+		@subsection subsection__140xx_aax_host_errors -140xx: AAX Host errors
+
+These errors relate to logic failures in the %AAX host software. These errors can be due to plug-in bugs or system configuration problems.
+
+<TABLE>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<B>Table 2: %AAX Host Software error codes</B>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TH ROWSPAN="1" COLSPAN="1">
+Value
+</TH>
+<TH ROWSPAN="1" COLSPAN="1">
+Definition
+</TH>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+ -14001
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_Warning</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14003
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_UnsupportedPlatform</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14004
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_EffectNotRegistered</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14005
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_IncompleteInstantiationRequest</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14006
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_NoShellMgrLoaded</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14007
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_UnknownExceptionLoadingTIPlugIn</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14008
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_EffectComponentsMissing</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14009
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_BadLegacyPlugInIDIndex</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14010
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_EffectFactoryInitedTooManyTimes</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14011
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_InstanceNotFoundWhenDeinstantiating</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14012
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_FailedToRegisterEffectPackage</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14013
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_PlugInSignatureNotValid</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14014
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_ExceptionDuringInstantiation</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14015
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_ShuffleCancelled</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14016
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_NoPacketTargetRegistered</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14017
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_ExceptionReconnectingAfterShuffle</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14018
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_EffectModuleCreationFailed</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14019
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_AccessingUninitializedComponent</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14020
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_TIComponentInstantiationPostponed</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14021
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_FailedToRegisterEffectPackageNotAuthorized</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14022
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_FailedToRegisterEffectPackageWrongArchitecture</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14023
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_PluginBuiltAgainstIncompatibleSDKVersion</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14023
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_PluginBuiltAgainstIncompatibleSDKVersion</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14100<sup>*</sup>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_InvalidArgumentValue</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14101<sup>*</sup>
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>kAAXH_Result_NameNotFoundInPageTable</TT>
+</TD>
+</TR>
+</TABLE>
+
+<sup>*</sup>Overlaps with \ref subsection__141xx_ti_system_errors definitions
+
+		@subsection subsection__141xx_ti_system_errors -141xx: TI System errors
+
+These errors relate to logic failures in the TI management software and generally indicate a failure in the HDX system services such as buffered message queues, context management, and callback timing.
+
+<TABLE>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<B>Table 3: TI system error codes</B>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TH ROWSPAN="1" COLSPAN="1">
+Value
+</TH>
+<TH ROWSPAN="1" COLSPAN="1">
+Definition
+</TH>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14101
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorNotImpl</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14102
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorMemory</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14103
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorParam</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14104
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorNull</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14105
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorCommunication</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14106
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorIllegalAccess</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14107
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorDirectAccessOfFifoBlocksUnsupported</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14108
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorPortIdOutOfBounds</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14109
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorPortTypeDoesNotSupportDirectAccess</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14110
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorFIFOFull</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14111
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorRPCTimeOutOnDSP</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14112
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorShellMgrChip_SegsDontMatchAddrs</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14113
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorOnChipRPCNotRegistered</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14114
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorUnexpectedBufferLength</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14115
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorUnexpectedEntryPointName</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14116
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorPortIDTooLargeForContextBlock</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14117
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorMixerDelayNotSupportedForPlugIns</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14118
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorShellFailedToStartUp</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14119
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorUnexpectedCondition</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14120
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorShellNotRunningWhenExpected</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14121
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorFailedToCreateNewPIInstance</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14122
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorUnknownPIInstance</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14123
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorTooManyInstancesForSingleBufferProcessing</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14124
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysErrorNoDSPs</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14125
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysBadDSPID</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14126
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysBadPIContextWriteBlockSize</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14128
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysInstanceInitFailed</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14129
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysSameModuleLoadedTwiceOnSameChip</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14130
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysCouldNotOpenPlugInModule</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14130
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysCouldNotOpenPlugInModule</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14131
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysPlugInModuleMissingDependcies</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14132
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysPlugInModuleLoadableSegmentCountMismatch</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14133
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysPlugInModuleLoadFailure</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14134
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysOutOfOnChipDebuggingSpace</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14135
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysMissingAlgEntryPoint</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14136
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysInvalidRunningStatus</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14137
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysExceptionRunningInstantiation</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14138
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysTIShellBinaryNotFound</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14139
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysTimeoutWaitingForTIShell</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14140
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysSwapScriptTimeout</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14141
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysTIDSPModuleNotFound</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14142
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eTISysTIDSPReadError</TT>
+</TD>
+</TR>
+</TABLE>
+
+		@subsection subsection__142xx_didl_errors -142xx: DIDL errors
+
+These errors all relate to the dynamic library loading system that manages ELF DLL binaries on Pro Tools HDX hardware. For example, a <TT>eDIDL_FileNotFound</TT> error will be raised if the ELF DLL name specified by an Effect's Describe code does not match any DLL that is present in the plug-in's bundle.
+
+<TABLE>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<B>Table 4: DIDL error codes</B>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TH ROWSPAN="1" COLSPAN="1">
+Value
+</TH>
+<TH ROWSPAN="1" COLSPAN="1">
+Definition
+</TH>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14201
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_FileNotFound</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14202
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_FileNotOpen</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14203
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_FileAlreadyOpen</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14204
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_InvalidElfFile</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14205
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_ImageNotFound</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14206
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_SymbolNotFound</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14207
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_DependencyNotLoaded</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14208
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_BadAlignment</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14209
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDIDL_NotImplemented</TT>
+</TD>
+</TR>
+</TABLE>
+
+		@subsection subsection__144xx_hdx_hardware_errors -144xx: HDX hardware errors
+
+These errors relate to failures on the HDX hardware itself. Plug-ins should never be able to trigger these error codes, which indicate low-level problems in the system.
+
+<TABLE>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<B>Table 5: HDX hardware error codes</B>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TH ROWSPAN="1" COLSPAN="1">
+Value
+</TH>
+<TH ROWSPAN="1" COLSPAN="1">
+Definition
+</TH>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14401
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinImageError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14402
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinImageWriteError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14403
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinInvalidArgs</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14404
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinCantGetTMSChannel</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14405
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinChunkWriteError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14406
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinChunkReadError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14407
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinInvalidReqID</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14408
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinDSPInResetError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14409
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinDSPTimeOut</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14410
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinIncorrectTdmCableWiring</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14411
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eBerlinInvalidClock</TT>
+</TD>
+</TR>
+</TABLE>
+
+		@subsection subsection__145xx_dhm_isochronous_audio_engine_errors -145xx: DHM isochronous audio engine errors
+
+These errors relate to failures within the HDX audio engine software. Plug-ins should never be able to trigger these error codes, which indicate low-level problems in the system.
+
+<TABLE>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<B>Table 6: DHM isochronous audio engine error codes</B>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="2">
+<BR />
+</TD>
+</TR>
+<TR>
+<TH ROWSPAN="1" COLSPAN="1">
+Value
+</TH>
+<TH ROWSPAN="1" COLSPAN="1">
+Definition
+</TH>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14500
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineGenericError</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14501
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineWrongChannelNumber</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14502
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineTxRingFull</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14503
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineRxRingNotReady</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14504
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineWrongNumberOfSamplesRequest</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14505
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineUnrecognizedSampleRate</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14506
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineUnsupportedSampleSizeBytes</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14507
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineUnsupportedNumberOfChannels</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14508
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineUnsupportedSampleRate</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14509
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineDMAAlreadyEnabled</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14510
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineDMAAlreadyDisabled</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14511
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineInterruptHandlerAlreadyInstalled</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14512
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineBadCardRecord</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14513
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineCantSetValueDuringStreaming</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14514
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineStreamingAlreadyStarted</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14515
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineStreamingAlreadyStopped</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14516
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineStreamingCantBeStarted</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14517
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineUnsupportedSamplesPerInterrupt</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14518
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineCantSetSamplesPerInterrupt</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14519
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineInterruptLoopAlreadyExists</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14520
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineGlobalDMADisabled</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14521
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineActiveInterruptMaskAlreadyEnabled</TT>
+</TD>
+</TR>
+<TR>
+<TD ROWSPAN="1" COLSPAN="1">
+-14522
+</TD>
+<TD ROWSPAN="1" COLSPAN="1">
+<TT>eDsiIsochEngineSDI0Errors</TT>
+</TD>
+</TR>
+</TABLE>
+
+		@subsection subsection__30xxx_dynamic_error_codes -30xxx: Dynamically-generated error codes
+		
+Errors in the -30xxx range are dynamically generated codes, and thus the same failure point could generate a different error code depending on the order in which errors occurred. These kinds of error codes are used heavily by the TI Shell Manager, the host component that interacts with the on–DSP shell environment.
+
+If one of these error codes is being generated by the TI Shell Manager (the most common case) then you should be able to get more information about the failure by enabling the following \ref AAX_DigiTrace_Guide "DigiTrace" logging facility:
+
+<DIV CLASS="TextInd1"><TT>DTF_TISHELLMGR=file\@DTP_NORMAL</TT></DIV>
+
+or, within the DSH tool:
+
+<DIV CLASS="TextInd1"><TT>enable_trace_facility [DTF_TISHELLMGR, DTP_NORMAL]</TT></DIV>
+
+This should result in a log with more information such as the name of the failing plug-in, the dynamically generated error code, and a string description of its meaning. Depending on the failure case, the DAE dish command <TT>getlastdsploaderror</TT> can also sometimes be used to retrieve the description string for a dynamically-generated error if it was the last error generated during the DSP loading operation.
+
+</DIV>
+
+*/

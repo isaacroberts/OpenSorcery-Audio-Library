@@ -1,0 +1,19 @@
+/*===================================================================================================
+AAX_InstrumentParameters.doxygen
+
+Copyright 2013-2015, 2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup AAXLibraryFeatures_InstrumentParameters Monolithic VIs and Effects
+	@ingroup ExtensionsDocs
+
+	@copydoc AAX_CMonolithicParameters
+	
+	@ref AAX_CMonolithicParameters
+ */
+ 
+	
+

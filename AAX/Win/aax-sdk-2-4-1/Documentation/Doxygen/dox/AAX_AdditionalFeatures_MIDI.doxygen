@@ -1,0 +1,181 @@
+/*===================================================================================================
+AAX_AdditionalFeatures_MIDI.doxygen
+
+Copyright 2011-2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup additionalFeatures_MIDI MIDI
+ 	@ingroup AdditionalFeatures
+ 	
+ 	@brief How to route and process MIDI in %AAX plug-ins
+ 
+ 	\section additionalFeatures_MIDI_Overview Midi Overview
+ 	
+	DirectMidi is Avid's protocol for communication of MIDI and other timing-critical plug-in information. It is a cross-platform solution to tightly integrate the host application, audio engine, and plug-ins.
+ 		
+ 	\section additionalFeatures_MIDI_NodeTypes MIDI node types
+ 	
+ 	There are four kinds of nodes an %AAX plug-in can create. See \ref AAX_EMIDINodeType for additional details about these node types:
+		\li \ref AAX_eMIDINodeType_LocalInput
+		\li \ref AAX_eMIDINodeType_LocalOutput
+		\li \ref AAX_eMIDINodeType_Global
+		\li \ref AAX_eMIDINodeType_Transport
+ 	
+ 	\section additionalFeatures_MIDI_AddingMIDI Adding MIDI functionality to a plug-in
+ 	
+ 	Plug-in may access MIDI data in its algorithm or data model.  If plug-in needs MIDI in both places or just in the algorithm, it should add a MIDI node to the algorithm context, i.e. call \ref AAX_IComponentDescriptor::AddMIDINode() with the appropriate node type.
+ 	
+ \code
+//==============================================================================
+// Algorithm context definitions
+//==============================================================================
+
+// Context structure
+struct SMy_Alg_Context
+{
+	[...]
+	AAX_IMIDINode	* mMIDIInNodeP;			// Local input MIDI node pointer
+	AAX_IMIDINode	* mMIDINodeOutP;		// Local output MIDI node pointer
+	AAX_IMIDINode	* mMIDINodeTransportP;	// Transport node 
+	[...]
+};
+
+enum EDemoMIDI_Alg_PortID
+{
+	[...]
+	//
+	// Add the MIDI node as a physical address within the context field
+	,eAlgPortID_MIDINodeIn			= AAX_FIELD_INDEX (SDemoMIDI_Alg_Context, mMIDINodeP)
+	,eAlgPortID_MIDINodeOut			= AAX_FIELD_INDEX (SDemoMIDI_Alg_Context, mMIDINodeOutP)
+	,eAlgPortID_MIDINodeTransport	= AAX_FIELD_INDEX (SDemoMIDI_Alg_Context, mMIDINodeTransportP)
+	[...]
+};
+\endcode
+
+\code
+// ***************************************************************************
+// ROUTINE:	DescribeAlgorithmComponent
+// Algorithm component description
+// ***************************************************************************
+static void DescribeAlgorithmComponent( AAX_IComponentDescriptor * outDesc )
+{
+	AAX_Result					err;
+	
+	[...]
+	// Register MIDI nodes
+	err = outDesc->AddMIDINode(eAlgPortID_MIDINodeA, AAX_eMIDINodeType_LocalInput, "DemoMIDI", 0xffff);					AAX_ASSERT (err == 0);
+	err = outDesc->AddMIDINode(eAlgPortID_MIDINodeOut, AAX_eMIDINodeType_LocalOutput, "DemoMIDIOut", 0xffff);			AAX_ASSERT (err == 0);
+	err = outDesc->AddMIDINode(eAlgPortID_MIDINodeTransport, AAX_eMIDINodeType_Transport, "DemoMIDITrnsprt", 0xffff);	AAX_ASSERT (err == 0);
+	[...]
+}
+\endcode
+
+	If MIDI data is needed in the plug-in's data model only, plug-in should describe MIDI node with \ref AAX_IEffectDescriptor::AddControlMIDINode().
+
+\code
+// ***************************************************************************
+// ROUTINE:	GetPlugInDescription
+// ***************************************************************************
+static AAX_Result GetPlugInDescription( AAX_IEffectDescriptor * outDescriptor )
+{
+	AAX_Result					err;
+	
+	[...]
+	// Register MIDI nodes
+	err = outDesc->AddControlMIDINode('linp', AAX_eMIDINodeType_LocalInput, "DemoMIDI", 0xffff);		AAX_ASSERT (err == 0);
+	err = outDesc-> AddControlMIDINode('lout', AAX_eMIDINodeType_LocalOutput, "DemoMIDIOut", 0xffff);	AAX_ASSERT (err == 0);
+	err = outDesc-> AddControlMIDINode('tran', AAX_eMIDINodeType_Transport, "DemoMIDITrnsprt", 0xffff);	AAX_ASSERT (err == 0);
+	[...]
+
+	return err;
+}
+\endcode
+
+	\note These two types of MIDI nodes can't be used together in the same plug-in's effect.
+
+	\section additionalFeatures_MIDI_Algorithm Using MIDI in a plug-in algorithm
+
+	Like with other algorithm context ports, data in MIDI nodes is directly available in the plug-in's algorithm process function. Here is an example from the DemoMIDI_NoteOn sample plug-in:
+
+\code
+template<int kNumChannelsIn, int kNumChannelsOut> 
+void
+AAX_CALLBACK
+DemoMIDI_AlgorithmProcessFunction (
+								   SDemoMIDI_Alg_Context * const	inInstancesBegin [],
+								   const void *					inInstancesEnd)
+{
+	[...]
+	// Setup MIDI In node pointers 
+	AAX_IMIDINode* midiNodeIn = instance->mMIDINodeP;
+	AAX_CMidiStream* midiBufferIn = midiNodeIn->GetNodeBuffer();
+	AAX_CMidiPacket* midiBufferInPtr = midiBufferIn->mBuffer;
+	uint32_t packets_count_in = midiBufferIn->mBufferSize;
+	
+	// Setup MIDI Out node pointers 
+	AAX_IMIDINode* midiNodeOut = instance->mMIDINodeOutP;
+	AAX_CMidiStream* midiBufferOut = midiNodeOut->GetNodeBuffer();
+	AAX_CMidiPacket* midiBufferOutPtr = midiBufferOut->mBuffer;
+	uint32_t packets_count_out = midiBufferOut->mBufferSize;
+
+	
+	// Setup MIDI Transport node pointers 
+	AAX_IMIDINode* midiTransport = instance->mMIDINodeTransportP;
+	AAX_ITransport * transport = midiTransport->GetTransport();
+	bool transport_is_playing = false;
+	if (transport)
+		transport->IsTransportPlaying(&transport_is_playing);
+	
+	if(transport_is_playing)
+	{
+		//
+		// While there are packets in the node
+		while (packets_count_in > 0)
+		{
+			midiBufferOutPtr = midiBufferInPtr;			// Copy the packet from the input MIDI node 
+										// to the output MIDI node
+			midiBufferOutPtr->mTimestamp = timeStamp;		// Set the MIDI time stamp
+			midiNodeOut->PostMIDIPacket(midiBufferOutPtr);	// Post the MIDI packet
+			midiBufferOut->mBufferSize = packets_count_in;   
+							
+			midiBufferInPtr++;
+			packets_count_in--;
+		}
+	}
+	[...]
+}	
+\endcode
+ 	
+	Also data from the MIDI nodes that were described with \ref AAX_IComponentDescriptor::AddMIDINode() can be accessed via \ref AAX_CEffectParameters::UpdateMIDINodes() method. This method provides an \ref AAX_CMidiPacket. Because the MIDI packet structure does not identify the associated MIDI stream's type (input, output, global, or transport) this method also provides an index into the plug-in's algorithm context structure which can be used to identify the semantics of the MIDI packet.
+
+ 	\section additionalFeatures_MIDI_DataModel Accessing MIDI in the plug-in data model
+ 	
+ 	A plug-in may access MIDI data in its data model via the \ref AAX_CEffectParameters::UpdateMIDINodes() or \ref AAX_CEffectParameters::UpdateControlMIDINodes() methods. Both of these methods provide an \ref AAX_CMidiPacket. Because the MIDI packet structure does not identify the associated MIDI stream's type (input, output, global, or transport) UpdateMIDINodes method also provides an index into the plug-in's algorithm context structure which can be used to identify the semantics of the MIDI packet, while UpdateControlMIDINodes provides MIDI node ID for the same reason.
+
+\code
+AAX_Result DemoMIDI_Parameters::UpdateMIDINodes ( AAX_CFieldIndex inFieldIndex,	AAX_CMidiPacket& inPacket )
+{	
+	if (eAlgPortID_MIDINodeIn == inFieldIndex)
+	{
+		if ( (inPacket.mData[0] & 0xF0) == 0x90 )
+		{
+			if ( inPacket.mData[2] == 0x00 )
+			{
+				//	Note Off
+			}
+			else
+			{
+				// Note On
+			}
+		}
+	}
+	
+	return AAX_SUCCESS;
+}
+\endcode
+
+	\note Only one of the UpdateMIDINodes and UpdateControlMIDINodes can be used in the single plug-in's effect at a time. If plug-in uses MIDI nodes described with AddMIDINode function, then only UpdateMIDINodes method can be used to receive MIDI messages. Otherwise UpdateControlMIDINodes should be used.
+ */

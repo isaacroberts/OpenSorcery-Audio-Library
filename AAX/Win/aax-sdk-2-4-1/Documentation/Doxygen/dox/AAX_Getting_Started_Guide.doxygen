@@ -1,0 +1,472 @@
+/*===================================================================================================
+AAX_Getting_Started_Guide.doxygen
+
+Copyright 2016, 2018-2019, 2021 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup AAX_Getting_Started_Guide Getting Started with AAX
+	@ingroup manual_docs
+	
+	@brief A brief introduction to %AAX
+	
+	@section aax_getting_started_guide_contents Contents
+		\li \ref aax_sdk_guide_00_introduction
+\ifnot docs_for_cpexam
+		\li \ref aax_sdk_guide_quickstart
+\endif
+		\li \ref aax_sdk_guide_01_aax_design_overview
+		\li \ref aax_sdk_guide_02_demogain_example
+		\li \ref aax_sdk_guide_next_steps
+	
+	
+\ifnot docs_for_cpexam
+
+<!-- NORMAL INTRODUCTION TEXT -->
+<DIV CLASS="section">
+	@section aax_sdk_guide_00_introduction Welcome
+		Welcome to %AAX! This guide is designed to introduce you to the fundamental concepts of %AAX. By the end of this guide you will understand:
+		\li The purpose of %AAX
+		\li The basic components of an %AAX plug-in
+		\li The structure of the DemoGain example plug-in
+		\li What you need to do to successfully build and run your own %AAX plug-ins
+
+</DIV>
+
+\else
+
+<!-- CERTIFICATION EXAM INTRODUCTION TEXT -->
+<DIV CLASS="section">
+	@section aax_sdk_guide_00_introduction Introduction
+		Welcome to the %AAX Connectivity Partner Certification documentation. This documentation is designed to introduce you to the most fundamental concepts of %AAX. After carefully reviewing the material here you will be prepared to pass the %AAX Connectivity Partner Certification exam.
+		
+Note that the %AAX Connectivity Partner Certification exam requires that you are a registered %AAX developer and that your company is signed up as an Avid Connectivity Partner.
+
+<UL>
+	<LI>
+		If your company is not yet an Avid Connectivity Partner, you must first request to join the Connectivity Partner program. For more information about this program, see this page on the Avid website:
+		<a href="https://www.avid.com/US/partners/developer-partners">https://www.avid.com/US/partners/developer-partners</a> 
+		
+	</LI>
+	<LI>
+		If your company is already an Avid Connectivity Partner but you are not already a registered %AAX developer, contact <a href="mailto:partners@avid.com">partners@avid.com</a> for more information about creating your own developer account, gaining access to the %AAX SDK, and becoming an Avid Certified Connectivity Partner.
+		
+	</LI>
+</UL>
+
+</DIV>
+
+
+\endif
+
+\ifnot docs_for_cpexam
+
+<DIV CLASS="section">
+	@section aax_sdk_guide_quickstart Quick Start
+		
+		Use the steps below to get up and running quickly with an example plug-in from the %AAX SDK.
+		
+		<UL CLASS="paragraphs">
+			<LI>
+				<DIV CLASS="SectionHead">
+					Build the %AAX Library
+				</DIV>
+				<P>
+					If this is your first time opening the %AAX SDK then your first step should be to build the %AAX Library project. The %AAX Library is a static library containing default implementations of the %AAX interface and convenience classes designed to make %AAX development easy. All of the SDK example plug-ins link to this library, and your plug-ins should too.
+				</P>
+				<P>
+					Open the %AAX Library project for your chosen IDE from the Libs/AAXLibrary directory and build the library. Now you are ready to build plug-ins!
+				</P>
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Open and build the DemoGain example plug-in
+				</DIV>
+				<P>
+					The DemoGain project is located in ExamplePlugIns/DemoGain. Once you have built the %AAX Library project you will be able to successfully build DemoGain. To learn more about the DemoGain example plug-in, see the \ref aax_sdk_guide_02_demogain_example section below.
+				</P>
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Install a developer build of Pro Tools
+				</DIV>
+				<P>
+					If you looking at %AAX then you are most likely interested in developing plug-ins for \ref AAX_Pro_Tools_Guide "Pro Tools". Publicly available builds of Pro Tools require that %AAX plug-ins be digitally signed. During development, you can use a "developer build" of Pro Tools to run unsigned test builds of your plug-ins, like the DemoGain plug-in that you just built.
+				</P>
+				<P>
+					Download and install the latest Pro Tools developer build from the %AAX developer downloads in your <a href="https://my.avid.com/account">my.avid.com</a> account.
+				</P>
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Obtain a Pro Tools Developer iLok license (and an iLok)
+				</DIV>
+				<P>
+					Pro Tools developer builds require a special license loaded on an iLok USB device. You can request this Pro Tools Developer license, as well as any other NFR (Not For Resale) licenses which you require for your %AAX product development and testing, by writing to <a href="mailto:devauth@avid.com?subject=License Request">devauth@avid.com</a> with "License Request" in the subject.
+				</P>
+				<P>
+					If you don't have an iLok device you will also need to obtain one from <a href="https://www.ilok.com">PACE Anti-Piracy Inc.</a> or a reseller, including most music shops which sell audio software.
+				</P>
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Install DemoGain in the %AAX Plug-Ins folder
+				</DIV>
+				<P>
+					In order to be loaded into Pro Tools, a plug-in must be present in the system's %AAX Plug-Ins directory. See \ref subsection__install_directories_ in the \ref AAX_Pro_Tools_Guide document for more information about where to install %AAX plug-ins for Pro Tools.
+				</P>
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Launch Pro Tools and run DemoGain
+				</DIV>
+				<P>
+					You're now ready to run your very first %AAX plug-in!
+					<OL>
+						<LI>
+							Make sure that your iLok USB device is connected to the system and contains the Pro Tools Developer license, then launch the Pro Tools developer build.
+						</LI>
+						<LI>
+							Once Pro Tools has launched, you will be prompted to create a new Session or Project. Choose Session (Local Storage) to create a local session file.
+						</LI>
+						<LI>
+							Create a new mono audio track in your session using the "New Track..." menu item
+						</LI>
+						<LI>
+							If it is not already visible, reveal the "Inserts A-E" view in the Edit window using the View > Edit Window menu.
+						</LI>
+						<LI>
+							Click on one of the insert slots for your audio track and choose DemoGain from the insert selection menu.
+						</LI>
+					</OL>
+				</P>
+				<P>
+					You're now running an instance of the DemoGain %AAX plug-in. If you have a debugger attached to Pro Tools you should now be able to break in the plug-in's methods and step through its code.
+				</P>
+			</LI>
+			<LI>
+				<DIV CLASS="SectionHead">
+					Get ready to release your own products
+				</DIV>
+				<P>
+					Once you have created your own %AAX plug-in you can follow the steps in \ref AAX_DistributingYourPlugIn to prepare your plug-in for public sale and distribution.
+				</P>
+				<P>
+					In particular, for Pro Tools compatibility or to test your product with a public Pro Tools release you will need to digitally sign your plug-in using a toolkit from PACE Anti-Piracy Inc. See the \ref subsection__digital_signature_ "digital signature" section of the \ref AAX_Pro_Tools_Guide for more information about this requirement.
+				</P>
+			</LI>
+		</UL>
+
+</DIV>
+
+\endif
+
+
+<DIV CLASS="section">
+	@section aax_sdk_guide_01_aax_design_overview AAX Design Overview
+		@subsection subsection__architecture_philosophy Architecture Philosophy
+The purpose of the %AAX architecture is to provide an <EM CLASS="Italic">easy-to-use</EM> framework for the development of <EM CLASS="Italic">high-performance audio plug-ins</EM> that can run on a <EM CLASS="Italic">variety of platforms</EM>, both present and future, with a <EM CLASS="Italic">high level of code re-use</EM>.
+
+		@subsection subsection__design_attributes Design Attributes
+%AAX incorporates a flexible, decoupled component hierarchy, including:
+<OL>
+<LI CLASS="List">
+A relocatable C-style callback that performs the plug-in's real-time audio processing algorithm </LI>
+<LI CLASS="List">
+A collection of supporting C++ objects that manage the plug-in's data, GUI, and any other non-real-time information </LI>
+<LI CLASS="List">
+A "description" method that statically describes the plug-in's layout and compatibility requirements to the host. </LI>
+</OL>
+
+This flexible design facilitates optimal performance and portability; %AAX is 64-bit ready and is designed to work well in both host-based (Native), accelerated (DSP), and future (e.g. embedded) environments. Importantly, plug-ins running in each of these environments can use the same code base, and porting to new platforms should not require much more than a re-compile. To satisfy these portability requirements, %AAX must be decoupled into three parts, the GUI, data model, and algorithm.
+
+		@subsection subsection__component_structure Component Structure
+The core component structure of an %AAX plug-in involves data model, GUI, description, and algorithm modules. The design involves a mixture of C++ objects (data model and GUI modules) and C-style callbacks (algorithm and description modules.)
+
+The figure below shows basic object ownership and composition in an %AAX plug-in. The purple components are provided as part of the %AAX SDK while the other components are written as needed by the plug-in developer. The classes above the dotted line are pure virtual interfaces, while the classes below the dotted line are concrete implementations.
+
+\nodox Image files must be copied to the /output/html directory \endnodox
+<IMG width="50%" alt="Core AAX interface design" src="AAX_Design_Overview_ActualAAXInterface.png" />
+<DIV CLASS="imagecaption">
+Figure 1: Core %AAX interface design.</DIV>
+
+As you can see, the plug-in's \ref CommonInterface_DataModel "data model" and \ref CommonInterface_GUI "GUI" are written as C++ objects inherited from SDK interfaces, while its \ref CommonInterface_Algorithm "algorithm" and \ref CommonInterface_Describe "Description" methods are implemented as simple callbacks. This basic model may be expanded by attaching additional modules, such as the \ref AuxInterface_HostProcessor "Host Processor" module used by advanced non-real-time plug-ins. In this section, however, we will be considering only the four core interfaces and modules.
+
+
+		@subsection subsection__algorithm Algorithm
+The most fundamental, and most important, component of any audio plug-in is its processing algorithm. Due to the design requirements of an %AAX plug-in, this component must meet several constraints in order to be compatible with accelerated platforms:
+<OL>
+<LI CLASS="List">
+It must be possible to build the algorithm as a compatible component on a variety of platforms </LI>
+<LI CLASS="List">
+It must be possible for the host to re-locate the algorithm in memory without affecting the algorithm's state </LI>
+<LI CLASS="List">
+The algorithm must be separable from the rest of its plug-in, e.g. into a different memory space </LI>
+<LI CLASS="List">
+The algorithm must be as efficient as possible to call. </LI>
+</OL>
+
+To satisfy these constraints, %AAX uses a decoupled C-style callback function. State information within the function is obtained through the context, a custom data structure that contains everything from the "outside world" that is relevant to the algorithm. The context includes information such as audio buffers and coefficient packets, which are provided according to a static set of data routing definitions that we will describe further in the next chapter. The host is responsible for ensuring that this structure is up-to-date whenever the algorithm callback is entered.
+
+\sa \ref CommonInterface_Algorithm
+
+		@subsection subsection__data_model Data Model
+The \ref AAX_IEffectParameters interface represents the data model portion of your plug-in. The %AAX host interacts with your plug-in's data model via this interface, which includes methods that store and update of your plug-in's internal data.
+
+In your plug-in's data model implementation, you will be responsible for creating the plug-in's parameters and defining how the plug-in will respond when these parameters are changed via control updates or preset loads. In order for information to be routed from the data model to the plug-in's algorithm, the parameters that are created here must be registered with the host in the plug-in's Description callback (see below).
+
+The data model is composed with \ref AAX_IController, an interface that provides access to the host. This interface provides a means of querying information from the host such as stem format or sample rate, and is also responsible for communication between the data model and the (decoupled) algorithm.
+
+You will most likely inherit your custom data model's implementation from \ref AAX_CEffectParameters, a default implementation of the \ref AAX_IEffectParameters interface. This class provides basic functionality such as adding custom parameters, setting control values, restoring state, generating coefficients, etc., which you can override and customize as needed.
+
+\ifnot docs_for_cpexam
+	\sa \ref CommonInterface_DataModel
+\endif
+
+		@subsection subsection__gui_interface GUI Interface
+The \ref AAX_IEffectGUI interface contains the plug-in's GUI methods. This interface is decoupled from the plug-in's data model, allowing %AAX to support distributed architectures that incorporate remote GUIs.
+
+The GUI is also composed with \ref AAX_IController, from which references to the plug-in's other components, such as its data model interface, may be retrieved.
+
+The %AAX SDK includes a set of GUI extensions to help you get started implementing your plug-ins' GUIs. These extensions include both native drawing formats and suggested integrations with third-party graphics frameworks. Although the SDK does not include any actual graphics frameworks, these extensions provide examples of how you can incorporate your chosen GUI framework with AAX.
+
+	\sa \ref CommonInterface_GUI
+
+		@subsection subsection__describe Describe
+A plug-in's Describe callback ties all the plug-in's components together and registers the plug-in with the host. In this callback, your plug-in defines a set of algorithm callbacks, data connections, and static plug-in properties
+
+In order to route data to the plug-in's algorithm, Describe includes a description of the algorithm's context structure. This description involves a set of port definitions, which can be "hard-wired" to receive data from the host (such as audio buffers,) from the plug-in's data model (such as packets of coefficients,) or even from past calls to the algorithm (private, persistent algorithm state.)
+
+Once these connections are made, Describe passes the host a populated description interface and returns. In the next section we will demonstrate how all these interfaces interact with one another by examining a sample plug-in.
+
+\sa \ref CommonInterface_Describe
+
+		@subsection subsection__controller Controller
+There is one additional core component to any %AAX plug-in, the Controller. The plug-in does not implement this component - rather, the Controller is an interface that provides access to various facilities provided by the host, as well as to the plug-in's other modules.
+</DIV>
+
+
+
+
+<DIV CLASS="section">
+	@section aax_sdk_guide_02_demogain_example DemoGain Example
+The %AAX SDK includes a basic example plug-in named DemoGain. In this section we will examine this plug-in to show how the various core modules in an %AAX plug-in interact with one another. We will focus in particular on how the DemoGain's "gain" parameter is defined, routed to the algorithm, and used to apply a gain effect to audio samples. In this way we will "visit" each of the core components in DemoGain.
+
+\ifnot docs_for_cpexam
+	For a description of all the example plug-ins included in the SDK, see the \ref ExamplePlugIns page.
+	
+	@note To run DemoGain or other example plug-ins in Pro Tools 10 you must change the <TT>AAX_ePlugInCategory_Example</TT> category to <TT>AAX_ePlugInCategory_Dynamics</TT> in the plug-in's Describe function. The "example" category is not supported in Pro Tools 10.
+\endif
+
+		@subsection subsection__overview_of_parameter_creation AAX Plug-In Parameters
+		
+A good starting point for understanding a plug-in is to understand its parameters. In DemoGain, as in most %AAX plug-ins, the plug-in's parameters define its data model state and the plug-in's parameters provide the fundamental connection between user interactions and audio processing.
+
+The sections below will guide you through each of the main steps of parameter creation and connection, making use of the default implementation in <EM CLASS="Italic">AAX_CEffectParameters</EM>:
+<OL>
+<LI CLASS="List">
+\ref subsection__data_model_create_your_parameter
+<OL>
+<LI CLASS="AlphaList1st">
+Create a new parameter object </LI>
+<LI CLASS="AlphaList">
+Register the parameter with the Packet Dispatcher </LI>
+<LI CLASS="AlphaList">
+Create an update callback that converts the raw parameter value into a packet of processed coefficients </LI>
+</OL>
+</LI>
+<LI CLASS="List">
+\ref subsection__algorithm_add_coefficients_to_the_algorithms_context_structure
+<OL>
+<LI CLASS="AlphaList1st">
+Create a new field for incoming coefficient packets </LI>
+<LI CLASS="AlphaList">
+Generate a <EM CLASS="Italic">field ID</EM> to reference the new member </LI>
+<LI CLASS="AlphaList">
+Add the new coefficient to the plug-in's algorithm code </LI>
+</OL>
+</LI>
+<LI CLASS="List">
+\ref subsection__describe_connect_the_parameter_throughout_the_plugin
+<OL>
+<LI CLASS="AlphaList1st">
+Add a new Data Input Port to the algorithm via the component descriptor interface </LI>
+<LI CLASS="AlphaList">
+Add a connection between the parameter's <EM CLASS="Italic">packet ID</EM> and its coefficients' <EM CLASS="Italic">field ID</EM></LI>
+</OL>
+</LI>
+<LI CLASS="List">
+\ref subsection__gui_add_a_control
+<OL>
+<LI CLASS="AlphaList1st">
+Create a GUI widget that can update the parameter's state </LI>
+<LI CLASS="AlphaList">
+Add logic to notify the data model when the GUI is edited </LI>
+<LI CLASS="AlphaList">
+Add logic to update the GUI when the data model state changes </LI>
+</OL>
+</LI>
+</OL>
+
+		@subsection subsection__data_model_create_your_parameter Data Model: Create Your Parameter
+DemoGain's data model inherits its functionality from \ref AAX_CEffectParameters (the default implementation of \ref AAX_IEffectParameters). The <TT>DemoGain_Parameters.h</TT> and <TT>DemoGain_Parameters.cpp</TT> source files comprise the source code for DemoGain's data model.
+
+During plug-in initialization, <TT>DemoGain_Parameters::EffectInit()</TT> creates the plug-in's custom parameters. A look inside of the .cpp file shows how this is done via the creation of a new \ref AAX_CParameter for the gainParameter: the \ref AAX_CParameter constructor is parametrized with a set of arguments that define the gain parameter's behavior, such as its default value (<TT>1.0f</TT>), name ("Gain"), taper behavior (linear), etc.
+
+After creating the parameter objects, a series of packets are registered with the host via the inherited \ref AAX_CPacketDispatcher "Packet Dispatcher", <TT>mPacketDispatcher</TT>, which is a helper object used by \ref AAX_CEffectParameters to assist with the plug-in's packet management tasks.
+
+\code
+mPacketDispatcher.RegisterPacket(
+	DemoGain_GainID,
+	eAlgPortID_CoefsGainIn,
+	this,
+	&DemoGain_Parameters::UpdatePacket_Gain); \endcode
+<DIV CLASS="fragmentcaption">
+Listing 1: Registration of DemoGain's "gain" packet handler</DIV>
+
+The last parameter in \ref AAX_CPacketDispatcher::RegisterPacket() takes a reference to a packet handler callback. This method will be called by the Packet Dispatcher whenever new parameter values need to be converted into coefficients that can be used by the algorithm. In DemoGain, a reference to DemoGain_Parameters::UpdatePacket_Gain() is used for the gain parameter's coefficient packet.
+
+As a developer, you will choose how this portion of your data model gets handled; you can choose to use the default handler method, which simply forwards the raw parameter values to the algorithm, or you can define a custom handler. You can also choose to bypass the Packet Dispatcher completely (see the <TT>DemoDist_GenCoef</TT> plug-in for an example of this.)
+
+Although the handling of DemoGain's gain parameter is trivial, for the sake of demonstration this plug-in uses both Packet Dispatcher approaches in the registration of its bypass and gain parameters.
+
+		@subsection subsection__algorithm_add_coefficients_to_the_algorithms_context_structure Algorithm: Add coefficients to the algorithm's context structure
+
+Your plug-in's context is nothing more than a data structure of pointers that is registered with the host during Describe. These pointers function as <EM CLASS="Italic">
+ports</EM>
+ where host-managed data may be delivered or retrieved.
+
+			@subsubsection subsubsection__context_definition_ Context definition
+<P CLASS="Normal">
+Looking under the "Component context definitions" section within DemoGain_Alg.h, you will find DemoGain's <TT>SDemoGain_Alg_Context</TT> context. This is DemoGain's context structure, and its sole purpose is to parametrize DemoGain's algorithm with a set of ports. Note the definition of a port for the gain coefficients that are created by <TT>DemoGain_Parameters::UpdatePacket_Gain()</TT> and another port for the bypass value that is forwarded via the default packet update handler.</P>
+
+\code
+int32_t               * mCtrlBypassP;
+SDemoGain_CoefsGain   * mCoefsGainP; \endcode
+<DIV CLASS="fragmentcaption">
+Listing 2: Gain and bypass ports in the DemoGain algorithm's context structure</DIV>
+
+Once ports have been defined for the algorithm's coefficients and other algorithmic data, unique identifiers for each port in the context must be generated. This is accomplished through use of the \ref AAX_FIELD_INDEX macro. The basic idea behind this macro is to generate IDs that the host can use to directly address the ports within their context:
+
+
+\code
+, eAlgPortID_CoefsGainIn = AAX_FIELD_INDEX ( SDemoGain_Alg_Context , mCoef ),
+, eAlgFieldID_AudioIn = AAX_FIELD_INDEX ( SDemoGain_Alg_Context , mInputPP ) ) \endcode
+<DIV CLASS="fragmentcaption">
+Listing 3: Some port ID definitions for the DemoGain algorithm's context structure</DIV>
+
+Now the context's definition is complete. So far these are just fields in a struct; the host doesn't yet know how to route packets from the data model to these ports. That information will come later, in the plug-in's \ref subsection__describe_connect_the_parameter_throughout_the_plugin "description". Once this context is described to the host, the host will know to populate it and pass it to the processing function located in DemoGain_AlgProc.cpp.
+
+			@subsubsection subsubsection__algorithm_processing_callback_ Algorithm processing callback
+
+
+\code
+void
+AAX_CALLBACK
+DemoGain_AlgorithmProcessFunction (
+	SDemoGain_Alg_Context * const inInstancesBegin [],
+	const void * inInstancesEnd ) \endcode
+<DIV CLASS="fragmentcaption">
+Listing 4: The DemoGain algorithm's callback prototype</DIV>
+
+This is where the plug-in's audio buffer processing of the plug-in occurs. Note that this function is passed a pointer to an array of <TT>SDemoGain_Alg_Contexts</TT>. Each of these represents the state of a particular instance of DemoGain, and contains pointers to the applicable coefficient and audio buffer data.
+
+Using the <TT>SDemoGain_Alg_Context</TT> array, instance-specific information and audio buffers are easily retrieved for processing. DemoGain accomplishes this by first iterating over each plug-in instance, then over each channel, and finally over each sample, at which point the gain coefficient is applied to each sample in the input audio buffer and the sample data is copied to the output audio buffer:
+
+
+\code
+// --------- Iterate over plug -in instances ---------//
+for (SDemoGain_Alg_Context * const * walk = inInstancesBegin ; walk &lt;
+	inInstancesEnd ; ++ walk )
+{
+		.
+		.
+		.
+	// --------- Run processing loop over each input channel ---------//
+	//
+	for (int ch = 0; ch &lt; kNumChannelsIn ; ch ++)
+	{
+		// --------- Run processing loop over each sample ---------//
+		//
+		for (int t = 0; t &lt; kAudioWindowSize ; t++)
+		{
+				.
+				.
+				.
+		pdO [t] = gain * pdI [t];
+				.
+				.
+				.
+		} // Go to the next sample
+	} // Go to next channel
+ } // End instance-iteration loop \endcode
+<DIV CLASS="fragmentcaption">
+Listing 5: Iterative loops in the DemoGain algorithm</DIV>
+
+		@subsection subsection__describe_connect_the_parameter_throughout_the_plugin Describe: Connect the parameter throughout the plug-in
+
+As mentioned before, Describe provides a static description of all communication pathways between a plug-in's algorithm, host, and data model. In addition, various effect properties are defined that help the host determine how to handle the plug-in.
+
+Communication paths between the various plug-in components are described as connections between source and destination ports. In order for these communication paths to be created, the algorithm must first define some destination ports by actually registering its previously defined context fields as communication destinations. DemoGain does this for its gain parameter through the following call to \ref AAX_IComponentDescriptor::AddDataInPort() in DemoGain_Describe.cpp's <TT>DescribeAlgorithmComponent()</TT> method:
+
+
+\code
+AAX_IComponentDescriptor * compDesc;
+compDesc = outDescriptor->NewComponentDescriptor ();
+err = compDesc->AddDataInPort (
+	eAlgPortID_CoefsGainIn ,
+	sizeof (SDemoGain_CoefsGain) ); \endcode
+<DIV CLASS="fragmentcaption">
+Listing 6: Adding a data port to DemoGain's algorithm component descriptor</DIV>
+
+This registration process is required for both custom coefficients (Gain) and for data that all plug-ins need such as audio input and output fields.
+
+That completes the connection, and now the plug-in is fully wired to receive parameter updates, convert raw parameter values to algorithmic coefficients, pack these coefficients into a packet, post the packet to the host for routing, receive the updated packet in the list of context structures that the host provides when calling the algorithm callback, and apply the updated coefficient data in the appropriate context structure to the plug-in's audio data. Whew! 
+		@subsection subsection__gui_add_a_control GUI: Add a control
+
+Although the specific steps for adding a GUI control to edit a plug-in parameter will vary depending on the GUI framework you choose, there are a few basic design principles that should always be followed.
+
+The basic DemoGain plug-in does not include any GUI implementation. For practical GUI implementation examples, open the DemoGain_GUIExtensions sample plug-ins. DemoGain_Cocoa provides an example of a custom plug-in GUI using the native OS X SDK, while DemoGain_Win32 uses native Windows APIs. The other examples in this folder require common third-party libraries.
+
+			@subsubsection subsubsection__control_edits_vs_parameter_updates_ Control edits vs. parameter updates
+
+The most important principle for %AAX GUI design is that an edit in a plug-in's GUI should never directly set the state of the associated parameter or parameters. This is because there may be other controller clients of the plug-in's data model which will need to be notified of the edit, or which may need to override edits from the GUI.
+<UL CLASS="paragraphs">
+<LI>
+<DIV CLASS="SectionHead">
+On control edit</DIV>
+
+When a control is edited in the plug-in GUI, call \ref AAX_IEffectParameters::SetParameterNormalizedValue(). The implementation of this method should post a request to the host in order to trigger the parameter update. The GUI should not update its state until the corresponding parameter update notification is received.
+</LI>
+<LI>
+<DIV CLASS="SectionHead">
+On parameter update</DIV>
+
+A parameter update can occur in response to a GUI edit, an edit from another attached controller, an update to a linked parameter, or any other event that affects the state of the data model. When the state of a parameter changes, \ref AAX_IEffectGUI::ParameterUpdated() is called. The plug-in's GUI should be updated in this method in order to reflect the new state of the affected parameter.
+</LI>
+</UL>
+
+\ifnot docs_for_cpexam 
+For detailed information about the sequence of events and GUI responsibilities during a parameter update, see \ref advancedTopics_ParameterUpdates
+\endif
+
+			@subsubsection subsubsection__notifying_the_host_of_gui_events_ Notifying the host of GUI events
+
+Some GUI events must be handled by the host rather than by the plug-in. For example, in Pro Tools a user should be able to display a pop-up menu for controlling automation information by command-option-control-clicking (Mac) or alt-ctl-right clicking (Windows) a control. These events, and other direct communication between the GUI and the "container" in which the host creates the plug-in view, is accomplished via the \ref AAX_IViewContainer interface. Be sure to always call the handler methods in this interface before handling a mouse event within the plug-in GUI, in order to maintain the expected host behavior.
+
+</DIV>
+
+
+
+
+<DIV CLASS="section">
+	@section aax_sdk_guide_next_steps Next Steps
+	
+	Now that you have a basic understanding of %AAX, head back to the \ref welcome_basics "front page" and continue reading through the suggested documentation. Or dig in to the \ref ExamplePlugIns "sample plug-ins" to see how specific features are supported in %AAX.
+	
+	@warning Your %AAX plug-ins will not be compatible with shipping versions of Pro Tools until they are digitally signed using tools provided by PACE Anti-Piracy, Inc. As an %AAX developer you can receive these tools free of charge. Read the \ref subsection__digital_signature_ section of the \ref AAX_Pro_Tools_Guide to learn about the digital signing requirements for compatibility with Pro Tools. 
+	
+</DIV>
+
+*/

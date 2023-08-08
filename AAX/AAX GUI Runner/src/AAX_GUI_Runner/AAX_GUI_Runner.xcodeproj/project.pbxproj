@@ -1,0 +1,380 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		841E05A417FC9CA200D97125 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 841E05A217FC9CA200D97125 /* InfoPlist.strings */; };
+		841E05A617FC9CA200D97125 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E05A517FC9CA200D97125 /* main.m */; };
+		841E05AD17FC9CA200D97125 /* AGRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E05AC17FC9CA200D97125 /* AGRAppDelegate.m */; };
+		841E05B017FC9CA200D97125 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841E05AE17FC9CA200D97125 /* MainMenu.xib */; };
+		8472FD7018063AEB0085A5F5 /* AGRPlugInInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 8472FD6F18063AEB0085A5F5 /* AGRPlugInInstance.m */; };
+		84780B7C1801C0CF009364CD /* AAXHostShell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84780B7B1801C0CF009364CD /* AAXHostShell.framework */; };
+		84780B801801FF06009364CD /* AGRPlugInWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84780B7E1801FF06009364CD /* AGRPlugInWindowController.m */; };
+		84780B811801FF06009364CD /* AGRPlugInWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84780B7F1801FF06009364CD /* AGRPlugInWindowController.xib */; };
+		847B8D871A9580E300FCC0DF /* AAXHostShell_ObjC_Commands.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B8D841A95773000FCC0DF /* AAXHostShell_ObjC_Commands.m */; };
+		84ECFFA2180C49E50068B0A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841E059917FC9CA200D97125 /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		841E059617FC9CA200D97125 /* AAX_GUI_Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAX_GUI_Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		841E059917FC9CA200D97125 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		841E05A117FC9CA200D97125 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		841E05A317FC9CA200D97125 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		841E05A517FC9CA200D97125 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		841E05A717FC9CA200D97125 /* AAX_GUI_Runner-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AAX_GUI_Runner-Prefix.pch"; sourceTree = "<group>"; };
+		841E05AB17FC9CA200D97125 /* AGRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AGRAppDelegate.h; sourceTree = "<group>"; };
+		841E05AC17FC9CA200D97125 /* AGRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AGRAppDelegate.m; sourceTree = "<group>"; };
+		841E05AF17FC9CA200D97125 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		841E05B917FC9F9600D97125 /* GlobalApplication.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = GlobalApplication.xcconfig; path = ../../../ProTools/DigiPublic/Xcode/GlobalApplication.xcconfig; sourceTree = "<group>"; };
+		841E05BA17FC9F9600D97125 /* GlobalApplicationRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = GlobalApplicationRelease.xcconfig; path = ../../../ProTools/DigiPublic/Xcode/GlobalApplicationRelease.xcconfig; sourceTree = "<group>"; };
+		8472FD6E18063AEB0085A5F5 /* AGRPlugInInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGRPlugInInstance.h; sourceTree = "<group>"; };
+		8472FD6F18063AEB0085A5F5 /* AGRPlugInInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGRPlugInInstance.m; sourceTree = "<group>"; };
+		84780B7B1801C0CF009364CD /* AAXHostShell.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AAXHostShell.framework; path = ../../../MacBag/Debug/AAXHostShell.framework; sourceTree = "<group>"; };
+		84780B7D1801FF06009364CD /* AGRPlugInWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGRPlugInWindowController.h; sourceTree = "<group>"; };
+		84780B7E1801FF06009364CD /* AGRPlugInWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGRPlugInWindowController.m; sourceTree = "<group>"; };
+		84780B7F1801FF06009364CD /* AGRPlugInWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AGRPlugInWindowController.xib; sourceTree = "<group>"; };
+		847B8D831A95773000FCC0DF /* AAXHostShell_ObjC_Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAXHostShell_ObjC_Commands.h; path = ../../AAXHostShell/ClientUtilities/objc/AAXHostShell_ObjC_Commands.h; sourceTree = "<group>"; };
+		847B8D841A95773000FCC0DF /* AAXHostShell_ObjC_Commands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AAXHostShell_ObjC_Commands.m; path = ../../AAXHostShell/ClientUtilities/objc/AAXHostShell_ObjC_Commands.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		841E059317FC9CA200D97125 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84ECFFA2180C49E50068B0A9 /* Cocoa.framework in Frameworks */,
+				84780B7C1801C0CF009364CD /* AAXHostShell.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		841E058D17FC9CA200D97125 = {
+			isa = PBXGroup;
+			children = (
+				841E05B917FC9F9600D97125 /* GlobalApplication.xcconfig */,
+				841E05BA17FC9F9600D97125 /* GlobalApplicationRelease.xcconfig */,
+				841E059F17FC9CA200D97125 /* AAX_GUI_Runner */,
+				841E05C617FCC5E900D97125 /* Libs */,
+				841E059817FC9CA200D97125 /* Frameworks */,
+				841E059717FC9CA200D97125 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		841E059717FC9CA200D97125 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				841E059617FC9CA200D97125 /* AAX_GUI_Runner.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		841E059817FC9CA200D97125 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				841E059917FC9CA200D97125 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		841E059F17FC9CA200D97125 /* AAX_GUI_Runner */ = {
+			isa = PBXGroup;
+			children = (
+				841E05AB17FC9CA200D97125 /* AGRAppDelegate.h */,
+				841E05AC17FC9CA200D97125 /* AGRAppDelegate.m */,
+				8472FD6E18063AEB0085A5F5 /* AGRPlugInInstance.h */,
+				8472FD6F18063AEB0085A5F5 /* AGRPlugInInstance.m */,
+				84780B7D1801FF06009364CD /* AGRPlugInWindowController.h */,
+				84780B7E1801FF06009364CD /* AGRPlugInWindowController.m */,
+				847B8D831A95773000FCC0DF /* AAXHostShell_ObjC_Commands.h */,
+				847B8D841A95773000FCC0DF /* AAXHostShell_ObjC_Commands.m */,
+				84780B82180202C8009364CD /* Resources */,
+				841E05A017FC9CA200D97125 /* Supporting Files */,
+			);
+			path = AAX_GUI_Runner;
+			sourceTree = "<group>";
+		};
+		841E05A017FC9CA200D97125 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				841E05A117FC9CA200D97125 /* Info.plist */,
+				841E05A217FC9CA200D97125 /* InfoPlist.strings */,
+				841E05A517FC9CA200D97125 /* main.m */,
+				841E05A717FC9CA200D97125 /* AAX_GUI_Runner-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		841E05C617FCC5E900D97125 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				84780B7B1801C0CF009364CD /* AAXHostShell.framework */,
+			);
+			name = Libs;
+			sourceTree = "<group>";
+		};
+		84780B82180202C8009364CD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				841E05AE17FC9CA200D97125 /* MainMenu.xib */,
+				84780B7F1801FF06009364CD /* AGRPlugInWindowController.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		841E059517FC9CA200D97125 /* AAX_GUI_Runner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 841E05B317FC9CA200D97125 /* Build configuration list for PBXNativeTarget "AAX_GUI_Runner" */;
+			buildPhases = (
+				841E059217FC9CA200D97125 /* Sources */,
+				841E059317FC9CA200D97125 /* Frameworks */,
+				841E059417FC9CA200D97125 /* Resources */,
+				8411F94517FEE5B90029CE88 /* Make Frameworks and PlugIns Syms */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AAX_GUI_Runner;
+			productName = AAX_GUI_Runner;
+			productReference = 841E059617FC9CA200D97125 /* AAX_GUI_Runner.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		841E058E17FC9CA200D97125 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = AGR;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Rob Majors";
+			};
+			buildConfigurationList = 841E059117FC9CA200D97125 /* Build configuration list for PBXProject "AAX_GUI_Runner" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 841E058D17FC9CA200D97125;
+			productRefGroup = 841E059717FC9CA200D97125 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				841E059517FC9CA200D97125 /* AAX_GUI_Runner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		841E059417FC9CA200D97125 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				841E05A417FC9CA200D97125 /* InfoPlist.strings in Resources */,
+				841E05B017FC9CA200D97125 /* MainMenu.xib in Resources */,
+				84780B811801FF06009364CD /* AGRPlugInWindowController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8411F94517FEE5B90029CE88 /* Make Frameworks and PlugIns Syms */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Make Frameworks and PlugIns Syms";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ ! -d \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\" ]; then\ncd \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"\nln -s ../../ Frameworks\nfi;\n\nif [ ! -d \"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\" ]; then\ncd \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"\nln -s ../../ PlugIns\nfi;\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		841E059217FC9CA200D97125 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				847B8D871A9580E300FCC0DF /* AAXHostShell_ObjC_Commands.m in Sources */,
+				8472FD7018063AEB0085A5F5 /* AGRPlugInInstance.m in Sources */,
+				841E05A617FC9CA200D97125 /* main.m in Sources */,
+				841E05AD17FC9CA200D97125 /* AGRAppDelegate.m in Sources */,
+				84780B801801FF06009364CD /* AGRPlugInWindowController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		841E05A217FC9CA200D97125 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				841E05A317FC9CA200D97125 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		841E05AE17FC9CA200D97125 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				841E05AF17FC9CA200D97125 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		841E05B117FC9CA200D97125 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 841E05B917FC9F9600D97125 /* GlobalApplication.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MacBag = "$(SRCROOT)/../../../MacBag";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		841E05B217FC9CA200D97125 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 841E05BA17FC9F9600D97125 /* GlobalApplicationRelease.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MacBag = "$(SRCROOT)/../../../MacBag";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		841E05B417FC9CA200D97125 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 841E05B917FC9F9600D97125 /* GlobalApplication.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../MacBag/$(CONFIGURATION)\"",
+					"\"$(SRCROOT)/../../$(EXECUTABLE_NAME)/Contents/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AAX_GUI_Runner/AAX_GUI_Runner-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../AAXHostShell/Interface,
+					../AAXHostShell/ClientUltilities/objc,
+				);
+				INFOPLIST_FILE = AAX_GUI_Runner/Info.plist;
+				MacBag = "$(SRCROOT)/../../../MacBag";
+				PRODUCT_NAME = AAX_GUI_Runner;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		841E05B517FC9CA200D97125 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 841E05BA17FC9F9600D97125 /* GlobalApplicationRelease.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../MacBag/$(CONFIGURATION)\"",
+					"\"$(SRCROOT)/../../$(EXECUTABLE_NAME)/Contents/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AAX_GUI_Runner/AAX_GUI_Runner-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../AAXHostShell/Interface,
+					../AAXHostShell/ClientUltilities/objc,
+				);
+				INFOPLIST_FILE = AAX_GUI_Runner/Info.plist;
+				MacBag = "$(SRCROOT)/../../../MacBag";
+				PRODUCT_NAME = AAX_GUI_Runner;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		841E059117FC9CA200D97125 /* Build configuration list for PBXProject "AAX_GUI_Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				841E05B117FC9CA200D97125 /* Debug */,
+				841E05B217FC9CA200D97125 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		841E05B317FC9CA200D97125 /* Build configuration list for PBXNativeTarget "AAX_GUI_Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				841E05B417FC9CA200D97125 /* Debug */,
+				841E05B517FC9CA200D97125 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 841E058E17FC9CA200D97125 /* Project object */;
+}

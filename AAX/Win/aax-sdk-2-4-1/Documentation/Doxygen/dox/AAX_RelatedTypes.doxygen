@@ -1,0 +1,191 @@
+/*===================================================================================================
+AAX_RelatedTypes.doxygen
+
+Copyright 2016, 2018 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup advancedTopics_relatedTypes Plug-in type conversion
+	@ingroup AdvancedTopics
+	
+	@brief Specification for valid conversions between plug-in types
+	
+	\section advancedTopics_relatedTypes_about About this specification
+
+		The specification on this page defines the valid %AAX plug-in type conversions. An %AAX host may use this specification to perform automatic type conversions. For example:
+		<UL>
+			<LI CLASS="Bullet">
+			When a session that was saved with a DSP plug-in Type is opened on a Native system the saved DSP Type should be converted to its Native counterpart. </LI>
+			<LI CLASS="Bullet">When a session saved with the free version of a plug-in is opened on a system that has the full version installed then the saved free Type may be converted to the full version. </LI>
+		</UL>
+
+	\section advancedTopics_relatedTypes_terminology Terminology
+
+		In this specification the term "Type" refers to a specific configuration of an %AAX plug-in.
+
+		Each Type is uniquely identified by a combination of five values:
+		<UL>
+			<LI CLASS="Bullet">Manufacturer ID </LI>
+			<LI CLASS="Bullet">Product ID </LI>
+			<LI CLASS="Bullet">Plug-In ID </LI>
+			<LI CLASS="Bullet">Sample rate bit mask </LI>
+			<LI CLASS="Bullet">Architecture </LI>
+		</UL>
+
+		Each Type is defined by a particular call to \ref AAX_IComponentDescriptor::AddProcessProc_Native or \ref AAX_IComponentDescriptor::AddProcessProc_TI in the plug-in's description method.
+
+		The Plug-In ID is defined as one of \ref AAX_eProperty_PlugInID_Native or \ref AAX_eProperty_PlugInID_TI.
+
+		In this specification, the format for describing an ID is:
+
+		[ ID triad + sample rate + architecture ]
+
+		Where the ID triad may be expanded to [ [Manufacturer ID] [Product ID] [Plug-In ID] ]
+
+		<UL>
+			<LI CLASS="Bullet">Explicit values are given in plain face </LI>
+			<LI CLASS="Bullet">Arbitrary constant values are given in <EM CLASS="Bold">bold face</EM> </LI>
+			<LI CLASS="Bullet">Wildcard values are given in <EM CLASS="Italic">italics</EM> </LI>
+		</UL>
+
+		For example:
+		<UL CLASS="paragraphs">
+			<LI>[ <EM CLASS="Bold">ID triad</EM> + <EM CLASS="Italic">any sample rate</EM> + Native ]
+				<UL CLASS="paragraphs">
+				<LI>Defines all Type identifiers with the same ID triad and the Native architecture, regardless of sample rate. </LI>
+				</UL>
+			</LI>
+			<LI>[ [ [<EM CLASS="Bold">Manufacturer ID</EM>] [<EM CLASS="Bold">Product ID</EM>] [<EM CLASS="Italic">any ID</EM>] ] + <EM CLASS="Bold">sample rate</EM> + Native ]
+				<UL CLASS="paragraphs">
+				<LI>Defines all Type identifiers with the same Manufacturer and Product IDs, the same sample rate, and the Native architecture, but with any plug-in ID. </LI>
+				</UL>
+			</LI>
+		</UL>
+
+
+
+
+	\section advancedTopics_relatedTypes_scope Scope of this specification
+
+		For the purposes of this specification we are not concerned with AudioSuite Types. Currently these Types are never type-converted.
+
+		In theory, an %AAX host may apply a "partial" type conversion by swapping between different ProcessProcs without destroying and re-building any of the plug-in's objects (data model, GUI). For the purposes of this specification we are not concerned about whether a given conversion is "partial" or "total"; all conversions are treated the same.
+
+		Plug-in conversions are also required between Types of different stem formats. In fact, the supported stem format is an integral part of a Type's unique identifier. This specification ignores the question of stem formats entirely; we assume that each Type supports all necessary stem formats for legal conversion with other Types.
+
+		In general, type swapping rules for deprecated types and related types are equivalent. See \ref advancedTopics_relatedTypes_deprecation for more information about the differences between related and deprecated types.
+
+
+
+
+	\section advancedTopics_relatedTypes_constraints Topological constraints
+	<UL>
+		<LI CLASS="Bullet">All Types included in a single \ref AAX_ICollection must have the same Manufacturer ID </LI>
+		<LI CLASS="Bullet"> All Types included in a single \ref AAX_IEffectDescriptor must have the same Manufacturer ID and Product ID </LI>
+		<LI CLASS="Bullet"> The Sample rate bit masks for two Types that share all other identifiers must be non-overlapping. I.e. <TT>0x0 == sr_mask1 & sr_mask2</TT> </LI>
+		<LI CLASS="Bullet"> Two Types may not be registered that differ only in their Architecture </LI>
+		<LI CLASS="Bullet"> Type relationships may only be defined between mutually exclusive Types. Types are mutually exclusive if:
+			<UL>
+				<LI CLASS="Bullet">Their sample rate support is non-overlapping </LI>
+				<LI CLASS="Bullet">The "before" Type's ID triad is not associated with any Type in the plug-in </LI>
+			</UL>
+		</LI>
+	</UL>
+
+
+
+
+	\section advancedTopics_relatedTypes_implicitconversions Implicit conversions
+
+		The %AAX host should automatically convert between Types within the following IDs:
+		<UL>
+			<LI CLASS="Bullet"> [ <EM CLASS="Bold">ID triad</EM> + <EM CLASS="Italic">any sample rate</EM> + <EM CLASS="Bold">Architecture</EM> ] </LI>
+			<LI CLASS="Bullet"> [ [ [<EM CLASS="Bold">Manufacturer ID</EM>] [<EM CLASS="Bold">Product ID</EM>] [<EM CLASS="Italic">any ID</EM>] ] + <EM CLASS="Bold">sample rate</EM> + <EM CLASS="Italic">any architecture</EM> ] </LI>
+		</UL>
+
+		These conversions occur only if both Types are included in the plug-in when the conversion is made. Consider the following scenario:
+		<OL>
+			<LI CLASS="List"> A session is saved including an plug-in instance with the following Type identifier: [ My ID triad + 48 kHz + TI ] </LI>
+			<LI CLASS="List"> The plug-in is updated to a version that does not include this Type identifier, but that does include [ My ID triad + 48 kHz + Native ] </LI>
+			<LI CLASS="List"> The session is opened on a Native system </LI>
+		</OL>
+
+		In this scenario, if the plug-in had not been updated then an automatic conversion would occur. However, since the plug-in no longer includes the saved Type identifier, no automatic conversion occurs.
+
+		A plug-in can work around this situation by including the "old" Type identifier as a Related (or Deprecated) Type (see \ref advancedTopics_relatedTypes_explicitconversions.)
+
+		When a plug-in instance is saved after making an implicit conversion, plug-ins may be saved with the session using their new Type identifier. This is not required. For example, Pro Tools will prefer to save plug-in instances that were converted from DSP types as DSP, even if they were converted to corresponding Native types when the session was loaded onto and saved from a native Pro Tools system.
+
+
+
+	\section advancedTopics_relatedTypes_explicitconversions Explicit conversions
+
+		%AAX includes properties that allow a plug-in to define explicit relationships between different Types. These properties only operate on ID triads. Each property can be associated with an array of ID triads to define a one-to-one or a many-to-one association between the given ID triads and the specific Type to which the property is attached.
+		<UL>
+			<LI CLASS="Bullet"> \ref AAX_eProperty_Related_DSP_Plugin_List / \ref AAX_eProperty_Deprecated_DSP_Plugin_List
+				<UL CLASS="paragraphs">
+					<LI>All of the given ID triads specify TI Types </LI>
+				</UL>
+			</LI>
+			<LI CLASS="Bullet"> \ref AAX_eProperty_Related_Native_Plugin_List / \ref AAX_eProperty_Deprecated_Native_Plugin_List
+				<UL CLASS="paragraphs">
+					<LI>All of the given ID triads specify Native Types </LI>
+				</UL>
+			</LI>
+		</UL>
+
+		The %AAX host should convert between related Types within the following constraints:
+		<UL>
+			<LI CLASS="Bullet"> [ [ [Manufacturer ID] [Related Product ID] [Related TI Plug-In ID] ] + <EM CLASS="Bold">sample rate</EM> + TI ]
+				<UL CLASS="paragraphs">
+					<LI>-> [ [ [Manufacturer ID] [New Product ID | Related Product ID] [New Plug-In ID] ] + <EM CLASS="Bold">sample rate</EM> + <EM CLASS="Italic">any architecture</EM> ] </LI>
+				</UL>
+			</LI>
+			<LI CLASS="Bullet"> [ [ [Manufacturer ID] [Related Product ID] [Related Native Plug-In ID] ] + <EM CLASS="Bold">sample rate</EM> + Native ]
+				<UL CLASS="paragraphs">
+					<LI>-> [ [ [Manufacturer ID] [New Product ID | Related Product ID] [New Plug-In ID] ] + <EM CLASS="Bold">sample rate</EM> + <EM CLASS="Italic">any architecture</EM> ] </LI>
+				</UL>
+			</LI>
+		</UL>
+
+		These conversions will occur regardless of whether the related ID triad is used for any of the Types in the plug-in.
+
+		When a plug-in instance is saved after making an explicit conversion, all plug-ins are saved with the session using their new Type identifier.
+		
+		\compatibility Pro Tools versions prior to Pro Tools 12.3 do not allow explicit type conversion between types with different product ID values. Beginning in Pro Tools 12.3 both the product ID and the plug-in ID may differ between explicitly related types.
+
+
+
+
+	\section advancedTopics_relatedTypes_deprecation Type deprecation
+		There are two varieties of explicit plug-in type association: related types and deprecated types.
+		
+		Properties that create a related type association:
+		<UL>
+			<LI CLASS="Bullet">\ref AAX_eProperty_Related_Native_Plugin_List</LI>
+			<LI CLASS="Bullet">\ref AAX_eProperty_Related_DSP_Plugin_List</LI>
+		</UL>
+		
+		Properties that create a deprecated type association:
+		<UL>
+			<LI CLASS="Bullet">\ref AAX_eProperty_Deprecated_Native_Plugin_List</LI>
+			<LI CLASS="Bullet">\ref AAX_eProperty_Deprecated_DSP_Plugin_List</LI>
+			<LI CLASS="Bullet">\ref AAX_eProperty_PlugInID_Deprecated</LI>
+		</UL>
+		
+		With a few exceptions, these two types of explicit association are treated identically. These are the ways in which deprecated plug-in type association differs from related plug-in type association:
+		<UL>
+			<LI CLASS="Bullet">If plug-in types A and B are both installed, and if type A deprecates type B, then type B will be excluded from all insert lists in Pro Tools and will be made invisible to the user.</LI>
+			<LI CLASS="Bullet">If plug-in types A and B are both installed, and if type A deprecates type B, then instances of type B will be swapped to type A when a session containing saved instances of type B is opened.</LI>
+			<LI CLASS="Bullet">Upon the next session save following a swap due to a deprecated type association, the plug-in instance will be saved into the session using the ID of the new plug-in type. Therefore deprecated type swaps do not round-trip when moving between multiple systems if some of the systems have the deprecated types, but not the deprecating types, installed.</LI>
+		</UL>
+		
+		Type deprecation should only be used when a new version of an effect completely replaces an old version of the effect. For all other situations, type relationship should be used.
+		
+		\compatibility \li Pro Tools versions before Pro Tools 12.3 treat deprecated and related type associations identically and do not support type deprecation features
+		\li Media Composer does not support type deprecation features
+		\li VENUE does not support type deprecation features
+*/
+	

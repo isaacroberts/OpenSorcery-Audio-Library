@@ -1,0 +1,360 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		160F9854129BCD4D0014CA0A /* DemoMIDIPages.xml in Resources */ = {isa = PBXBuildFile; fileRef = 160F9853129BCD4D0014CA0A /* DemoMIDIPages.xml */; };
+		F064DD7F12D4EB3000A76665 /* libAAXLibrary_libcpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F064DD7E12D4EB3000A76665 /* libAAXLibrary_libcpp.a */; };
+		F0770532124BB04F00FDDE77 /* DemoMIDI_AlgProc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0770528124BB04F00FDDE77 /* DemoMIDI_AlgProc.cpp */; };
+		F0770534124BB04F00FDDE77 /* DemoMIDI_Describe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F077052C124BB04F00FDDE77 /* DemoMIDI_Describe.cpp */; };
+		F0770536124BB04F00FDDE77 /* DemoMIDI_Parameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0770530124BB04F00FDDE77 /* DemoMIDI_Parameters.cpp */; };
+		F0770587124BB51B00FDDE77 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0770586124BB51B00FDDE77 /* Cocoa.framework */; };
+		F0770594124BB53200FDDE77 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0770591124BB53200FDDE77 /* AppKit.framework */; };
+		F0770595124BB53200FDDE77 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0770592124BB53200FDDE77 /* CoreData.framework */; };
+		F0770596124BB53200FDDE77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0770593124BB53200FDDE77 /* Foundation.framework */; };
+		F0BA994E12D7EC99006ECD06 /* AAX_Exports.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0BA994D12D7EC99006ECD06 /* AAX_Exports.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		160F9853129BCD4D0014CA0A /* DemoMIDIPages.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = DemoMIDIPages.xml; path = ../../Source/DemoMIDIPages.xml; sourceTree = SOURCE_ROOT; };
+		5B0F5C8E08999681003B44AA /* Info-DemoGain.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist; path = "Info-DemoGain.plist"; sourceTree = "<group>"; };
+		5B521CB8088F2ED8009C75FE /* CommonDebugSettings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; name = CommonDebugSettings.xcconfig; path = ../../../Common/Mac/CommonDebugSettings.xcconfig; sourceTree = SOURCE_ROOT; };
+		5B521CB9088F2ED8009C75FE /* CommonReleaseSettings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; name = CommonReleaseSettings.xcconfig; path = ../../../Common/Mac/CommonReleaseSettings.xcconfig; sourceTree = SOURCE_ROOT; };
+		8D01CCD20486CAD60068D4B7 /* DemoMIDI_NoteOn_example.aaxplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoMIDI_NoteOn_example.aaxplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		F064DD7E12D4EB3000A76665 /* libAAXLibrary_libcpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAAXLibrary_libcpp.a; path = ../../../../Libs/Debug/libAAXLibrary_libcpp.a; sourceTree = SOURCE_ROOT; };
+		F0770527124BB04F00FDDE77 /* DemoMIDI_Alg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoMIDI_Alg.h; path = ../../Source/DemoMIDI_Alg.h; sourceTree = SOURCE_ROOT; };
+		F0770528124BB04F00FDDE77 /* DemoMIDI_AlgProc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DemoMIDI_AlgProc.cpp; path = ../../Source/DemoMIDI_AlgProc.cpp; sourceTree = SOURCE_ROOT; };
+		F077052B124BB04F00FDDE77 /* DemoMIDI_Defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoMIDI_Defs.h; path = ../../Source/DemoMIDI_Defs.h; sourceTree = SOURCE_ROOT; };
+		F077052C124BB04F00FDDE77 /* DemoMIDI_Describe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DemoMIDI_Describe.cpp; path = ../../Source/DemoMIDI_Describe.cpp; sourceTree = SOURCE_ROOT; };
+		F077052D124BB04F00FDDE77 /* DemoMIDI_Describe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoMIDI_Describe.h; path = ../../Source/DemoMIDI_Describe.h; sourceTree = SOURCE_ROOT; };
+		F0770530124BB04F00FDDE77 /* DemoMIDI_Parameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DemoMIDI_Parameters.cpp; path = ../../Source/DemoMIDI_Parameters.cpp; sourceTree = SOURCE_ROOT; };
+		F0770531124BB04F00FDDE77 /* DemoMIDI_Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DemoMIDI_Parameters.h; path = ../../Source/DemoMIDI_Parameters.h; sourceTree = SOURCE_ROOT; };
+		F0770586124BB51B00FDDE77 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		F0770591124BB53200FDDE77 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		F0770592124BB53200FDDE77 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		F0770593124BB53200FDDE77 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		F0BA994D12D7EC99006ECD06 /* AAX_Exports.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AAX_Exports.cpp; path = ../../../../Interfaces/AAX_Exports.cpp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D01CCCD0486CAD60068D4B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0770587124BB51B00FDDE77 /* Cocoa.framework in Frameworks */,
+				F0770594124BB53200FDDE77 /* AppKit.framework in Frameworks */,
+				F0770595124BB53200FDDE77 /* CoreData.framework in Frameworks */,
+				F0770596124BB53200FDDE77 /* Foundation.framework in Frameworks */,
+				F064DD7F12D4EB3000A76665 /* libAAXLibrary_libcpp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* ProjectTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				5B521CB8088F2ED8009C75FE /* CommonDebugSettings.xcconfig */,
+				5B521CB9088F2ED8009C75FE /* CommonReleaseSettings.xcconfig */,
+				08FB77ADFE841716C02AAC07 /* Source */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				5B521CE608916CD1009C75FE /* Avid Libraries */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				19C28FB4FE9D528D11CA2CBB /* Products */,
+			);
+			name = ProjectTemplate;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				F0770585124BB51B00FDDE77 /* Linked Frameworks */,
+				F0770590124BB53200FDDE77 /* Other Frameworks */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5B0F5C8E08999681003B44AA /* Info-DemoGain.plist */,
+				160F9853129BCD4D0014CA0A /* DemoMIDIPages.xml */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77ADFE841716C02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				F0770527124BB04F00FDDE77 /* DemoMIDI_Alg.h */,
+				F0770528124BB04F00FDDE77 /* DemoMIDI_AlgProc.cpp */,
+				F077052B124BB04F00FDDE77 /* DemoMIDI_Defs.h */,
+				F077052C124BB04F00FDDE77 /* DemoMIDI_Describe.cpp */,
+				F077052D124BB04F00FDDE77 /* DemoMIDI_Describe.h */,
+				F0770530124BB04F00FDDE77 /* DemoMIDI_Parameters.cpp */,
+				F0770531124BB04F00FDDE77 /* DemoMIDI_Parameters.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		19C28FB4FE9D528D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D01CCD20486CAD60068D4B7 /* DemoMIDI_NoteOn_example.aaxplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5B521CE608916CD1009C75FE /* Avid Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				F0BA994D12D7EC99006ECD06 /* AAX_Exports.cpp */,
+				F064DD7E12D4EB3000A76665 /* libAAXLibrary_libcpp.a */,
+			);
+			name = "Avid Libraries";
+			sourceTree = "<group>";
+		};
+		F0770585124BB51B00FDDE77 /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F0770586124BB51B00FDDE77 /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		F0770590124BB53200FDDE77 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F0770591124BB53200FDDE77 /* AppKit.framework */,
+				F0770592124BB53200FDDE77 /* CoreData.framework */,
+				F0770593124BB53200FDDE77 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D01CCC60486CAD60068D4B7 /* DemoMIDI_example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B521C99088F2389009C75FE /* Build configuration list for PBXNativeTarget "DemoMIDI_example" */;
+			buildPhases = (
+				8D01CCCB0486CAD60068D4B7 /* Sources */,
+				8D01CCCD0486CAD60068D4B7 /* Frameworks */,
+				66A328E611E7F360007E297C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DemoMIDI_example;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = ProjectTemplate;
+			productReference = 8D01CCD20486CAD60068D4B7 /* DemoMIDI_NoteOn_example.aaxplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1250;
+			};
+			buildConfigurationList = 5B521C9D088F2389009C75FE /* Build configuration list for PBXProject "DemoMIDI_NoteOn" */;
+			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = en;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				Base,
+				ja,
+				fr,
+				en,
+				de,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* ProjectTemplate */;
+			projectDirPath = "";
+			projectRoot = ..;
+			targets = (
+				8D01CCC60486CAD60068D4B7 /* DemoMIDI_example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		66A328E611E7F360007E297C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				160F9854129BCD4D0014CA0A /* DemoMIDIPages.xml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D01CCCB0486CAD60068D4B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0770532124BB04F00FDDE77 /* DemoMIDI_AlgProc.cpp in Sources */,
+				F0770534124BB04F00FDDE77 /* DemoMIDI_Describe.cpp in Sources */,
+				F0770536124BB04F00FDDE77 /* DemoMIDI_Parameters.cpp in Sources */,
+				F0BA994E12D7EC99006ECD06 /* AAX_Exports.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C3BD9E2E097C3182001EB161 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B521CB8088F2ED8009C75FE /* CommonDebugSettings.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = "_DEBUG=1";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "Info-DemoGain.plist";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.avid.aax-sdk-example.DemoMIDI-NoteOn;
+				PRODUCT_NAME = DemoMIDI_NoteOn_example;
+				SEPARATE_STRIP = NO;
+				SKIP_INSTALL = NO;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = build;
+			};
+			name = Debug;
+		};
+		C3BD9E2F097C3182001EB161 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B521CB9088F2ED8009C75FE /* CommonReleaseSettings.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "PLUGGUI=0";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "Info-DemoGain.plist";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"$(OTHER_LDFLAGS_QUOTED_FOR_TARGET_1)",
+					"-Xlinker",
+					1500,
+				);
+				OTHER_LDFLAGS_QUOTED_FOR_TARGET_1 = "\"-headerpad\"";
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.avid.aax-sdk-example.DemoMIDI-NoteOn;
+				PRODUCT_NAME = DemoMIDI_NoteOn_example;
+				SEPARATE_STRIP = NO;
+				SKIP_INSTALL = NO;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = build;
+			};
+			name = Release;
+		};
+		C3BD9E30097C3182001EB161 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		C3BD9E31097C3182001EB161 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5B521C99088F2389009C75FE /* Build configuration list for PBXNativeTarget "DemoMIDI_example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3BD9E2E097C3182001EB161 /* Debug */,
+				C3BD9E2F097C3182001EB161 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5B521C9D088F2389009C75FE /* Build configuration list for PBXProject "DemoMIDI_NoteOn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3BD9E30097C3182001EB161 /* Debug */,
+				C3BD9E31097C3182001EB161 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

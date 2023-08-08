@@ -1,0 +1,512 @@
+/*===================================================================================================
+AAX_CommonInterface_Describe.doxygen
+
+Copyright 2011-2017 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+/** @defgroup CommonInterface_Describe Description callback
+	@ingroup MainInterface
+	
+	@brief Static configuration for an %AAX plug-in
+	
+	@section describe_contents On this page
+		\li \ref describe_about
+		\li \ref describe_collection
+		\li \ref describe_effects
+		\li \ref describe_component
+		\li \ref describe_checking_results
+		\li \ref describe_validation
+		\li \ref describe_additionaltopics
+	
+	
+<DIV CLASS="section">
+	@section describe_about About the Describe callback and AAX descriptor interfaces
+		\dotfile aax_desc_interfaces.dot
+	
+		In Describe, a plug-in declares its static (or default) configuration and any properties that the host will need in order to manage the plug-in.
+		
+		A plug-in's Describe callback ties the Algorithm, GUI, and Data Model together. In this callback, the plug-in provides a description of its algorithm callbacks, data connections, and other static plug-in properties using a set of host-provided description interfaces. The plug-in uses a tiered hierarchy of these description interfaces to complete its description:
+		<UL>
+			<LI CLASS="Bullet">
+			At the top level, a single Collection interface represents properties that apply to the plug-in binary. </LI>
+			<LI CLASS="Bullet">
+			The Collection interface is populated with one or more Effect descriptors, each of which represents a single kind of effect. For example, a single dynamics plug-in binary may include both single-band and multi-band Effects. Each Effect represents a different plug-in "product" available to users. </LI>
+			<LI CLASS="Bullet">
+			Each Effect is registered with a set of one or more algorithm components that represent the specific processing configurations (e.g. stem formats, sample rates) that the plug-in supports. The set of components in a single Effect provide possible variations of the single plug-in "product", and as such these variations are mostly transparent to users. </LI>
+		</UL>
+
+		The actual description callback entrypoint is \ref ACFRegisterPlugin(), which is declared in \ref AAX_Exports.cpp. This method is implemented inside of the %AAX Library, where it calls the plug-in's custom implementation of the \ref GetEffectDescriptions() callback.
+		
+		\code		
+		// ***************************************************************************
+		// ROUTINE:	GetEffectDescriptions
+		// ***************************************************************************
+		AAX_Result GetEffectDescriptions( AAX_ICollection * outCollection )
+		{
+			AAX_Result				result = AAX_SUCCESS;
+			AAX_IEffectDescriptor *	plugInDescriptor = outCollection->NewDescriptor();
+			if ( plugInDescriptor )
+			{
+				result = DemoGain_GetPlugInDescription( plugInDescriptor );
+				if ( result == AAX_SUCCESS )
+					outCollection->AddEffect( kEffectID_DemoGain, plugInDescriptor );
+			}
+			else result = AAX_ERROR_NULL_OBJECT;
+	
+			outCollection->SetManufacturerName( "Avid, Inc." );
+			outCollection->AddPackageName( "DemoGain Plug-In" );
+			outCollection->AddPackageName( "DemoGain" );
+			outCollection->AddPackageName( "DmGi" );		
+			outCollection->SetPackageVersion( 1 );		
+	
+			return result;
+	
+		}
+		\endcode
+		<DIV CLASS="fragmentcaption">GetEffectDescriptions() from the DemoGain example plug-in</DIV>
+
+		In general, the following procedure is used when describing an %AAX plug-in:
+		<OL>
+			<LI CLASS="List">
+			Create an Effect description interface from the Collection interface provided by the host </LI>
+			<LI CLASS="List">
+			Use the Effect description interface to create references to one or more component description interfaces. </LI>
+			<LI CLASS="List">
+			Describe each algorithm component by populating the component descriptions. </LI>
+			<LI CLASS="List">
+			Add the components to the Effect description</LI>
+			<LI CLASS="List">
+			Add additional modules and properties to the Effect description. </LI>
+			<LI CLASS="List">
+			Add the completed Effect to the Collection </LI>
+			<LI CLASS="List">
+			Repeat for any additional Effects included in the plug-in binary. </LI>
+			<LI CLASS="List">
+			Return the completed Collection interface to the host and exit. </LI>
+		</OL>
+
+		\note
+		The host owns all memory associated with any descriptors that the plug-in returns via this callback.
+		
+</DIV>
+
+
+<DIV CLASS="section">
+	@section describe_collection Top level: Collection
+		The \ref AAX_ICollection interface provides a creation function (\ref AAX_ICollection::NewDescriptor()) for new plug-in descriptors, which in turn provides access to the various interfaces necessary for describing a plug-in (see the <TT>DemoGain_GetPlugInDescription()</TT> and <TT>DescribeAlgorithmComponent()</TT> listings below). 
+
+		When a plug-in description is complete, it is added to the collection via the \ref AAX_ICollection::AddEffect() method. The \ref AAX_ICollection interface also provides some additional description methods that are used to describe the overall plug-in package. These methods can be used to describe the plug-in	package's name, the name of the plug-in's manufacturer, and the plug-in package version. Once these have been described, the completed description interface is returned to the host and exits.
+	
+		\code		
+		// ***************************************************************************
+		// ROUTINE:	GetEffectDescriptions
+		// ***************************************************************************
+		AAX_Result GetEffectDescriptions( AAX_ICollection * outCollection )
+		{
+							.
+							.
+							.
+			AAX_IEffectDescriptor *	plugInDescriptor = outCollection->NewDescriptor();
+							.
+							.
+							.
+				result = DemoGain_GetPlugInDescription( plugInDescriptor );
+							.
+							.
+							.
+					outCollection->AddEffect( kEffectID_DemoGain, plugInDescriptor );
+							.
+							.
+							.
+			outCollection->SetManufacturerName( "Avid, Inc." );
+			outCollection->AddPackageName( "DemoGain Plug-In" );
+			outCollection->AddPackageName( "DemoGain" );
+			outCollection->AddPackageName( "DmGi" );		
+			outCollection->SetPackageVersion( 1 );		
+							.
+							.
+							.
+			return result;
+		}
+		\endcode
+		<DIV CLASS="fragmentcaption">Populating the AAX_ICollection interface</DIV>
+
+</DIV>
+
+
+<DIV CLASS="section">
+	@section describe_effects Middle level: Effects
+		The \ref AAX_IEffectDescriptor interface provides description methods that are used to describe the Effect, such as its name, category, associated page table, and, importantly, creation methods for its data model, GUI, and other %AAX modules. 
+		
+		\code		
+		// ***************************************************************************
+		// ROUTINE:	DemoGain_GetPlugInDescription
+		// ***************************************************************************
+		static AAX_Result DemoGain_GetPlugInDescription( AAX_IEffectDescriptor * outDescriptor )
+		{
+			int							err;
+			AAX_IComponentDescriptor *	compDesc = outDescriptor->NewComponentDescriptor ();
+			if ( !compDesc )
+				return AAX_ERROR_NULL_OBJECT;
+	
+			// Add empty component descriptors to the host, register a processing
+			// entrypoint for each, and populate with description information. 
+			//
+			// Alg component
+			DescribeAlgorithmComponent( compDesc );
+			err = outDescriptor->AddComponent( compDesc ); AAX_ASSERT (err == 0);
+	
+			outDescriptor->AddPlugInName ( "Demo Gain AAX" );
+			outDescriptor->AddPlugInName ( "Demo Gain" );
+			outDescriptor->AddPlugInName ( "DemoGain" );
+			outDescriptor->AddPlugInName ( "DmGain" );
+			outDescriptor->AddPlugInName ( "DGpr" );
+			outDescriptor->AddPlugInName ( "Dn" );
+			outDescriptor->AddPlugInCategory ( AAX_ePlugInCategory_Dynamics );
+			outDescriptor->AddProcPtr( (void *) DemoGain_Parameters::Create, kAAX_ProcPtrID_Create_EffectParameters );
+			outDescriptor->AddResourceInfo ( AAX_eResourceType_PageTable, "DemoGainPages.xml" );
+
+		#if PLUGGUI != 0
+			outDescriptor->AddProcPtr( (void *) DemoGain_GUI::Create, kAAX_ProcPtrID_Create_EffectGUI );
+		#endif
+		
+			return AAX_SUCCESS;
+		}
+		\endcode
+		<DIV CLASS="fragmentcaption">Populating an AAX_IEffectDescriptor interface</DIV>
+		
+		All components in an Effect must share the same %AAX modules; for example, it is not possible to use one data model definition for one sample rate and another data model definition for a different sample rate. Therefore, a plug-in's %AAX modules are defined in its Effect description.
+
+		@subsection describe_effects_multiple Registering multiple Effects
+			A single plug-in package may include multiple Effects, which are added in turn in the description method. Once these connections are made, Describe passes the host a populated description interface and returns.		
+		
+			For example, consider an EQ plug-in that contains both one-band and four-band variations, each of which the user should see as a distinct plug-in. These Effects would be described and added separately to the collection object and would appear as separate products to the user.
+		
+			\code
+			AAX_Result GetEffectsDescriptions ( AAX_ICollection * outCollection )
+			{
+				AAX_Result result = AAX_SUCCESS ;
+				if ( result == AAX_SUCCESS )
+				{
+					AAX_IEffectDescriptor * aDesc1 = outCollection -> NewDescriptor ();
+					// ...
+					// Populate aDesc1 with one - band EQ description
+					// ...
+					result = outCollection -> AddEffect ( kEffectID_MyOneBandEQ , aDesc1 );
+				}
+				if ( result == AAX_SUCCESS )
+				{
+					AAX_IEffectDescriptor * aDesc4 = outCollection -> NewDescriptor ();
+					// ...
+					// Populate aDesc4 with four - band EQ description
+					// ...
+					result = outCollection -> AddEffect ( kEffectID_MyFourBandEQ , aDesc4 );
+				}
+				if ( result == AAX_SUCCESS )
+				{
+					outCollection -> SetManufacturerName ( "My Plug -Ins ,  Inc." );
+					outCollection -> AddPackageName ( " MyEQ  Plug -In" );
+					outCollection -> AddPackageName ( " MyQ" ); // Short name
+					outCollection -> SetPackageVersion ( 1 );
+				}
+				return result ;
+			}
+			\endcode
+			<DIV CLASS="fragmentcaption">Registering multiple Effects in a single Collection</DIV>
+
+</DIV>
+
+
+<DIV CLASS="section">
+	@section describe_component Lowest level: Algorithm components
+		In order to register an algorithm component, a plug-in must describe the component's external interface. This includes each of the component's ports and any other fields in its context structure, a reference to its processing function entrypoint (its "Process Procedure", or ProcessProc,) and any other special properties that the host should know about.
+
+		The description of a context structure involves a set of port definitions, which can be "hard-wired" to receive data from the host (such as audio buffers), from the plug-in's data model (such as packets of coefficients), or even from past calls to the algorithm (private, persistent algorithm state). See \ref CommonInterface_Algorithm for more information on an algorithm's context structure.
+		
+		\code
+		static void DescribeAlgorithmComponent( AAX_IComponentDescriptor * outDesc )
+		{
+							.
+							.
+							.
+			AAX_Result					err;
+	
+			// Subscribe context fields to host-provided services or information
+			err = outDesc->AddField ( eAlgFieldID_AudioIn, kAAX_FieldTypeAudioIn ); AAX_ASSERT(err == 0);
+			err = outDesc->AddField ( eAlgFieldID_AudioOut, kAAX_FieldTypeAudioOut ); AAX_ASSERT (err == 0);
+			err = outDesc->AddField ( eAlgFieldID_BufferSize, kAAX_FieldTypeAudioBufferLength ); AAX_ASSERT (err == 0);
+	
+			// Register context fields as communications destinations
+			err = outDesc->AddDataInPort ( eAlgPortID_BypassIn, sizeof (int32_t) ); AAX_ASSERT (err == 0);
+			err = outDesc->AddDataInPort ( eAlgPortID_CoefsGainIn, sizeof (SDemoGain_CoefsGain) ); AAX_ASSERT (err == 0);
+							.
+							.
+							.
+		}
+		\endcode
+		<DIV CLASS="fragmentcaption">Populating a single AAX_IComponentDescriptor interface</DIV>
+		
+		@subsection describe_component_properties Algorithm callback properties
+			A set of callback properties is required when adding a Process Procedure to an algorithm component. This is done via the \ref AAX_IPropertyMap interface. Using distinct property maps, a single component may register multiple versions of its callback. For example, an audio processing component might register mono and stereo callbacks, or Native and TI callbacks, assigning each the applicable property mapping. This allows the host to determine the correct callback to use depending on the environment in which the plug-in is instantiated. 
+	
+			\code		
+			static void DescribeAlgorithmComponent( AAX_IComponentDescriptor * outDesc )
+			{
+				AAX_IPropertyMap * 			properties = outDesc->NewPropertyMap();
+								.
+								.
+								.		
+				properties->Clear ();
+				properties->AddProperty ( AAX_eProperty_ManufacturerID, cDemoGain_ManufactureID );
+				properties->AddProperty ( AAX_eProperty_ProductID, cDemoGain_ProductID );
+				properties->AddProperty ( AAX_eProperty_InputStemFormat, AAX_eStemFormat_Mono );
+				properties->AddProperty ( AAX_eProperty_OutputStemFormat, AAX_eStemFormat_Mono );
+				properties->AddProperty ( AAX_eProperty_CanBypass, true );
+	
+				// Native and AudioSuite versions
+				properties->AddProperty ( AAX_eProperty_PlugInID_Native, cDemoGain_PlugInID_Native );
+				properties->AddProperty ( AAX_eProperty_PlugInID_AudioSuite, cDemoGain_PlugInID_AudioSuite );	// Since this is a linear plug-in the RTAS version can also be an AudioSuite version.
+				properties->AddProperty ( AAX_eProperty_DSP_AudioBufferLength, kAAX_NativeAudioBufferLength_Default);
+				err = outDesc->AddProcessProc_Native ( DemoGain_AlgorithmProcessFunction <1, 1, 1<<kAAX_NativeAudioBufferLength_Default>, properties ); AAX_ASSERT (err == 0);
+	
+				// TI DSP Version
+				properties->AddProperty ( AAX_eProperty_PlugInID_TI, cDemoGain_PlugInID_TI );
+				properties->AddProperty ( AAX_eProperty_DSP_AudioBufferLength, AAX_eAudioBufferLengthDSP_Default );
+				properties->AddProperty ( AAX_eProperty_TI_InstanceCycleCount, 1055 );
+				properties->AddProperty ( AAX_eProperty_TI_SharedCycleCount, 58 );
+			}
+			\endcode
+			<DIV CLASS="fragmentcaption">Adding properties to a component description</DIV>		
+	
+			%AAX does not require that every value in \ref AAX_IPropertyMap be assigned by the developer. However, if a specic value is not assigned to one of an element's properties then the element must support any value for that property. For example, if an audio processing component does not provide any stem format properties then the host will assume that the callback will support any stem format.
+
+</DIV>
+
+
+<DIV CLASS="section">
+	@section describe_checking_results Checking Results		
+		@subsection describe_checking_results_summary Summary
+ 			- Use \ref AAX_CheckedResult to store result values from all method calls in Describe.
+			- Use the \ref AAX_SWALLOW and \ref AAX_SWALLOW_MULT macros to encapsulate independent describe code, such as registration logic for separate Effects or for separate ProcessProc variations within a single Effect.
+
+		@subsection describe_checking_results_problem The Problem
+			With plain \ref AAX_Result values it can be challenging to properly detect and handle error states. Each description method call returns an \ref AAX_Result to indicate success or failure, and often problems in a plug-in's configuration can be addressed by properly detecting and resolving errors that occur here. However, adding a return value check after ever method and providing conditional logic in the case of a failure is onerous, ugly, and difficult to maintain.
+			
+			\code
+			AAX_Result result = AAX_SUCCESS;
+
+			result = descriptor->SomeMethod();
+			result = descriptor->AnotherMethod(); // oops! might ignore an error
+			\endcode
+			
+			\code
+			// --------------------------------------------------
+			// Safer, but not a good solution:
+			// Information about the errors is lost, the
+			// merged error code is meaningless, and
+			// debugging to find the location of the
+			// failure is hard.
+			//
+			result |= descriptor->SomeMethod();
+			result |= descriptor->AnotherMethod();
+			// ...
+			if (AAX_SUCCESS != result)
+			{
+			  // handle the merged error code
+			}
+			\endcode
+			
+			\code
+			// --------------------------------------------------
+			// This is also not a good solution:
+			// There is no actual handling of errors
+			// (from the SDK example plug-ins)
+			//
+			result = descriptor->SomeMethod();
+			AAX_ASSERT(AAX_SUCCESS == result);
+			result = descriptor->AnotherMethod();
+			AAX_ASSERT(AAX_SUCCESS == result);
+			\endcode
+			
+			\code
+			// --------------------------------------------------
+			// This is correct but is too hard
+			//
+			AAX_Result result = AAX_SUCCESS;
+			result = descriptor->SomeMethod();
+			if (AAX_SUCCESS != result) {
+			  // logic to handle this error:
+			  // assert and/or log the failure?
+			  // return or continue execution?
+			}
+
+			result = descriptor->AnotherMethod();
+			if (AAX_SUCCESS != result) {
+			  // ditto
+			}
+			\endcode
+			<DIV CLASS="fragmentcaption">\ref AAX_Result based error checking is awkward</DIV>
+
+
+		@subsection describe_checking_results_solution The Solution
+			The \ref AAX_CheckedResult class is designed to solve this problem. \ref AAX_CheckedResult can be used just like a plain-old-data \ref AAX_Result :
+			
+			\code
+			AAX_CheckedResult result = AAX_SUCCESS;
+			result = descriptor->SomeMethod();
+			result = descriptor->AnotherMethod();
+			\endcode
+			<DIV CLASS="fragmentcaption">Simpler result checking with \ref AAX_CheckedResult</DIV>
+
+			When a failure is encountered, AAX_CheckedResult will:
+			- Store the error value
+			- Log the error using AAX_TRACE_RELEASE
+			- Throw an exception of type AAX_CheckedResult::Exception
+
+			To make this safe to use in the Describe routine, the AAX Library includes a try/catch block around the call to the plug-in's \c GetEffectDescriptions() routine.
+ 
+			\warning Do not use \ref AAX_CheckedResult anywhere where an exception could escape to the host (\ref GetEffectDescriptions() is OK)
+
+
+		@subsection describe_checking_results_handling_errors Handling Errors and Managing Control Flow
+			With the basic approach shown above, any error which is encountered will throw an exception which will cancel the plug-in's registration and prevent the plug-in from being shown in the host. However, most errors can be safely handled without canceling the entire plug-in registration.
+
+			\code
+			AAX_CheckedResult result = AAX_SUCCESS;
+
+			// effect 1 registration
+			result = DescribeMyEffect1( effect1Descriptor );
+			result = outCollection->AddEffect( myEffect1ID, effect1Descriptor );
+
+			// effect 2 registration
+			result = DescribeMyEffect2( effect2Descriptor );
+			result = outCollection->AddEffect( myEffect2ID, effect2Descriptor );
+			\endcode
+			<DIV CLASS="fragmentcaption">Example with no error handling</DIV>
+
+			In this example, a failure when describing either individual effect will prevent the other effect from being registered. Registration of individual ProcessProcs within a single effect, e.g. for different stem formats, is similar.
+
+			To allow the registration of other effects to proceed in the event of a failure, any exceptions thrown during the registration of one effect should be caught and should only prevent the registration of that individual effect.
+
+			\code
+			AAX_CheckedResult result = AAX_SUCCESS;
+
+			// effect 1 registration
+			try {
+			  result = DescribeMyEffect1( effect1Descriptor );
+			  result = outCollection->AddEffect( myEffect1ID, effect1Descriptor );
+			}
+			catch (const AAX_CheckedResult::Exception& ex) {
+			  // log the error using ex.What()
+			  // swallow the exception and proceed
+			}
+
+			// effect 2 registration
+			try {
+			  result = DescribeMyEffect2( effect2Descriptor );
+			  result = outCollection->AddEffect( myEffect2ID, effect2Descriptor );
+			}
+			catch (const AAX_CheckedResult::Exception& ex) {
+			  // ditto
+			}
+			\endcode
+			<DIV CLASS="fragmentcaption">Example of error handling with try/catch</DIV>
+
+			This solves the problem fully, but it is still cumbersome - especially when registering a long list of separate ProcessProc variants!
+
+			The \ref AAX_SWALLOW_MULT macro makes it easier to handle errors which are thrown by \ref AAX_CheckedResult :
+
+			\code
+			AAX_CheckedResult result = AAX_SUCCESS;
+
+			// effect 1 registration
+			AAX_SWALLOW_MULT (
+			  result = DescribeMyEffect1( effect1Descriptor );
+			  result = outCollection->AddEffect( myEffect1ID, effect1Descriptor );
+			);
+
+			// effect 2 registration
+			AAX_SWALLOW_MULT (
+			  result = DescribeMyEffect2( effect2Descriptor );
+			  result = outCollection->AddEffect( myEffect2ID, effect2Descriptor );
+			);
+			\endcode
+			<DIV CLASS="fragmentcaption">Example of error handling with \ref AAX_SWALLOW_MULT</DIV>
+			
+			<EM CLASS="Bold">Variations</EM>
+			- For single-line try/catch there is also \ref AAX_SWALLOW.
+			- If you need to reference the error value after the exception is caught, use \ref AAX_CAPTURE_MULT (multi-line) or \ref AAX_CAPTURE (single-line)
+			- If you know that a certain error code is OK and should not throw in a given situation then you can add it as an exception to the \ref AAX_CheckedResult object with \ref AAX_CheckedResult::AddAcceptedResult().
+
+			For examples of \ref AAX_CheckedResult in use, see the \ref DemoGain_Multichannel and \ref DemoGain_UpMixer plug-ins
+
+</DIV>
+
+
+<DIV CLASS="section">
+	@section describe_validation Describe Validation
+		@subsection describe_validation_dsh Validation with DSH
+			You can validate your plug-in's Describe routine using the \ref DSH_Guide "DigiShell" command-line tool. The validation command is available directly in the aaxh dish and is also available through an %AAX Validator test module:
+			
+			<EM CLASS="Bold">aaxh dish</EM>
+			\verbatim
+dsh> load_dish aaxh
+dsh> loadpi "/quoted/path/without escape chars/MyPlugIn.aaxplugin"
+dsh> getdescriptionvalidationinfo 0
+			\endverbatim
+		
+			<EM CLASS="Bold">%AAX Validator</EM>
+			\verbatim
+dsh> load_dish aaxval
+dsh> runtest [test.describe_validation, "/quoted/path/without escape chars/MyPlugIn.aaxplugin"]
+			\endverbatim
+		
+		@subsection describe_validation_protools Validation with Pro Tools
+			Beginning in Pro Tools 12.8.2, developer builds of Pro Tools will also check plug-in describe routines and will present an alert dialog when the plug-in is scanned if any aspect of the plug-in's describe code has failed the validation step.
+			
+			\nodox Image files must be copied to the /output/html directory \endnodox
+			<IMG alt="Describe validation warning in a Pro Tools developer build" src="describe_validation_error_pro_tools.png" />
+			<DIV CLASS="imagecaption">
+			Describe validation warning in a Pro Tools developer build</DIV>
+			
+			The specific kinds of errors which were encountered will be printed to the \ref AAX_DigiTrace_Guide "DigiTrace" log file:
+			
+			\verbatim
+13033.502646,00307,0073: ERROR: Unknown target host for the plug-in.
+13033.502662,00307,0073: ERROR: PlugInID property is missing for a ProcessProc (process, initialization, or background function).
+13033.502734,00307,0e0f: CMN_TRACEASSERT  Sandbox.aaxplugin configuration contains 2 errors. See the DigiTrace log or run the AAX Validator for more info. (0 == numErrors)
+			\endverbatim
+			
+			This check may be suppressed using the following \ref aax_pro_tools_guide_06c_digioptions "DigiOption":
+			
+			<TT>TestPlugInDescriptions 0</TT>
+
+</DIV>
+
+
+<DIV CLASS="section">
+	@section describe_additionaltopics Additional Topics
+		
+	\sa \ref AdditionalFeatures_Meters
+
+</DIV>
+	
+ */
+
+/** \fn extern AAX_Result GetEffectDescriptions( AAX_ICollection * inCollection )
+	\brief The plug-in's static Description entrypoint
+	
+	This function is responsible for describing an %AAX plug-in to the host.  It does this by
+	populating an AAX_ICollection interface.  
+	
+	This function must be included in every plug-in that links to the %AAX library. It is called
+	when the host first loads the plug-in.
+	
+	\param[out] inCollection
+
+	\ingroup CommonInterface_Describe
+ */
+ 
+ extern AAX_Result GetEffectDescriptions( AAX_ICollection * inCollection );

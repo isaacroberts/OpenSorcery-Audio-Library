@@ -1,0 +1,52 @@
+/*===================================================================================================
+AAX_AdditionalFeatures_Hybrid.doxygen
+
+Copyright 2016 by Avid Technology, Inc. 
+All rights reserved.
+
+===================================================================================================*/
+
+
+/** @defgroup additionalFeatures_Hybrid Hybrid Processing architecture
+ 	@ingroup AdditionalFeatures
+ 	
+ 	@brief An architecture combining low-latency and high-latency audio processing
+ 
+  	\image html AAX_Hybrid.png
+ 	\image rtf AAX_Hybrid.png
+ 
+ 	\section additionalFeatures_Hybrid_overview Overview of Hybrid
+ 		
+ 		Hybrid processing is an optional feature that allows a single plug-in to simultaneously render data on the host's low- and high-latency signal networks. In many large plug-ins this can be very useful. For example, consider a reverb algorithm with both early reflection and tail processing. With %AAX Hybrid, this plug-in can process the early reflections at low latency while allowing the tail algorithm to be handled at higher latency (and thus higher efficiency.) Other kinds of algorithms that could benefit from Hybrid processing are noise reductions, analyzers, multi-effect suites, and instruments.
+
+ 		Because the low-latency %AAX signal network may be run on DSP hardware, %AAX DSP plug-ins that incorporate Hybrid processing can split audio processing between the DSP and the host. This provides the benefits of low latency, highly deterministic DSP-based processing while also allowing the plug-in to leverage the high-latency power of the Intel core where appropriate.
+ 		
+ 		%AAX Hybrid is an internal feature and is not exposed to users, except in terms of better plug-in performance and more efficient DSP usage.
+ 		
+ 		\note %AAX Hybrid may be protected by one or more U.S. and non-U.S. patents. Details are available at <a href="https://www.avid.com/patents">www.avid.com/patents</a>.
+ 	
+ 	\section additionalFeatures_Hybrid_adding Implementing Hybrid processing
+ 		
+ 		<em>For an example of Hybrid processing, see the \ref DemoDelay_Hybrid example plug-in</em>
+ 		
+ 		To register for Hybrid processing, a plug-in should add values for \ref AAX_eProperty_HybridInputStemFormat and \ref AAX_eProperty_HybridOutputStemFormat to the associated ProcessProc property map. Once these values have been registered, both the ProcessProc callback and the Hybrid render function in the plug-in's data model will be invoked during processing.
+ 		
+ 		Hybrid processing context information is provided via a dedicated \ref AAX_SHybridRenderInfo "Hybrid processing context structure". It is not possible to register additional fields on this context. However, unlike a normal algorithm ProcessProc, the Hybrid render method is implemented directly within the plug-in's effect parameters object and has direct access to the data model memory. This is possible since the render method will always run on the host, and makes it easier to implement algorithms that require access to the data model, e.g. for direct access to impulse responses, etc.
+ 		
+ 		The %AAX host provides dedicated audio buffers in both the ProcessProc context and the Hybrid processing context. These buffers can be used to pass audio data between the low-latency ProcesProc and the Hybrid render contexts.
+ 			\li The plug-in may pass output from the low-latency ProcessProc to the Hybrid render method using additional audio buffers that are added at the end of the ProcessProc context's normal output buffer array. The ProcessProc may perform any pre-processing that is desired before passing audio to the Hybrid render context via these buffers. The \ref AAX_eProperty_HybridOutputStemFormat property defines how many buffers will be sent from the ProcessProc to the Hybrid render method.
+ 			\li Similarly, the plug-in may pass samples from the Hybrid processing callback to the low-latency ProcessProc using additional audio buffers that are added at the end of the ProcessProc context's normal input buffer array. The \ref AAX_eProperty_HybridInputStemFormat property defines how many buffers will be sent from the Hybrid render method to the ProcessProc.
+ 		
+ 		Samples which are sent from the ProcessProc to the Hybrid processing callback and back to the ProcessProc are delayed by a fixed amount relative to the normal input samples that are processed directly by the ProcessProc to its output buffers. The number of samples of delay that are added in this round-trip is available to the plug-in via \ref AAX_IController::GetHybridSignalLatency() .
+ 	
+ 	\section additionalFeatures_Hybrid_subtleties Additional information
+ 	
+ 		\subsection additionalFeatures_Hybrid_parametertiming Parameter update timing
+ 			Because updates are not passed to the \ref AAX_SHybridRenderInfo "Hybrid processing context" using the normal %AAX port infrastructure, any parameter updates from automation will be reflected in this context a little bit ahead of time (~21 ms at 44.1 kHz.) See the \ref advancedTopics_parameterUpdateTiming page for a discussion of parameter timing accuracy and some suggestions of how you can maintain accurate parameter update timing.
+ 		
+ 		\subsection additionalFeatures_Hybrid_hostsupport Host support and alternatives
+ 			Not all AAX hosts support AAX Hybrid processing. See the \ref HostSupport page for additional information.
+ 			
+ 			\sa AuxInterface_DirectData for another approach for transferring non-audio data between the algorithm callback and the plug-in's data model.
+ 	
+ */
