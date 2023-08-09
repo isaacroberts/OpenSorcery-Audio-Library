@@ -19,7 +19,7 @@ C:\Boost\libs
 C:\Libs\Libs
 
 Intermediates Path:
-	C:\Users\yitza\Documents\BuildFolder\PluginName
+	C:\Users\yourname\Documents\BuildFolder\PluginName
 
 
 Module path for Visual Studio:

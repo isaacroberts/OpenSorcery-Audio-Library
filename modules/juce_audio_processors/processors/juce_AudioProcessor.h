@@ -40,9 +40,11 @@ namespace juce
     plugin, you should implement a global function called createPluginFilter() which
     creates and returns a new instance of your subclass.
 
+    @see AAXClientExtensions, VST2ClientExtensions, VST3ClientExtensions
+
     @tags{Audio}
 */
-class JUCE_API  AudioProcessor
+class JUCE_API  AudioProcessor : private AAXClientExtensions
 {
 protected:
     struct BusesProperties;
@@ -309,29 +311,37 @@ public:
     */
     struct BusesLayout
     {
+    private:
+        template <typename This>
+        static auto& getBuses (This& t, bool isInput) { return isInput ? t.inputBuses : t.outputBuses; }
+
+    public:
         /** An array containing the list of input buses that this processor supports. */
         Array<AudioChannelSet> inputBuses;
 
         /** An array containing the list of output buses that this processor supports. */
         Array<AudioChannelSet> outputBuses;
 
+        auto& getBuses (bool isInput) const { return getBuses (*this, isInput); }
+        auto& getBuses (bool isInput)       { return getBuses (*this, isInput); }
+
         /** Get the number of channels of a particular bus */
         int getNumChannels (bool isInput, int busIndex) const noexcept
         {
-            auto& bus = (isInput ? inputBuses : outputBuses);
+            auto& bus = getBuses (isInput);
             return isPositiveAndBelow (busIndex, bus.size()) ? bus.getReference (busIndex).size() : 0;
         }
 
         /** Get the channel set of a particular bus */
         AudioChannelSet& getChannelSet (bool isInput, int busIndex) noexcept
         {
-            return (isInput ? inputBuses : outputBuses).getReference (busIndex);
+            return getBuses (isInput).getReference (busIndex);
         }
 
         /** Get the channel set of a particular bus */
         AudioChannelSet getChannelSet (bool isInput, int busIndex) const noexcept
         {
-            return (isInput ? inputBuses : outputBuses)[busIndex];
+            return getBuses (isInput)[busIndex];
         }
 
         /** Get the input channel layout on the main bus. */
@@ -418,7 +428,7 @@ public:
             @param set           The AudioChannelSet which is to be probed.
             @param currentLayout If non-null, pretend that the current layout of the AudioProcessor is
                                  currentLayout. On exit, currentLayout will be modified to
-                                 to represent the buses layouts of the AudioProcessor as if the layout
+                                 represent the buses layouts of the AudioProcessor as if the layout
                                  of the receiver had been successfully changed. This is useful as changing
                                  the layout of the receiver may change the bus layout of other buses.
 
@@ -524,7 +534,7 @@ public:
 
          @see addBus
     */
-    virtual bool canAddBus (bool isInput) const                     { ignoreUnused (isInput); return false; }
+    virtual bool canAddBus (bool isInput) const;
 
     /**  Callback to query if the last bus can currently be removed.
 
@@ -537,7 +547,7 @@ public:
 
          The default implementation will always return false.
     */
-    virtual bool canRemoveBus (bool isInput) const                  { ignoreUnused (isInput); return false; }
+    virtual bool canRemoveBus (bool isInput) const;
 
     /** Dynamically request an additional bus.
 
@@ -914,7 +924,7 @@ public:
         plug-in's bypass. You should always check the value of this parameter in your
         processBlock callback and bypass any effects if it is non-zero.
     */
-    virtual AudioProcessorParameter* getBypassParameter()         { return nullptr; }
+    virtual AudioProcessorParameter* getBypassParameter() const        { return nullptr; }
 
     //==============================================================================
     /** Returns true if the processor is being run in an offline mode for rendering.
@@ -1168,18 +1178,30 @@ public:
     void setRateAndBufferSizeDetails (double sampleRate, int blockSize) noexcept;
 
     //==============================================================================
-    /** AAX plug-ins need to report a unique "plug-in id" for every audio layout
-        configuration that your AudioProcessor supports on the main bus. Override this
-        function if you want your AudioProcessor to use a custom "plug-in id" (for example
-        to stay backward compatible with older versions of JUCE).
-
-        The default implementation will compute a unique integer from the input and output
-        layout and add this value to the 4 character code 'jcaa' (for native AAX) or 'jyaa'
-        (for AudioSuite plug-ins).
+    /** Returns a reference to an object that implements AAX specific information regarding
+        this AudioProcessor.
     */
-    virtual int32 getAAXPluginIDForMainBusConfig (const AudioChannelSet& mainInputLayout,
-                                                  const AudioChannelSet& mainOutputLayout,
-                                                  bool idForAudioSuite) const;
+    virtual AAXClientExtensions& getAAXClientExtensions()       { return *this; }
+
+    /** Returns a non-owning pointer to an object that implements VST2 specific information
+        regarding this AudioProcessor.
+
+        By default, for backwards compatibility, this will attempt to dynamic-cast this
+        AudioProcessor to VST2ClientExtensions.
+        It is recommended to override this function to return a pointer directly to an object
+        of the correct type in order to avoid this dynamic cast.
+    */
+    virtual VST2ClientExtensions* getVST2ClientExtensions();
+
+    /** Returns a non-owning pointer to an object that implements VST3 specific information
+        regarding this AudioProcessor.
+
+        By default, for backwards compatibility, this will attempt to dynamic-cast this
+        AudioProcessor to VST3ClientExtensions.
+        It is recommended to override this function to return a pointer directly to an object
+        of the correct type in order to avoid this dynamic cast.
+    */
+    virtual VST3ClientExtensions* getVST3ClientExtensions();
 
     //==============================================================================
     /** Some plug-ins support sharing response curve data with the host so that it can
@@ -1361,8 +1383,8 @@ protected:
 
         void addBus (bool isInput, const String& name, const AudioChannelSet& defaultLayout, bool isActivatedByDefault = true);
 
-        JUCE_NODISCARD BusesProperties withInput  (const String& name, const AudioChannelSet& defaultLayout, bool isActivatedByDefault = true) const;
-        JUCE_NODISCARD BusesProperties withOutput (const String& name, const AudioChannelSet& defaultLayout, bool isActivatedByDefault = true) const;
+        [[nodiscard]] BusesProperties withInput  (const String& name, const AudioChannelSet& defaultLayout, bool isActivatedByDefault = true) const;
+        [[nodiscard]] BusesProperties withOutput (const String& name, const AudioChannelSet& defaultLayout, bool isActivatedByDefault = true) const;
     };
 
     /** Callback to query if adding/removing buses currently possible.

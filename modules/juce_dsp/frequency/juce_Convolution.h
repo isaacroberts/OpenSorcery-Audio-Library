@@ -184,19 +184,11 @@ public:
         stereo processing.
     */
     template <typename ProcessContext,
-              std::enable_if_t<std::is_same<typename ProcessContext::SampleType, float>::value, int> = 0>
+              std::enable_if_t<std::is_same_v<typename ProcessContext::SampleType, float>, int> = 0>
     void process (const ProcessContext& context) noexcept
     {
         processSamples (context.getInputBlock(), context.getOutputBlock(), context.isBypassed);
     }
-	
-	
-	template <typename ProcessContext,
-			  std::enable_if_t<std::is_same<typename ProcessContext::SampleType, float>::value, int> = 0>
-	void bypassProcess (const ProcessContext& context) noexcept
-	{
-		processSamples (context.getInputBlock(), context.getOutputBlock(), true);
-	}
 
     //==============================================================================
     enum class Stereo    { no, yes };
@@ -273,8 +265,6 @@ public:
     */
     int getLatency() const;
 
-	bool isTailing() const;
-	
 private:
     //==============================================================================
     Convolution (const Latency&,
@@ -283,13 +273,6 @@ private:
 
     void processSamples (const AudioBlock<const float>&, AudioBlock<float>&, bool isBypassed) noexcept;
 
-	
-public:
-//	void setDryMix(float set) { mixer.setDryMix(set); }
-//	void setWetMix(float set) { mixer.setWetMix(set); }
-//	void setMix(float set) 	  { mixer.setMix(set); }
-	
-private:
     class Mixer
     {
     public:
@@ -302,16 +285,15 @@ private:
                              ProcessWet&&) noexcept;
 
         void reset();
-		bool isTailing() const; 
+
     private:
         std::array<SmoothedValue<float>, 2> volumeDry, volumeWet;
         AudioBlock<float> dryBlock;
         HeapBlock<char> dryBlockStorage;
-//		float dryMix=0.0f, wetMix=1.0f;
         double sampleRate = 0;
         bool currentIsBypassed = false;
     };
-	
+
     //==============================================================================
     class Impl;
     std::unique_ptr<Impl> pimpl;

@@ -1,0 +1,4 @@
+
+cd "C:\Program Files (x86)\PACEAntiPiracy\Eden\Fusion\Versions\5"
+wraptool.exe sign --verbose --account *** --keyfile "C:\Users\WINDOWS\Dropbox\JUCE_Secrets\AAX\DeveloperIDKey.p12" --keypassword "***" --password "***"--wcguid *** --in "C:\Users\WINDOWS\Dropbox\MagicVocals\VocalSweetener\VS2019\x64\Release\AAX\MagicVocals.aaxplugin" --out "C:\Users\WINDOWS\Dropbox\MagicVocals\VocalSweetener\VS2019\x64\Release\AAX\MagicVocals.aaxplugin" --autoinstall on
+

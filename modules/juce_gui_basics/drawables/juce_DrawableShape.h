@@ -97,7 +97,7 @@ public:
     /** @internal */
     void paint (Graphics&) override;
     /** @internal */
-    bool hitTest (Pix x, Pix y) override;
+    bool hitTest (int x, int y) override;
     /** @internal */
     bool replaceColour (Colour originalColour, Colour replacementColour) override;
     /** @internal */

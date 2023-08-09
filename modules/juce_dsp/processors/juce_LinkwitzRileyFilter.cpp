@@ -88,8 +88,6 @@ void LinkwitzRileyFilter<SampleType>::snapToZero() noexcept
 template <typename SampleType>
 SampleType LinkwitzRileyFilter<SampleType>::processSample (int channel, SampleType inputValue)
 {
-	jassert(inputValue < 1000 && inputValue > -1000);
-	
     auto yH = (inputValue - (R2 + g) * s1[(size_t) channel] - s2[(size_t) channel]) * h;
 
     auto yB = g * yH + s1[(size_t) channel];

@@ -105,10 +105,10 @@ class JUCE_API  LookAndFeel   : public ScrollBar::LookAndFeelMethods,
                                 public ExtraLookAndFeelBaseClasses::AudioDeviceSelectorComponentMethods,
                                 public ExtraLookAndFeelBaseClasses::LassoComponentMethods,
                                 public SidePanel::LookAndFeelMethods
-#ifdef RT_INCLUDED
-								, public RTLookAndFeel
-#endif
 
+#ifdef RT_INCLUDED
+    , public RTLookAndFeel
+#endif 
 {
 public:
     //==============================================================================

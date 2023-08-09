@@ -90,17 +90,18 @@ public:
     /** @internal */
     void paint (Graphics&) override;
     /** @internal */
-    bool hitTest (Pix x, Pix y) override;
+    bool hitTest (int x, int y) override;
     /** @internal */
     std::unique_ptr<Drawable> createCopy() const override;
     /** @internal */
     Rectangle<float> getDrawableBounds() const override;
     /** @internal */
     Path getOutlineAsPath() const override;
+    /** @internal */
+    std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
 
 private:
     //==============================================================================
-    std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
     bool setImageInternal (const Image&);
 
     //==============================================================================

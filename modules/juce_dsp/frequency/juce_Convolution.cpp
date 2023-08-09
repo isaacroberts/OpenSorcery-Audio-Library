@@ -618,7 +618,7 @@ static float calculateNormalisationFactor (float sumSquaredMagnitude)
     if (sumSquaredMagnitude < 1e-8f)
         return 1.0f;
 
-    return 1.f / std::sqrt (sumSquaredMagnitude);
+    return 0.125f / std::sqrt (sumSquaredMagnitude);
 }
 
 static void normaliseImpulseResponse (AudioBuffer<float>& buf)
@@ -647,7 +647,7 @@ static AudioBuffer<float> resampleImpulseResponse (const AudioBuffer<float>& buf
                                                    const double srcSampleRate,
                                                    const double destSampleRate)
 {
-    if (srcSampleRate == destSampleRate)
+    if (approximatelyEqual (srcSampleRate, destSampleRate))
         return buf;
 
     const auto factorReading = srcSampleRate / destSampleRate;
@@ -780,7 +780,7 @@ private:
         auto resampled = resampleImpulseResponse (impulseResponse, originalSampleRate, processSpec.sampleRate);
 
         if (wantsNormalise == Convolution::Normalise::yes)
-			normaliseImpulseResponse(resampled);
+            normaliseImpulseResponse (resampled);
         else
             resampled.applyGain ((float) (originalSampleRate / processSpec.sampleRate));
 
@@ -1131,20 +1131,20 @@ private:
 //==============================================================================
 void Convolution::Mixer::prepare (const ProcessSpec& spec)
 {
-	for (auto& dry : volumeDry)
-		dry.reset (spec.sampleRate, 0.05);
-	
-	for (auto& wet : volumeWet)
-		wet.reset (spec.sampleRate, 0.05);
-	
-	sampleRate = spec.sampleRate;
-	
-	dryBlock = AudioBlock<float> (dryBlockStorage,
-								  jmin (spec.numChannels, 2u),
-								  spec.maximumBlockSize);
-	
+    for (auto& dry : volumeDry)
+        dry.reset (spec.sampleRate, 0.05);
+
+    for (auto& wet : volumeWet)
+        wet.reset (spec.sampleRate, 0.05);
+
+    sampleRate = spec.sampleRate;
+
+    dryBlock = AudioBlock<float> (dryBlockStorage,
+                                  jmin (spec.numChannels, 2u),
+                                  spec.maximumBlockSize);
+
 }
-	
+
 template <typename ProcessWet>
 void Convolution::Mixer::processSamples (const AudioBlock<const float>& input,
                                          AudioBlock<float>& output,
@@ -1154,62 +1154,47 @@ void Convolution::Mixer::processSamples (const AudioBlock<const float>& input,
     const auto numChannels = jmin (input.getNumChannels(), volumeDry.size());
     const auto numSamples  = jmin (input.getNumSamples(), output.getNumSamples());
 
-	auto dry = dryBlock.getSubsetChannelBlock (0, numChannels);
+    auto dry = dryBlock.getSubsetChannelBlock (0, numChannels);
 
-	if (volumeDry[0].isSmoothing())
-	{
-		dry.copyFrom (input);
-		
-		for (size_t channel = 0; channel < numChannels; ++channel)
-			volumeDry[channel].applyGain (dry.getChannelPointer (channel), (int) numSamples);
-		
-		processWet (input, output);
-		
-		for (size_t channel = 0; channel < numChannels; ++channel)
-			volumeWet[channel].applyGain (output.getChannelPointer (channel), (int) numSamples);
-		
-		output += dry;
-	}
-	else
-	{
-		if (! currentIsBypassed)
-			processWet (input, output);
-		
-		if (isBypassed != currentIsBypassed)
-		{
-			currentIsBypassed = isBypassed;
-			
-			for (size_t channel = 0; channel < numChannels; ++channel)
-			{
-				volumeDry[channel].setTargetValue (isBypassed ? 0.0f : 1.0f);
-				volumeDry[channel].reset (sampleRate, 0.05);
-				volumeDry[channel].setTargetValue (isBypassed ? 1.0f : 0.0f);
-				
-				volumeWet[channel].setTargetValue (isBypassed ? 1.0f : 0.0f);
-				volumeWet[channel].reset (sampleRate, 0.05);
-				volumeWet[channel].setTargetValue (isBypassed ? 0.0f : 1.0f);
-			}
-		}
-	}
+    if (volumeDry[0].isSmoothing())
+    {
+        dry.copyFrom (input);
+
+        for (size_t channel = 0; channel < numChannels; ++channel)
+            volumeDry[channel].applyGain (dry.getChannelPointer (channel), (int) numSamples);
+
+        processWet (input, output);
+
+        for (size_t channel = 0; channel < numChannels; ++channel)
+            volumeWet[channel].applyGain (output.getChannelPointer (channel), (int) numSamples);
+
+        output += dry;
+    }
+    else
+    {
+        if (! currentIsBypassed)
+            processWet (input, output);
+
+        if (isBypassed != currentIsBypassed)
+        {
+            currentIsBypassed = isBypassed;
+
+            for (size_t channel = 0; channel < numChannels; ++channel)
+            {
+                volumeDry[channel].setTargetValue (isBypassed ? 0.0f : 1.0f);
+                volumeDry[channel].reset (sampleRate, 0.05);
+                volumeDry[channel].setTargetValue (isBypassed ? 1.0f : 0.0f);
+
+                volumeWet[channel].setTargetValue (isBypassed ? 1.0f : 0.0f);
+                volumeWet[channel].reset (sampleRate, 0.05);
+                volumeWet[channel].setTargetValue (isBypassed ? 0.0f : 1.0f);
+            }
+        }
+    }
 }
 
 void Convolution::Mixer::reset() { dryBlock.clear(); }
 
-bool Convolution::Mixer::isTailing() const
-{
-	if (!currentIsBypassed)
-		return true;
-	else
-	{
-		return volumeDry[0].isSmoothing();
-	}
-}
-	
-bool Convolution::isTailing() const
-{
-	return mixer.isTailing();
-}
-	
 //==============================================================================
 Convolution::Convolution()
     : Convolution (Latency { 0 })

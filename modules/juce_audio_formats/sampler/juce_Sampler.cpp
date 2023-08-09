@@ -47,7 +47,6 @@ SamplerSound::SamplerSound (const String& soundName,
 
         source.read (data.get(), 0, length + 4, 0, true, true);
 
-		
         params.attack  = static_cast<float> (attackTimeSecs);
         params.release = static_cast<float> (releaseTimeSecs);
     }

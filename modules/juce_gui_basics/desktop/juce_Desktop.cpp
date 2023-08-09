@@ -27,7 +27,7 @@ namespace juce
 {
 
 Desktop::Desktop()
-    : mouseSources (new MouseInputSource::SourceList()),
+    : mouseSources (new detail::MouseInputSourceList()),
       masterScaleFactor ((float) getDefaultMasterScale()),
       nativeDarkModeChangeDetectorImpl (createNativeDarkModeChangeDetectorImpl())
 {
@@ -223,7 +223,7 @@ void Desktop::handleAsyncUpdate()
 void Desktop::addDarkModeSettingListener    (DarkModeSettingListener* l)  { darkModeSettingListeners.add (l); }
 void Desktop::removeDarkModeSettingListener (DarkModeSettingListener* l)  { darkModeSettingListeners.remove (l); }
 
-void Desktop::darkModeChanged()  { darkModeSettingListeners.call ([] (DarkModeSettingListener& l) { l.darkModeSettingChanged(); }); }
+void Desktop::darkModeChanged()  { darkModeSettingListeners.call ([] (auto& l) { l.darkModeSettingChanged(); }); }
 
 //==============================================================================
 void Desktop::resetTimer()
@@ -353,7 +353,7 @@ void Desktop::setGlobalScaleFactor (float newScaleFactor) noexcept
 {
     JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
 
-    if (masterScaleFactor != newScaleFactor)
+    if (! approximatelyEqual (masterScaleFactor, newScaleFactor))
     {
         masterScaleFactor = newScaleFactor;
         displays->refresh();

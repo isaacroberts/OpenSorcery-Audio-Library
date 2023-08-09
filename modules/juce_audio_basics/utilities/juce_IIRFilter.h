@@ -56,12 +56,6 @@ public:
     ~IIRCoefficients() noexcept;
 
     //==============================================================================
-	static IIRCoefficients makeBypass() noexcept
-	{
-		return IIRCoefficients(1, 0, 0, 1, 0, 0);
-	}
-	
-
     /** Returns the coefficients for a low-pass filter. */
     static IIRCoefficients makeLowPass (double sampleRate,
                                         double frequency) noexcept;
@@ -142,6 +136,12 @@ public:
                                            double centreFrequency,
                                            double Q,
                                            float gainFactor) noexcept;
+
+
+    static IIRCoefficients makeBypass() noexcept
+    {
+        return IIRCoefficients(1, 0, 0, 1, 0, 0);
+    }
 
     //==============================================================================
     /** The raw coefficients.

@@ -23,12 +23,12 @@
   ==============================================================================
 */
 
-#if JUCE_PLUGINHOST_LV2
+#if JUCE_PLUGINHOST_LV2 && (! (JUCE_ANDROID || JUCE_IOS))
 
 #include "juce_LV2Common.h"
 #include "juce_LV2Resources.h"
 
-#include <juce_gui_extra/native/juce_mac_NSViewFrameWatcher.h>
+#include <juce_gui_extra/native/juce_NSViewFrameWatcher_mac.h>
 
 #include <thread>
 
@@ -944,9 +944,10 @@ struct WorkSubmitter
     CriticalSection* workMutex;
 };
 
-template <typename Trivial, std::enable_if_t<std::is_trivial<Trivial>::value, int> = 0>
+template <typename Trivial>
 static auto toChars (Trivial value)
 {
+    static_assert (std::is_trivial_v<Trivial>);
     std::array<char, sizeof (Trivial)> result;
     writeUnaligned (result.data(), value);
     return result;
@@ -956,7 +957,7 @@ template <typename Context>
 class WorkQueue
 {
 public:
-    static_assert (std::is_trivial<Context>::value, "Context must be copyable as bytes");
+    static_assert (std::is_trivial_v<Context>, "Context must be copyable as bytes");
 
     explicit WorkQueue (int size)
         : fifo (size), data (static_cast<size_t> (size)) {}
@@ -1277,10 +1278,8 @@ private:
                                                   LV2_Options_Option* options,
                                                   LV2_Worker_Schedule* schedule,
                                                   LV2_Resize_Port_Resize* resize,
-                                                  LV2_Log_Log* log)
+                                                  [[maybe_unused]] LV2_Log_Log* log)
     {
-        ignoreUnused (log);
-
         return { LV2_Feature { LV2_STATE__loadDefaultState,         nullptr },
                  LV2_Feature { LV2_BUF_SIZE__boundedBlockLength,    nullptr },
                  LV2_Feature { LV2_URID__map,                       map },
@@ -1840,7 +1839,12 @@ class World
 public:
     World() : world (lilv_world_new()) {}
 
-    void loadAll() { lilv_world_load_all (world.get()); }
+    void loadAllFromPaths (const NodeString& paths)
+    {
+        lilv_world_set_option (world.get(), LILV_OPTION_LV2_PATH, paths.get());
+        lilv_world_load_all (world.get());
+    }
+
     void loadBundle   (const NodeUri& uri)      { lilv_world_load_bundle   (world.get(), uri.get()); }
     void unloadBundle (const NodeUri& uri)      { lilv_world_unload_bundle (world.get(), uri.get()); }
 
@@ -2507,7 +2511,7 @@ public:
             // In this case, we find the closest label by searching the midpoints of the scale
             // point values.
             const auto index = std::distance (midPoints.begin(),
-                                              std::lower_bound (midPoints.begin(), midPoints.end(), normalisedValue));
+                                              std::lower_bound (midPoints.begin(), midPoints.end(), denormalised));
             jassert (isPositiveAndBelow (index, info.scalePoints.size()));
             return info.scalePoints[(size_t) index].label;
         }
@@ -2549,6 +2553,7 @@ private:
             return {};
 
         std::vector<float> result;
+        result.reserve (set.size() - 1);
 
         for (auto it = std::next (set.begin()); it != set.end(); ++it)
             result.push_back ((std::prev (it)->value + it->value) * 0.5f);
@@ -2574,15 +2579,8 @@ public:
     File bundlePath;
     URL pluginUri;
 
-    auto withBundlePath (File v) const noexcept { return with (&UiInstanceArgs::bundlePath, std::move (v)); }
-    auto withPluginUri  (URL v)  const noexcept { return with (&UiInstanceArgs::pluginUri,  std::move (v)); }
-
-private:
-    template <typename Member>
-    UiInstanceArgs with (Member UiInstanceArgs::* member, Member value) const noexcept
-    {
-        return juce::lv2_host::with (*this, member, std::move (value));
-    }
+    auto withBundlePath (File v) const noexcept { return withMember (*this, &UiInstanceArgs::bundlePath, std::move (v)); }
+    auto withPluginUri  (URL v)  const noexcept { return withMember (*this, &UiInstanceArgs::pluginUri,  std::move (v)); }
 };
 
 static File bundlePathFromUri (const char* uri)
@@ -2609,7 +2607,7 @@ public:
           mLV2_UI__floatProtocol   (map.map (LV2_UI__floatProtocol)),
           mLV2_ATOM__atomTransfer  (map.map (LV2_ATOM__atomTransfer)),
           mLV2_ATOM__eventTransfer (map.map (LV2_ATOM__eventTransfer)),
-          instance (makeInstance (args.pluginUri, args.bundlePath, features)),
+          instance (makeInstance (args, features)),
           idleCallback (getExtensionData<LV2UI_Idle_Interface> (world, LV2_UI__idleInterface))
     {
         jassert (descriptor != nullptr);
@@ -2677,14 +2675,14 @@ private:
     using Instance = std::unique_ptr<void, void (*) (LV2UI_Handle)>;
     using Idle = int (*) (LV2UI_Handle);
 
-    Instance makeInstance (const URL& pluginUri, const File& bundlePath, const LV2_Feature* const* features)
+    Instance makeInstance (const UiInstanceArgs& args, const LV2_Feature* const* features)
     {
         if (descriptor->get() == nullptr)
             return { nullptr, [] (LV2UI_Handle) {} };
 
         return Instance { descriptor->get()->instantiate (descriptor->get(),
-                                                          pluginUri.toString (false).toRawUTF8(),
-                                                          File::addTrailingSeparator (bundlePath.getFullPathName()).toRawUTF8(),
+                                                          args.pluginUri.toString (true).toRawUTF8(),
+                                                          File::addTrailingSeparator (args.bundlePath.getFullPathName()).toRawUTF8(),
                                                           writeFunction,
                                                           this,
                                                           &widget,
@@ -2866,11 +2864,10 @@ private:
 
         ports.forEachPort ([&] (const PortHeader& header)
         {
-            const auto emplaced = result.emplace (header.symbol, header.index);
+            [[maybe_unused]] const auto emplaced = result.emplace (header.symbol, header.index);
 
             // This will complain if there are duplicate port symbols.
             jassert (emplaced.second);
-            ignoreUnused (emplaced);
         });
 
         return result;
@@ -3283,7 +3280,7 @@ private:
             {
                 if (auto* r = ref.getComponent())
                 {
-                    if (std::exchange (r->nativeScaleFactor, platformScale) == platformScale)
+                    if (approximatelyEqual (std::exchange (r->nativeScaleFactor, platformScale), platformScale))
                         return;
 
                     r->nativeScaleFactor = platformScale;
@@ -3656,8 +3653,8 @@ private:
 
     union Data
     {
-        static_assert (std::is_trivial<PortBacking>::value,  "PortBacking must be trivial");
-        static_assert (std::is_trivial<PatchBacking>::value, "PatchBacking must be trivial");
+        static_assert (std::is_trivial_v<PortBacking>,  "PortBacking must be trivial");
+        static_assert (std::is_trivial_v<PatchBacking>, "PatchBacking must be trivial");
 
         explicit Data (PortBacking p)  : port  (p) {}
         explicit Data (PatchBacking p) : patch (p) {}
@@ -4877,10 +4874,8 @@ private:
                                                              : freeWheelingPort->info.min;
     }
 
-    void pushMessage (MessageHeader header, uint32_t size, const void* data)
+    void pushMessage (MessageHeader header, [[maybe_unused]] uint32_t size, const void* data)
     {
-        ignoreUnused (size);
-
         if (header.protocol == 0 || header.protocol == instance->urids.mLV2_UI__floatProtocol)
         {
             const auto value = readUnaligned<float> (data);
@@ -5187,7 +5182,7 @@ class LV2PluginFormat::Pimpl
 public:
     Pimpl()
     {
-        world->loadAll();
+        loadAllPluginsFromPaths (getDefaultLocationsToSearch());
 
         const auto tempFile = lv2ResourceFolder.getFile();
 
@@ -5250,9 +5245,9 @@ public:
         return findPluginByUri (description.fileOrIdentifier) != nullptr;
     }
 
-    StringArray searchPathsForPlugins (const FileSearchPath&, bool, bool)
+    StringArray searchPathsForPlugins (const FileSearchPath& paths, bool, bool)
     {
-        world->loadAll();
+        loadAllPluginsFromPaths (paths);
 
         StringArray result;
 
@@ -5262,7 +5257,30 @@ public:
         return result;
     }
 
-    FileSearchPath getDefaultLocationsToSearch() { return {}; }
+    FileSearchPath getDefaultLocationsToSearch()
+    {
+      #if JUCE_MAC
+        return { "~/Library/Audio/Plug-Ins/LV2;"
+                 "~/.lv2;"
+                 "/usr/local/lib/lv2;"
+                 "/usr/lib/lv2;"
+                 "/Library/Audio/Plug-Ins/LV2;" };
+      #elif JUCE_WINDOWS
+        return { "%APPDATA%\\LV2;"
+                 "%COMMONPROGRAMFILES%\\LV2" };
+      #else
+       #if JUCE_64BIT
+        if (File ("/usr/lib64/lv2").exists() || File ("/usr/local/lib64/lv2").exists())
+            return { "~/.lv2;"
+                     "/usr/lib64/lv2;"
+                     "/usr/local/lib64/lv2" };
+       #endif
+
+        return { "~/.lv2;"
+                 "/usr/lib/lv2;"
+                 "/usr/local/lib/lv2" };
+      #endif
+    }
 
     const LilvUI* findEmbeddableUi (const lv2_host::Uis* pluginUis, std::true_type)
     {
@@ -5455,6 +5473,12 @@ public:
     }
 
 private:
+    void loadAllPluginsFromPaths (const FileSearchPath& path)
+    {
+        const auto joined = path.toStringWithSeparator (LILV_PATH_SEP);
+        world->loadAllFromPaths (world->newString (joined.toRawUTF8()));
+    }
+
     struct Free { void operator() (char* ptr) const noexcept { free (ptr); } };
     using StringPtr = std::unique_ptr<char, Free>;
 

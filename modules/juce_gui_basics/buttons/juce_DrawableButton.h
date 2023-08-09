@@ -188,9 +188,7 @@ private:
     ButtonStyle style;
     std::unique_ptr<Drawable> normalImage, overImage, downImage, disabledImage,
                               normalImageOn, overImageOn, downImageOn, disabledImageOn;
-protected:
     Drawable* currentImage = nullptr;
-public:
     int edgeIndent = 3;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DrawableButton)

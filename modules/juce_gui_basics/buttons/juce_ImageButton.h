@@ -140,7 +140,7 @@ public:
 protected:
     //==============================================================================
     /** @internal */
-    bool hitTest (Pix x, Pix y) override;
+    bool hitTest (int x, int y) override;
     /** @internal */
     void paintButton (Graphics&, bool, bool) override;
 

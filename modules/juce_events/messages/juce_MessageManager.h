@@ -298,12 +298,12 @@ public:
         friend class ReferenceCountedObjectPtr<BlockingMessage>;
 
         bool tryAcquire (bool) const noexcept;
-        void messageCallback() const;
 
         //==============================================================================
         mutable ReferenceCountedObjectPtr<BlockingMessage> blockingMessage;
-        WaitableEvent lockedEvent;
-        mutable Atomic<int> abortWait, lockGained;
+        mutable std::mutex mutex;
+        mutable std::condition_variable condvar;
+        mutable bool abortWait = false, acquired = false;
     };
 
     //==============================================================================
@@ -328,6 +328,7 @@ private:
     Atomic<int> quitMessagePosted { 0 }, quitMessageReceived { 0 };
     Thread::ThreadID messageThreadId;
     Atomic<Thread::ThreadID> threadWithLock;
+    mutable std::mutex messageThreadIdMutex;
 
     static bool postMessageToSystemQueue (MessageBase*);
     static void* exitModalLoopCallback (void*);

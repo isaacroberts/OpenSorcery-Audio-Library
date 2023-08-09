@@ -346,9 +346,7 @@ private:
     friend class LegacyAudioParameter;
     AudioProcessor* processor = nullptr;
     int parameterIndex = -1;
-	
-	int version = 0;
-	
+    int version = 0;
     CriticalSection listenerLock;
     Array<Listener*> listeners;
     mutable StringArray valueStrings;

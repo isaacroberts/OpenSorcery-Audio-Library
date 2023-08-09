@@ -62,7 +62,7 @@ class ConvolutionTest  : public UnitTest
         AudioBuffer<float> result (2, length);
         result.clear();
 
-        auto** channels = result.getArrayOfWritePointers();
+        auto* const* channels = result.getArrayOfWritePointers();
         std::for_each (channels, channels + result.getNumChannels(), [length] (auto* channel)
         {
             std::fill (channel, channel + length, 1.0f);
@@ -97,7 +97,7 @@ class ConvolutionTest  : public UnitTest
 
             expect (std::any_of (channel, channel + block.getNumSamples(), [] (float sample)
             {
-                return sample != 0.0f;
+                return ! approximatelyEqual (sample, 0.0f);
             }));
         }
     }
@@ -193,7 +193,7 @@ class ConvolutionTest  : public UnitTest
                 processBlocksWithDiracImpulse();
 
                 // Check if the impulse response was loaded
-                if (block.getSample (0, 1) != 0.0f)
+                if (! approximatelyEqual (block.getSample (0, 1), 0.0f))
                     break;
             }
         }
@@ -470,7 +470,7 @@ public:
                              Convolution::Stereo::no,
                              Convolution::Trim::yes,
                              Convolution::Normalise::no,
-                             AudioBlock<const float> (channels, numElementsInArray (channels), length));
+                             AudioBlock<const float> (channels, numElementsInArray (channels), (size_t) length));
         }
 
         beginTest ("IRs with extra silence are trimmed appropriately");

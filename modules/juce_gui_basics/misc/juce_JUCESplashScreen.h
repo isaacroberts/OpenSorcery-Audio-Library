@@ -55,13 +55,15 @@ public:
 
     static std::unique_ptr<Drawable> getSplashScreenLogo();
 
-private:
+    /** @internal */
     std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
+
+private:
     void paint (Graphics&) override;
     void timerCallback() override;
     void parentSizeChanged() override;
     void parentHierarchyChanged() override;
-    bool hitTest (Pix, Pix) override;
+    bool hitTest (int, int) override;
     void mouseUp (const MouseEvent&) override;
 
     std::unique_ptr<Drawable> content;

@@ -189,14 +189,10 @@ public:
         If shouldNotify == sendNotification, then a callback will be made
         to itemSelectionChanged() if the item's selection has changed.
     */
-
     void setSelected (bool shouldBeSelected,
                       bool deselectOtherItemsFirst,
                       NotificationType shouldNotify = sendNotification);
 
-	void deselectAll() {
-		deselectAllRecursively(NULL);
-	}
     /** Returns the rectangle that this item occupies.
 
         If relativeToTreeViewTopLeft is true, the coordinates are relative to the
@@ -617,7 +613,7 @@ private:
     int getIndentX() const noexcept;
     void setOwnerView (TreeView*) noexcept;
     TreeViewItem* getTopLevelItem() noexcept;
-    TreeViewItem* getDeepestOpenParentItem() noexcept;
+    const TreeViewItem* getDeepestOpenParentItem() const noexcept;
     int getNumRows() const noexcept;
     TreeViewItem* getItemOnRow (int) noexcept;
     void deselectAllRecursively (TreeViewItem*);
@@ -687,9 +683,6 @@ public:
         to delete it.
     */
     void setRootItem (TreeViewItem* newRootItem);
-	
-	
-	void scrollToItemAtTop (TreeViewItem* item);
 
     /** Returns the tree's root item.
 
@@ -805,7 +798,7 @@ public:
     TreeViewItem* getItemAt (int yPosition) const noexcept;
 
     /** Tries to scroll the tree so that this item is on-screen somewhere. */
-    void scrollToKeepItemVisible (TreeViewItem* item);
+    void scrollToKeepItemVisible (const TreeViewItem* item);
 
     /** Returns the TreeView's Viewport object. */
     Viewport* getViewport() const noexcept;
@@ -928,6 +921,8 @@ public:
     void itemDragExit (const SourceDetails&) override;
     /** @internal */
     void itemDropped (const SourceDetails&) override;
+    /** @internal */
+    std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
 
 private:
     friend class TreeViewItem;
@@ -940,9 +935,8 @@ private:
     class TreeAccessibilityHandler;
     struct InsertPoint;
 
-    std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
     void itemsChanged() noexcept;
-    void updateVisibleItems();
+    void updateVisibleItems (std::optional<Point<int>> viewportPosition = {});
     void updateButtonUnderMouse (const MouseEvent&);
     void showDragHighlight (const InsertPoint&) noexcept;
     void hideDragHighlight() noexcept;

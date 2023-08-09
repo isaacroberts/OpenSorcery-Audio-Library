@@ -153,7 +153,7 @@ public:
     /** @internal */
     void childBoundsChanged (Component*) override;
     /** @internal */
-    bool hitTest (Pix x, Pix y) override;
+    bool hitTest (int x, int y) override;
     /** @internal */
     void inputAttemptWhenModal() override;
     /** @internal */
@@ -164,6 +164,8 @@ public:
     int getBorderSize() const noexcept;
     /** @internal */
     void lookAndFeelChanged() override;
+    /** @internal */
+    std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
 
 private:
     //==============================================================================
@@ -177,7 +179,6 @@ private:
 
     Time creationTime;
 
-    std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
     void refreshPath();
     void timerCallback() override;
 

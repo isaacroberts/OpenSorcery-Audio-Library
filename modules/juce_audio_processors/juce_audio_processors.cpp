@@ -43,7 +43,9 @@
 
 //==============================================================================
 #if (JUCE_PLUGINHOST_VST || JUCE_PLUGINHOST_VST3) && (JUCE_LINUX || JUCE_BSD)
+ JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wvariadic-macros")
  #include <X11/Xlib.h>
+ JUCE_END_IGNORE_WARNINGS_GCC_LIKE
  #include <X11/Xutil.h>
  #include <sys/utsname.h>
  #undef KeyPress
@@ -61,7 +63,7 @@
 namespace juce
 {
 
-#if JUCE_PLUGINHOST_VST || (JUCE_PLUGINHOST_LADSPA && JUCE_LINUX)
+#if JUCE_PLUGINHOST_VST || (JUCE_PLUGINHOST_LADSPA && (JUCE_LINUX || JUCE_BSD))
 
 static bool arrayContainsPlugin (const OwnedArray<PluginDescription>& list,
                                  const PluginDescription& desc)
@@ -220,6 +222,8 @@ private:
 #include "utilities/juce_AudioProcessorValueTreeState.cpp"
 #include "utilities/juce_PluginHostType.cpp"
 #include "utilities/juce_NativeScaleFactorNotifier.cpp"
+#include "utilities/juce_AAXClientExtensions.cpp"
+#include "utilities/juce_VST2ClientExtensions.cpp"
 #include "utilities/ARA/juce_ARA_utils.cpp"
 
 #include "format_types/juce_LV2PluginFormat.cpp"
@@ -229,7 +233,7 @@ private:
   #include "format_types/juce_VST3PluginFormat_test.cpp"
  #endif
 
- #if JUCE_PLUGINHOST_LV2
+ #if JUCE_PLUGINHOST_LV2 && (! (JUCE_ANDROID || JUCE_IOS))
   #include "format_types/juce_LV2PluginFormat_test.cpp"
  #endif
 #endif

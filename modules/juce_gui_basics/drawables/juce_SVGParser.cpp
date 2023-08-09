@@ -189,8 +189,8 @@ public:
         }
         else
         {
-            if (viewBoxW == 0.0f)  newState.viewBoxW = newState.width;
-            if (viewBoxH == 0.0f)  newState.viewBoxH = newState.height;
+            if (approximatelyEqual (viewBoxW, 0.0f))  newState.viewBoxW = newState.width;
+            if (approximatelyEqual (viewBoxH, 0.0f))  newState.viewBoxH = newState.height;
         }
 
         newState.parseSubElements (xml, *drawable);
@@ -1093,9 +1093,9 @@ private:
                 dt->setFont (font, true);
 
                 if (additonalTransform != nullptr)
-                    dt->setTransform (transform.followedBy (*additonalTransform));
+                    dt->setDrawableTransform (transform.followedBy (*additonalTransform));
                 else
-                    dt->setTransform (transform);
+                    dt->setDrawableTransform (transform);
 
                 dt->setColour (parseColour (xml, "fill", Colours::black)
                                  .withMultipliedAlpha (parseSafeFloat (getStyleAttribute (xml, "fill-opacity", "1"))));

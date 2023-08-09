@@ -401,9 +401,11 @@ public:
         }
 
         if (error.isNotEmpty())
-            AlertWindow::showMessageBoxAsync (MessageBoxIconType::WarningIcon,
-                                              TRANS("Error when trying to open audio device!"),
-                                              error);
+            messageBox = AlertWindow::showScopedAsync (MessageBoxOptions().withIconType (MessageBoxIconType::WarningIcon)
+                                                                          .withTitle (TRANS ("Error when trying to open audio device!"))
+                                                                          .withMessage (error)
+                                                                          .withButton (TRANS ("OK")),
+                                                       nullptr);
     }
 
     bool showDeviceControlPanel()
@@ -720,7 +722,7 @@ private:
 
         auto currentRate = currentDevice->getCurrentSampleRate();
 
-        if (currentRate == 0)
+        if (exactlyEqual (currentRate, 0.0))
             currentRate = 48000.0;
 
         for (auto bs : currentDevice->getAvailableBufferSizes())
@@ -966,6 +968,7 @@ public:
 
 private:
     std::unique_ptr<ChannelSelectorListBox> inputChanList, outputChanList;
+    ScopedMessageBox messageBox;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioDeviceSettingsPanel)
 };
@@ -1193,11 +1196,18 @@ void AudioDeviceSelectorComponent::updateAllControls()
 
 void AudioDeviceSelectorComponent::handleBluetoothButton()
 {
-    if (! RuntimePermissions::isGranted (RuntimePermissions::bluetoothMidi))
-        RuntimePermissions::request (RuntimePermissions::bluetoothMidi, nullptr);
-
     if (RuntimePermissions::isGranted (RuntimePermissions::bluetoothMidi))
+    {
         BluetoothMidiDevicePairingDialogue::open();
+    }
+    else
+    {
+        RuntimePermissions::request (RuntimePermissions::bluetoothMidi, [] (auto)
+        {
+            if (RuntimePermissions::isGranted (RuntimePermissions::bluetoothMidi))
+                BluetoothMidiDevicePairingDialogue::open();
+        });
+    }
 }
 
 ListBox* AudioDeviceSelectorComponent::getMidiInputSelectorListBox() const noexcept

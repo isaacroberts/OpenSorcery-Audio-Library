@@ -499,6 +499,10 @@ private:
     std::unique_ptr<XmlElement> lastExplicitSettings;
     mutable bool listNeedsScanning = true;
     AudioBuffer<float> tempBuffer;
+    MidiDeviceListConnection midiDeviceListConnection = MidiDeviceListConnection::make ([this]
+    {
+        midiDeviceListChanged();
+    });
 
     struct MidiCallbackInfo
     {
@@ -526,9 +530,9 @@ private:
     class CallbackHandler;
     std::unique_ptr<CallbackHandler> callbackHandler;
 
-    void audioDeviceIOCallbackInt (const float** inputChannelData,
+    void audioDeviceIOCallbackInt (const float* const* inputChannelData,
                                    int totalNumInputChannels,
-                                   float** outputChannelData,
+                                   float* const* outputChannelData,
                                    int totalNumOutputChannels,
                                    int numSamples,
                                    const AudioIODeviceCallbackContext& context);
@@ -537,6 +541,7 @@ private:
     void audioDeviceErrorInt (const String&);
     void handleIncomingMidiMessageInt (MidiInput*, const MidiMessage&);
     void audioDeviceListChanged();
+    void midiDeviceListChanged();
 
     String restartDevice (int blockSizeToUse, double sampleRateToUse,
                           const BigInteger& ins, const BigInteger& outs);
@@ -551,12 +556,10 @@ private:
     double chooseBestSampleRate (double preferred) const;
     int chooseBestBufferSize (int preferred) const;
     void insertDefaultDeviceNames (AudioDeviceSetup&) const;
-	
-	String initialiseForIsaac (const AudioDeviceSetup*);
-	
     String initialiseDefault (const String& preferredDefaultDeviceName, const AudioDeviceSetup*);
     String initialiseFromXML (const XmlElement&, bool selectDefaultDeviceOnFailure,
                               const String& preferredDefaultDeviceName, const AudioDeviceSetup*);
+    void openLastRequestedMidiDevices (const Array<MidiDeviceInfo>&, const MidiDeviceInfo&);
 
     AudioIODeviceType* findType (const String& inputName, const String& outputName);
     AudioIODeviceType* findType (const String& typeName);

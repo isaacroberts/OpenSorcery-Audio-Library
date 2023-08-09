@@ -35,12 +35,12 @@
 
   ID:                 juce_graphics
   vendor:             juce
-  version:            7.0.1
+  version:            7.0.6
   name:               JUCE graphics classes
   description:        Classes for 2D vector graphics, image loading/saving, font handling, etc.
   website:            http://www.juce.com/juce
   license:            GPL/Commercial
-  minimumCppStandard: 14
+  minimumCppStandard: 17
 
   dependencies:       juce_events
   OSXFrameworks:      Cocoa QuartzCore
@@ -99,31 +99,6 @@
  #define USE_COREGRAPHICS_RENDERING 1
 #endif
 
-
-#ifndef USE_FLOAT_PIX
-#define USE_FLOAT_PIX 0
-#endif
-
-
-
-#define USE_INT_PIX !USE_FLOAT_PIX
-
-#if USE_FLOAT_PIX
-#define Pix float
-#define PixAlt int
-#else
-#define Pix int
-#define PixAlt float
-#endif
-
-#if USE_INT_PIX
-#define roundToPix(x) roundToInt(x)
-#else
-#define roundToPix(x) float(x)
-#endif
-
-
-
 //==============================================================================
 namespace juce
 {
@@ -175,10 +150,10 @@ namespace juce
 #include "effects/juce_GlowEffect.h"
 
 #if JUCE_GRAPHICS_INCLUDE_COREGRAPHICS_HELPERS && (JUCE_MAC || JUCE_IOS)
- #include "native/juce_mac_CoreGraphicsHelpers.h"
- #include "native/juce_mac_CoreGraphicsContext.h"
+ #include "native/juce_CoreGraphicsHelpers_mac.h"
+ #include "native/juce_CoreGraphicsContext_mac.h"
 #endif
 
 #if JUCE_DIRECT2D && JUCE_WINDOWS
-#include "native/juce_win32_Direct2DGraphicsContext.h"
+#include "native/juce_Direct2DGraphicsContext_windows.h"
 #endif

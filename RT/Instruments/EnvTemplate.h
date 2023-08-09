@@ -56,7 +56,7 @@ private:
 /*
 	JUCE UPDATE
 	
-	Go to juce_ADSR and add this:
+	Go to juce_audio_basics > utilities > juce_ADSR and add this:
 			
 	void advanceSamples(int numSamples)
 	{

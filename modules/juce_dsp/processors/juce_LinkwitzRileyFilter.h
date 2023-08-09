@@ -111,26 +111,18 @@ public:
         snapToZero();
        #endif
     }
-//#if DEBUG_SAN
-	inline void sanCrash_lr(float e) {
-		jassertfalse;
-	}
-//#else
-//#error "no"
-//	inline void sanCrash_lr(float e) {}
-//#endif
-	
-	
-	void sanCheckState() {
-		const float SMAX=1000;
-		for (auto s : { &s1, &s2, &s3, &s4 })
-		  for (auto& e : *s)
-		  {
-			  if (isnan(e)) { sanCrash_lr(e); e=0;}
-			  else if (e > SMAX) e = SMAX;
-			  else if (e <-SMAX) e =-SMAX;
-		  }
-	}
+
+
+    void sanCheckState() {
+        const float SMAX = 1000;
+        for (auto s : { &s1, &s2, &s3, &s4 })
+            for (auto& e : *s)
+            {
+                if (isnan(e)) e = 0;
+                else if (e > SMAX) e = SMAX;
+                else if (e < -SMAX) e = -SMAX;
+            }
+    }
 
     /** Performs the filter operation on a single sample at a time. */
     SampleType processSample (int channel, SampleType inputValue);

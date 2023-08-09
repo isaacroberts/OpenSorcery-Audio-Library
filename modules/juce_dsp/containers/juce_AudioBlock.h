@@ -31,7 +31,7 @@ namespace dsp
 #ifndef DOXYGEN
 namespace SampleTypeHelpers // Internal classes needed for handling sample type classes
 {
-    template <typename T, bool = std::is_floating_point<T>::value>
+    template <typename T, bool = std::is_floating_point_v<T>>
     struct ElementType
     {
         using Type = T;
@@ -71,10 +71,10 @@ class AudioBlock
 private:
     template <typename OtherSampleType>
     using MayUseConvertingConstructor =
-        std::enable_if_t<std::is_same<std::remove_const_t<SampleType>,
-                                      std::remove_const_t<OtherSampleType>>::value
-                             && std::is_const<SampleType>::value
-                             && ! std::is_const<OtherSampleType>::value,
+        std::enable_if_t<std::is_same_v<std::remove_const_t<SampleType>,
+                                        std::remove_const_t<OtherSampleType>>
+                             && std::is_const_v<SampleType>
+                             && ! std::is_const_v<OtherSampleType>,
                          int>;
 
 public:
@@ -212,6 +212,21 @@ public:
         std::swap (other.numSamples, numSamples);
     }
 
+
+
+    const SampleType* operator[](int c) const noexcept {
+        return getChannelPointer(c);
+    }
+    SampleType* operator[](int c) noexcept {
+        return getChannelPointer(c);
+    }
+    const SampleType* operator[](size_t c) const noexcept {
+        return getChannelPointer(c);
+    }
+    SampleType* operator[](size_t c) noexcept {
+        return getChannelPointer(c);
+    }
+
     //==============================================================================
     template <typename OtherSampleType>
     constexpr bool operator== (const AudioBlock<OtherSampleType>& other) const noexcept
@@ -245,20 +260,6 @@ public:
         return channels[channel] + startSample;
     }
 
-	const SampleType* operator[](int c) const noexcept {
-		return getChannelPointer(c);
-	}
-	SampleType* operator[](int c) noexcept {
-		return getChannelPointer(c);
-	}
-	const SampleType* operator[](size_t c) const noexcept {
-		return getChannelPointer(c);
-	}
-	SampleType* operator[](size_t c) noexcept {
-		return getChannelPointer(c);
-	}
-
-	
     /** Returns an AudioBlock that represents one of the channels in this block. */
     AudioBlock getSingleChannelBlock (size_t channel) const noexcept
     {
@@ -351,7 +352,7 @@ public:
         SIMDRegister then incrementing dstPos by one will increase the sample position
         in the AudioBuffer's units by a factor of SIMDRegister<SampleType>::SIMDNumElements.
     */
-    void copyTo (AudioBuffer<typename std::remove_const<NumericType>::type>& dst, size_t srcPos = 0, size_t dstPos = 0,
+    void copyTo (AudioBuffer<std::remove_const_t<NumericType>>& dst, size_t srcPos = 0, size_t dstPos = 0,
                  size_t numElements = std::numeric_limits<size_t>::max()) const
     {
         auto dstlen = static_cast<size_t> (dst.getNumSamples()) / sizeFactor;
@@ -532,7 +533,7 @@ public:
 
     //==============================================================================
     /** Finds the minimum and maximum value of the buffer. */
-    Range<typename std::remove_const<NumericType>::type> findMinAndMax() const noexcept
+    Range<std::remove_const_t<NumericType>> findMinAndMax() const noexcept
     {
         if (numChannels == 0)
             return {};
@@ -573,11 +574,11 @@ public:
 
     //==============================================================================
     // This class can only be used with floating point types
-    static_assert (std::is_same<std::remove_const_t<SampleType>, float>::value
-                    || std::is_same<std::remove_const_t<SampleType>, double>::value
+    static_assert (std::is_same_v<std::remove_const_t<SampleType>, float>
+                    || std::is_same_v<std::remove_const_t<SampleType>, double>
                   #if JUCE_USE_SIMD
-                    || std::is_same<std::remove_const_t<SampleType>, SIMDRegister<float>>::value
-                    || std::is_same<std::remove_const_t<SampleType>, SIMDRegister<double>>::value
+                    || std::is_same_v<std::remove_const_t<SampleType>, SIMDRegister<float>>
+                    || std::is_same_v<std::remove_const_t<SampleType>, SIMDRegister<double>>
                   #endif
                    , "AudioBlock only supports single or double precision floating point types");
 

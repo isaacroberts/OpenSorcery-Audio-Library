@@ -67,7 +67,7 @@ void ARAAudioSourceReader::willUpdateAudioSourceProperties (ARAAudioSource* audi
                                                             ARAAudioSource::PropertiesPtr newProperties)
 {
     if (audioSource->getSampleCount() != newProperties->sampleCount
-        || audioSource->getSampleRate() != newProperties->sampleRate
+        || ! exactlyEqual (audioSource->getSampleRate(), newProperties->sampleRate)
         || audioSource->getChannelCount() != newProperties->channelCount)
     {
         invalidate();
@@ -115,17 +115,17 @@ void ARAAudioSourceReader::willDestroyAudioSource (ARAAudioSource* audioSource)
     invalidate();
 }
 
-bool ARAAudioSourceReader::readSamples (int** destSamples, int numDestChannels, int startOffsetInDestBuffer,
+bool ARAAudioSourceReader::readSamples (int* const* destSamples, int numDestChannels, int startOffsetInDestBuffer,
                                         int64 startSampleInFile, int numSamples)
 {
     const auto destSize = (bitsPerSample / 8) * (size_t) numSamples;
     const auto bufferOffset = (int) (bitsPerSample / 8) * startOffsetInDestBuffer;
 
-    if (isValid() && hostReader != nullptr)
+    if (isValid())
     {
         const ScopedTryReadLock readLock (lock);
 
-        if (readLock.isLocked())
+        if (readLock.isLocked() && hostReader != nullptr)
         {
             for (size_t i = 0; i < tmpPtrs.size(); ++i)
             {
@@ -237,7 +237,7 @@ void ARAPlaybackRegionReader::invalidate()
     playbackRenderer.reset();
 }
 
-bool ARAPlaybackRegionReader::readSamples (int** destSamples, int numDestChannels, int startOffsetInDestBuffer,
+bool ARAPlaybackRegionReader::readSamples (int* const* destSamples, int numDestChannels, int startOffsetInDestBuffer,
                                            int64 startSampleInFile, int numSamples)
 {
     bool success = false;
@@ -277,10 +277,10 @@ void ARAPlaybackRegionReader::willUpdatePlaybackRegionProperties (ARAPlaybackReg
 {
     jassert (ARA::contains (playbackRenderer->getPlaybackRegions(), playbackRegion));
 
-    if ((playbackRegion->getStartInAudioModificationTime() != newProperties->startInModificationTime)
-        || (playbackRegion->getDurationInAudioModificationTime() != newProperties->durationInModificationTime)
-        || (playbackRegion->getStartInPlaybackTime() != newProperties->startInPlaybackTime)
-        || (playbackRegion->getDurationInPlaybackTime() != newProperties->durationInPlaybackTime)
+    if ((! exactlyEqual (playbackRegion->getStartInAudioModificationTime(), newProperties->startInModificationTime))
+        || ! exactlyEqual (playbackRegion->getDurationInAudioModificationTime(), newProperties->durationInModificationTime)
+        || ! exactlyEqual (playbackRegion->getStartInPlaybackTime(), newProperties->startInPlaybackTime)
+        || ! exactlyEqual (playbackRegion->getDurationInPlaybackTime(), newProperties->durationInPlaybackTime)
         || (playbackRegion->isTimestretchEnabled() != ((newProperties->transformationFlags & ARA::kARAPlaybackTransformationTimestretch) != 0))
         || (playbackRegion->isTimeStretchReflectingTempo() != ((newProperties->transformationFlags & ARA::kARAPlaybackTransformationTimestretchReflectingTempo) != 0))
         || (playbackRegion->hasContentBasedFadeAtHead() != ((newProperties->transformationFlags & ARA::kARAPlaybackTransformationContentBasedFadeAtHead) != 0))

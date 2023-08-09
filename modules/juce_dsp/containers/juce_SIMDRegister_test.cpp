@@ -30,31 +30,30 @@ namespace dsp
 
 namespace SIMDRegister_test_internal
 {
-    template <typename type, typename = void> struct RandomPrimitive {};
-
     template <typename type>
-    struct RandomPrimitive<type, typename std::enable_if<std::is_floating_point<type>::value>::type>
+    struct RandomPrimitive
     {
         static type next (Random& random)
         {
-            return static_cast<type> (std::is_signed<type>::value ? (random.nextFloat() * 16.0) - 8.0
-                                                                  : (random.nextFloat() * 8.0));
-        }
-    };
-
-    template <typename type>
-    struct RandomPrimitive<type, typename std::enable_if<std::is_integral<type>::value>::type>
-    {
-        static type next (Random& random)
-        {
-            return static_cast<type> (random.nextInt64());
+            if constexpr (std::is_floating_point_v<type>)
+            {
+                return static_cast<type> (std::is_signed_v<type> ? (random.nextFloat() * 16.0) - 8.0
+                                                                 : (random.nextFloat() * 8.0));
+            }
+            else if constexpr (std::is_integral_v<type>)
+            {
+                return static_cast<type> (random.nextInt64());
+            }
         }
     };
 
     template <typename type>
     struct RandomValue
     {
-        static type next (Random& random) { return RandomPrimitive<type>::next (random); }
+        static type next (Random& random)
+        {
+            return RandomPrimitive<type>::next (random);
+        }
     };
 
     template <typename type>
@@ -118,19 +117,12 @@ public:
     template <typename type>
     static bool allValuesEqualTo (const SIMDRegister<type>& vec, const type scalar)
     {
-       #ifdef _MSC_VER
-        __declspec(align(sizeof (SIMDRegister<type>))) type elements[SIMDRegister<type>::SIMDNumElements];
-       #else
-        type elements[SIMDRegister<type>::SIMDNumElements] __attribute__((aligned(sizeof (SIMDRegister<type>))));
-       #endif
+        alignas (sizeof (SIMDRegister<type>)) type elements[SIMDRegister<type>::SIMDNumElements];
 
         vec.copyToRawArray (elements);
 
         // as we do not want to rely on the access operator we cast this to a primitive pointer
-        for (size_t i = 0; i < SIMDRegister<type>::SIMDNumElements; ++i)
-            if (elements[i] != scalar) return false;
-
-        return true;
+        return std::all_of (std::begin (elements), std::end (elements), [scalar] (const auto x) { return exactlyEqual (x, scalar); });
     }
 
     template <typename type>
@@ -308,7 +300,7 @@ public:
             const SIMDRegister<type>& b = a;
 
             for (size_t i = 0; i < SIMDRegister<type>::SIMDNumElements; ++i)
-                u.expect (b[i] == array[i]);
+                u.expect (exactlyEqual (b[i], array[i]));
         }
     };
 
@@ -540,8 +532,8 @@ public:
                 // do check
                 for (size_t j = 0; j < SIMDRegister<type>::SIMDNumElements; ++j)
                 {
-                    array_eq  [j] = (array_a[j] == array_b[j]) ? static_cast<MaskType> (-1) : 0;
-                    array_neq [j] = (array_a[j] != array_b[j]) ? static_cast<MaskType> (-1) : 0;
+                    array_eq  [j] = (  exactlyEqual (array_a[j], array_b[j])) ? static_cast<MaskType> (-1) : 0;
+                    array_neq [j] = (! exactlyEqual (array_a[j], array_b[j])) ? static_cast<MaskType> (-1) : 0;
                     array_lt  [j] = (array_a[j] <  array_b[j]) ? static_cast<MaskType> (-1) : 0;
                     array_le  [j] = (array_a[j] <= array_b[j]) ? static_cast<MaskType> (-1) : 0;
                     array_gt  [j] = (array_a[j] >  array_b[j]) ? static_cast<MaskType> (-1) : 0;
@@ -756,11 +748,10 @@ public:
         template <typename type>
         static void run (UnitTest& u, Random& random, Tag<type>)
         {
-            bool is_signed = std::is_signed<type>::value;
             type array [SIMDRegister<type>::SIMDNumElements];
 
-            auto value = is_signed ? static_cast<type> ((random.nextFloat() * 16.0) - 8.0)
-                                   : static_cast<type> (random.nextFloat() * 8.0);
+            auto value = std::is_signed_v<type> ? static_cast<type> ((random.nextFloat() * 16.0) - 8.0)
+                                                : static_cast<type> (random.nextFloat() * 8.0);
 
             std::fill (array, array + SIMDRegister<type>::SIMDNumElements, value);
             SIMDRegister<type> a, b;

@@ -144,8 +144,8 @@ public:
         int lineWrapLength = 60;           /**< A maximum line length before wrapping is done. (If newLineChars is nullptr, this is ignored) */
         const char* newLineChars = "\r\n"; /**< Allows the newline characters to be set. If you set this to nullptr, then the whole XML document will be placed on a single line. */
 
-        JUCE_NODISCARD TextFormat singleLine() const;     /**< returns a copy of this format with newLineChars set to nullptr. */
-        JUCE_NODISCARD TextFormat withoutHeader() const;  /**< returns a copy of this format with the addDefaultHeader flag set to false. */
+        [[nodiscard]] TextFormat singleLine() const;     /**< returns a copy of this format with newLineChars set to nullptr. */
+        [[nodiscard]] TextFormat withoutHeader() const;  /**< returns a copy of this format with the addDefaultHeader flag set to false. */
     };
 
     /** Returns a text version of this XML element.
@@ -286,47 +286,6 @@ public:
                                     with this name
     */
     bool getBoolAttribute (StringRef attributeName, bool defaultReturnValue = false) const;
-
-	
-
-	void getAttribute(StringRef name, int& value) const {
-		value = getIntAttribute(name, value);
-	}
-	void getAttribute(StringRef name, size_t& value) const {
-		value = getIntAttribute(name, (int)value);
-	}
-	void getAttribute(StringRef name, unsigned int& value) const {
-		value = getIntAttribute(name, value);
-	}
-	void getAttribute(StringRef name, String& value) const {
-		value = getStringAttribute(name, value);
-	}
-	void getAttribute(StringRef name, double& value) const {
-		value = getDoubleAttribute(name, value);
-	}
-	void getAttribute(StringRef name, float& value) const {
-		value = getDoubleAttribute(name, value);
-	}
-	void getAttribute(StringRef name, bool& value) const {
-		value = getBoolAttribute(name, value);
-	}
-	template <class Type>
-	void getAttribute(StringRef name, Type& value) const {
-		static_assert("Unrecognized type");
-	}
-	// For all types except integral types:
-	template<typename Type>
-	typename std::enable_if<std::is_integral<Type>::value>::type getAttribute(StringRef name, Type& value) const
-	{
-		value = getIntAttribute(name, (int)value);
-	}
-
-	// For integral types only:
-	template<typename Type>
-	typename std::enable_if<std::is_floating_point<Type>::value>::type getAttribute(StringRef name, Type& value) const
-	{
-		value = getDoubleAttribute(name, (double)value);
-	}
 
     /** Adds a named attribute to the element.
 
