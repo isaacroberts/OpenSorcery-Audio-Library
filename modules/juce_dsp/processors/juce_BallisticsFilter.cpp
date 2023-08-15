@@ -109,6 +109,33 @@ SampleType BallisticsFilter<SampleType>::processSample (int channel, SampleType 
 }
 
 template <typename SampleType>
+void BallisticsFilter<SampleType>::skipSample(int channel, SampleType inputValue)
+{
+    jassert(isPositiveAndBelow(channel, yold.size()));
+
+    if (levelType == LevelCalculationType::RMS)
+        inputValue *= inputValue;
+    else
+        inputValue = std::abs(inputValue);
+
+    SampleType cte = (inputValue > yold[(size_t)channel] ? cteAT : cteRL);
+
+    SampleType result = inputValue + cte * (yold[(size_t)channel] - inputValue);
+    yold[(size_t)channel] = result;
+}
+
+template <typename SampleType>
+void BallisticsFilter<SampleType>::skipSample(int channel)
+{
+    jassert(isPositiveAndBelow(channel, yold.size()));
+
+    if (yold[(size_t)channel] < 0)
+        yold[(size_t)channel] *= cteAT;
+    else
+        yold[(size_t)channel] *= cteRL;
+}
+
+template <typename SampleType>
 void BallisticsFilter<SampleType>::snapToZero() noexcept
 {
     for (auto& old : yold)

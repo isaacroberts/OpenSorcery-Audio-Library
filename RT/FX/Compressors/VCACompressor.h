@@ -20,8 +20,9 @@
 	
  
 	This is just copied from JUCE and adapted to my code
- */
 
+	This might be either unfinished or untested. If you delete this file you don't have to do the update below.
+*/
 class VCACompressor
 {
 public:
@@ -123,3 +124,83 @@ private:
 
 
 #endif /* VCACompressor_h */
+
+
+/*
+JUCE UPDATE :
+
+Add to juce_dsp > processors > juce_BallisticsFilter
+
+	//My library uses bypassProcess and silenceProcess to signify to processors that they don't need to do full processing
+	//For example, Filters can use this to assume input=0 and simplify calculations 
+	//These functions are added piecemeal where needed
+	void bypassProcess(const AudioBlock<const float>& inputBlock) noexcept
+	{
+		const auto numChannels = inputBlock.getNumChannels();
+		const auto numSamples = inputBlock.getNumSamples();
+
+		jassert(inputBlock.getNumChannels() <= yold.size());
+
+		for (size_t channel = 0; channel < numChannels; ++channel)
+		{
+			auto* inputSamples = inputBlock.getChannelPointer(channel);
+
+			for (size_t i = 0; i < numSamples; ++i)
+				skipSample((int)channel, inputSamples[i]);
+		}
+
+	#if JUCE_DSP_ENABLE_SNAP_TO_ZERO
+		snapToZero();
+	#endif
+	}
+	void silenceProcess(int numSamples) noexcept
+	{
+		for (size_t channel = 0; channel < yold.size(); ++channel)
+		{
+			if (yold[channel] < 0)
+				yold[channel] *= pow(cteAT, numSamples);
+			else
+				yold[channel] *= pow(cteRL, numSamples);
+
+		}
+
+	#if JUCE_DSP_ENABLE_SNAP_TO_ZERO
+		snapToZero();
+	#endif
+	}
+	void skipSample(int channel, SampleType input);
+	void skipSample(int channel);
+
+
+goto juce_BallisticsFilter.cppand add ~line 112
+
+	template <typename SampleType>
+	void BallisticsFilter<SampleType>::skipSample(int channel, SampleType inputValue)
+	{
+		jassert(isPositiveAndBelow(channel, yold.size()));
+
+		if (levelType == LevelCalculationType::RMS)
+			inputValue *= inputValue;
+		else
+			inputValue = std::abs(inputValue);
+
+		SampleType cte = (inputValue > yold[(size_t)channel] ? cteAT : cteRL);
+
+		SampleType result = inputValue + cte * (yold[(size_t)channel] - inputValue);
+		yold[(size_t)channel] = result;
+	}
+
+	template <typename SampleType>
+	void BallisticsFilter<SampleType>::skipSample(int channel)
+	{
+		jassert(isPositiveAndBelow(channel, yold.size()));
+
+		if (yold[(size_t)channel] < 0)
+			yold[(size_t)channel] *= cteAT;
+		else
+			yold[(size_t)channel] *= cteRL;
+	}
+
+
+
+*/

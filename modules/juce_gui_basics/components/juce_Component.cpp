@@ -217,6 +217,36 @@ void Component::setName (const String& name)
     }
 }
 
+float Component::docW = 500;
+float Component::docH = 500;
+
+void Component::setDocSize(float w, float h) {
+    docW = w;
+    docH = h;
+}
+void Component::setBoundsInDoc(float x, float y, float w, float h)
+{
+    float rx = x / docW;
+    float ry = y / docH;
+    float rw = w / docW;
+    float rh = h / docH;
+
+    setBoundsRelative(rx, ry, rw, rh);
+}
+void Component::setBoundsInDoc(float x, float y, float w, float h, Rectangle<float> pd)
+{
+    float rx = (x - pd.getX()) / pd.getWidth();
+    float ry = (y - pd.getY()) / pd.getHeight();
+    float rw = w / pd.getWidth();
+    float rh = h / pd.getHeight();
+
+    setBoundsRelative(rx, ry, rw, rh);
+}
+
+
+
+
+
 void Component::setComponentID (const String& newID)
 {
     componentID = newID;

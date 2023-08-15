@@ -28,6 +28,24 @@ namespace juce
 namespace dsp
 {
 
+
+    bool Convolution::Mixer::isTailing() const
+    {
+        if (!currentIsBypassed)
+            return true;
+        else
+        {
+            return volumeDry[0].isSmoothing();
+        }
+    }
+
+    bool Convolution::isTailing() const
+    {
+        return mixer.isTailing();
+    }
+
+
+
 template <typename Element>
 class Queue
 {

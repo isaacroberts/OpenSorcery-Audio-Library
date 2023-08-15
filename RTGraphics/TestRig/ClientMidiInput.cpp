@@ -90,7 +90,7 @@ void ClientMidiInput::noteOn(int n)
 void ClientMidiInput::start(int port)
 {
 	url = String("http://localhost:"+String(port)+"/get-block?num_samples=100");
-	startThread(7);
+	startThread(Thread::Priority::normal);
 }
 
 

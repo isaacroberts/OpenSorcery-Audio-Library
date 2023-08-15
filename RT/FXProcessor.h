@@ -845,38 +845,38 @@ private:
 
 	void protectYourEars(AudioBuffer<float>& buff)
 	{
-//		if(!Format::isStandalone())
-//			return;
-//		
-//		int N = buff.getNumSamples();
-//		for (int c=0; c < buff.getNumChannels(); ++c)
-//		{
-////			bool firstWarning = true;
-//			auto buffer = buff.getWritePointer(c);
-//			for (int i = 0; i < N; ++i)
-//			{
-//				float x = buffer[i];
-//				if (std::isnan(x)) {
-////					if (firstWarning) {
-////						firstWarning = false;
-////						DBG("!!! WARNING: nan detected in output, zeroing !!!");
-////					}
-//					buffer[i] = 0.0f;
-//				} else if (x < -1.0f) {
-////					if (firstWarning) {
-////						DBG("!!! WARNING: audio louder than 0db, clamping !!!");
-////						firstWarning = false;
-////					}
-//					buffer[i] = -1.0f;
-//				} else if (x > 1.0f) {
-////					if (firstWarning) {
-////						DBG("!!! WARNING: audio louder than 0db, clamping !!!");
-////						firstWarning = false;
-////					}
-//					buffer[i] = 1.0f;
-//				}
-//			}
-//		}
+		if(!Format::isStandalone())
+			return;
+		
+		int N = buff.getNumSamples();
+		for (int c=0; c < buff.getNumChannels(); ++c)
+		{
+//			bool firstWarning = true;
+			auto buffer = buff.getWritePointer(c);
+			for (int i = 0; i < N; ++i)
+			{
+				float x = buffer[i];
+				if (std::isnan(x)) {
+//					if (firstWarning) {
+//						firstWarning = false;
+//						DBG("!!! WARNING: nan detected in output, zeroing !!!");
+//					}
+					buffer[i] = 0.0f;
+				} else if (x < -1.0f) {
+//					if (firstWarning) {
+//						DBG("!!! WARNING: audio louder than 0db, clamping !!!");
+//						firstWarning = false;
+//					}
+					buffer[i] = -1.0f;
+				} else if (x > 1.0f) {
+//					if (firstWarning) {
+//						DBG("!!! WARNING: audio louder than 0db, clamping !!!");
+//						firstWarning = false;
+//					}
+					buffer[i] = 1.0f;
+				}
+			}
+		}
 	}
 
 #else
@@ -925,3 +925,14 @@ private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FXProcessor);
 
 };
+/*
+JUCE UPDATE
+
+	go to 
+		juce_audio_processors > processors > juce_AudioProcessor.h
+
+	and change    
+		virtual AudioProcessorParameter* getBypassParameter() const
+	to non-const 
+
+*/

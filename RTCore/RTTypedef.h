@@ -76,6 +76,7 @@
 #endif
 
 
+
 #ifdef JUCE_DSP_H_INCLUDED
 
 typedef const juce::dsp::ProcessSpec Spec;
@@ -94,6 +95,9 @@ typedef juce::dsp::AudioBlock<float> ABlock;
  add it under the word public:
  
  
+	// Convinience functions
+	// audioBlock[channel][sample] = 0.0f;
+
 	 const SampleType* operator[](int c) const noexcept {
 		return getChannelPointer(c);
 	}
@@ -106,6 +110,25 @@ typedef juce::dsp::AudioBlock<float> ABlock;
 	SampleType* operator[](size_t c) noexcept {
 		return getChannelPointer(c);
 	}
+
+
+goto juce_audio_basics > buffers > juce_AudioSampleBuffer.h
+add at line ~292 (anywhere under public)
+
+	 //Added for convinience
+	 // audioBuffer[channel][sample] = 0.0f;
+
+	Type* operator[](int ch) noexcept {
+		jassert(isPositiveAndBelow(ch, numChannels));
+		isClear = false;
+		return channels[ch];
+	}
+	const Type* operator[](int ch) const noexcept {
+		jassert(isPositiveAndBelow(ch, numChannels));
+		isClear = false;
+		return channels[ch];
+	}
+
  */
 
 #endif /* RTTypedef_h */

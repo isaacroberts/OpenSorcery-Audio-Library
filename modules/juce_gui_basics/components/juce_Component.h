@@ -35,6 +35,27 @@ namespace juce
 class JUCE_API  Component  : public MouseListener
 {
 public:
+
+
+private:
+    //Allows developer to size components directly from their positions in a PSD. 
+    static float docW, docH;
+public:
+    static float getDocW() { return docW; }
+    static float getDocH() { return docH; }
+    //Called first to set the size of the image in PSD. Ex: 3650 x 2420
+    static void setDocSize(float w, float h);
+    //Called on main component to set each item's position in the PSD. 
+    void setBoundsInDoc(float x, float y, float w, float h);
+    //Called to set subcomponents. Must include a Rectangle with the bounds of the current element.
+    //Ex: SpeakerFace::resized() {
+    //		Rectangle<float> speakerFaceBounds(900, 50, 1200, 800);
+    //		speakerKnob.setBoundsInDoc(950, 75, 100, 100, speakerFaceBounds);
+    void setBoundsInDoc(float x, float y, float w, float h, Rectangle<float> parentDoc);
+
+
+
+
     //==============================================================================
     /** Creates a component.
 

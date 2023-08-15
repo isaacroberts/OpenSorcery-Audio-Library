@@ -272,6 +272,19 @@ public:
         return channels[channelNumber] + sampleIndex;
     }
 
+    //Added for convinience
+    // audioBuffer[channel][sample] = 0.0f;
+    Type* operator[](int ch) noexcept {
+        jassert(isPositiveAndBelow(ch, numChannels));
+        isClear = false;
+        return channels[ch];
+    }
+
+    const Type* operator[](int ch) const noexcept {
+        jassert(isPositiveAndBelow(ch, numChannels));
+        isClear = false;
+        return channels[ch];
+    }
     /** Returns a writeable pointer to one of the buffer's channels.
 
         For speed, this doesn't check whether the channel number is out of range,

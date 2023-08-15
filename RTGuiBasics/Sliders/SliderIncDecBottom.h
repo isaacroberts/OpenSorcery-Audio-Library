@@ -245,8 +245,8 @@ public:
 	*/
 	void setTextBoxStyle (TextEntryBoxPosition newPosition,
 						  bool isReadOnly,
-						  Pix textEntryBoxWidth,
-						  Pix textEntryBoxHeight);
+						  int textEntryBoxWidth,
+						  int textEntryBoxHeight);
 
 	/** Returns the status of the text-box.
 		@see setTextBoxStyle
@@ -256,12 +256,12 @@ public:
 	/** Returns the width used for the text-box.
 		@see setTextBoxStyle
 	*/
-	Pix getTextBoxWidth() const noexcept;
+	int getTextBoxWidth() const noexcept;
 
 	/** Returns the height used for the text-box.
 		@see setTextBoxStyle
 	*/
-	Pix getTextBoxHeight() const noexcept;
+	int getTextBoxHeight() const noexcept;
 
 	/** Makes the text-box editable.
 
@@ -574,7 +574,7 @@ public:
 		If the slider is rotary, this will throw an assertion and return 0. If the
 		value is out-of-range, it will be constrained to the length of the slider.
 	*/
-	Pix getPositionOfValue (double value) const;
+	float getPositionOfValue (double value) const;
 
 	//==============================================================================
 	/** This can be overridden to allow the slider to snap to user-definable values.
@@ -627,8 +627,8 @@ public:
 	 */
 	struct SliderLayout
 	{
-		Rectangle<Pix> sliderBounds;
-		Rectangle<Pix> textBoxBounds;
+		Rectangle<int> sliderBounds;
+		Rectangle<int> textBoxBounds;
 	};
 
 	//==============================================================================

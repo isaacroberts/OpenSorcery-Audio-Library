@@ -213,7 +213,8 @@ public:
     }
 
 
-
+    // Convinience functions
+    // audioBlock[channel][sample] = 0.0f;
     const SampleType* operator[](int c) const noexcept {
         return getChannelPointer(c);
     }

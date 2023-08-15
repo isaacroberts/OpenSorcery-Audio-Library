@@ -220,6 +220,44 @@ Colour::Colour (uint32 col) noexcept
 {
 }
 
+
+Colour Colour::hex(int col)
+{
+    return Colour(static_cast<uint8> ((col >> 16) & 0xff),
+        static_cast<uint8> ((col >> 8) & 0xff),
+        static_cast<uint8> (col & 0xff));
+}
+Colour Colour::hex(int col, float a)
+{
+    return Colour(static_cast<uint8> ((col >> 16) & 0xff),
+        static_cast<uint8> ((col >> 8) & 0xff),
+        static_cast<uint8> (col & 0xff),
+        static_cast<uint8> (jlimit(0.f, 1.f, a) * 255));
+}
+Colour Colour::grey(float f)
+{
+    auto gg = ColourHelpers::floatToUInt8(f);
+    return Colour(gg, gg, gg);
+}
+Colour Colour::grey(float f, float a)
+{
+    auto gg = ColourHelpers::floatToUInt8(f);
+    auto ag = ColourHelpers::floatToUInt8(a);
+    return Colour(gg, gg, gg, ag);
+}
+
+Colour Colour::greyx(uint8 gg)
+{
+    return Colour(gg, gg, gg);
+}
+Colour Colour::greyx(uint8 gg, float a)
+{
+    auto ag = ColourHelpers::floatToUInt8(a);
+    return Colour(gg, gg, gg, ag);
+}
+
+
+
 Colour::Colour (uint8 red, uint8 green, uint8 blue) noexcept
 {
     argb.setARGB (0xff, red, green, blue);

@@ -78,6 +78,25 @@ public:
                             uint8 blue,
                             uint8 alpha) noexcept;
 
+
+    //Creates from hex integer. Color(0xffaa5b);
+    static Colour hex(int rgbHex);
+    static Colour hex(int rgbHex, float a);
+
+    //Creates gray color from single float 0-1
+    static Colour grey(float f);
+    //Creates gray color with alpha
+    static Colour grey(float f, float a);
+
+
+    //Creates gray color from single int 0-255
+    static Colour greyx(uint8 g);
+    //Creates gray color with alpha
+    static Colour greyx(uint8 g, float a);
+
+
+
+
     /** Creates a colour from 8-bit red, green, and blue values, and a floating-point alpha.
 
         Alpha of 0.0 is transparent, alpha of 1.0f is opaque.

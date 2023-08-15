@@ -924,7 +924,7 @@ public:
         plug-in's bypass. You should always check the value of this parameter in your
         processBlock callback and bypass any effects if it is non-zero.
     */
-    virtual AudioProcessorParameter* getBypassParameter() const        { return nullptr; }
+    virtual AudioProcessorParameter* getBypassParameter()        { return nullptr; }
 
     //==============================================================================
     /** Returns true if the processor is being run in an offline mode for rendering.

@@ -272,8 +272,8 @@ public:
 
 	void setTextBoxStyle (TextEntryBoxPosition newPosition,
 						  bool isReadOnly,
-						  Pix textEntryBoxWidth,
-						  Pix textEntryBoxHeight)
+						  int textEntryBoxWidth,
+						  int textEntryBoxHeight)
 	{
 		if (textBoxPos != newPosition
 			 || editableText != (! isReadOnly)
@@ -699,13 +699,13 @@ public:
 	int sliderBeingDragged = -1;
 	int pixelsForFullDragExtent = 250;
 	Time lastMouseWheelTime;
-	Rectangle<Pix> sliderRect;
+	Rectangle<int> sliderRect;
 	std::unique_ptr<DragInProgress> currentDrag;
 
 	TextEntryBoxPosition textBoxPos;
 	String textSuffix;
 	int numDecimalPlaces = 7;
-	Pix textBoxWidth = 80, textBoxHeight = 20;
+	int textBoxWidth = 80, textBoxHeight = 20;
 	IncDecButtonMode incDecButtonMode = incDecButtonsNotDraggable;
 	ModifierKeys::Flags modifierToSwapModes = ModifierKeys::ctrlAltCommandModifiers;
 
@@ -772,6 +772,7 @@ void SliderIncDecBottom::removeListener (Listener* l)    { pimpl->listeners.remo
 
 //==============================================================================
 
+
 void SliderIncDecBottom::setVelocityBasedMode (bool vb)                 { pimpl->isVelocityBased = vb; }
 bool SliderIncDecBottom::getVelocityBasedMode() const noexcept          { return pimpl->isVelocityBased; }
 bool SliderIncDecBottom::getVelocityModeIsSwappable() const noexcept    { return pimpl->userKeyOverridesVelocity; }
@@ -817,10 +818,10 @@ void SliderIncDecBottom::setMouseDragSensitivity (int distanceForFullScaleDrag)
 void SliderIncDecBottom::setIncDecButtonsMode (IncDecButtonMode mode)                   { pimpl->setIncDecButtonsMode (mode); }
 
 SliderIncDecBottom::TextEntryBoxPosition SliderIncDecBottom::getTextBoxPosition() const noexcept    { return pimpl->textBoxPos; }
-Pix SliderIncDecBottom::getTextBoxWidth() const noexcept                                { return pimpl->textBoxWidth; }
-Pix SliderIncDecBottom::getTextBoxHeight() const noexcept                               { return pimpl->textBoxHeight; }
+int SliderIncDecBottom::getTextBoxWidth() const noexcept                                { return pimpl->textBoxWidth; }
+int SliderIncDecBottom::getTextBoxHeight() const noexcept                               { return pimpl->textBoxHeight; }
 
-void SliderIncDecBottom::setTextBoxStyle (TextEntryBoxPosition newPosition, bool isReadOnly, Pix textEntryBoxWidth, Pix textEntryBoxHeight)
+void SliderIncDecBottom::setTextBoxStyle (TextEntryBoxPosition newPosition, bool isReadOnly, int textEntryBoxWidth, int textEntryBoxHeight)
 {
 	pimpl->setTextBoxStyle (newPosition, isReadOnly, textEntryBoxWidth, textEntryBoxHeight);
 }

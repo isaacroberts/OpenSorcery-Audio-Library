@@ -88,9 +88,8 @@ class TwoValueSlider;
 						   static_cast<uint8> (col & 0xff),
 						   static_cast<uint8> (jlimit(0.f, 1.f, a)*255));
 		 }
-		 Colour Colour::grey(float f)
+		 Colour Colour::grey(float gg)
 		 {
-			 auto gg = ColourHelpers::floatToUInt8(f);
 			 return Colour(gg, gg, gg);
 		 }
 		 Colour Colour::grey(float f, float a)
@@ -99,21 +98,65 @@ class TwoValueSlider;
 			 auto ag = ColourHelpers::floatToUInt8(a);
 			 return Colour(gg, gg, gg, ag);
 		 }
- 
+		Colour Colour::greyx(uint8 f)
+		{
+			auto gg = ColourHelpers::floatToUInt8(f);
+			return Colour(gg, gg, gg);
+		}
+		Colour Colour::greyx(uint8 gg, float a)
+		{
+			auto ag = ColourHelpers::floatToUInt8(a);
+			return Colour(gg, gg, gg, ag);
+		}
+
+
+
  
 	and Colour.h:
 	juce_graphics > colour > Colour.h
 	line ~64
+		//Creates from hex integer. Color(0xffaa5b);
 		 static Colour hex(int rgbHex);
 		 static Colour hex(int rgbHex, float a);
 
+		 //Creates gray color from single float 0-1
 		 static Colour grey(float f);
+		 //Creates gray color with alpha
 		 static Colour grey(float f, float a);
 
+		//Creates gray color from single int 0-255
+		static Colour greyx(uint8 g);
+		//Creates gray color with alpha
+		static Colour greyx(uint8 g, float a);
+
+
  
+
  
 	Component positioning capabilities:
-	Component.hcpp
+
+
+	Component.h
+	juce_gui_basics > components > Component.h
+
+		 private:
+		//Allows developer to size components directly from their positions in a PSD.
+			 static float docW, docH;
+		 public:
+			static float getDocW() { return docW; }
+			static float getDocH() { return docH; }
+			//Called first to set the size of the image in PSD. Ex: 3650 x 2420
+			 static void setDocSize(float w, float h);
+			 //Called on main component to set each item's position in the PSD
+			 void setBoundsInDoc(float x, float y, float w, float h);
+			 //Called to set subcomponents. Must include a Rectangle with the bounds of the current element.
+			 //Ex: SpeakerFace::resized() {
+			 //		Rectangle<float> speakerFaceBounds(900, 50, 1200, 800);
+			 //		speakerKnob.setBoundsInDoc(950, 75, 100, 100, speakerFaceBounds);
+			 void setBoundsInDoc(float x, float y, float w, float h, Rectangle<float> parentDoc);
+
+
+	Component.cpp
 	juce_gui_basics > components > Component.cpp
 	line ~1229
  
@@ -142,20 +185,6 @@ class TwoValueSlider;
 		 
 		 setBoundsRelative(rx, ry, rw, rh);
 	 }
-
-
- 
- 
-	Component.h
-	juce_gui_basics > components > Component.h
-	line ~530
-		 private:
-			 static float docW, docH;
-		 public:
-			 static void setDocSize(float w, float h);
-			 void setBoundsInDoc(float x, float y, float w, float h);
-			 void setBoundsInDoc(float x, float y, float w, float h, Rectangle<float> parentDoc);
-
 
  
  */

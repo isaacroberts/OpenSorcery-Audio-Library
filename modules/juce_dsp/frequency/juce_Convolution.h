@@ -190,6 +190,17 @@ public:
         processSamples (context.getInputBlock(), context.getOutputBlock(), context.isBypassed);
     }
 
+
+
+    template <typename ProcessContext,
+        std::enable_if_t<std::is_same<typename ProcessContext::SampleType, float>::value, int> = 0>
+    void bypassProcess(const ProcessContext& context) noexcept
+    {
+        processSamples(context.getInputBlock(), context.getOutputBlock(), true);
+    }
+
+    bool isTailing() const;
+
     //==============================================================================
     enum class Stereo    { no, yes };
     enum class Trim      { no, yes };
@@ -285,6 +296,7 @@ private:
                              ProcessWet&&) noexcept;
 
         void reset();
+        bool isTailing() const;
 
     private:
         std::array<SmoothedValue<float>, 2> volumeDry, volumeWet;

@@ -60,7 +60,7 @@ void RTFastReverb<true>::prepare2(const ProcessSpec& spec)
 	
 	// Priority = 8; One less than the audio thread
 	for (int t=0; t < num_threads; ++t)
-		backgroundThreads[t].startThread(8);
+		backgroundThreads[t].startThread(Thread::Priority::high);
 }
 
 template<>
@@ -81,7 +81,7 @@ void RTFastReverb<false>::prepare2(const ProcessSpec& spec)
 		loadImpulse();
 	
 	// Priority = 8; One less than the audio thread
-	backgroundThreads[0].startThread(8);
+	backgroundThreads[0].startThread(Thread::Priority::high);
 }
 
 template<>
