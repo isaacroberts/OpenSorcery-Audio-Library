@@ -5,7 +5,7 @@ The audio library I used for freelancing in audio plugins. I'm making it public 
 Includes the JUCE library, which must be licensed from juce.com.
 
 The JUCE library isn't linked as a submodule because I added minor changes and inserted my libraries into the include tree. 
-  The changes are marked with #JUCE UPDATE, so if you are using this repo and need to update to the most recent version of JUCE, you can search the codebase, and either carry over or rollback the changes. 
+  The changes are marked with //JUCE UPDATE, so if you are using this repo and need to update to the most recent version of JUCE, you can search the codebase, and either carry over or rollback the changes. 
 
 Using this library requires you to use certain settings in the projucer. You can use the Template project to start with those. 
 You will also need to install the boost lockfree module. 
