@@ -31,21 +31,51 @@ I used an adaptation of the juce_ProcessorChain, renamed to "Chain" in RT > FX.
 
 The Chain class templating to improve speed. Each processor elements is an FX object.
 
+The Templating allows you to customize your process chain from a single file.
+
 ```
 typedef Chain<Piano, MoogFilter, RTCompressor, RTReverb, RTLowPassButterworth> JazzyPianoSynthChain;
 ```
 
+
 Because of the templating, FX objects don't have to derive from the FX base class as long as they have the sample function signature as the FX object, which are laid out in RT > FX > Templates. 
 
 The Chain object is at the core of the combined processchain / preset / AudioProcessor element called FXProcessor. 
-'''
+
+```
 typedef FXProcessor<JazzyPianoSynthChain, JazzyPianoPreset, HasInstr=True> JazzyPianoProcessor;
-'''
+```
+
 The FXProcessor is the main object that gets top-level calls from JUCE and creates the main window object (GuiEditor).
 
-## BypassProcess & SilenceProcess
+## Processing Modes
+
+  My FX modules extend from the concepts in the JUCE modules. 
+```
+  //Used to set up processing, allocate data, etc
+	void prepare2(Spec& spec) override;
+
+  //Main processing, replacing the input audio block
+	void process (ContextR&);
+  //Main processing, reading from an input block and writing to an output block
+	void process (ContextNR&);
+
+  //Bypass processes. Can be used to tail audio for reverbs/delays, or decay filters.
+  // inputIsSilent allows fx to assume that input=0, simplifying calculations. 
+	void bypassProcess(ContextR&  c, bool allowTail, bool inputIsSilent) 
+	void bypassProcess(ContextNR& c, bool allowTail, bool inputIsSilent) 
+
+  // Only relevant for compressors. Most modules redirect calls to process 
+ 	void sidechain(InputBlock& level, ContextR& c) { process(c); }
+ 	void sidechain(InputBlock& level, ContextNR& c) { process(c); }
+
+  // I think this is unused, but resets state variables and things like that 
+	void reset2() override;
+```
+
 
 My library uses bypassProcess and silenceProcess to signify to processors that they don't need to do full processing.
+
 
 Each FX object must have process replacing and process non-replacing (process(ContextR&) and process(ContextNR&)). 
 
