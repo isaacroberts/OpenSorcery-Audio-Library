@@ -1,8 +1,8 @@
 # robertsaudiolibrary
 
-The audio library I used for freelancing in audio plugins. I'm making it public now because I'm switching industries and hope to help other developers get on their feet faster.
+The audio library I used for freelancing in audio plugins. I'm making it public now because I'm switching industries and hoping to help other developers get on their feet!
 
-Includes the JUCE library, which must be licensed from juce.com.
+Includes the JUCE library, which must be licensed from https://juce.com.
 
 The JUCE library isn't linked as a submodule because I added minor changes and inserted my libraries into the include tree. 
   The changes are marked with //JUCE UPDATE, so if you are using this repo and need to update to the most recent version of JUCE, you can search the codebase, and either carry over or rollback the changes. 
@@ -12,24 +12,31 @@ You will also need to install the boost lockfree module.
 
 An example project is included because I was rarely able to use this library without copying & pasting my own prior code :) 
 
-If you are using this library, please let me know and I will add more documentation! When writing the code I intended to be the only person using this code so it is not documented as well as it should be! 
+If you are using this library, please let me know and I will add more documentation! When writing the code I intended to be the only person using it so it a bit messy at times!
 
+# About the Code:
 
-# Concepts used in this library:
+In the code, the library is referred to as "RT" (RTCompressor, RTGain, etc), because my company name changed several times. The RT stands for "Roberts.Tech" 
+
+## FXProcessor
+
+The FXProcessor class is a combined process chain / preset manager / AudioProcessor object. This makes it very fast to set up projects, and the centralization makes it easy to make large changes late into the project. 
+
+The FXProcessor replaces the AudioProcessor, meaning it's the main object that gets top-level calls from JUCE and creates the main gui window.
 
 ## Presets
 
-I used my own presets module, when I probably didn't need to. It made it a lot easier to change around presets, which is common in freelancing.  
+I used my own presets module, although I probably didn't need to. It made it a lot easier to change around presets.  
 
-The top-level FXProcessor expects a subclass of the PresetObject, which contains a list of parameters as well as any sub-presets. The starter function signature is in PresetObject.h. 
+The FXProcessor expects a subclass of PresetObject, which will contain your list of parameters and any nested PresetOjbects. 
 
 ## Process Chain
 
 Processor chains are laid out as chains & trees of FX, just like in JUCE.
 
-I used an adaptation of the juce_ProcessorChain, renamed to "Chain" in RT > FX. 
+I used an adaptation of the juce_ProcessorChain, renamed to "Chain" in RT/FX. 
 
-The Chain class templating to improve speed. Each processor elements is an FX object.
+The Chain class uses templating to improve speed. Each processor elements is an FX object.
 
 The Templating allows you to customize your process chain from a single file.
 
@@ -37,16 +44,11 @@ The Templating allows you to customize your process chain from a single file.
 typedef Chain<Piano, MoogFilter, RTCompressor, RTReverb, RTLowPassButterworth> JazzyPianoSynthChain;
 ```
 
-
-Because of the templating, FX objects don't have to derive from the FX base class as long as they have the sample function signature as the FX object, which are laid out in RT > FX > Templates. 
-
-The Chain object is at the core of the combined processchain / preset / AudioProcessor element called FXProcessor. 
+Because of the templating, FX objects don't have to derive from the FX base class as long as they have the same function signature, which is laid out in RT > FX > Templates. 
 
 ```
 typedef FXProcessor<JazzyPianoSynthChain, JazzyPianoPreset, HasInstr=True> JazzyPianoProcessor;
 ```
-
-The FXProcessor is the main object that gets top-level calls from JUCE and creates the main window object (GuiEditor).
 
 ## Processing Modes
 
@@ -76,8 +78,8 @@ The FXProcessor is the main object that gets top-level calls from JUCE and creat
 
 My library uses bypassProcess and silenceProcess to signify to processors that they don't need to do full processing.
 
+For example, Filters can use this to assume input=0 and simplify calculations 
+These functions are added to some of the JUCE Fx modules where needed. 
 
 Each FX object must have process replacing and process non-replacing (process(ContextR&) and process(ContextNR&)). 
 
-For example, Filters can use this to assume input=0 and simplify calculations 
-These functions are added to some of the JUCE Fx modules where needed. 
